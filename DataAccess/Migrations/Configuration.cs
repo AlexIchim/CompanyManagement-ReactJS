@@ -1,18 +1,14 @@
 using Domain.Models;
 
-namespace DataAccess.Migrations
-{
+namespace DataAccess.Migrations {
     using System.Data.Entity.Migrations;
 
-    internal sealed class Configuration : DbMigrationsConfiguration<DataAccess.Context.DbContext>
-    {
-        public Configuration()
-        {
+    internal sealed class Configuration : DbMigrationsConfiguration<DataAccess.Context.DbContext> {
+        public Configuration() {
             AutomaticMigrationsEnabled = false;
         }
 
-        protected override void Seed(DataAccess.Context.DbContext context)
-        {
+        protected override void Seed(DataAccess.Context.DbContext context) {
             context.Departments.AddOrUpdate(
               p => p.Name,
               new Department { Name = ".NET" },

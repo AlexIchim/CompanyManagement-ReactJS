@@ -30,7 +30,7 @@ namespace ManagementApp.Manager.Tests
         [Test]
         public void GetAll_ReturnsAListOfDepartments()
         {
-            //Arrange
+            //Arrange - aranjezi ce date vrei sa iti intre, ce rezultate de pe moc sa intoarca
             var departments = new List<Department>
             {
                 CreateDepartment("Java", 1),
@@ -45,7 +45,7 @@ namespace ManagementApp.Manager.Tests
             _departmentRepositoryMock.Setup(m => m.GetAll()).Returns(departments);
             _mapperMock.Setup(m => m.Map<IEnumerable<DepartmentInfo>>(departments)).Returns(departmentsInfo);
 
-            //Act
+            //Act - apeleaza metoda care vreau sa fie testata
            var result = _departmentService.GetAll();
 
             //Assert
