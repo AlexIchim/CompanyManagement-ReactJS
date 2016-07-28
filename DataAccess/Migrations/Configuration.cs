@@ -13,12 +13,12 @@ namespace DataAccess.Migrations
 
         protected override void Seed(DataAccess.Context.DbContext context)
         {
-            context.Departments.AddOrUpdate(
+            /*context.Departments.AddOrUpdate(
               p => p.Name,
               new Department { Name = ".NET" },
               new Department { Name = "JAVA" },
               new Department { Name = "PHP" }
-            );
+            );*/
 
         }
     }
