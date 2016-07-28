@@ -52,9 +52,10 @@
   <ItemGroup>
     <Compile Include="Context\DbContext.cs" />
     <Compile Include="Extensions\QueryableExtensions.cs" />
-    <Compile Include="Migrations\201607251011292_InitialCreate.cs" />
-    <Compile Include="Migrations\201607251011292_InitialCreate.Designer.cs">
-      <DependentUpon>201607251011292_InitialCreate.cs</DependentUpon>
+    <Compile Include="Mappings\DepartmentMap.cs" />
+    <Compile Include="Migrations\201607281335068_DataModelTest.cs" />
+    <Compile Include="Migrations\201607281335068_DataModelTest.Designer.cs">
+      <DependentUpon>201607281335068_DataModelTest.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -75,11 +76,8 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Mappings\" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Migrations\201607251011292_InitialCreate.resx">
-      <DependentUpon>201607251011292_InitialCreate.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201607281335068_DataModelTest.resx">
+      <DependentUpon>201607281335068_DataModelTest.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
