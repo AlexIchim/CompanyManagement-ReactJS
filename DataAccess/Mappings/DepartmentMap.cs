@@ -8,7 +8,15 @@ namespace DataAccess.Mappings
     {
         public DepartmentMap()
         {
+            //Properties
+            this.Property(t => t.Name)
+                .IsRequired()
+                .HasMaxLength(100);
+            this.Property(t => t.OfficeId)
+                .IsRequired();
             
+            //Relationships
+
         }
     }
 }
