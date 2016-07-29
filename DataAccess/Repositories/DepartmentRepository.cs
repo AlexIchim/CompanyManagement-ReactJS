@@ -6,7 +6,7 @@ using Domain.Models;
 
 namespace DataAccess.Repositories
 {
-    public class DepartmentRepository: IDepartmentRepository
+    public class DepartmentRepository : IDepartmentRepository
     {
         private readonly DbContext _context;
 

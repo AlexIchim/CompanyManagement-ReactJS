@@ -1,8 +1,9 @@
 ﻿using System.Collections.Generic;
+using Domain.Models;
 
-namespace Domain.Models
+namespace Manager.InfoModels
 {
-    public class Project
+    public class ProjectInfo
     {
         public int Id { get; set; }
         public string Name { get; set; }
@@ -10,8 +11,5 @@ namespace Domain.Models
         public int? Duration { get; set; }
 
         public int? DepartmentId { get; set; }
-        public virtual Department Department { get; set; }
-
-        public virtual ICollection<ProjectAllocation> Allocations { get; set; }
     }
 }

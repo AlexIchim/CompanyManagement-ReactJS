@@ -5,7 +5,7 @@ using Manager.InputInfoModels;
 
 namespace Manager.Mapper
 {
-    public class MappingConfig: Profile
+    public class MappingConfig : Profile
     {
         public MappingConfig()
         {

@@ -52,7 +52,7 @@ namespace ManagementApp.App_Start
                    .Where(t => t.Name.EndsWith("Service", StringComparison.OrdinalIgnoreCase));
             builder.RegisterAssemblyTypes(managerAssembly).AsImplementedInterfaces();
         }
-      
+
         private static void RegisterContexts(ContainerBuilder builder)
         {
             builder.RegisterType<DbContext>().InstancePerRequest();
