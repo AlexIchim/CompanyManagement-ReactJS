@@ -25,7 +25,15 @@ namespace Manager.Services
 
             return departmentInfos;
         }
-        
+
+        public IEnumerable<DepartmentInfo> GetByOfficeId(int OfficeId)
+        {
+            var departments = _departmentRepository.GetByOfficeId(OfficeId);
+            var departmentInfos = _mapper.Map<IEnumerable<DepartmentInfo>>(departments);
+
+            return departmentInfos;
+        }
+
         public OperationResult Add(AddDepartmentInputInfo inputInfo)
         {
             var newDepartment = _mapper.Map<Department>(inputInfo);

@@ -20,9 +20,14 @@ namespace DataAccess.Repositories
             return _context.Departments.ToArray();
         }
 
-        public Department GetById(int id)
+        public Department GetById(int Id)
         {
-            return _context.Departments.SingleOrDefault(d=>d.Id == id);
+            return _context.Departments.SingleOrDefault(d=>d.Id == Id);
+        }
+
+        public IEnumerable<Department> GetByOfficeId(int OfficeId)
+        {
+            return _context.Offices.Single(d => d.Id == OfficeId).Departments.ToArray();
         }
 
         public void Add(Department department)
@@ -30,7 +35,7 @@ namespace DataAccess.Repositories
             _context.Departments.Add(department);
             Save();
         }
-        
+
         public void Save()
         {
             _context.SaveChanges();
