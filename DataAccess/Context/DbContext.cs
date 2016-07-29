@@ -23,6 +23,7 @@ namespace DataAccess.Context
             modelBuilder.Configurations.Add(new EmployeeMap());
             modelBuilder.Configurations.Add(new DepartmentMap());
             modelBuilder.Configurations.Add(new ProjectMap());
+            modelBuilder.Configurations.Add(new OfficeMap());
         }
 
     }

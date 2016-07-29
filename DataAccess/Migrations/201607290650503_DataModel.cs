@@ -84,9 +84,9 @@ namespace DataAccess.Migrations
                 c => new
                     {
                         Id = c.Int(nullable: false, identity: true),
-                        Name = c.String(),
-                        Address = c.String(),
-                        Phone = c.String(),
+                        Name = c.String(nullable: false, maxLength: 100),
+                        Address = c.String(nullable: false, maxLength: 300),
+                        Phone = c.String(nullable: false, maxLength: 20),
                         Image = c.Binary(),
                     })
                 .PrimaryKey(t => t.Id);
