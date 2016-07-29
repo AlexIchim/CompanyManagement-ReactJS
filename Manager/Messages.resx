@@ -120,10 +120,19 @@
   <data name="ErrorWhileUpdatingDepartment" xml:space="preserve">
     <value>'Department could not be modified'</value>
   </data>
+  <data name="ErrorWhileUpdatingOffice" xml:space="preserve">
+    <value>'Office could not be modified'</value>
+  </data>
   <data name="SuccessfullyAddedDepartment" xml:space="preserve">
     <value>'Department was added with success'</value>
   </data>
+  <data name="SuccessfullyAddedOffice" xml:space="preserve">
+    <value>'Office was added with success'</value>
+  </data>
   <data name="SuccessfullyUpdatedDepartment" xml:space="preserve">
     <value>'Department was updated with success'</value>
+  </data>
+  <data name="SuccessfullyUpdatedOffice" xml:space="preserve">
+    <value>'Office was updated with success'</value>
   </data>
 </root>
