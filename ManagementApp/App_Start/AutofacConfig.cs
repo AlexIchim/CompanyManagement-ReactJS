@@ -61,7 +61,9 @@ namespace ManagementApp.App_Start
         private static void RegisterRepository(ContainerBuilder builder)
         {
             builder.RegisterType<DepartmentRepository>().As<IDepartmentRepository>();
+            builder.RegisterType<EmployeeRepository>().As<IEmployeeRepository>();
         }
+
 
     }
 }
