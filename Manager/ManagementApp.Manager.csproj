@@ -58,6 +58,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="InfoModels\EmployeeInfo.cs" />
     <Compile Include="InfoModels\ProjectInfo.cs" />
     <Compile Include="InfoModels\DepartmentInfo.cs" />
     <Compile Include="InfoModels\OfficeInfo.cs" />
@@ -71,6 +72,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Messages.resx</DependentUpon>
     </Compile>
+    <Compile Include="Services\EmployeeService.cs" />
     <Compile Include="Services\ProjectService.cs" />
     <Compile Include="Services\DepartmentService.cs" />
     <Compile Include="Services\OfficeService.cs" />

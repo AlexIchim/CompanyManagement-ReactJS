@@ -22,12 +22,12 @@ namespace DataAccess.Repositories
 
         public Department GetById(int Id)
         {
-            return _context.Departments.SingleOrDefault(d=>d.Id == Id);
+            return _context.Departments.SingleOrDefault(d => d.Id == Id);
         }
 
-        public IEnumerable<Department> GetByOfficeId(int OfficeId)
+        public IEnumerable<Department> GetByOfficeId(int officeId)
         {
-            return _context.Offices.Single(d => d.Id == OfficeId).Departments.ToArray();
+            return _context.Offices.Single(d => d.Id == officeId).Departments.ToArray();
         }
 
         public void Add(Department department)
