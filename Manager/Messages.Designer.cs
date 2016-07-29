@@ -70,6 +70,15 @@ namespace Manager {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to &apos;Employee could not be modified&apos;.
+        /// </summary>
+        public static string ErrorWhileUpdatingEmployee {
+            get {
+                return ResourceManager.GetString("ErrorWhileUpdatingEmployee", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to &apos;Department was added with success&apos;.
         /// </summary>
         public static string SuccessfullyAddedDepartment {
@@ -79,11 +88,29 @@ namespace Manager {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to &apos;Employee was added with success&apos;.
+        /// </summary>
+        public static string SuccessfullyAddedEmployee {
+            get {
+                return ResourceManager.GetString("SuccessfullyAddedEmployee", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to &apos;Department was updated with success&apos;.
         /// </summary>
         public static string SuccessfullyUpdatedDepartment {
             get {
                 return ResourceManager.GetString("SuccessfullyUpdatedDepartment", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to &apos;Employee was updated with success&apos;.
+        /// </summary>
+        public static string SuccessfullyUpdatedEmployee {
+            get {
+                return ResourceManager.GetString("SuccessfullyUpdatedEmployee", resourceCulture);
             }
         }
     }
