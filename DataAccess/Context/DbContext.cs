@@ -1,5 +1,6 @@
 ﻿using Domain.Models;
 using System.Data.Entity;
+using DataAccess.Mappings;
 
 namespace DataAccess.Context
 {
@@ -17,7 +18,28 @@ namespace DataAccess.Context
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<Assignment>().HasKey(t => new { t.EmployeeId, t.ProjectId});
+            modelBuilder.Configurations.Add(new AssignmentMap());
+            modelBuilder.Configurations.Add(new DepartmentMap());
+            modelBuilder.Configurations.Add(new EmployeeMap());
+            modelBuilder.Configurations.Add(new OfficeMap());
+            modelBuilder.Configurations.Add(new ProjectMap());
+
+
+            /*modelBuilder.Entity<Project>()
+                .HasRequired(t => t.Department)
+                .WithMany()
+                .WillCascadeOnDelete(true);
+
+            modelBuilder.Entity<Department>()
+                .HasRequired(t => t.Office)
+                .WithMany()
+                .WillCascadeOnDelete(true);
+
+            modelBuilder.Entity<Department>()
+                .HasRequired(t => t.DepartmentManager)
+                .WithMany()
+                .WillCascadeOnDelete(true);*/
+            //.WillCascadeOnDelete(true);
             /*modelBuilder.Entity<Employee>()
                 .HasRequired(s => s.Department);*/
             /*modelBuilder.Entity<Assignment>()
