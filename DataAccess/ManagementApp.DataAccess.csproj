@@ -53,6 +53,7 @@
     <Compile Include="Context\DbContext.cs" />
     <Compile Include="Extensions\QueryableExtensions.cs" />
     <Compile Include="Mappings\DepartmentMap.cs" />
+    <Compile Include="Mappings\OfficeMap.cs" />
     <Compile Include="Migrations\201607281335068_DataModelTest.cs" />
     <Compile Include="Migrations\201607281335068_DataModelTest.Designer.cs">
       <DependentUpon>201607281335068_DataModelTest.cs</DependentUpon>

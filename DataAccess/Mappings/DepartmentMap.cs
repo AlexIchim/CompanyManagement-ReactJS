@@ -9,7 +9,6 @@ namespace DataAccess.Mappings
         public DepartmentMap()
         {
             
-
         }
     }
 }
