@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Domain.Models {
     public class Office {
-         Office()
+        public Office()
         {
             this.Departments = new List<Department>();
         }

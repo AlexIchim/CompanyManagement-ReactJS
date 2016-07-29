@@ -19,7 +19,7 @@ namespace Domain.Models {
         fullTime
     };
     public class Employee {
-         Employee()
+        public Employee()
         {
             this.Assignments = new List<Assignment>();
         }
@@ -29,8 +29,8 @@ namespace Domain.Models {
         public Department Department { get; set; }
         public List<Assignment> Assignments { get; set; }
         public DateTime EmploymentDate { get; set; }
-        public DateTime ReleasedDate { get; set; }
-        public enum JobType { Get }
+        public DateTime? ReleasedDate { get; set; }
+        public JobTypes JobType { get; set; }
         public Position Position { get; set; }
     }
 }

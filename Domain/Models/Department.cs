@@ -5,7 +5,7 @@ namespace Domain.Models
 {
     public class Department
     {
-         Department()
+        public Department()
         {
             this.Employees = new List<Employee>();
             this.Projects = new List<Project>();
