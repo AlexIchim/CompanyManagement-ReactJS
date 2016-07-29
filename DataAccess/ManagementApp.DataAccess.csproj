@@ -55,10 +55,11 @@
     <Compile Include="Mappings\DepartmentMap.cs" />
     <Compile Include="Mappings\EmployeeMap.cs" />
     <Compile Include="Mappings\OfficeMap.cs" />
+    <Compile Include="Mappings\PositionMap.cs" />
     <Compile Include="Mappings\ProjectMap.cs" />
-    <Compile Include="Migrations\201607290650503_DataModel.cs" />
-    <Compile Include="Migrations\201607290650503_DataModel.Designer.cs">
-      <DependentUpon>201607290650503_DataModel.cs</DependentUpon>
+    <Compile Include="Migrations\201607290746519_DataModel.cs" />
+    <Compile Include="Migrations\201607290746519_DataModel.Designer.cs">
+      <DependentUpon>201607290746519_DataModel.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -79,8 +80,8 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201607290650503_DataModel.resx">
-      <DependentUpon>201607290650503_DataModel.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201607290746519_DataModel.resx">
+      <DependentUpon>201607290746519_DataModel.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

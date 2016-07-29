@@ -12,7 +12,7 @@ namespace DataAccess.Migrations
                 c => new
                     {
                         Id = c.Int(nullable: false, identity: true),
-                        Name = c.String(),
+                        Name = c.String(nullable: false, maxLength: 100),
                         OfficeId = c.Int(nullable: false),
                         DepartmentManager_Id = c.Int(),
                     })
@@ -27,8 +27,8 @@ namespace DataAccess.Migrations
                 c => new
                     {
                         Id = c.Int(nullable: false, identity: true),
-                        Name = c.String(),
-                        Adress = c.String(),
+                        Name = c.String(nullable: false, maxLength: 100),
+                        Adress = c.String(maxLength: 300),
                         EmploymentDate = c.DateTime(nullable: false),
                         ReleaseDate = c.DateTime(nullable: false),
                         EmploymentHours = c.Int(nullable: false),
@@ -46,7 +46,7 @@ namespace DataAccess.Migrations
                 c => new
                     {
                         Id = c.Int(nullable: false, identity: true),
-                        Name = c.String(),
+                        Name = c.String(nullable: false, maxLength: 100),
                     })
                 .PrimaryKey(t => t.Id);
             
@@ -70,8 +70,8 @@ namespace DataAccess.Migrations
                 c => new
                     {
                         Id = c.Int(nullable: false, identity: true),
-                        Name = c.String(),
-                        Status = c.String(),
+                        Name = c.String(nullable: false, maxLength: 100),
+                        Status = c.String(nullable: false, maxLength: 100),
                         Duration = c.Int(),
                         Department_Id = c.Int(),
                     })
