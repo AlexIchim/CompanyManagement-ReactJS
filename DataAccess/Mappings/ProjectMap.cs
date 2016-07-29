@@ -4,9 +4,9 @@ using Domain.Models;
 
 namespace DataAccess.Mappings
 {
-    public class DepartmentMap : EntityTypeConfiguration<Department>
+    public class ProjectMap : EntityTypeConfiguration<Project>
     {
-        public DepartmentMap()
+        public ProjectMap()
         {
         }
     }

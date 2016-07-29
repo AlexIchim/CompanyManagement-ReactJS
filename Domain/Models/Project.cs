@@ -9,8 +9,8 @@ namespace Domain.Models
         public string Status { get; set; }
         public int? Duration { get; set; }
 
-        public int DepartmentId { get; set; }
         public Department Department { get; set; }
+
         public ICollection<ProjectAllocation> Allocations { get; set; }
     }
 }

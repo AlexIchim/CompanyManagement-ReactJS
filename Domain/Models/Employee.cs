@@ -15,9 +15,11 @@ namespace Domain.Models
         public int PositionId { get; set; }
         public Position Position { get; set; }
 
-        //public int DepartmentId { get; set; }  // results in ambiguity between two foreign keys
+        public int DepartmentId { get; set; }
         public Department Department { get; set; }
-        public ICollection<ProjectAllocation> ProjectAllocations { get; set; }
 
+        public Department ManagedDepartment { get; set; }
+
+        public ICollection<ProjectAllocation> ProjectAllocations { get; set; }
     }
 }

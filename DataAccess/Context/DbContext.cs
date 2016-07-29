@@ -1,5 +1,6 @@
 ﻿using Domain.Models;
 using System.Data.Entity;
+using DataAccess.Mappings;
 
 namespace DataAccess.Context
 {
@@ -19,9 +20,10 @@ namespace DataAccess.Context
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
-
+            modelBuilder.Configurations.Add(new EmployeeMap());
+            modelBuilder.Configurations.Add(new DepartmentMap());
+            modelBuilder.Configurations.Add(new ProjectMap());
         }
-
 
     }
 }

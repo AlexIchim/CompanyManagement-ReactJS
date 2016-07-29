@@ -7,13 +7,13 @@ namespace DataAccess.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.1.3-40302")]
-    public sealed partial class DataModelTest : IMigrationMetadata
+    public sealed partial class DataModel : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(DataModelTest));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(DataModel));
         
         string IMigrationMetadata.Id
         {
-            get { return "201607281335068_DataModelTest"; }
+            get { return "201607290629179_DataModel"; }
         }
         
         string IMigrationMetadata.Source
