@@ -71,6 +71,17 @@ namespace DataAccess.Migrations
                 new ProjectAllocation() { Id = 3, AllocationPercentage = 100, ProjectId = 4, EmployeeId = 3 },
                 new ProjectAllocation() { Id = 4, AllocationPercentage = 50, ProjectId = 6, EmployeeId = 5 }
             );
+
+            context.SaveChanges();
+
+            // Assign the department managers
+            context.Departments.Single(t => t.Id == 1).DepartmentManager =
+                context.Employees.Single(t => t.Id == 2);
+            context.Departments.Single(t => t.Id == 2).DepartmentManager =
+                context.Employees.Single(t => t.Id == 4);
+            context.Departments.Single(t => t.Id == 3).DepartmentManager =
+                context.Employees.Single(t => t.Id == 6);
+            context.SaveChanges();
         }
     }
 }
