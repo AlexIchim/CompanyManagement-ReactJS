@@ -6,7 +6,7 @@ using Domain.Models;
 
 namespace DataAccess.Repositories
 {
-    public class DepartmentRepository: IDepartmentRepository
+    public class DepartmentRepository : IDepartmentRepository
     {
         private readonly DbContext _context;
 
@@ -22,7 +22,7 @@ namespace DataAccess.Repositories
 
         public Department GetById(int id)
         {
-            return _context.Departments.SingleOrDefault(d=>d.Id == id);
+            return _context.Departments.SingleOrDefault(d => d.Id == id);
         }
 
         public void Add(Department department)
@@ -30,7 +30,7 @@ namespace DataAccess.Repositories
             _context.Departments.Add(department);
             Save();
         }
-        
+
         public void Save()
         {
             _context.SaveChanges();

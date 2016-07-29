@@ -8,7 +8,6 @@ namespace DataAccess.Context
     {
         public DbContext() : base("DbContext")
         {
-
         }
 
         public DbSet<Department> Departments { get; set; }

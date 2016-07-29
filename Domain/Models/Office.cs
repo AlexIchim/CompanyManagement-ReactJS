@@ -10,6 +10,6 @@ namespace Domain.Models
         public string Phone { get; set; }
         public byte[] Image { get; set; }
 
-        public ICollection<Department> Departments;
+        public virtual ICollection<Department> Departments { get; set; }
     }
 }
