@@ -60,6 +60,10 @@
     <Compile Include="Migrations\201607290718308_CreateModelTest.Designer.cs">
       <DependentUpon>201607290718308_CreateModelTest.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201607290824138_AddConstraints.cs" />
+    <Compile Include="Migrations\201607290824138_AddConstraints.Designer.cs">
+      <DependentUpon>201607290824138_AddConstraints.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositories\DepartmentRepository.cs" />
@@ -87,6 +91,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201607290718308_CreateModelTest.resx">
       <DependentUpon>201607290718308_CreateModelTest.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201607290824138_AddConstraints.resx">
+      <DependentUpon>201607290824138_AddConstraints.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
