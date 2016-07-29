@@ -9,5 +9,9 @@ namespace Contracts
         Department GetById(int id);
         void Add(Department department);
         void Save();
+
+        IEnumerable<Project> GetAllDepartmentProjects(int id);
+
+        IEnumerable<Employee> GetAllUnAllocatedEmployeesOnProject();
     }
 }

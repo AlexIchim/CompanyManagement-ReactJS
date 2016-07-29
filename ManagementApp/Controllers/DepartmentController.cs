@@ -22,6 +22,22 @@ namespace ManagementApp.Controllers
             return Json(result);
         }
 
+        [Route("getAllDepartmentProjects")]
+        [HttpGet]
+        public IHttpActionResult GetAllDepartmentProjects(int inputInfo)
+        {
+            var result = _departmentService.GetAllDepartmentProjects(inputInfo);
+            return Json(result);
+        }
+
+        [Route("GetAllUnAllocatedEmployeesOnProject")]
+        [HttpGet]
+        public IHttpActionResult GetAllUnAllocatedEmployeesOnProject()
+        {
+            var result = _departmentService.GetAllUnAllocatedEmployeesOnProject();
+            return Json(result);
+        }
+
         [Route("add")]
         [HttpPost]
         public IHttpActionResult Add([FromBody] AddDepartmentInputInfo inputInfo)
@@ -37,5 +53,7 @@ namespace ManagementApp.Controllers
             var result = _departmentService.Update(inputInfo);
             return Json(result);
         }
+
+
     }
 }
