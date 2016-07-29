@@ -14,7 +14,7 @@ namespace Domain.Models {
     };
     public class Project
     {
-        Project()
+         Project()
         {
             this.Assignments = new List<Assignment>();
         }

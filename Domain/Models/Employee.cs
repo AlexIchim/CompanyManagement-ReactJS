@@ -19,7 +19,7 @@ namespace Domain.Models {
         fullTime
     };
     public class Employee {
-        Employee()
+         Employee()
         {
             this.Assignments = new List<Assignment>();
         }
