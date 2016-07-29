@@ -30,6 +30,7 @@ namespace DataAccess.Migrations
                         Address = c.String(nullable: false, maxLength: 100),
                         EmploymentDate = c.DateTime(nullable: false),
                         ReleasedDate = c.DateTime(nullable: false),
+                        JobType = c.Int(nullable: false),
                         Position = c.Int(nullable: false),
                         Department_Id = c.Int(),
                     })

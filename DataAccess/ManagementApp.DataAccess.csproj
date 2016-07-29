@@ -57,9 +57,9 @@
     <Compile Include="Mappings\EmployeeMap.cs" />
     <Compile Include="Mappings\OfficeMap.cs" />
     <Compile Include="Mappings\ProjectMap.cs" />
-    <Compile Include="Migrations\201607290831223_initial.cs" />
-    <Compile Include="Migrations\201607290831223_initial.Designer.cs">
-      <DependentUpon>201607290831223_initial.cs</DependentUpon>
+    <Compile Include="Migrations\201607290845150_initial.cs" />
+    <Compile Include="Migrations\201607290845150_initial.Designer.cs">
+      <DependentUpon>201607290845150_initial.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -80,8 +80,8 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201607290831223_initial.resx">
-      <DependentUpon>201607290831223_initial.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201607290845150_initial.resx">
+      <DependentUpon>201607290845150_initial.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
