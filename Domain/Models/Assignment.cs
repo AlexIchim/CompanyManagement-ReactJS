@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace Domain.Models {
-     class Assignment {
+     public class Assignment {
         public int EmployeeId { get; set; }
         public int ProjectId { get; set; }
         public Employee Employee { get; set; }
