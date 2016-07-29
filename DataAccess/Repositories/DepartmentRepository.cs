@@ -55,5 +55,11 @@ namespace DataAccess.Repositories
             var array = _context.Employees.Where(e => e.TotalAllocation == 0);
             return array.ToArray();
         }
+
+        public IEnumerable<Employee> GetEmployeesThatAreNotFullyAllocated()
+        {
+            var array = _context.Employees.Where(e => e.TotalAllocation < 100);
+            return array.ToArray();
+        }
     }
 }

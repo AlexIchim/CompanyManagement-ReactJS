@@ -38,6 +38,15 @@ namespace ManagementApp.Controllers
             return Json(result);
         }
 
+        [Route("GetEmployeesThatAreNotFullyAllocated")]
+        [HttpGet]
+        public IHttpActionResult GetEmployeesThatAreNotFullyAllocated()
+        {
+            var result = _departmentService.GetEmployeesThatAreNotFullyAllocated();
+            return Json(result);
+        }
+
+
         [Route("add")]
         [HttpPost]
         public IHttpActionResult Add([FromBody] AddDepartmentInputInfo inputInfo)

@@ -45,6 +45,12 @@ namespace Manager.Services
             return employeeInfos;
         }
 
+        public IEnumerable<EmployeeInfo> GetEmployeesThatAreNotFullyAllocated()
+        {
+            var employees = _departmentRepository.GetEmployeesThatAreNotFullyAllocated();
+            var employeeInfos = _mapper.Map<IEnumerable<EmployeeInfo>>(employees);
+            return employeeInfos;
+        }
 
         public OperationResult Add(AddDepartmentInputInfo inputInfo)
         {

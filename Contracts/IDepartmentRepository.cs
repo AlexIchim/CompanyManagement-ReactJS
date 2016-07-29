@@ -13,5 +13,7 @@ namespace Contracts
         IEnumerable<Project> GetAllDepartmentProjects(int id);
 
         IEnumerable<Employee> GetAllUnAllocatedEmployeesOnProject();
+
+        IEnumerable<Employee> GetEmployeesThatAreNotFullyAllocated();
     }
 }
