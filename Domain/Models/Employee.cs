@@ -19,6 +19,10 @@ namespace Domain.Models {
         fullTime
     };
     public class Employee {
+        Employee()
+        {
+            this.Assignments = new List<Assignment>();
+        }
         public int Id { get; set; }
         public string Name { get; set; }
         public string Address { get; set; }
