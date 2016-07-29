@@ -22,5 +22,13 @@ namespace DataAccess.Repositories
         {
             return _context.Offices.ToArray();
         }
+
+        public IEnumerable<Department> GetAllDepartmentsOfAnOffice(int officeId)
+        {
+            var array = _context.Offices.Include("Departments").SingleOrDefault(d => d.Id == officeId);
+
+            return array.Departments;
+
+        }
     }
 }

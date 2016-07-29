@@ -10,5 +10,7 @@ namespace Contracts
     public interface IOfficeRepository
     {
         IEnumerable<Office> GetAll();
+
+        IEnumerable<Department> GetAllDepartmentsOfAnOffice(int officeId);
     }
 }

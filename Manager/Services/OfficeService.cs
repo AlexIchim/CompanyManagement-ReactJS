@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using AutoMapper;
 using Contracts;
+using Domain.Models;
 using Manager.InfoModels;
 
 namespace Manager.Services
@@ -26,6 +27,16 @@ namespace Manager.Services
             var officeInfos = _mapper.Map<IEnumerable<OfficeInfo>>(offices);
 
             return officeInfos;
+        }
+
+        public IEnumerable<DepartmentInfo> GetAllDepartmentsOfAnOffice(int officeId)
+        {
+            var newDep = _mapper.Map<int>(officeId);
+            var departments = _officeRepository.GetAllDepartmentsOfAnOffice(newDep);
+            var departmentInfos = _mapper.Map<IEnumerable<DepartmentInfo>>(departments);
+
+            return departmentInfos;
+
         }
     }
 }
