@@ -54,6 +54,7 @@
     <Compile Include="Extensions\QueryableExtensions.cs" />
     <Compile Include="Mappings\DepartmentMap.cs" />
     <Compile Include="Mappings\EmployeeMap.cs" />
+    <Compile Include="Mappings\OfficeMap.cs" />
     <Compile Include="Mappings\ProjectMap.cs" />
     <Compile Include="Migrations\201607290629179_DataModel.cs" />
     <Compile Include="Migrations\201607290629179_DataModel.Designer.cs">
