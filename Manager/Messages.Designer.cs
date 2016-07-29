@@ -77,7 +77,16 @@ namespace Manager {
                 return ResourceManager.GetString("SuccessfullyAddedDepartment", resourceCulture);
             }
         }
-        
+
+        /// <summary>
+        ///   Looks up a localized string similar to &apos;Department was deleted with success&apos;.
+        /// </summary>
+        public static string SuccessfullyDeletedDepartment {
+            get {
+                return ResourceManager.GetString("SuccessfullyDeletedDepartment", resourceCulture);
+            }
+        }
+
         /// <summary>
         ///   Looks up a localized string similar to &apos;Department was updated with success&apos;.
         /// </summary>

@@ -18,25 +18,39 @@ namespace Manager.Services
             _mapper = mapper;
         }
 
-        public IEnumerable<DepartmentInfo> GetAll()
+        public IEnumerable<DepartmentInfo> GetAllDepartments()
         {
-            var departments = _departmentRepository.GetAll();
+            var departments = _departmentRepository.GetAllDepartments();
             var departmentInfos = _mapper.Map<IEnumerable<DepartmentInfo>>(departments);
 
             return departmentInfos;
         }
-        
-        public OperationResult Add(AddDepartmentInputInfo inputInfo)
+
+        public DepartmentInfo GetDepartmentById(int departmentId) {
+            var department = _departmentRepository.GetDepartmentById(departmentId);
+            var departmentInfo = _mapper.Map<DepartmentInfo>(department);
+
+            return departmentInfo;
+        }
+
+        public OperationResult AddDepartment(AddDepartmentInputInfo inputInfo)
         {
             var newDepartment = _mapper.Map<Department>(inputInfo);
-            _departmentRepository.Add(newDepartment);
+            _departmentRepository.AddDepartment(newDepartment);
 
             return new OperationResult(true, Messages.SuccessfullyAddedDepartment);
         }
 
-        public OperationResult Update(UpdateDepartmentInputInfo inputInfo)
+        public OperationResult DeleteDepartment(int departmentId)
         {
-            var department = _departmentRepository.GetById(inputInfo.Id);
+            _departmentRepository.DeleteDepartment(departmentId);
+
+            return new OperationResult(true, Messages.SuccessfullyDeletedDepartment);
+        }
+
+        public OperationResult UpdateDepartment(UpdateDepartmentInputInfo inputInfo)
+        {
+            var department = _departmentRepository.GetDepartmentById(inputInfo.Id);
 
             if (department == null)
             {
@@ -44,7 +58,10 @@ namespace Manager.Services
             }
 
             department.Name = inputInfo.Name;
-            _departmentRepository.Save();
+
+            _departmentRepository.UpdateDepartment(department);
+
+            //_departmentRepository.Save();
 
             return new OperationResult(true, Messages.SuccessfullyUpdatedDepartment);
         }
