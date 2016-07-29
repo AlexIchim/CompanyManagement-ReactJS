@@ -8,6 +8,14 @@ namespace DataAccess.Mappings
     {
         public ProjectMap()
         {
+            //Properties
+            this.Property(t => t.Name)
+                .IsRequired()
+                .HasMaxLength(100);
+
+            this.Property(t => t.Status)
+                .IsRequired()
+                .HasMaxLength(100);
         }
     }
 }
