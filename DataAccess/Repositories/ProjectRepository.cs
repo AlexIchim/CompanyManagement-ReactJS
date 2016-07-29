@@ -30,10 +30,5 @@ namespace DataAccess.Repositories
             return array.ToArray();
 
         }
-        public IEnumerable<Project> GetAllDepartmentProjects(int id)
-        {
-            var array = _context.Departments.Include("Projects").SingleOrDefault(d => d.Id == id);
-            return array.Projects;
-        }
     }
 }

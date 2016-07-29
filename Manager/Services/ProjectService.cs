@@ -21,10 +21,10 @@ namespace Manager.Services
             _mapper = mapper;
         }
 
-        public IEnumerable<ProjectInfo> GetByProjectId(int projectId)
+        public IEnumerable<EmployeeInfo> GetByProjectId(int projectId)
         {
             var employees = _projectRepository.GetByProjectId(projectId);
-            var employeeInfos = _mapper.Map<IEnumerable<ProjectInfo>>(employees);
+            var employeeInfos = _mapper.Map<IEnumerable<EmployeeInfo>>(employees);
             return employeeInfos;
         }
     }
