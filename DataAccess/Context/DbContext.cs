@@ -25,6 +25,7 @@ namespace DataAccess.Context
             modelBuilder.Configurations.Add(new ProjectMap());
             modelBuilder.Configurations.Add(new OfficeMap());
             modelBuilder.Configurations.Add(new ProjectMap());
+            modelBuilder.Configurations.Add(new PositionMap());
         }
 
     }
