@@ -6,6 +6,10 @@ using System.Threading.Tasks;
 
 namespace Domain.Models {
     public class Office {
+        Office()
+        {
+            this.Departments = new List<Department>();
+        }
         public int Id { get; set; }
         public string Name { get; set; }
         public string Address { get; set; }

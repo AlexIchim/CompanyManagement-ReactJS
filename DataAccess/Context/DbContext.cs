@@ -18,6 +18,9 @@ namespace DataAccess.Context
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Assignment>().HasKey(t => new { t.EmployeeId, t.ProjectId});
+            modelBuilder.Entity<Department>()
+                .HasRequired(t => t.DepartmentManager)
+                .WithMany();
             /*modelBuilder.Entity<Employee>()
                 .HasRequired(s => s.Department);*/
             /*modelBuilder.Entity<Assignment>()

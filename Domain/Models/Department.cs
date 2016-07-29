@@ -5,6 +5,11 @@ namespace Domain.Models
 {
     public class Department
     {
+        Department()
+        {
+            this.Employees = new List<Employee>();
+            this.Projects = new List<Project>();
+        }
         public int Id { get; set; }
         public string Name { get; set; }
         public List<Employee> Employees { get; set; }

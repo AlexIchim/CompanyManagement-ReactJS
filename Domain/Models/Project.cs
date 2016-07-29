@@ -14,6 +14,10 @@ namespace Domain.Models {
     };
     public class Project
     {
+        Project()
+        {
+            this.Assignments = new List<Assignment>();
+        }
         public int Id { get; set; }
         public string Name { get; set; }
         public Department Department { get; set; }
