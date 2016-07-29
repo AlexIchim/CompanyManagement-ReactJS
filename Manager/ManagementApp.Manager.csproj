@@ -59,6 +59,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="InfoModels\DepartmentInfo.cs" />
+    <Compile Include="InfoModels\ProjectInfo.cs" />
+    <Compile Include="InputInfoModels\AddProjectInputInfo.cs" />
     <Compile Include="InputInfoModels\UpdateDepartmentInputInfo.cs" />
     <Compile Include="InputInfoModels\AddDepartmentInputInfo.cs" />
     <Compile Include="Mapper\MappingConfig.cs" />
@@ -70,6 +72,7 @@
       <DependentUpon>Messages.resx</DependentUpon>
     </Compile>
     <Compile Include="Services\DepartmentService.cs" />
+    <Compile Include="Services\ProjectService.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

@@ -11,6 +11,9 @@ namespace Manager.Mapper
         {
             CreateMap<Department, DepartmentInfo>();
             CreateMap<AddDepartmentInputInfo, Department>();
+
+            CreateMap<Project, ProjectInfo>();
+            CreateMap<AddProjectInputInfo, Project>();
         }
     }
 }
