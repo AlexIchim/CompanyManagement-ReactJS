@@ -3,7 +3,7 @@ namespace DataAccess.Migrations
     using System;
     using System.Data.Entity.Migrations;
     
-    public partial class AddModelTest3 : DbMigration
+    public partial class CreateModelTest : DbMigration
     {
         public override void Up()
         {
@@ -19,11 +19,11 @@ namespace DataAccess.Migrations
                         TotalAllocation = c.Int(nullable: false),
                         JobType = c.Int(nullable: false),
                         PositionType = c.Int(nullable: false),
-                        Department_Id = c.Int(),
+                        DepartmentId = c.Int(nullable: false),
                     })
                 .PrimaryKey(t => t.Id)
-                .ForeignKey("dbo.Departments", t => t.Department_Id)
-                .Index(t => t.Department_Id);
+                .ForeignKey("dbo.Departments", t => t.DepartmentId, cascadeDelete: true)
+                .Index(t => t.DepartmentId);
             
             CreateTable(
                 "dbo.EmployeeProjects",
@@ -47,10 +47,10 @@ namespace DataAccess.Migrations
                         Name = c.String(),
                         Status = c.String(),
                         Duration = c.Int(),
-                        DepartmentId = c.Int(nullable: false),
+                        DepartmentId = c.Int(),
                     })
                 .PrimaryKey(t => t.Id)
-                .ForeignKey("dbo.Departments", t => t.DepartmentId, cascadeDelete: true)
+                .ForeignKey("dbo.Departments", t => t.DepartmentId)
                 .Index(t => t.DepartmentId);
             
             CreateTable(
@@ -66,22 +66,28 @@ namespace DataAccess.Migrations
                 .PrimaryKey(t => t.Id);
             
             AddColumn("dbo.Departments", "OfficeId", c => c.Int(nullable: false));
+            AddColumn("dbo.Departments", "DepartmentManager_Id", c => c.Int());
             CreateIndex("dbo.Departments", "OfficeId");
+            CreateIndex("dbo.Departments", "DepartmentManager_Id");
+            AddForeignKey("dbo.Departments", "DepartmentManager_Id", "dbo.Employees", "Id");
             AddForeignKey("dbo.Departments", "OfficeId", "dbo.Offices", "Id", cascadeDelete: true);
         }
         
         public override void Down()
         {
             DropForeignKey("dbo.Departments", "OfficeId", "dbo.Offices");
+            DropForeignKey("dbo.Departments", "DepartmentManager_Id", "dbo.Employees");
             DropForeignKey("dbo.EmployeeProjects", "ProjectId", "dbo.Projects");
             DropForeignKey("dbo.Projects", "DepartmentId", "dbo.Departments");
             DropForeignKey("dbo.EmployeeProjects", "EmployeeId", "dbo.Employees");
-            DropForeignKey("dbo.Employees", "Department_Id", "dbo.Departments");
+            DropForeignKey("dbo.Employees", "DepartmentId", "dbo.Departments");
             DropIndex("dbo.Projects", new[] { "DepartmentId" });
             DropIndex("dbo.EmployeeProjects", new[] { "ProjectId" });
             DropIndex("dbo.EmployeeProjects", new[] { "EmployeeId" });
-            DropIndex("dbo.Employees", new[] { "Department_Id" });
+            DropIndex("dbo.Employees", new[] { "DepartmentId" });
+            DropIndex("dbo.Departments", new[] { "DepartmentManager_Id" });
             DropIndex("dbo.Departments", new[] { "OfficeId" });
+            DropColumn("dbo.Departments", "DepartmentManager_Id");
             DropColumn("dbo.Departments", "OfficeId");
             DropTable("dbo.Offices");
             DropTable("dbo.Projects");

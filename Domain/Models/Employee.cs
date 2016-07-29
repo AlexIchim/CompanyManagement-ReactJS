@@ -25,9 +25,11 @@ namespace Domain.Models
 
         public PositionType PositionType { get; set; }
 
-        //public int DepartmentId { get; set; }
+        public int DepartmentId { get; set; }
 
         public Department Department { get; set; }
+
+        public Department ManagedDepartment { get; set; }
 
         public ICollection<EmployeeProject> EmployeeProjects { get; set; }
 

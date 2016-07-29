@@ -24,6 +24,13 @@ namespace DataAccess.Context
         {
             modelBuilder.Entity<EmployeeProject>().HasKey(ep => new { ep.EmployeeId, ep.ProjectId });
 
+            // Employees
+            modelBuilder.Entity<Employee>().HasRequired(t => t.Department)
+                .WithMany(t => t.Employees)
+                .HasForeignKey(d => d.DepartmentId);
+
+            modelBuilder.Entity<Employee>().HasOptional(t => t.ManagedDepartment)
+                .WithOptionalPrincipal(t => t.DepartmentManager);
         }
     }
 }

@@ -16,7 +16,7 @@ namespace Domain.Models
 
         public int? Duration { get; set; }
 
-        public int DepartmentId { get; set; }
+        public int? DepartmentId { get; set; }
 
         public Department Department { get; set; }
 
