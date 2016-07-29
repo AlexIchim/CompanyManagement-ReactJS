@@ -21,7 +21,7 @@ namespace DataAccess.Mappings
                 .IsRequired()
                 .HasMaxLength(100);
 
-            this.Property(t => t.Adress)
+            this.Property(t => t.Address)
                 .HasMaxLength(300);
 
             this.Property(t => t.EmploymentHours)

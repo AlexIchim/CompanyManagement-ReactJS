@@ -7,9 +7,9 @@ namespace Domain.Models
     {
         public int Id { get; set; }
         public string Name { get; set; }
-        public string Adress { get; set; }
+        public string Address { get; set; }
         public DateTime EmploymentDate { get; set; }
-        public DateTime ReleaseDate { get; set; }
+        public DateTime? ReleaseDate { get; set; }
         public int EmploymentHours { get; set; }
 
         public int PositionId { get; set; }

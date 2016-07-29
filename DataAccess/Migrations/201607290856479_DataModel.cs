@@ -28,9 +28,9 @@ namespace DataAccess.Migrations
                     {
                         Id = c.Int(nullable: false, identity: true),
                         Name = c.String(nullable: false, maxLength: 100),
-                        Adress = c.String(maxLength: 300),
+                        Address = c.String(maxLength: 300),
                         EmploymentDate = c.DateTime(nullable: false),
-                        ReleaseDate = c.DateTime(nullable: false),
+                        ReleaseDate = c.DateTime(),
                         EmploymentHours = c.Int(nullable: false),
                         PositionId = c.Int(nullable: false),
                         DepartmentId = c.Int(nullable: false),
@@ -73,11 +73,11 @@ namespace DataAccess.Migrations
                         Name = c.String(nullable: false, maxLength: 100),
                         Status = c.String(nullable: false, maxLength: 100),
                         Duration = c.Int(),
-                        Department_Id = c.Int(),
+                        DepartmentId = c.Int(),
                     })
                 .PrimaryKey(t => t.Id)
-                .ForeignKey("dbo.Departments", t => t.Department_Id)
-                .Index(t => t.Department_Id);
+                .ForeignKey("dbo.Departments", t => t.DepartmentId)
+                .Index(t => t.DepartmentId);
             
             CreateTable(
                 "dbo.Offices",
@@ -96,13 +96,13 @@ namespace DataAccess.Migrations
         public override void Down()
         {
             DropForeignKey("dbo.Departments", "OfficeId", "dbo.Offices");
-            DropForeignKey("dbo.Projects", "Department_Id", "dbo.Departments");
+            DropForeignKey("dbo.Projects", "DepartmentId", "dbo.Departments");
             DropForeignKey("dbo.ProjectAllocations", "ProjectId", "dbo.Projects");
             DropForeignKey("dbo.ProjectAllocations", "EmployeeId", "dbo.Employees");
             DropForeignKey("dbo.Employees", "PositionId", "dbo.Positions");
             DropForeignKey("dbo.Departments", "DepartmentManager_Id", "dbo.Employees");
             DropForeignKey("dbo.Employees", "DepartmentId", "dbo.Departments");
-            DropIndex("dbo.Projects", new[] { "Department_Id" });
+            DropIndex("dbo.Projects", new[] { "DepartmentId" });
             DropIndex("dbo.ProjectAllocations", new[] { "EmployeeId" });
             DropIndex("dbo.ProjectAllocations", new[] { "ProjectId" });
             DropIndex("dbo.Employees", new[] { "DepartmentId" });
