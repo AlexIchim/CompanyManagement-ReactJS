@@ -16,6 +16,21 @@ namespace DataAccess.Mappings
             this.HasOptional(t => t.ManagedDepartment)
                 .WithOptionalPrincipal(t => t.DepartmentManager);
 
+            // Properties
+            this.Property(t => t.Name)
+                .IsRequired()
+                .HasMaxLength(100);
+
+            this.Property(t => t.Adress)
+                .HasMaxLength(300);
+
+            this.Property(t => t.EmploymentHours)
+                .IsRequired();
+
+            this.Property(t => t.EmploymentDate)
+                .IsRequired();
+
+
         }
     }
 }
