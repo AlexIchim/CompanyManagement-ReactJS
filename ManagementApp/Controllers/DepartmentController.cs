@@ -1,6 +1,6 @@
-﻿using System.Web.Http;
-using Manager.InputInfoModels;
+﻿using Manager.InputInfoModels;
 using Manager.Services;
+using System.Web.Http;
 
 namespace ManagementApp.Controllers
 {
@@ -29,6 +29,16 @@ namespace ManagementApp.Controllers
             var result = _departmentService.GetAllDepartmentProjects(inputInfo);
             return Json(result);
         }
+
+        [Route("getAllDepartmentMembers")]
+        [HttpGet]
+        public IHttpActionResult GetAllDepartmentMembers(int inputInfo)
+        {
+            var result = _departmentService.GetAllDepartmentMembers(inputInfo);
+            return Json(result);
+        }
+
+
 
         [Route("GetAllUnAllocatedEmployeesOnProject")]
         [HttpGet]

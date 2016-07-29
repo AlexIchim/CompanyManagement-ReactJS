@@ -5,7 +5,7 @@ using Manager.InputInfoModels;
 
 namespace Manager.Mapper
 {
-    public class MappingConfig: Profile
+    public class MappingConfig : Profile
     {
         public MappingConfig()
         {
@@ -13,6 +13,8 @@ namespace Manager.Mapper
             CreateMap<AddDepartmentInputInfo, Department>();
             CreateMap<Project, ProjectInfo>();
             CreateMap<Employee, EmployeeInfo>();
+            CreateMap<Employee, MemberInfo>();
+
         }
     }
 }

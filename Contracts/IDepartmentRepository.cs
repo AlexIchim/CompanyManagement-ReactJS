@@ -1,5 +1,5 @@
-﻿using System.Collections.Generic;
-using Domain.Models;
+﻿using Domain.Models;
+using System.Collections.Generic;
 
 namespace Contracts
 {
@@ -13,5 +13,7 @@ namespace Contracts
         IEnumerable<Project> GetAllDepartmentProjects(int id);
 
         IEnumerable<Employee> GetAllUnAllocatedEmployeesOnProject();
+
+        IEnumerable<Employee> GetAllDepartmentMembers(int id);
     }
 }

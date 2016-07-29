@@ -1,9 +1,9 @@
-﻿using System.Collections.Generic;
-using AutoMapper;
+﻿using AutoMapper;
 using Contracts;
 using Domain.Models;
 using Manager.InfoModels;
 using Manager.InputInfoModels;
+using System.Collections.Generic;
 
 namespace Manager.Services
 {
@@ -25,7 +25,7 @@ namespace Manager.Services
 
             return departmentInfos;
         }
-        
+
         public IEnumerable<ProjectInfo> GetAllDepartmentProjects(int inputInfo)
         {
             var newProject = _mapper.Map<int>(inputInfo);
@@ -37,6 +37,19 @@ namespace Manager.Services
             var projectInfos = _mapper.Map<IEnumerable<ProjectInfo>>(projects);
             return projectInfos;
         }
+
+        public IEnumerable<MemberInfo> GetAllDepartmentMembers(int inputInfo)
+        {
+            var newMember = _mapper.Map<int>(inputInfo);
+            var members = _departmentRepository.GetAllDepartmentMembers(newMember);
+            if (members == null)
+            {
+                return null;
+            }
+            var memberInfos = _mapper.Map<IEnumerable<MemberInfo>>(members);
+            return memberInfos;
+        }
+
 
         public IEnumerable<EmployeeInfo> GetAllUnAllocatedEmployeesOnProject()
         {
