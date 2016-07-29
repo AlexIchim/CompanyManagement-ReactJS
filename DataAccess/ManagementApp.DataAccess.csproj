@@ -57,13 +57,9 @@
     <Compile Include="Mappings\EmployeeMap.cs" />
     <Compile Include="Mappings\OfficeMap.cs" />
     <Compile Include="Mappings\ProjectMap.cs" />
-    <Compile Include="Migrations\201607290727226_initial.cs" />
-    <Compile Include="Migrations\201607290727226_initial.Designer.cs">
-      <DependentUpon>201607290727226_initial.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201607290808271_addMappings.cs" />
-    <Compile Include="Migrations\201607290808271_addMappings.Designer.cs">
-      <DependentUpon>201607290808271_addMappings.cs</DependentUpon>
+    <Compile Include="Migrations\201607290831223_initial.cs" />
+    <Compile Include="Migrations\201607290831223_initial.Designer.cs">
+      <DependentUpon>201607290831223_initial.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -84,11 +80,8 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201607290727226_initial.resx">
-      <DependentUpon>201607290727226_initial.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201607290808271_addMappings.resx">
-      <DependentUpon>201607290808271_addMappings.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201607290831223_initial.resx">
+      <DependentUpon>201607290831223_initial.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

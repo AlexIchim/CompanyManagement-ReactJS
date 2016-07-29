@@ -26,8 +26,8 @@ namespace DataAccess.Migrations
                 c => new
                     {
                         Id = c.Int(nullable: false, identity: true),
-                        Name = c.String(),
-                        Address = c.String(),
+                        Name = c.String(nullable: false, maxLength: 30),
+                        Address = c.String(nullable: false, maxLength: 100),
                         EmploymentDate = c.DateTime(nullable: false),
                         ReleasedDate = c.DateTime(nullable: false),
                         Position = c.Int(nullable: false),
@@ -42,7 +42,7 @@ namespace DataAccess.Migrations
                 c => new
                     {
                         Id = c.Int(nullable: false, identity: true),
-                        Name = c.String(),
+                        Name = c.String(nullable: false, maxLength: 30),
                         DepartmentManager_Id = c.Int(nullable: false),
                         Office_Id = c.Int(),
                     })
@@ -57,10 +57,10 @@ namespace DataAccess.Migrations
                 c => new
                     {
                         Id = c.Int(nullable: false, identity: true),
-                        Name = c.String(),
-                        Address = c.String(),
-                        Phone = c.String(),
-                        Image = c.Binary(),
+                        Name = c.String(nullable: false, maxLength: 30),
+                        Address = c.String(nullable: false, maxLength: 100),
+                        Phone = c.String(nullable: false, maxLength: 20),
+                        Image = c.Binary(nullable: false),
                     })
                 .PrimaryKey(t => t.Id);
             
@@ -69,7 +69,7 @@ namespace DataAccess.Migrations
                 c => new
                     {
                         Id = c.Int(nullable: false, identity: true),
-                        Name = c.String(),
+                        Name = c.String(nullable: false, maxLength: 30),
                         Duration = c.String(),
                         Status = c.Int(nullable: false),
                         Department_Id = c.Int(),
