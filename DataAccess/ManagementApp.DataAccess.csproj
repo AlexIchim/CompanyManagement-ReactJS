@@ -56,13 +56,13 @@
     <Compile Include="Migrations\201607251011292_InitialCreate.Designer.cs">
       <DependentUpon>201607251011292_InitialCreate.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201607281447365_AddModelTest3.cs" />
-    <Compile Include="Migrations\201607281447365_AddModelTest3.Designer.cs">
-      <DependentUpon>201607281447365_AddModelTest3.cs</DependentUpon>
+    <Compile Include="Migrations\201607290718308_CreateModelTest.cs" />
+    <Compile Include="Migrations\201607290718308_CreateModelTest.Designer.cs">
+      <DependentUpon>201607290718308_CreateModelTest.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201607281449276_AddModelTest4.cs" />
-    <Compile Include="Migrations\201607281449276_AddModelTest4.Designer.cs">
-      <DependentUpon>201607281449276_AddModelTest4.cs</DependentUpon>
+    <Compile Include="Migrations\201607290824138_AddConstraints.cs" />
+    <Compile Include="Migrations\201607290824138_AddConstraints.Designer.cs">
+      <DependentUpon>201607290824138_AddConstraints.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -89,11 +89,11 @@
     <EmbeddedResource Include="Migrations\201607251011292_InitialCreate.resx">
       <DependentUpon>201607251011292_InitialCreate.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201607281447365_AddModelTest3.resx">
-      <DependentUpon>201607281447365_AddModelTest3.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201607290718308_CreateModelTest.resx">
+      <DependentUpon>201607290718308_CreateModelTest.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201607281449276_AddModelTest4.resx">
-      <DependentUpon>201607281449276_AddModelTest4.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201607290824138_AddConstraints.resx">
+      <DependentUpon>201607290824138_AddConstraints.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
