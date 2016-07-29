@@ -10,6 +10,7 @@ namespace Manager.Mapper
         public MappingConfig()
         {
             CreateMap<Department, DepartmentInfo>();
+            CreateMap<Employee, EmployeeInfo>();
             CreateMap<AddDepartmentInputInfo, Department>();
 
             CreateMap<Office, OfficeInfo>();

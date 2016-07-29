@@ -64,5 +64,6 @@ namespace ManagementApp.App_Start
             builder.RegisterType<OfficeRepository>().As<IOfficeRepository>();
         }
 
+
     }
 }
