@@ -19,7 +19,6 @@ namespace Manager.Mapper
             CreateMap<Project, ProjectInfo>().ForMember(projectInfo => projectInfo.NrMembers,
                                                         project => project.MapFrom(src => src.Assignments.Count));
             CreateMap<AddProjectInputInfo, Project>();
-            CreateMap<Employee, EmployeeInfo>();
             CreateMap<AssignmentInfo, Assignment>();
 
         }

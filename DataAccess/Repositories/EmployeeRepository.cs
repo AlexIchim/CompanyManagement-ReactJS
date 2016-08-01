@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Contracts;
 using DataAccess.Context;
@@ -27,8 +28,9 @@ namespace DataAccess.Repositories
 
         public void Add(Employee employee)
         {
+            employee.EmploymentDate = DateTime.Now;
             _context.Employees.Add(employee);
-            Save();
+            _context.SaveChanges();
         }
         
         public void Save()
@@ -36,10 +38,9 @@ namespace DataAccess.Repositories
             _context.SaveChanges();
         }
 
-        public void Delete(Employee employee)
+        public void Delete(int employeeId, DateTime releaseDate)
         {
-            _context.Employees.Remove(employee);
-            _context.SaveChanges();
+
         }
     }
 }
