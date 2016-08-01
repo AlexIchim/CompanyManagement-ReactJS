@@ -15,5 +15,6 @@ namespace Manager.InfoModels
         public string Address { get; set; }
 
         public int PhoneNumber { get; set; }
+
     }
 }

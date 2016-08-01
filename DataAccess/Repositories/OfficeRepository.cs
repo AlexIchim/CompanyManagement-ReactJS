@@ -25,7 +25,7 @@ namespace DataAccess.Repositories
 
         public IEnumerable<Department> GetAllDepartmentsOfAnOffice(int officeId)
         {
-            var array = _context.Offices.Include("Departments").SingleOrDefault(d => d.Id == officeId);
+            var array = _context.Offices.SingleOrDefault(d => d.Id == officeId);
 
             return array.Departments;
 
