@@ -105,6 +105,42 @@ namespace Manager {
             }
         }
         
+		/// <summary>
+        ///   Looks up a localized string similar to &apos;Department already exist in this office&apos;.
+        /// </summary>
+        public static string ErrorWhileAddingDepartment {
+            get {
+                return ResourceManager.GetString("ErrorWhileAddingDepartment", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to &apos;Department could not be added: Name field is empty.&apos;.
+        /// </summary>
+        public static string ErrorWhileAddingDepartment_EmptyName {
+            get {
+                return ResourceManager.GetString("ErrorWhileAddingDepartment_EmptyName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to &apos;Department could not be updated: Name too long.&apos;.
+        /// </summary>
+        public static string ErrorWhileAddingDepartment_NameTooLong {
+            get {
+                return ResourceManager.GetString("ErrorWhileAddingDepartment_NameTooLong", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to &apos;Department could not be added: OfficeId invalid.&apos;.
+        /// </summary>
+        public static string ErrorWhileAddingDepartment_OfficeIdInvalid {
+            get {
+                return ResourceManager.GetString("ErrorWhileAddingDepartment_OfficeIdInvalid", resourceCulture);
+            }
+        }
+		
         /// <summary>
         ///   Looks up a localized string similar to &apos;Position could not be added: Name field is empty.&apos;.
         /// </summary>
@@ -135,9 +171,9 @@ namespace Manager {
         /// <summary>
         ///   Looks up a localized string similar to &apos;Employee does not exist&apos;.
         /// </summary>
-        public static string ErrorWhileDeletingEmployee {
+        public static string ErrorWhileReleasingEmployee {
             get {
-                return ResourceManager.GetString("ErrorWhileDeletingEmployee", resourceCulture);
+                return ResourceManager.GetString("ErrorWhileReleasingEmployee", resourceCulture);
             }
         }
         
@@ -159,14 +195,24 @@ namespace Manager {
             }
         }
         
-        /// <summary>
-        ///   Looks up a localized string similar to &apos;Department could not be modified&apos;.
+         /// <summary>
+        ///   Looks up a localized string similar to &apos;Department could not be modified: Invalid department id&apos;.
         /// </summary>
-        public static string ErrorWhileUpdatingDepartment {
+        public static string ErrorWhileUpdatingDepartment_InvalidId {
             get {
-                return ResourceManager.GetString("ErrorWhileUpdatingDepartment", resourceCulture);
+                return ResourceManager.GetString("ErrorWhileUpdatingDepartment_InvalidId", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to &apos;Department could not be updated: OfficeId invalid.&apos;.
+        /// </summary>
+        public static string ErrorWhileUpdatingDepartment_OfficeIdInvalid {
+            get {
+                return ResourceManager.GetString("ErrorWhileUpdatingDepartment_OfficeIdInvalid", resourceCulture);
+            }
+        }
+        
         
         /// <summary>
         ///   Looks up a localized string similar to &apos;Position could not be modified.&apos;.
@@ -240,14 +286,7 @@ namespace Manager {
             }
         }
         
-        /// <summary>
-        ///   Looks up a localized string similar to &apos;Employee was deleted with success&apos;.
-        /// </summary>
-        public static string SuccessfullyDeletedEmployee {
-            get {
-                return ResourceManager.GetString("SuccessfullyDeletedEmployee", resourceCulture);
-            }
-        }
+        
         
         /// <summary>
         ///   Looks up a localized string similar to &apos;Successfully deleted project.&apos;.
@@ -264,6 +303,15 @@ namespace Manager {
         public static string SuccessfullyUpdatedAllocation {
             get {
                 return ResourceManager.GetString("SuccessfullyUpdatedAllocation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to &apos;Employee was released with success&apos;.
+        /// </summary>
+        public static string SuccessfullyReleasedEmployee {
+            get {
+                return ResourceManager.GetString("SuccessfullyReleasedEmployee", resourceCulture);
             }
         }
         
