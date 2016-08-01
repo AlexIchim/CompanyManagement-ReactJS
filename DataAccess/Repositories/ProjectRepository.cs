@@ -31,6 +31,16 @@ namespace DataAccess.Repositories
             return _context.Projects.SingleOrDefault(d => d.Id == id)
                 .Allocations
                 .Select(a => new Tuple<Employee, int>(a.Employee, a.AllocationPercentage));
-        } 
+        }
+
+        public void Delete(Project project)
+        {
+            _context.Projects.Remove(project);
+        }
+
+        public void Save()
+        {
+            _context.SaveChanges();
+        }
     }
 }

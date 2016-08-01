@@ -39,15 +39,35 @@ namespace Manager.Services
         public IEnumerable<ProjectEmployeeInfo> GetEmployeesByProjectId(int id)
         {
             var tuples = _projectRepository.GetEmployeesByProjectId(id);
-            //var employeesInfo = _mapper.Map<IEnumerable<Tuple<EmployeeInfo, int>>>(employees);
 
             var res = tuples.Select(t => new ProjectEmployeeInfo()
             {
-                Employee =  _mapper.Map<EmployeeInfo>(t.Item1),
+                Employee = _mapper.Map<EmployeeInfo>(t.Item1),
                 Allocation = t.Item2
             });
 
             return res;
+        }
+
+        public OperationResult Delete(int? id)
+        {
+            if (id == null)
+            {
+                return new OperationResult(false, Messages.ErrorWhileDeletingProject);
+            }
+            else
+            {
+                var project = _projectRepository.GetById(id.Value);
+
+                if (project == null)
+                {
+                    return new OperationResult(false, Messages.ErrorWhileDeletingProject);
+                }
+
+                _projectRepository.Delete(project);
+                _projectRepository.Save();
+            }
+            return new OperationResult(true, Messages.SuccessfullyDeletedProject);
         }
 
     }

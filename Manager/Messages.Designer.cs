@@ -79,6 +79,15 @@ namespace Manager {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to &apos;Project coud not be deleted.&apos;.
+        /// </summary>
+        public static string ErrorWhileDeletingProject {
+            get {
+                return ResourceManager.GetString("ErrorWhileDeletingProject", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to &apos;Department could not be modified&apos;.
         /// </summary>
         public static string ErrorWhileUpdatingDepartment {
@@ -129,6 +138,15 @@ namespace Manager {
         public static string SuccessfullyAddedPosition {
             get {
                 return ResourceManager.GetString("SuccessfullyAddedPosition", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to &apos;Successfully deleted project.&apos;.
+        /// </summary>
+        public static string SuccessfullyDeletedProject {
+            get {
+                return ResourceManager.GetString("SuccessfullyDeletedProject", resourceCulture);
             }
         }
         

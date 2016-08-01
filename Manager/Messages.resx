@@ -123,6 +123,9 @@
   <data name="ErrorWhileAddingPosition_NameTooLong" xml:space="preserve">
     <value>'Position could not be updated: Name too long.'</value>
   </data>
+  <data name="ErrorWhileDeletingProject" xml:space="preserve">
+    <value>'Project coud not be deleted.'</value>
+  </data>
   <data name="ErrorWhileUpdatingDepartment" xml:space="preserve">
     <value>'Department could not be modified'</value>
   </data>
@@ -140,6 +143,9 @@
   </data>
   <data name="SuccessfullyAddedPosition" xml:space="preserve">
     <value>'Position was added with success'</value>
+  </data>
+  <data name="SuccessfullyDeletedProject" xml:space="preserve">
+    <value>'Successfully deleted project.'</value>
   </data>
   <data name="SuccessfullyUpdatedDepartment" xml:space="preserve">
     <value>'Department was updated with success'</value>

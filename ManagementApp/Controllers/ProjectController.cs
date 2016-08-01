@@ -37,5 +37,13 @@ namespace ManagementApp.Controllers
             var result = _projectService.GetEmployeesByProjectId(id);
             return Json(result);
         }
+
+        [Route("delete/{projectId}")]
+        [HttpDelete]
+        public IHttpActionResult Delete(int projectId)
+        {
+            var result = _projectService.Delete(projectId);
+            return Json(result);
+        }
     }
 }

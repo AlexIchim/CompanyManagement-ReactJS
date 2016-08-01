@@ -9,5 +9,7 @@ namespace Contracts
         IEnumerable<Project> GetAll();
         Project GetById(int id);
         IEnumerable<Tuple<Employee, int>> GetEmployeesByProjectId(int id);
+        void Delete(Project project);
+        void Save();
     }
 }
