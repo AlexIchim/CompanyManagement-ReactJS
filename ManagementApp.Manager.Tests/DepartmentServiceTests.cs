@@ -62,13 +62,13 @@ namespace ManagementApp.Manager.Tests
             {
                 CreateEmployee("Adi",0,1),
                 CreateEmployee("Cristina",0,2),
-                CreateEmployee("Patricia",60,3)
+              //  CreateEmployee("Patricia",60,3)
             };
             var employeesinfo = new List<EmployeeInfo>
             {
                 CreateEmployeeInfo(1,"Adi",0),
                 CreateEmployeeInfo(2,"Cristina",0),
-                CreateEmployeeInfo(3,"Patricia",60)
+               // CreateEmployeeInfo(3,"Patricia",60)
             };
             _departmentRepositoryMock.Setup(m => m.GetAllUnAllocatedEmployeesOnProject()).Returns(employees);
             _mapperMock.Setup(m => m.Map<IEnumerable<EmployeeInfo>>(employees)).Returns(employeesinfo);
