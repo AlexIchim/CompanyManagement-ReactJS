@@ -239,6 +239,59 @@ namespace ManagementApp.Manager.Tests
             _officeRepositoryMock.Verify(x => x.Save(), Times.Never);
         }
 
+        [Test]
+        public void Delete_CallsGetByIdFromRepository()
+        {
+            var officeId = 1;
+            var office = CreateOffice(
+               1,
+               "TestName1",
+               "TestAddress1",
+               "0700000000",
+               new byte[] { 0, 0, 0 });
+            _officeRepositoryMock.Setup(m => m.GetById(officeId)).Returns(office);
+            _officeRepositoryMock.Setup(m => m.Delete(office));
+
+            //Act
+            _officeService.Delete(officeId);
+
+            //Assert
+            _officeRepositoryMock.Verify(m => m.GetById(officeId), Times.Once);
+        }
+        [Test]
+        public void Delete_CallsDeleteFromRepository_WhenOfficeDoesExist()
+        {
+            //Arrange
+            var officeId = 1;
+            var office = CreateOffice(
+               1,
+               "TestName1",
+               "TestAddress1",
+               "0700000000",
+               new byte[] { 0, 0, 0 });
+            _officeRepositoryMock.Setup(m => m.GetById(officeId)).Returns(office);
+            _officeRepositoryMock.Setup(m => m.Delete(office));
+
+            //Act
+            _officeService.Delete(officeId);
+
+            //Assert
+            _officeRepositoryMock.Verify(m=>m.Delete(office),Times.Once);
+        }
+        [Test]
+        public void Delete_DoesNotCallDeleteFromRepository_WhenOfficeDoesNotExist()
+        {
+            //Arrange
+            var officeId = 1;
+            _officeRepositoryMock.Setup(m => m.GetById(officeId)).Returns((Office)null);
+
+            //Act
+            _officeService.Delete(officeId);
+
+            //Assert
+            _officeRepositoryMock.Verify(m => m.Delete(null), Times.Never);
+        }
+
         #region helpers
 
         private Office CreateOffice(int? id, string name, string address, string phone, byte[] image)

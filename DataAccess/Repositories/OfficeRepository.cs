@@ -40,5 +40,11 @@ namespace DataAccess.Repositories
             _context.SaveChanges();
         }
 
+        public void Delete(Office office)
+        {
+            _context.Offices.Remove(office);
+            _context.SaveChanges();
+        }
+
     }
 }

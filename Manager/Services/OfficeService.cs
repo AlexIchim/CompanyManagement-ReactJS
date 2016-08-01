@@ -56,5 +56,18 @@ namespace Manager.Services
 
             return new OperationResult(true, Messages.SuccessfullyUpdatedOffice);
         }
+
+        public OperationResult Delete(int officeId)
+        {
+            var office = _officeRepository.GetById(officeId);
+
+            if (office==null)
+            {
+                return new OperationResult(false, Messages.ErrorWhileDeletingOffice);
+            }
+
+            _officeRepository.Delete(office);
+            return new OperationResult(true, Messages.SuccessfullyDeletedOffice);
+        }
     }
 }

@@ -13,5 +13,6 @@ namespace Contracts
         Office GetById(int id);
         void Add(Office office);
         void Save();
+        void Delete(Office office);
     }
 }

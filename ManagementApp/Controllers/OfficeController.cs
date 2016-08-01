@@ -36,10 +36,18 @@ namespace ManagementApp.Controllers
         }
 
         [Route("update")]
-        [HttpPost]
+        [HttpPut]
         public IHttpActionResult Update([FromBody] UpdateOfficeInputInfo inputInfo)
         {
             var result = _officeService.Update(inputInfo);
+            return Json(result);
+        }
+
+        [Route("delete")]
+        [HttpDelete]
+        public IHttpActionResult Delete(int officeId)
+        {
+            var result = _officeService.Delete(officeId);
             return Json(result);
         }
     }
