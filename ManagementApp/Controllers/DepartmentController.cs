@@ -37,6 +37,7 @@ namespace ManagementApp.Controllers
             var result = _departmentService.GetEmployeesByDepartmentId(ID);
             return Json(result);
         }
+
         [Route("add")]
         [HttpPost]
         public IHttpActionResult Add([FromBody] AddDepartmentInputInfo inputInfo)
