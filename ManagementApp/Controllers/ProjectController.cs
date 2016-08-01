@@ -30,5 +30,12 @@ namespace ManagementApp.Controllers
             return Json(result);
         }
 
+        [Route("getEmployeesByProjectId")]
+        [HttpGet]
+        public IHttpActionResult GetEmployeesByProjectId(int id)
+        {
+            var result = _projectService.GetEmployeesByProjectId(id);
+            return Json(result);
+        }
     }
 }

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Contracts;
 using DataAccess.Context;
@@ -25,5 +26,11 @@ namespace DataAccess.Repositories
             return _context.Projects.SingleOrDefault(d => d.Id == id);
         }
 
+        public IEnumerable<Tuple<Employee, int>> GetEmployeesByProjectId(int id)
+        {
+            return _context.Projects.SingleOrDefault(d => d.Id == id)
+                .Allocations
+                .Select(a => new Tuple<Employee, int>(a.Employee, a.AllocationPercentage));
+        } 
     }
 }

@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using Domain.Models;
+using System;
 
 namespace Contracts
 {
@@ -7,5 +8,6 @@ namespace Contracts
     {
         IEnumerable<Project> GetAll();
         Project GetById(int id);
+        IEnumerable<Tuple<Employee, int>> GetEmployeesByProjectId(int id);
     }
 }
