@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Domain.Models;
 using DataAccess.Context;
 using System.Linq;
+using System;
 
 namespace DataAccess.Repositories
 {
@@ -22,6 +23,23 @@ namespace DataAccess.Repositories
         public IEnumerable<Employee> GetAllDepartmentManagers()
         {
             return _context.Employees.Where(e => e.Position.Id == 1).ToArray();
+        }
+
+        public IEnumerable<Tuple<string, int>> GetAllocationsByEmployeeId(int id)
+        {
+            var employee = _context.Employees.SingleOrDefault(e => e.Id == id);
+            if (employee == null)
+            {
+                return new Tuple<string, int>[0];
+            }
+            else
+            {
+                var query = employee.ProjectAllocations.Select(a => new Tuple<string, int>(
+                    a.Project.Name,
+                    a.AllocationPercentage
+                ));
+                return query.ToArray();
+            }
         }
 
         public Employee GetById(int id)

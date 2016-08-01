@@ -43,5 +43,16 @@ namespace Manager.Services
 
             return employeeInfo;
         }
+
+        public IEnumerable<EmployeeAllocationInfo> GetAllocationsByEmployeeId(int id)
+        {
+            var employeeAllocations = _employeeRepository.GetAllocationsByEmployeeId(id);
+            var employeeAllocationInfos = employeeAllocations.Select(a => new EmployeeAllocationInfo() {
+                ProjectName = a.Item1,
+                AllocationPercentage = a.Item2
+            });
+
+            return employeeAllocationInfos;
+        }
     }
 }
