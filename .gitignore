@@ -28,4 +28,6 @@ obj/
 _ReSharper*/
 [Tt]est[Rr]esult*
 packages
-.vs/
+.vs
+node_modules/
+frontend/node_modules
