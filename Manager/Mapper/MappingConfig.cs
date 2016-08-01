@@ -12,7 +12,6 @@ namespace Manager.Mapper
         {
             CreateMap<Department, DepartmentInfo>();
             CreateMap<AddDepartmentInputInfo, Department>();
-            CreateMap<Project, ProjectInfo>();
             CreateMap<Employee, EmployeeInfo>();
             CreateMap<Project, ProjectInfo>().ForMember(
                 pi => pi.EmployeesNumber,

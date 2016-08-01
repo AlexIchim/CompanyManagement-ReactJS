@@ -12,6 +12,7 @@ namespace Domain.Enums
         ProjectManager=2,
         TeamLead=3,
         QA=4,
-        BA=5
+        BA=5,
+        DepartmentManager = 6
     }
 }

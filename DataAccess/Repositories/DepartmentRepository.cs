@@ -31,22 +31,18 @@ namespace DataAccess.Repositories
             Save();
         }
 
+
+
         public void Save()
         {
             _context.SaveChanges();
         }
 
-        /*
-        public IEnumerable<Project> GetAllDepartmentProjects(int id)
-        {
-            var array = _context.Projects.Where(project => project.Department.Id == id);
-            return array.ToArray();
-        }*/
-
 
         public IEnumerable<Project> GetAllDepartmentProjects(int id)
         {
-            var array = _context.Departments.Include("Projects").SingleOrDefault(d => d.Id == id);
+            //var array = _context.Departments.Include("Projects").SingleOrDefault(d => d.Id == id);
+            var array = _context.Departments.SingleOrDefault(d => d.Id == id);
             return array.Projects;
         }
 
