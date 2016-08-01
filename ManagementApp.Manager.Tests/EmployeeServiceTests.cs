@@ -210,6 +210,51 @@ namespace ManagementApp.Manager.Tests
             _employeeRepositoryMock.Verify(x => x.Save(), Times.Never);
         }
 
+        [Test]
+        public void Delete_CallsGetByIdFromRepository()
+        {
+            var employeeId = 1;
+            var employee = CreateEmployee(
+              "Mike");
+            _employeeRepositoryMock.Setup(m => m.GetById(employeeId)).Returns(employee);
+            _employeeRepositoryMock.Setup(m => m.Delete(employee));
+
+            //Act
+            _employeeService.Delete(employeeId);
+
+            //Assert
+            _employeeRepositoryMock.Verify(m => m.GetById(employeeId), Times.Once);
+        }
+        [Test]
+        public void Delete_CallsDeleteFromRepository_WhenEmployeeDoesExist()
+        {
+            //Arrange
+            var employeeId = 1;
+            var employee = CreateEmployee(
+                "Mike");
+            _employeeRepositoryMock.Setup(m => m.GetById(employeeId)).Returns(employee);
+            _employeeRepositoryMock.Setup(m => m.Delete(employee));
+
+            //Act
+            _employeeService.Delete(employeeId);
+
+            //Assert
+            _employeeRepositoryMock.Verify(m => m.Delete(employee), Times.Once);
+        }
+        [Test]
+        public void Delete_DoesNotCallDeleteFromRepository_WhenEmployeeDoesNotExist()
+        {
+            //Arrange
+            var employeeId = 1;
+            _employeeRepositoryMock.Setup(m => m.GetById(employeeId)).Returns((Employee)null);
+
+            //Act
+            _employeeService.Delete(employeeId);
+
+            //Assert
+            _employeeRepositoryMock.Verify(m => m.Delete(null), Times.Never);
+        }
+
         private Employee CreateEmployee(string name, int? id = null)
         {
             var employee =  new Employee

@@ -35,5 +35,11 @@ namespace DataAccess.Repositories
         {
             _context.SaveChanges();
         }
+
+        public void Delete(Employee employee)
+        {
+            _context.Employees.Remove(employee);
+            _context.SaveChanges();
+        }
     }
 }

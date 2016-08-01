@@ -61,6 +61,15 @@ namespace Manager {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to &apos;Employee could not be deleted&apos;.
+        /// </summary>
+        public static string ErrorWhileDeletingEmployee {
+            get {
+                return ResourceManager.GetString("ErrorWhileDeletingEmployee", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to &apos;Department could not be modified&apos;.
         /// </summary>
         public static string ErrorWhileUpdatingDepartment {
@@ -93,6 +102,15 @@ namespace Manager {
         public static string SuccessfullyAddedEmployee {
             get {
                 return ResourceManager.GetString("SuccessfullyAddedEmployee", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to &apos;Employee was deleted successfully&apos;.
+        /// </summary>
+        public static string SuccessfullyDeletedEmployee {
+            get {
+                return ResourceManager.GetString("SuccessfullyDeletedEmployee", resourceCulture);
             }
         }
         

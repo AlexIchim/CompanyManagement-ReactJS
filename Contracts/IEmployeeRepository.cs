@@ -9,5 +9,6 @@ namespace Contracts
         Employee GetById(int id);
         void Add(Employee department);
         void Save();
+        void Delete(Employee employee);
     }
 }

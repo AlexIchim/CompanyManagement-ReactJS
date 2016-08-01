@@ -135,4 +135,10 @@
   <data name="SuccessfullyUpdatedEmployee" xml:space="preserve">
     <value>'Employee was updated with success'</value>
   </data>
+  <data name="SuccessfullyDeletedEmployee" xml:space="preserve">
+    <value>'Employee was deleted successfully'</value>
+  </data>
+  <data name="ErrorWhileDeletingEmployee" xml:space="preserve">
+    <value>'Employee could not be deleted'</value>
+  </data>
 </root>
