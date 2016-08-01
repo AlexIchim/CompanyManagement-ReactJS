@@ -65,13 +65,7 @@ namespace Manager.Services
             return employeeInfos;
         }
 
-        public OperationResult Add(AddDepartmentInputInfo inputInfo)
-        {
-            var newDepartment = _mapper.Map<Department>(inputInfo);
-            _departmentRepository.Add(newDepartment);
-
-            return new OperationResult(true, Messages.SuccessfullyAddedDepartment);
-        }
+       
 
         public OperationResult Update(UpdateDepartmentInputInfo inputInfo)
         {

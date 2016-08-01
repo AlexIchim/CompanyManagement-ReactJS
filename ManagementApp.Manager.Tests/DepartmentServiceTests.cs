@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using AutoMapper;
+﻿using AutoMapper;
 using Contracts;
 using Domain.Models;
 using Manager;
@@ -9,6 +7,8 @@ using Manager.InputInfoModels;
 using Manager.Services;
 using Moq;
 using NUnit.Framework;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace ManagementApp.Manager.Tests
 {
@@ -46,7 +46,7 @@ namespace ManagementApp.Manager.Tests
             _mapperMock.Setup(m => m.Map<IEnumerable<DepartmentInfo>>(departments)).Returns(departmentsInfo);
 
             //Act
-           var result = _departmentService.GetAll();
+            var result = _departmentService.GetAll();
 
             //Assert
             Assert.AreEqual(2, result.Count());
@@ -77,7 +77,7 @@ namespace ManagementApp.Manager.Tests
             var result = _departmentService.GetAllUnAllocatedEmployeesOnProject();
 
             //Assert
-            Assert.AreEqual(2,result.Count());
+            Assert.AreEqual(2, result.Count());
 
         }
 
@@ -93,49 +93,49 @@ namespace ManagementApp.Manager.Tests
             _departmentRepositoryMock.Verify(x => x.GetAll(), Times.Once);
         }
 
-        [Test]
-        public void Add_CallsAddFromRepository()
-        {
-            //Arrange
-            var departmentInputInfo = new AddDepartmentInputInfo {Name = "javascript"};
-            var department = new Department { Name = "javascript" };
+        //[Test]
+        //public void Add_CallsAddFromRepository()
+        //{
+        //    //Arrange
+        //    var departmentInputInfo = new AddDepartmentInputInfo {Name = "javascript"};
+        //    var department = new Department { Name = "javascript" };
 
-            _mapperMock.Setup(m => m.Map<Department>(departmentInputInfo)).Returns(department);
-            _departmentRepositoryMock.Setup(m => m.Add(department));
+        //    _mapperMock.Setup(m => m.Map<Department>(departmentInputInfo)).Returns(department);
+        //    _departmentRepositoryMock.Setup(m => m.Add(department));
 
-            //Act
-            _departmentService.Add(departmentInputInfo);
+        //    //Act
+        //    _departmentService.Add(departmentInputInfo);
 
-            //Assert
-            _departmentRepositoryMock.Verify(x => x.Add(department), Times.Once);
-        }
+        //    //Assert
+        //    _departmentRepositoryMock.Verify(x => x.Add(department), Times.Once);
+        //}
 
-        [Test]
-        public void Add_ReturnsSuccessfulMessage()
-        {
-            //Arrange
-            var departmentInputInfo = new AddDepartmentInputInfo { Name = "javascript" };
-            var department = CreateDepartment("javascript");
+        //[Test]
+        //public void Add_ReturnsSuccessfulMessage()
+        //{
+        //    //Arrange
+        //    var departmentInputInfo = new AddDepartmentInputInfo { Name = "javascript" };
+        //    var department = CreateDepartment("javascript");
 
-            _mapperMock.Setup(m => m.Map<Department>(departmentInputInfo)).Returns(department);
-            _departmentRepositoryMock.Setup(m => m.Add(department));
+        //    _mapperMock.Setup(m => m.Map<Department>(departmentInputInfo)).Returns(department);
+        //    _departmentRepositoryMock.Setup(m => m.Add(department));
 
-            //Act
-            var result = _departmentService.Add(departmentInputInfo);
+        //    //Act
+        //    var result = _departmentService.Add(departmentInputInfo);
 
-            //Assert
-            Assert.IsTrue(result.Success);
-            Assert.AreEqual(Messages.SuccessfullyAddedDepartment, result.Message);
-        }
+        //    //Assert
+        //    Assert.IsTrue(result.Success);
+        //    Assert.AreEqual(Messages.SuccessfullyAddedDepartment, result.Message);
+        //}
 
 
         [Test]
         public void Update_ReturnsSuccessfulMessage_WhenDepartmentExists()
         {
             //Arrange
-            var departmentInputInfo = new UpdateDepartmentInputInfo {Id = 1, Name = "php" };
+            var departmentInputInfo = new UpdateDepartmentInputInfo { Id = 1, Name = "php" };
             var department = new Department { Id = 1, Name = "java" };
-            
+
             _departmentRepositoryMock.Setup(m => m.GetById(departmentInputInfo.Id)).Returns(department);
 
             //Act
@@ -211,13 +211,13 @@ namespace ManagementApp.Manager.Tests
 
         private Department CreateDepartment(string name, int? id = null)
         {
-            var department =  new Department
+            var department = new Department
             {
                 Name = name
             };
             if (id != null)
             {
-                department.Id = (int) id;
+                department.Id = (int)id;
             }
             return department;
         }
@@ -245,7 +245,7 @@ namespace ManagementApp.Manager.Tests
             };
         }
 
-        private EmployeeInfo CreateEmployeeInfo(int id, string name,int allocation)
+        private EmployeeInfo CreateEmployeeInfo(int id, string name, int allocation)
         {
             return new EmployeeInfo
             {

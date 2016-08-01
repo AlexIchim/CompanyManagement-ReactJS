@@ -1,14 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.Http;
+﻿using Manager.InputInfoModels;
 using Manager.Services;
+using System.Web.Http;
 
 namespace ManagementApp.Controllers
 {
     [RoutePrefix("api/office")]
-    public class OfficeController:ApiController
+    public class OfficeController : ApiController
     {
         private readonly OfficeService _officeService;
 
@@ -30,6 +27,14 @@ namespace ManagementApp.Controllers
         public IHttpActionResult GetAllDepartmentsOfAnOffice(int officeId)
         {
             var result = _officeService.GetAllDepartmentsOfAnOffice(officeId);
+            return Json(result);
+        }
+
+        [Route("add")]
+        [HttpPost]
+        public IHttpActionResult Add([FromBody] AddDepartmentInputInfo inputInfo)
+        {
+            var result = _officeService.Add(inputInfo);
             return Json(result);
         }
 

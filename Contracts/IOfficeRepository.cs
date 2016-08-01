@@ -1,9 +1,5 @@
-﻿using System;
+﻿using Domain.Models;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Domain.Models;
 
 namespace Contracts
 {
@@ -12,5 +8,7 @@ namespace Contracts
         IEnumerable<Office> GetAll();
 
         IEnumerable<Department> GetAllDepartmentsOfAnOffice(int officeId);
+
+        void Add(Department department, int? departmentManagerId);
     }
 }
