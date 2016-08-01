@@ -18,6 +18,7 @@ namespace Contracts
         //IEnumerable<Employee> GetAllAvailableEmployes([Optional]string department);
         int GetAllocationOfEmployeeFromProject(int projectId, int employeeId);
         int GetNrTeamMembers(int projectId);
+        void Delete(Project project);
 
     }
 }

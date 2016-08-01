@@ -67,5 +67,33 @@ namespace Manager.Services
         {
             return _projectRepository.GetNrTeamMembers(projectId);
         }
+
+        public OperationResult Delete(int projectId)
+        {
+            Project project = _projectRepository.GetById(projectId);
+            if (project == null)
+            {
+                return new OperationResult(false, Messages.ErrorWhileDeletingProject);
+            }
+            _projectRepository.Delete(project);
+            return new OperationResult(true, Messages.SuccessfullyDeletedProject);
+        }
+
+        public OperationResult Update(UpdateProjectInputInfo inputInfo)
+        {
+            var project = _projectRepository.GetById(inputInfo.Id);
+            if (project == null)
+            {
+                return new OperationResult(false, Messages.ErrorWhileUpdatingProject);
+            }
+
+            project.Name = inputInfo.Name;
+            project.Duration = inputInfo.Duration;
+            project.Status = inputInfo.Status;
+
+            _projectRepository.Save();
+
+            return new OperationResult(true, Messages.SuccessfullyUpdatedProject);
+        }
     }
 }

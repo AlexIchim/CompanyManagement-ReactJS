@@ -32,7 +32,7 @@ namespace ManagementApp.Controllers
 
         [Route("getById")]
         [HttpGet]
-        public IHttpActionResult GetById([FromBody] int id)
+        public IHttpActionResult GetById(int id)
         {
             var result = _projectService.GetById(id);
             return Json(result);
@@ -61,6 +61,21 @@ namespace ManagementApp.Controllers
             return Json(result);
         }
 
+        [Route("delete")]
+        [HttpDelete]
+        public IHttpActionResult Delete(int projectId)
+        {
+            var result = _projectService.Delete(projectId);
+            return Json(result);
+        }
+
+        [Route("update")]
+        [HttpPut]
+        public IHttpActionResult Update([FromBody] UpdateProjectInputInfo inputInfo)
+        {
+            var result = _projectService.Update(inputInfo);
+            return Json(result);
+        }
 
 
     }

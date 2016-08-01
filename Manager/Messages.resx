@@ -144,4 +144,16 @@
   <data name="SuccessfullyUpdatedOffice" xml:space="preserve">
     <value>'Office was updated with success'</value>
   </data>
+  <data name="ErrorWhileDeletingProject" xml:space="preserve">
+    <value>'Project could not be deleted'</value>
+  </data>
+  <data name="SuccessfullyDeletedProject" xml:space="preserve">
+    <value>'Project was deleted with success'</value>
+  </data>
+  <data name="ErrorWhileUpdatingProject" xml:space="preserve">
+    <value>'Project could not be modified'</value>
+  </data>
+  <data name="SuccessfullyUpdatedProject" xml:space="preserve">
+    <value>'Project was updated with success'</value>
+  </data>
 </root>

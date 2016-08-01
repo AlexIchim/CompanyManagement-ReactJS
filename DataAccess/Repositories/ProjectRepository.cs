@@ -56,6 +56,12 @@ namespace DataAccess.Repositories
             return nr;
 
         }
+
+        public void Delete(Project project)
+        {
+            _context.Projects.Remove(project);
+            _context.SaveChanges();
+        }
     }
 
 }
