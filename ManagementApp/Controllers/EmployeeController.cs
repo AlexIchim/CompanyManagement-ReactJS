@@ -50,6 +50,13 @@ namespace ManagementApp.Controllers
             return Json(result);
         }
 
+        [Route("getAllocationsByEmployeeId")]
+        [HttpGet]
+        public IHttpActionResult GetAllocationsByEmployeeId(int id)
+        {
+            var result = _employeeService.GetAllocationsByEmployeeId(id);
+            return Json(result);
+        }
 
     }
 }

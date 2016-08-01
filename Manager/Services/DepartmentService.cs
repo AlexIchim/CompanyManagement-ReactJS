@@ -34,6 +34,14 @@ namespace Manager.Services
             return projectInfos;
         }
 
+        public IEnumerable<EmployeeInfo> GetEmployeesByDepartmentId(int id)
+        {
+            var employees = _departmentRepository.GetEmployeesByDepartmentId(id);
+            var employeeInfos = _mapper.Map<IEnumerable<EmployeeInfo>>(employees);
+
+            return employeeInfos;
+        }
+
         public OperationResult Add(AddDepartmentInputInfo inputInfo)
         {
             var newDepartment = _mapper.Map<Department>(inputInfo);

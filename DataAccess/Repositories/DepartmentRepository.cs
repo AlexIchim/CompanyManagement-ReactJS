@@ -39,6 +39,19 @@ namespace DataAccess.Repositories
             }
         }
 
+        public IEnumerable<Employee> GetEmployeesByDepartmentId(int id)
+        {
+            var dept = _context.Departments.SingleOrDefault(d => d.Id == id);
+            if (dept == null)
+            {
+                return new Employee[0];
+            }
+            else
+            {
+                return dept.Employees.ToArray();
+            }
+        }
+
         public void Add(Department department)
         {
             _context.Departments.Add(department);
