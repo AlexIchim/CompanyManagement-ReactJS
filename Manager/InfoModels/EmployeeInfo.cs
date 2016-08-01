@@ -10,5 +10,8 @@ namespace Manager.InfoModels
     {
         public int Id { get; set; }
         public string Name { get; set; }
+
+        public int TotalAllocation { get; set; }
+
     }
 }

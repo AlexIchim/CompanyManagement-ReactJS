@@ -52,7 +52,7 @@ namespace DataAccess.Repositories
    
         public IEnumerable<Employee> GetAllUnAllocatedEmployeesOnProject()
         {
-            var array = _context.Employees.Where(e => e.TotalAllocation == 0);
+            var array = _context.Employees.Where(e => e.TotalAllocation==0);
             return array.ToArray();
         }
 
