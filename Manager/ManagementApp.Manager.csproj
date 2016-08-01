@@ -65,9 +65,11 @@
     <Compile Include="InfoModels\ProjectInfo.cs" />
     <Compile Include="InfoModels\DepartmentInfo.cs" />
     <Compile Include="InfoModels\OfficeInfo.cs" />
+    <Compile Include="InputInfoModels\AddAllocationInputInfo.cs" />
     <Compile Include="InputInfoModels\AddPositionInputInfo.cs" />
     <Compile Include="InputInfoModels\UpdateDepartmentInputInfo.cs" />
     <Compile Include="InputInfoModels\AddDepartmentInputInfo.cs" />
+    <Compile Include="InputInfoModels\UpdateAllocationInputInfo.cs" />
     <Compile Include="InputInfoModels\UpdatePositionInputInfo.cs" />
     <Compile Include="Mapper\MappingConfig.cs" />
     <Compile Include="OperationResult.cs" />
@@ -78,10 +80,12 @@
       <DependentUpon>Messages.resx</DependentUpon>
     </Compile>
     <Compile Include="Services\EmployeeService.cs" />
+    <Compile Include="Services\AllocationService.cs" />
     <Compile Include="Services\ProjectService.cs" />
     <Compile Include="Services\DepartmentService.cs" />
     <Compile Include="Services\OfficeService.cs" />
     <Compile Include="Services\PositionService.cs" />
+    <Compile Include="Validators\AllocationValidator.cs" />
     <Compile Include="Validators\PositionValidator.cs" />
   </ItemGroup>
   <ItemGroup>

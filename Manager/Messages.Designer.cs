@@ -61,6 +61,51 @@ namespace Manager {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to &apos;Allocation id invalid.&apos;.
+        /// </summary>
+        public static string AllocationIdInvalid {
+            get {
+                return ResourceManager.GetString("AllocationIdInvalid", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to &apos;Employee already allocated to this project.&apos;.
+        /// </summary>
+        public static string EmployeeAlreadyOnProject {
+            get {
+                return ResourceManager.GetString("EmployeeAlreadyOnProject", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to &apos;Employee does not have enough unallocated time.&apos;.
+        /// </summary>
+        public static string EmployeeFreeTimeNotEnough {
+            get {
+                return ResourceManager.GetString("EmployeeFreeTimeNotEnough", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to &apos;Invalid employee id&apos;.
+        /// </summary>
+        public static string EmployeeIdInvalid {
+            get {
+                return ResourceManager.GetString("EmployeeIdInvalid", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to &apos;Error while adding allocation:&apos;.
+        /// </summary>
+        public static string ErrorWhileAddingAllocation {
+            get {
+                return ResourceManager.GetString("ErrorWhileAddingAllocation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to &apos;Position could not be added: Name field is empty.&apos;.
         /// </summary>
         public static string ErrorWhileAddingPosition_EmptyName {
@@ -79,6 +124,15 @@ namespace Manager {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to &apos;Error while deleting allocation.&apos;.
+        /// </summary>
+        public static string ErrorWhileDeleteingAllocation {
+            get {
+                return ResourceManager.GetString("ErrorWhileDeleteingAllocation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to &apos;Employee does not exist&apos;.
         /// </summary>
         public static string ErrorWhileDeletingEmployee {
@@ -93,6 +147,15 @@ namespace Manager {
         public static string ErrorWhileDeletingProject {
             get {
                 return ResourceManager.GetString("ErrorWhileDeletingProject", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to &apos;Error while updating allocation:&apos;.
+        /// </summary>
+        public static string ErrorWhileUpdatingAllocation {
+            get {
+                return ResourceManager.GetString("ErrorWhileUpdatingAllocation", resourceCulture);
             }
         }
         
@@ -142,6 +205,15 @@ namespace Manager {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to &apos;Allocation added successfully.&apos;.
+        /// </summary>
+        public static string SuccessfullyAddedAllocation {
+            get {
+                return ResourceManager.GetString("SuccessfullyAddedAllocation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to &apos;Department was added with success&apos;.
         /// </summary>
         public static string SuccessfullyAddedDepartment {
@@ -160,6 +232,15 @@ namespace Manager {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to &apos;Successfully deleted allocation.&apos;.
+        /// </summary>
+        public static string SuccessfullyDeletedAllocation {
+            get {
+                return ResourceManager.GetString("SuccessfullyDeletedAllocation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to &apos;Employee was deleted with success&apos;.
         /// </summary>
         public static string SuccessfullyDeletedEmployee {
@@ -174,6 +255,15 @@ namespace Manager {
         public static string SuccessfullyDeletedProject {
             get {
                 return ResourceManager.GetString("SuccessfullyDeletedProject", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to &apos;Successfully updated allocation&apos;.
+        /// </summary>
+        public static string SuccessfullyUpdatedAllocation {
+            get {
+                return ResourceManager.GetString("SuccessfullyUpdatedAllocation", resourceCulture);
             }
         }
         

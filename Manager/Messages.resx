@@ -162,4 +162,34 @@
   <data name="ErrorWhileUpdatingPosition_InvalidId" xml:space="preserve">
     <value>'Error while updating position: Invalid id'</value>
   </data>
+  <data name="AllocationIdInvalid" xml:space="preserve">
+    <value>'Allocation id invalid.'</value>
+  </data>
+  <data name="EmployeeAlreadyOnProject" xml:space="preserve">
+    <value>'Employee already allocated to this project.'</value>
+  </data>
+  <data name="EmployeeFreeTimeNotEnough" xml:space="preserve">
+    <value>'Employee does not have enough unallocated time.'</value>
+  </data>
+  <data name="EmployeeIdInvalid" xml:space="preserve">
+    <value>'Invalid employee id'</value>
+  </data>
+  <data name="ErrorWhileAddingAllocation" xml:space="preserve">
+    <value>'Error while adding allocation:'</value>
+  </data>
+  <data name="ErrorWhileDeleteingAllocation" xml:space="preserve">
+    <value>'Error while deleting allocation.'</value>
+  </data>
+  <data name="ErrorWhileUpdatingAllocation" xml:space="preserve">
+    <value>'Error while updating allocation:'</value>
+  </data>
+  <data name="SuccessfullyAddedAllocation" xml:space="preserve">
+    <value>'Allocation added successfully.'</value>
+  </data>
+  <data name="SuccessfullyDeletedAllocation" xml:space="preserve">
+    <value>'Successfully deleted allocation.'</value>
+  </data>
+  <data name="SuccessfullyUpdatedAllocation" xml:space="preserve">
+    <value>'Successfully updated allocation'</value>
+  </data>
 </root>
