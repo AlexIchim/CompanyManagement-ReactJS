@@ -85,7 +85,7 @@ namespace Manager.Services
             department.Name = inputInfo.Name;
             _departmentRepository.Save();
 
-            return new OperationResult(true, Messages.SuccessfullyUpdatedDepartment);
+            return new OperationResult(true, Messages.SuccessfullyAddedDepartment);
         }
     }
 }

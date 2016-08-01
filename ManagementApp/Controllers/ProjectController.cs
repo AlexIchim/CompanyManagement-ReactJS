@@ -30,5 +30,13 @@ namespace ManagementApp.Controllers
             var result = _projectService.GetEmployeesAllocation(projectId);
             return Json(result);
         }
+
+        [Route("add")]
+        [HttpPost]
+        public IHttpActionResult Add([FromBody] AddProjectInputInfo inputInfo)
+        {
+            var result = _projectService.Add(inputInfo);
+            return Json(result);
+        }
     }
 }

@@ -79,6 +79,15 @@ namespace Manager {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to &apos;Porject was successfully added&apos;.
+        /// </summary>
+        public static string SuccessfullyAddedProject {
+            get {
+                return ResourceManager.GetString("SuccessfullyAddedProject", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to &apos;Department was updated with success&apos;.
         /// </summary>
         public static string SuccessfullyUpdatedDepartment {
