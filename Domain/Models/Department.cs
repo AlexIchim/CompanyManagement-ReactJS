@@ -19,5 +19,6 @@ namespace Domain.Models
         public virtual ICollection<Project> Projects { get; set; }
 
 
+
     }
 }

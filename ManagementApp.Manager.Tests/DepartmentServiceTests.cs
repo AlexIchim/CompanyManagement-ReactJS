@@ -52,6 +52,35 @@ namespace ManagementApp.Manager.Tests
             Assert.AreEqual(2, result.Count());
         }
 
+
+        //nu merge inca
+        [Test]
+        public void GetAllUnAllocatedEmployeesOnProject()
+        {
+            //Arrange
+            var employees = new List<Employee>
+            {
+                CreateEmployee("Adi",0,1),
+                CreateEmployee("Cristina",0,2),
+                CreateEmployee("Patricia",60,3)
+            };
+            var employeesinfo = new List<EmployeeInfo>
+            {
+                CreateEmployeeInfo(1,"Adi",0),
+                CreateEmployeeInfo(2,"Cristina",0),
+                CreateEmployeeInfo(3,"Patricia",60)
+            };
+            _departmentRepositoryMock.Setup(m => m.GetAllUnAllocatedEmployeesOnProject()).Returns(employees);
+            _mapperMock.Setup(m => m.Map<IEnumerable<EmployeeInfo>>(employees)).Returns(employeesinfo);
+
+            //Act
+            var result = _departmentService.GetAllUnAllocatedEmployeesOnProject();
+
+            //Assert
+            Assert.AreEqual(2,result.Count());
+
+        }
+
         [Test]
         public void GetAll_CallsGetAllFromRepository()
         {
@@ -193,12 +222,36 @@ namespace ManagementApp.Manager.Tests
             return department;
         }
 
+        private Employee CreateEmployee(string name, int allocation, int? id = null)
+        {
+            var employee = new Employee
+            {
+                Name = name,
+                TotalAllocation = allocation
+            };
+            if (id != null)
+            {
+                employee.Id = (int)id;
+            }
+            return employee;
+        }
+
         private DepartmentInfo CreateDepartmentInfo(int id, string name)
         {
             return new DepartmentInfo
             {
                 Id = id,
                 Name = name
+            };
+        }
+
+        private EmployeeInfo CreateEmployeeInfo(int id, string name,int allocation)
+        {
+            return new EmployeeInfo
+            {
+                Id = id,
+                Name = name,
+                TotalAllocation = allocation
             };
         }
     }
