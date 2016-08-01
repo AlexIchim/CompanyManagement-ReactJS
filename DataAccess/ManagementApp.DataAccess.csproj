@@ -71,6 +71,7 @@
     <Compile Include="Repositories\ProjectRepository.cs" />
     <Compile Include="Repositories\DepartmentRepository.cs" />
     <Compile Include="Repositories\OfficeRepository.cs" />
+    <Compile Include="Repositories\PositionRepository.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

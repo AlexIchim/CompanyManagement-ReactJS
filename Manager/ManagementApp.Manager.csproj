@@ -63,8 +63,10 @@
     <Compile Include="InfoModels\ProjectInfo.cs" />
     <Compile Include="InfoModels\DepartmentInfo.cs" />
     <Compile Include="InfoModels\OfficeInfo.cs" />
+    <Compile Include="InputInfoModels\AddPositionInputInfo.cs" />
     <Compile Include="InputInfoModels\UpdateDepartmentInputInfo.cs" />
     <Compile Include="InputInfoModels\AddDepartmentInputInfo.cs" />
+    <Compile Include="InputInfoModels\UpdatePositionInputInfo.cs" />
     <Compile Include="Mapper\MappingConfig.cs" />
     <Compile Include="OperationResult.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -77,6 +79,7 @@
     <Compile Include="Services\ProjectService.cs" />
     <Compile Include="Services\DepartmentService.cs" />
     <Compile Include="Services\OfficeService.cs" />
+    <Compile Include="Services\PositionService.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

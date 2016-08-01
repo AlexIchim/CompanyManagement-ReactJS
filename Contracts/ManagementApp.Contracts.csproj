@@ -43,6 +43,7 @@
     <Compile Include="IProjectRepository.cs" />
     <Compile Include="IDepartmentRepository.cs" />
     <Compile Include="IOfficeRepository.cs" />
+    <Compile Include="IPositionRepository.cs" />
     <Compile Include="IEmployeeRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

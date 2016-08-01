@@ -27,6 +27,7 @@ namespace Manager.Mapper
 
             CreateMap<AddDepartmentInputInfo, Department>();
 
+            CreateMap<Position, PositionInfo>();
             CreateMap<Project, ProjectInfo>().ForMember(
                 p => p.MemberCount,
                 opts => opts.MapFrom(src => src.Allocations.Count)
