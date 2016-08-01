@@ -25,6 +25,20 @@ namespace DataAccess.Repositories
             return _context.Offices.SingleOrDefault(d => d.Id == id);
         }
 
+        public IEnumerable<Department> GetDepartmentsByOfficeId(int officeId)
+        {
+            var office = _context.Offices.SingleOrDefault(d => d.Id == officeId);
+
+            if (office == null)
+            {
+                return new Department[0];
+            }
+            else
+            {
+                return office.Departments.ToArray();
+            }
+        }
+
         public void Add(Office office)
         {
             _context.Offices.Add(office);

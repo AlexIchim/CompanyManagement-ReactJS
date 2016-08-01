@@ -11,5 +11,8 @@ namespace Manager.InfoModels
         public int? Duration { get; set; }
 
         public int? DepartmentId { get; set; }
+
+        // custom:
+        public int MemberCount { get; set; }
     }
 }

@@ -26,12 +26,12 @@ namespace Manager.Services
             return departmentInfos;
         }
 
-        public IEnumerable<DepartmentInfo> GetByOfficeId(int OfficeId)
+        public IEnumerable<ProjectInfo> GetProjectsByDepartmentId(int id)
         {
-            var departments = _departmentRepository.GetByOfficeId(OfficeId);
-            var departmentInfos = _mapper.Map<IEnumerable<DepartmentInfo>>(departments);
+            var projects = _departmentRepository.GetProjectsByDepartmentId(id);
+            var projectInfos = _mapper.Map<IEnumerable<ProjectInfo>>(projects);
 
-            return departmentInfos;
+            return projectInfos;
         }
 
         public OperationResult Add(AddDepartmentInputInfo inputInfo)

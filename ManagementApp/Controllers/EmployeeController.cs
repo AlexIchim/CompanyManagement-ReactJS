@@ -8,7 +8,7 @@ using System.Web.Http;
 namespace ManagementApp.Controllers
 {
     [RoutePrefix("api/employee")]
-    public class EmployeeController: ApiController
+    public class EmployeeController : ApiController
     {
         private readonly EmployeeService _employeeService;
 
@@ -22,6 +22,14 @@ namespace ManagementApp.Controllers
         public IHttpActionResult GetAll()
         {
             var result = _employeeService.GetAll();
+            return Json(result);
+        }
+
+        [Route("getAllDepartmentManagers")]
+        [HttpGet]
+        public IHttpActionResult GetAllDepartmentManagers()
+        {
+            var result = _employeeService.GetAllDepartmentManagers();
             return Json(result);
         }
 

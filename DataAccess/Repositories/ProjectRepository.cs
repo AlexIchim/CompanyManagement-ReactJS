@@ -25,9 +25,5 @@ namespace DataAccess.Repositories
             return _context.Projects.SingleOrDefault(d => d.Id == id);
         }
 
-        public IEnumerable<Project> GetByDepartmentId(int id)
-        {
-            return _context.Departments.Single(d => d.Id == id).Projects.ToArray();
-        }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using Contracts;
 using DataAccess.Context;
@@ -25,9 +26,17 @@ namespace DataAccess.Repositories
             return _context.Departments.SingleOrDefault(d => d.Id == Id);
         }
 
-        public IEnumerable<Department> GetByOfficeId(int officeId)
+        public IEnumerable<Project> GetProjectsByDepartmentId(int id)
         {
-            return _context.Offices.Single(d => d.Id == officeId).Departments.ToArray();
+            var dept = _context.Departments.SingleOrDefault(d => d.Id == id);
+            if (dept == null)
+            {
+                return new Project[0];
+            }
+            else
+            {
+                return dept.Projects.ToArray();
+            }
         }
 
         public void Add(Department department)

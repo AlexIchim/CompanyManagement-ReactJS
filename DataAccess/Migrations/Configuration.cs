@@ -56,10 +56,10 @@ namespace DataAccess.Migrations
 
             context.Employees.AddOrUpdate(
                 p => p.Id,
-                new Employee() { Id = 1, Name = "Ion Popescu1", Address = null, EmploymentDate = DateTime.Now, ReleaseDate = null, EmploymentHours = 8, PositionId = 3, DepartmentId = 1 },
-                new Employee() { Id = 2, Name = "Claudiu Cretu1", Address = null, EmploymentDate = DateTime.Now, ReleaseDate = null, EmploymentHours = 8, PositionId = 1, DepartmentId = 1 },
-                new Employee() { Id = 3, Name = "Ion Popescu2", Address = null, EmploymentDate = DateTime.Now, ReleaseDate = null, EmploymentHours = 4, PositionId = 3, DepartmentId = 2 },
-                new Employee() { Id = 4, Name = "Claudiu Cretu2", Address = null, EmploymentDate = DateTime.Now, ReleaseDate = null, EmploymentHours = 8, PositionId = 1, DepartmentId = 2 },
+                new Employee() { Id = 1, Name = "Ion Popescu1", Address = null, Email = "ipop@ipop.ro", EmploymentDate = DateTime.Now, ReleaseDate = null, EmploymentHours = 8, PositionId = 3, DepartmentId = 1 },
+                new Employee() { Id = 2, Name = "Claudiu Cretu1", Address = null, Email = "cretu@asd.ro", EmploymentDate = DateTime.Now, ReleaseDate = null, EmploymentHours = 8, PositionId = 1, DepartmentId = 1 },
+                new Employee() { Id = 3, Name = "Ion Popescu2", Address = null, Email = "ipop2@ipop.ro", EmploymentDate = DateTime.Now, ReleaseDate = null, EmploymentHours = 4, PositionId = 3, DepartmentId = 2 },
+                new Employee() { Id = 4, Name = "Claudiu Cretu2", Address = null, Email = "cretu2@iasd.ro", EmploymentDate = DateTime.Now, ReleaseDate = null, EmploymentHours = 8, PositionId = 1, DepartmentId = 2 },
                 new Employee() { Id = 5, Name = "Ion Popescu3", Address = null, EmploymentDate = DateTime.Now, ReleaseDate = null, EmploymentHours = 6, PositionId = 3, DepartmentId = 3 },
                 new Employee() { Id = 6, Name = "Claudiu Cretu3", Address = null, EmploymentDate = DateTime.Now, ReleaseDate = null, EmploymentHours = 8, PositionId = 1, DepartmentId = 3 }
             );

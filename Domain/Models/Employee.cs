@@ -8,6 +8,7 @@ namespace Domain.Models
         public int Id { get; set; }
         public string Name { get; set; }
         public string Address { get; set; }
+        public string Email { get; set; }
         public DateTime EmploymentDate { get; set; }
         public DateTime? ReleaseDate { get; set; }
         public int EmploymentHours { get; set; }

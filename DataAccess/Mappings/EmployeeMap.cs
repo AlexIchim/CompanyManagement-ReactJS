@@ -21,6 +21,9 @@ namespace DataAccess.Mappings
                 .IsRequired()
                 .HasMaxLength(100);
 
+            this.Property(t => t.Email)
+                .HasMaxLength(200);
+
             this.Property(t => t.Address)
                 .HasMaxLength(300);
 

@@ -30,13 +30,5 @@ namespace ManagementApp.Controllers
             return Json(result);
         }
 
-        [Route("getByDepartmentId")]
-        [HttpGet]
-        public IHttpActionResult GetByDepartmentId(int ID)
-        {
-            var result = _projectService.GetByDepartmentId(ID);
-            return Json(result);
-        }
-
     }
 }

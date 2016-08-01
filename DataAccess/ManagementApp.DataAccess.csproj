@@ -61,6 +61,10 @@
     <Compile Include="Migrations\201607290856479_DataModel.Designer.cs">
       <DependentUpon>201607290856479_DataModel.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201608010627045_EmployeeMail.cs" />
+    <Compile Include="Migrations\201608010627045_EmployeeMail.Designer.cs">
+      <DependentUpon>201608010627045_EmployeeMail.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositories\EmployeeRepository.cs" />
@@ -85,6 +89,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201607290856479_DataModel.resx">
       <DependentUpon>201607290856479_DataModel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201608010627045_EmployeeMail.resx">
+      <DependentUpon>201608010627045_EmployeeMail.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

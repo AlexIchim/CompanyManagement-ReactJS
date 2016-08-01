@@ -7,7 +7,7 @@ namespace Contracts
     {
         IEnumerable<Department> GetAll();
         Department GetById(int id);
-        IEnumerable<Department> GetByOfficeId(int officeId);
+        IEnumerable<Project> GetProjectsByDepartmentId(int id);
         void Add(Department department);
         void Save();
     }

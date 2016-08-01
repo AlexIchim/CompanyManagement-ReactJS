@@ -9,12 +9,14 @@ namespace Manager.InfoModels
     public class EmployeeInfo
     {
         public int Id { get; set; }
-
         public string Name { get; set; }
+        public string Email { get; set; }
 
         public DateTime EmploymentDate { get; set; }
 
-        public int EmploymentHours{ get; set; }
+        public int EmploymentHours { get; set; }
 
+        // custom:
+        public int TotalAllocation { get; set; }
     }
 }

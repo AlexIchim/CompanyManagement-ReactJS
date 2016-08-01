@@ -25,7 +25,15 @@ namespace Manager.Services
             var employees = _employeeRepository.GetAll();
             var employeeInfos = _mapper.Map<IEnumerable<EmployeeInfo>>(employees);
 
-            return employeeInfos; 
+            return employeeInfos;
+        }
+
+        public IEnumerable<EmployeeInfo> GetAllDepartmentManagers()
+        {
+            var employees = _employeeRepository.GetAllDepartmentManagers();
+            var employeeInfos = _mapper.Map<IEnumerable<EmployeeInfo>>(employees);
+
+            return employeeInfos;
         }
 
         public EmployeeInfo GetById(int id)

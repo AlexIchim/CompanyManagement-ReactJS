@@ -22,13 +22,14 @@ namespace ManagementApp.Controllers
             return Json(result);
         }
 
-        [Route("getByOfficeId")]
+        [Route("getProjectsByDepartmentId")]
         [HttpGet]
-        public IHttpActionResult GetByOfficeId(int Id)
+        public IHttpActionResult GetProjectsByDepartmentId(int ID)
         {
-            var result = _departmentService.GetByOfficeId(Id);
+            var result = _departmentService.GetProjectsByDepartmentId(ID);
             return Json(result);
         }
+
 
         [Route("add")]
         [HttpPost]

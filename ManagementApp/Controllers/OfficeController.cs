@@ -29,5 +29,14 @@ namespace ManagementApp.Controllers
             var result = _officeService.GetById(Id);
             return Json(result);
         }
+
+        [Route("getDepartmentsByOfficeId")]
+        [HttpGet]
+        public IHttpActionResult GetByOfficeId(int Id)
+        {
+            var result = _officeService.GetDepartmentsByOfficeId(Id);
+            return Json(result);
+        }
+
     }
 }

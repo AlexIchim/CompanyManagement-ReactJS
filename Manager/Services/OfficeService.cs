@@ -33,5 +33,13 @@ namespace Manager.Services
 
             return officeInfo;
         }
+
+        public IEnumerable<DepartmentInfo> GetDepartmentsByOfficeId(int OfficeId)
+        {
+            var departments = _officeRepository.GetDepartmentsByOfficeId(OfficeId);
+            var departmentInfos = _mapper.Map<IEnumerable<DepartmentInfo>>(departments);
+
+            return departmentInfos;
+        }
     }
 }

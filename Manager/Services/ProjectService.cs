@@ -34,12 +34,5 @@ namespace Manager.Services
             return projectInfo;
         }
 
-        public IEnumerable<ProjectInfo> GetByDepartmentId(int id)
-        {
-            var projects = _projectRepository.GetByDepartmentId(id);
-            var projectInfos = _mapper.Map<IEnumerable<ProjectInfo>>(projects);
-
-            return projectInfos;
-        }
     }
 }

@@ -10,6 +10,8 @@ namespace Contracts
     public interface IEmployeeRepository
     {
         IEnumerable<Employee> GetAll();
+        IEnumerable<Employee> GetAllDepartmentManagers();
+
 
         Employee GetById(int id);
 

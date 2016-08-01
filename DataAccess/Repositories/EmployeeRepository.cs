@@ -19,6 +19,11 @@ namespace DataAccess.Repositories
             return _context.Employees.ToArray();
         }
 
+        public IEnumerable<Employee> GetAllDepartmentManagers()
+        {
+            return _context.Employees.Where(e => e.Position.Id == 1).ToArray();
+        }
+
         public Employee GetById(int id)
         {
             return _context.Employees.SingleOrDefault(e => e.Id == id);
