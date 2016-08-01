@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Manager.InputInfoModels;
 
 namespace Manager.Services
 {
@@ -38,6 +39,13 @@ namespace Manager.Services
             var employees = _projectRepository.GetByProjectId(projectId);
             var employeeInfos = _mapper.Map<IEnumerable<EmployeeInfo>>(employees);
             return employeeInfos;
+        }
+
+        public OperationResult AddEmployeeToProject(AddEmployeeToProjectInputInfo inputInfo)
+        {
+            var newEp = _mapper.Map<EmployeeProject>(inputInfo);
+            _projectRepository.AddEmployeeToProject(newEp);
+            return new OperationResult(true, Messages.SuccessfullyAddedDepartment);
         }
     }
 }

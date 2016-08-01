@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -15,6 +16,16 @@ namespace DataAccess.Repositories
         public ProjectRepository(DbContext context)
         {
             _context = context;
+        }
+
+        public void AddEmployeeToProject(EmployeeProject ep)
+        {
+            Employee employee = _context.Employees.SingleOrDefault(e => e.Id == ep.EmployeeId);
+            Project project = _context.Projects.SingleOrDefault(p => p.Id == ep.ProjectId);
+            ep.Employee = employee;
+            ep.Project = project;
+            _context.EmployeeProjects.Add(ep);
+            _context.SaveChanges();
         }
         public IEnumerable<Employee> GetByProjectId(int projectid)
         {
