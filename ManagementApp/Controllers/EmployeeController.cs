@@ -41,6 +41,5 @@ namespace ManagementApp.Controllers
             return Json(result);
         }
 
-
     }
 }
