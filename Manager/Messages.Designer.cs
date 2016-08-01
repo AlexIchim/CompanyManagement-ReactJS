@@ -61,11 +61,56 @@ namespace Manager {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to &apos;Position could not be added: Name field is empty.&apos;.
+        /// </summary>
+        public static string ErrorWhileAddingPosition_EmptyName {
+            get {
+                return ResourceManager.GetString("ErrorWhileAddingPosition_EmptyName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to &apos;Position could not be updated: Name too long.&apos;.
+        /// </summary>
+        public static string ErrorWhileAddingPosition_NameTooLong {
+            get {
+                return ResourceManager.GetString("ErrorWhileAddingPosition_NameTooLong", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to &apos;Department could not be modified&apos;.
         /// </summary>
         public static string ErrorWhileUpdatingDepartment {
             get {
                 return ResourceManager.GetString("ErrorWhileUpdatingDepartment", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to &apos;Position could not be modified.&apos;.
+        /// </summary>
+        public static string ErrorWhileUpdatingPosition {
+            get {
+                return ResourceManager.GetString("ErrorWhileUpdatingPosition", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to &apos;Position could not be modified: Name field is empty.&apos;.
+        /// </summary>
+        public static string ErrorWhileUpdatingPosition_EmptyName {
+            get {
+                return ResourceManager.GetString("ErrorWhileUpdatingPosition_EmptyName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to &apos;Position could not be modified: Name too long.&apos;.
+        /// </summary>
+        public static string ErrorWhileUpdatingPosition_NameTooLong {
+            get {
+                return ResourceManager.GetString("ErrorWhileUpdatingPosition_NameTooLong", resourceCulture);
             }
         }
         
@@ -79,11 +124,29 @@ namespace Manager {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to &apos;Position was added with success&apos;.
+        /// </summary>
+        public static string SuccessfullyAddedPosition {
+            get {
+                return ResourceManager.GetString("SuccessfullyAddedPosition", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to &apos;Department was updated with success&apos;.
         /// </summary>
         public static string SuccessfullyUpdatedDepartment {
             get {
                 return ResourceManager.GetString("SuccessfullyUpdatedDepartment", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to &apos;Position was updated with success&apos;.
+        /// </summary>
+        public static string SuccessfullyUpdatedPosition {
+            get {
+                return ResourceManager.GetString("SuccessfullyUpdatedPosition", resourceCulture);
             }
         }
     }
