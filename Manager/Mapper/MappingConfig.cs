@@ -16,6 +16,9 @@ namespace Manager.Mapper
             ).ForMember(
                 p => p.ProjectCount,
                 opts => opts.MapFrom(src => src.Projects.Count)
+            ).ForMember(
+                p => p.DepartmentManagerName,
+                opts => opts.MapFrom(src => src.DepartmentManager.Name)
             );
 
 
