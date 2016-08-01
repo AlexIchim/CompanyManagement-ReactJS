@@ -30,5 +30,11 @@ namespace Manager.Services
                     Allocation = emp.Allocation
                 }).ToList();
         }
+
+        public OperationResult ReleaseEmployee(int employeeId)
+        {
+            _employeeRepository.ReleaseEmployee(employeeId);
+            return new OperationResult(true, Messages.SuccessfullyDeletedEmployee);
+        }
     }
 }

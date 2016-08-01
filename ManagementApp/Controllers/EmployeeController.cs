@@ -24,5 +24,15 @@ namespace ManagementApp.Controllers
             return Json(result);
         }
 
+        [Route("releaseEmployee")]
+        [HttpDelete]
+        public IHttpActionResult ReleaseEmployee(int employeeId)
+        {
+            var result = _employeeService.ReleaseEmployee(employeeId);
+
+            return Json(result);
+
+        }
+
     }
 }

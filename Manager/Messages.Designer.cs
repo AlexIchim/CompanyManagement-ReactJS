@@ -81,9 +81,27 @@ namespace Manager {
         /// <summary>
         ///   Looks up a localized string similar to &apos;Office was added with success&apos;.
         /// </summary>
+        public static string SuccessfullyAddedOffice {
+            get {
+                return ResourceManager.GetString("SuccessfullyAddedOffice", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to &apos;Porject was successfully added&apos;.
+        /// </summary>
         public static string SuccessfullyAddedProject {
             get {
                 return ResourceManager.GetString("SuccessfullyAddedProject", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to &apos;Employee was successfully deleted&apos;.
+        /// </summary>
+        public static string SuccessfullyDeletedEmployee {
+            get {
+                return ResourceManager.GetString("SuccessfullyDeletedEmployee", resourceCulture);
             }
         }
         
