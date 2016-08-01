@@ -37,6 +37,8 @@ namespace Manager.Mapper
             );
 
             CreateMap<Office, OfficeInfo>();
+
+            CreateMap<AddPositionInputInfo, Position>();
         }
     }
 }

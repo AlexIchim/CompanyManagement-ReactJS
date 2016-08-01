@@ -36,48 +36,30 @@ namespace Manager.Services
 
         public OperationResult Add(AddPositionInputInfo inputInfo)
         {
-            var newPosition = _mapper.Map<Position>(inputInfo);
-            _positionRepository.Add(newPosition);
+            var result = Validators.PositionValidator.Validate(inputInfo);
 
-            int result = inputInfo.InputInfoValidationResult();
-            if (result == 1)
+            if (result.Success == true)
             {
-                return new Manager.OperationResult(false, Messages.ErrorWhileAddingPosition_EmptyName);
+                _positionRepository.Add(_mapper.Map<Position>(inputInfo));
             }
-                else
-                    if (result == 2)
-                    {
-                        return new Manager.OperationResult(false, Messages.ErrorWhileAddingPosition_NameTooLong);
-                    }
 
-            return new OperationResult(true, Messages.SuccessfullyAddedPosition);
+            return result;
         }
 
         public OperationResult Update(UpdatePositionInputInfo inputInfo)
         {
             var position = _positionRepository.GetById(inputInfo.Id);
 
-            int result = inputInfo.InputInfoValidationResult();
-
-            if(position == null)
+            if (position == null)
             {
-                return new Manager.OperationResult(false, Messages.ErrorWhileUpdatingPosition);
+                return new OperationResult(false, Messages.ErrorWhileUpdatingPosition_InvalidId);
             }
             else
-                if(result == 1)
-                {
-                    return new Manager.OperationResult(false, Messages.ErrorWhileUpdatingPosition_EmptyName);
-                }
-                else
-                    if(result == 2)
-                    {
-                return new Manager.OperationResult(false, Messages.ErrorWhileUpdatingPosition_NameTooLong);
-                    }  
-
-            position.Name = inputInfo.Name;
-            _positionRepository.Save();
-
-            return new Manager.OperationResult(true, Messages.SuccessfullyAddedDepartment);
+            {
+                position.Name = inputInfo.Name;
+                _positionRepository.Save();
+                return new Manager.OperationResult(true, Messages.SuccessfullyUpdatedPosition);
+            }
         }
     }
 }

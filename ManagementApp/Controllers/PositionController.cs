@@ -37,5 +37,13 @@ namespace ManagementApp.Controllers
             var result = _positionService.Add(inputInfo);
             return Json(result);
         }
+
+        [Route("update")]
+        [HttpPut]
+        public IHttpActionResult Update([FromBody] UpdatePositionInputInfo inputInfo)
+        {
+            var result = _positionService.Update(inputInfo);
+            return Json(result);
+        }
     }
 }

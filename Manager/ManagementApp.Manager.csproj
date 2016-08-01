@@ -82,6 +82,7 @@
     <Compile Include="Services\DepartmentService.cs" />
     <Compile Include="Services\OfficeService.cs" />
     <Compile Include="Services\PositionService.cs" />
+    <Compile Include="Validators\PositionValidator.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

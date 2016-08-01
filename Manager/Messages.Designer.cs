@@ -124,6 +124,15 @@ namespace Manager {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to &apos;Error while updating position: Invalid id&apos;.
+        /// </summary>
+        public static string ErrorWhileUpdatingPosition_InvalidId {
+            get {
+                return ResourceManager.GetString("ErrorWhileUpdatingPosition_InvalidId", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to &apos;Position could not be modified: Name too long.&apos;.
         /// </summary>
         public static string ErrorWhileUpdatingPosition_NameTooLong {
