@@ -57,17 +57,9 @@
     <Compile Include="Mappings\EmployeeMap.cs" />
     <Compile Include="Mappings\OfficeMap.cs" />
     <Compile Include="Mappings\ProjectMap.cs" />
-    <Compile Include="Migrations\201607290845150_initial.cs" />
-    <Compile Include="Migrations\201607290845150_initial.Designer.cs">
-      <DependentUpon>201607290845150_initial.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201607290922517_addData.cs" />
-    <Compile Include="Migrations\201607290922517_addData.Designer.cs">
-      <DependentUpon>201607290922517_addData.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201607291017399_changeFromListToICollection.cs" />
-    <Compile Include="Migrations\201607291017399_changeFromListToICollection.Designer.cs">
-      <DependentUpon>201607291017399_changeFromListToICollection.cs</DependentUpon>
+    <Compile Include="Migrations\201608010842274_initial.cs" />
+    <Compile Include="Migrations\201608010842274_initial.Designer.cs">
+      <DependentUpon>201608010842274_initial.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -89,14 +81,8 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201607290845150_initial.resx">
-      <DependentUpon>201607290845150_initial.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201607290922517_addData.resx">
-      <DependentUpon>201607290922517_addData.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201607291017399_changeFromListToICollection.resx">
-      <DependentUpon>201607291017399_changeFromListToICollection.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201608010842274_initial.resx">
+      <DependentUpon>201608010842274_initial.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

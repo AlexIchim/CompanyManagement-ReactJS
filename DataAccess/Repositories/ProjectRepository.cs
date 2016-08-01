@@ -26,6 +26,10 @@ namespace DataAccess.Repositories
             _context.SaveChanges();
         }
 
+        public IEnumerable<Project> GetAll()
+        {
+            return _context.Projects.ToArray();
+        }
         public Project GetById(int id)
         {
             return _context.Projects.SingleOrDefault(p => p.Id == id);

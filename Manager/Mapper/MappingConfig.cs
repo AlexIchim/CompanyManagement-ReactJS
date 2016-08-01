@@ -12,10 +12,9 @@ namespace Manager.Mapper
             CreateMap<Department, DepartmentInfo>();
             CreateMap<AddDepartmentInputInfo, Department>();
 
-            CreateMap<Project, ProjectInfo>();
+            CreateMap<Project, ProjectInfo>().ForMember(projectInfo => projectInfo.NrMembers,
+                                                        project => project.MapFrom(src => src.Assignments.Count));
             CreateMap<AddProjectInputInfo, Project>();
-
-            CreateMap<Employee, EmployeeInfo>();
         }
     }
 }

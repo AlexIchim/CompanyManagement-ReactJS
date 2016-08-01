@@ -22,6 +22,14 @@ namespace ManagementApp.Controllers
             return Json(result);
         }
 
+        [Route("getAll")]
+        [HttpGet]
+        public IHttpActionResult GetAll()
+        {
+            var result = _projectService.GetAll();
+            return Json(result);
+        }
+
         [Route("getById")]
         [HttpGet]
         public IHttpActionResult GetById([FromBody] int id)

@@ -26,6 +26,12 @@ namespace Manager.Services
             return new OperationResult(true, Messages.SuccessfullyAddedProject);
         }
 
+        public IEnumerable<ProjectInfo> GetAll()
+        {
+            var projects = _projectRepository.GetAll();
+            var projectsInfo = _mapper.Map<IEnumerable<ProjectInfo>>(projects);
+            return projectsInfo;
+        }
         public ProjectInfo GetById(int id)
         {
 
