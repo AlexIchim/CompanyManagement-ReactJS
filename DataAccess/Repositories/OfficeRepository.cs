@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity.Core.Objects;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -29,6 +30,17 @@ namespace DataAccess.Repositories
 
             return array.Departments;
 
+        }
+
+        public void AddOffice(Office office)
+        {
+            _context.Offices.Add(office);
+            Save();
+        }
+
+        public void Save()
+        {
+            _context.SaveChanges();
         }
     }
 }

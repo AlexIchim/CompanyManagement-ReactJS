@@ -7,6 +7,7 @@ using AutoMapper;
 using Contracts;
 using Domain.Models;
 using Manager.InfoModels;
+using Manager.InputInfoModels;
 
 namespace Manager.Services
 {
@@ -37,6 +38,14 @@ namespace Manager.Services
 
             return departmentInfos;
 
+        }
+
+        public OperationResult Add(AddOfficeInputInfo inputInfo)
+        {
+            var newOffice = _mapper.Map<Office>(inputInfo);
+            _officeRepository.AddOffice(newOffice);
+
+            return new OperationResult(true, Messages.SuccessfullyAddedOffice);
         }
     }
 }

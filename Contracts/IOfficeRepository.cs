@@ -12,5 +12,7 @@ namespace Contracts
         IEnumerable<Office> GetAll();
 
         IEnumerable<Department> GetAllDepartmentsOfAnOffice(int officeId);
+
+        void AddOffice(Office office);
     }
 }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Http;
+using Manager.InputInfoModels;
 using Manager.Services;
 
 namespace ManagementApp.Controllers
@@ -30,6 +31,14 @@ namespace ManagementApp.Controllers
         public IHttpActionResult GetAllDepartmentsOfAnOffice(int officeId)
         {
             var result = _officeService.GetAllDepartmentsOfAnOffice(officeId);
+            return Json(result);
+        }
+
+        [Route("add")]
+        [HttpPost]
+        public IHttpActionResult Add([FromBody] AddOfficeInputInfo inputInfo)
+        {
+            var result = _officeService.Add(inputInfo);
             return Json(result);
         }
 
