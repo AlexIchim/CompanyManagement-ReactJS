@@ -38,5 +38,13 @@ namespace ManagementApp.Controllers
             var result = _projectService.Add(inputInfo);
             return Json(result);
         }
+
+        [Route("delete")]
+        [HttpDelete]
+        public IHttpActionResult Delete(int projectId)
+        {
+            var result = _projectService.Delete(projectId);
+            return Json(result);
+        }
     }
 }

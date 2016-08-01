@@ -16,7 +16,7 @@ namespace DataAccess.Repositories
         {
             _context = context;
         }
-        public IEnumerable<Employee> GetByProjectId(int projectid)
+        public IEnumerable<Employee> GetEmployeeByProjectId(int projectid)
         {
             List<Employee> array = new List<Employee>();
             var proj = _context.EmployeeProjects.Where(ep => ep.ProjectId == projectid);
@@ -31,11 +31,20 @@ namespace DataAccess.Repositories
 
         }
 
-        public IQueryable<EmployeeProject> GetEmployeesAllocation(int ProjectId)
+        public IQueryable<EmployeeProject> GetEmployeesAllocation(int projectId)
         {
-            return _context.EmployeeProjects.Where (p => p.ProjectId == ProjectId);
+            return _context.EmployeeProjects.Where (p => p.ProjectId == projectId);
         }
 
+        public Project GetProjectById(int projectId)
+        {
+            return _context.Projects.Where(p => p.Id == projectId).SingleOrDefault();
+        }
+
+        public IEnumerable <EmployeeProject> GetEmployeeProjectByid(int projectId)
+        {
+            return _context.EmployeeProjects.Where(ep => ep.ProjectId == projectId).ToList();
+        }
         public void Add(Project project)
         {
             _context.Projects.Add(project);
@@ -46,6 +55,22 @@ namespace DataAccess.Repositories
         {
             _context.SaveChanges();
         }
-        
+
+        public void Delete(Project project, IEnumerable<EmployeeProject> employeeProjects)
+        {
+            if (employeeProjects.Count() != 0)
+            {
+                foreach (EmployeeProject employeeProject in employeeProjects)
+                {
+                    _context.EmployeeProjects.Remove(employeeProject);
+                }
+            }
+            if (project != null)
+            {
+                _context.Projects.Remove(project);
+            }
+            Save();
+        }
+
     }
 }

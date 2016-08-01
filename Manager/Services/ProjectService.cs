@@ -36,7 +36,7 @@ namespace Manager.Services
 
         public IEnumerable<EmployeeInfo> GetByProjectId(int projectId)
         {
-            var employees = _projectRepository.GetByProjectId(projectId);
+            var employees = _projectRepository.GetEmployeeByProjectId(projectId);
             var employeeInfos = _mapper.Map<IEnumerable<EmployeeInfo>>(employees);
             return employeeInfos;
         }
@@ -46,6 +46,14 @@ namespace Manager.Services
             var newProject = _mapper.Map<Project>(inputInfo);
             _projectRepository.Add(newProject);
             return new OperationResult(true, Messages.SuccessfullyAddedProject);
+        }
+
+        public OperationResult Delete(int projectId)
+        {
+            Project project = _projectRepository.GetProjectById(projectId);
+            IEnumerable <EmployeeProject> employeeProject = _projectRepository.GetEmployeeProjectByid(projectId);
+            _projectRepository.Delete(project, employeeProject);
+            return new OperationResult(true, Messages.SuccessfullyDeletedProject);
         }
     }
 }
