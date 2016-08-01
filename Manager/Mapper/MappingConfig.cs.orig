@@ -14,12 +14,15 @@ namespace Manager.Mapper
             CreateMap<AddDepartmentInputInfo, Department>();
             CreateMap<Project, ProjectInfo>();
             CreateMap<Employee, EmployeeInfo>();
+<<<<<<< HEAD
             CreateMap<Project, ProjectInfo>().ForMember(
                 pi => pi.EmployeesNumber,
                 proj => proj.MapFrom(src => src.EmployeeProjects.Count)
             );
+=======
             CreateMap<Employee, MemberInfo>();
-            
+
+>>>>>>> origin/capac-Adi
         }
     }
 }
