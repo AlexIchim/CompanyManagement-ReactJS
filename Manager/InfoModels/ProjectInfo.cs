@@ -7,8 +7,8 @@ namespace Manager.InfoModels
     {
         public int Id { get; set; }
         public string Name { get; set; }
-        public Department Department { get; set; }
+        public int Department { get; set; }
         public string Duration { get; set; }
-        public Status Status { get; set; }
+        public string Status { get; set; }
     }
 }

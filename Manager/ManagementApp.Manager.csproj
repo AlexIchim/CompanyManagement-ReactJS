@@ -59,6 +59,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="InfoModels\DepartmentInfo.cs" />
+    <Compile Include="InfoModels\EmployeeInfo.cs" />
     <Compile Include="InfoModels\ProjectInfo.cs" />
     <Compile Include="InputInfoModels\AddProjectInputInfo.cs" />
     <Compile Include="InputInfoModels\UpdateDepartmentInputInfo.cs" />

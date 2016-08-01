@@ -33,7 +33,7 @@ namespace ManagementApp.Manager.Tests
         public void Add_ReturnsSuccessfulMessage()
         {
             //Arrange
-            var projectInputInfo = new AddProjectInputInfo{Name = "Project1",Department = new Department(), Duration  =  "3 months", Status = Status.InProgress};
+            var projectInputInfo = new AddProjectInputInfo{Name = "Project1", Department = 1, Duration  =  "3 months", Status = "In progress"};
             var project = new Project { Name = "Project1", Department = new Department(), Duration = "3 months", Status = Status.InProgress };
 
             _mapperMock.Setup(m => m.Map<Project>(projectInputInfo)).Returns(project);
@@ -45,6 +45,13 @@ namespace ManagementApp.Manager.Tests
             //Assert
             Assert.IsTrue(result.Success);
             Assert.AreEqual(Messages.SuccessfullyAddedProject, result.Message);
+        }
+
+        [Test]
+        public void GetAllMembersFromProject_ReturnsSuccessfulMessage()
+        {
+            //Act
+            //var result = 
         }
 
     }

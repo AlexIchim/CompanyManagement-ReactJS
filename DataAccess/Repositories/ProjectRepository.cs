@@ -1,9 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data.Entity.Core.Objects;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Contracts;
 using DataAccess.Context;
 using Domain.Models;
@@ -29,5 +25,41 @@ namespace DataAccess.Repositories
         {
             _context.SaveChanges();
         }
+
+        public Project GetById(int id)
+        {
+            return _context.Projects.SingleOrDefault(p => p.Id == id);
+        }
+
+        public IEnumerable<Employee> GetAllMembersFromProject(int projectId)
+
+        {
+       
+            ICollection<Employee> allEmployees = new List<Employee>();
+            var assignments = _context.Assignments.Where(ep => ep.ProjectId == projectId);
+
+            foreach (Assignment asgn in assignments)
+            {
+                //int employeeId = asgn.EmployeeId;
+                //Employee employee = _context.Employees.SingleOrDefault(p => p.Id == employeeId);
+                allEmployees.Add(asgn.Employee);
+            }
+            return allEmployees.ToArray();
+        }
+
+        public int GetAllocationOfEmployeeFromProject(int projectId, int employeeId)
+        {
+            Assignment assignment = _context.Assignments.SingleOrDefault(ep => ep.ProjectId == projectId && ep.EmployeeId ==employeeId);
+            return assignment.Allocation;
+        }
+
+        public int GetNrTeamMembers(int projectId)
+        {
+            var assignments = _context.Assignments.Where(asgn => asgn.ProjectId == projectId);
+            int nr = assignments.Count();
+            return nr;
+
+        }
     }
+
 }

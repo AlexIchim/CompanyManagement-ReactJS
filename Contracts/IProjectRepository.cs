@@ -11,5 +11,9 @@ namespace Contracts
     {
         void Add(Project project);
         void Save();
+        Project GetById(int id);
+        IEnumerable<Employee> GetAllMembersFromProject(int projectId);
+        int GetAllocationOfEmployeeFromProject(int projectId, int employeeId);
+        int GetNrTeamMembers(int projectId);
     }
 }
