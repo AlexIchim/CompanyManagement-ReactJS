@@ -17,9 +17,17 @@ namespace ManagementApp.Controllers
        
         [Route("getEmployeeByProjectId")]
         [HttpGet]
-        public IHttpActionResult GetEmployeeByProjectId(int ProjectId)
+        public IHttpActionResult GetEmployeeByProjectId(int projectId)
         {
-            var result = _projectService.GetByProjectId(ProjectId);
+            var result = _projectService.GetByProjectId(projectId);
+            return Json(result);
+        }
+
+        [Route ("getEmployeesAllocation")]
+        [HttpGet]
+        public IHttpActionResult GetEmployeesAllocation(int projectId)
+        {
+            var result = _projectService.GetEmployeesAllocation(projectId);
             return Json(result);
         }
     }

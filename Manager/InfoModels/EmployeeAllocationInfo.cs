@@ -6,9 +6,10 @@ using System.Threading.Tasks;
 
 namespace Manager.InfoModels
 {
-    public class EmployeeInfo
+    public class EmployeeAllocationInfo
     {
         public int Id { get; set; }
         public string Name { get; set; }
+        public int Allocation { get; set; }
     }
 }

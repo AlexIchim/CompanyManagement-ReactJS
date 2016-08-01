@@ -21,6 +21,17 @@ namespace Manager.Services
             _mapper = mapper;
         }
 
+        public IEnumerable<EmployeeAllocationInfo> GetEmployeesAllocation(int projectId)
+        {
+            return _projectRepository.GetEmployeesAllocation(projectId)
+                .Select(proj => new EmployeeAllocationInfo
+                {
+                    Id = proj.EmployeeId,
+                    Name = proj.Employee.Name,
+                    Allocation = proj.Allocation
+                }).ToList();
+        }
+
         public IEnumerable<EmployeeInfo> GetByProjectId(int projectId)
         {
             var employees = _projectRepository.GetByProjectId(projectId);

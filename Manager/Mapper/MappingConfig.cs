@@ -12,6 +12,7 @@ namespace Manager.Mapper
             CreateMap<Department, DepartmentInfo>();
             CreateMap<AddDepartmentInputInfo, Department>();
             CreateMap<Employee, EmployeeInfo>();
+            CreateMap<Employee, EmployeeAllocationInfo>();
         }
     }
 }

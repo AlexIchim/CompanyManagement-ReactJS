@@ -30,5 +30,12 @@ namespace DataAccess.Repositories
             return array.ToArray();
 
         }
+
+        public IQueryable<EmployeeProject> GetEmployeesAllocation(int ProjectId)
+        {
+            return _context.EmployeeProjects.Where (p => p.ProjectId == ProjectId);
+        }
+
+        
     }
 }
