@@ -33,7 +33,7 @@ namespace Manager.Mapper
                  d => d.MapFrom(src => src.DepartmentManager.Name)
              );
 
-
+            CreateMap<EmployeeProject, ProjectsOfAnEmployeeInfo>();
         }
     }
 }
