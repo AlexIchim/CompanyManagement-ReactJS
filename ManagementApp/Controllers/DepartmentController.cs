@@ -22,10 +22,24 @@ namespace ManagementApp.Controllers
             return Json(result);
         }
 
-        [Route("getById/{id}")]
+        [Route("getById")]
         [HttpGet]
-        public IHttpActionResult GetDepartmentById(int id) {
-            var result = _departmentService.GetDepartmentById(id);
+        public IHttpActionResult GetDepartmentById(int departmentId) {
+            var result = _departmentService.GetDepartmentById(departmentId);
+            return Json(result);
+        }
+
+        [Route("getMembersOfDepartment")]
+        [HttpGet]
+        public IHttpActionResult GetAllMembersOfADepartment(int departmentId) {
+            var result = _departmentService.GetAllMembersOfADepartment(departmentId);
+            return Json(result);
+        }
+
+        [Route("getProjectsOfDepartment")]
+        [HttpGet]
+        public IHttpActionResult GetAllProjectsOfADepartment(int departmentId) {
+            var result = _departmentService.GetAllProjectsOfADepartment(departmentId);
             return Json(result);
         }
 

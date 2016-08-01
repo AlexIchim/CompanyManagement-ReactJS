@@ -68,7 +68,16 @@ namespace Manager {
                 return ResourceManager.GetString("ErrorWhileUpdatingDepartment", resourceCulture);
             }
         }
-        
+
+        /// <summary>
+        ///   Looks up a localized string similar to &apos;Department could not be modified&apos;.
+        /// </summary>
+        public static string ErrorWhileDeletingDepartment {
+            get {
+                return ResourceManager.GetString("ErrorWhileDeletingDepartment", resourceCulture);
+            }
+        }
+
         /// <summary>
         ///   Looks up a localized string similar to &apos;Department was added with success&apos;.
         /// </summary>

@@ -21,9 +21,9 @@ namespace Manager.Services
         public IEnumerable<DepartmentInfo> GetAllDepartments()
         {
             var departments = _departmentRepository.GetAllDepartments();
-            var departmentInfos = _mapper.Map<IEnumerable<DepartmentInfo>>(departments);
+            var departmentsInfos = _mapper.Map<IEnumerable<DepartmentInfo>>(departments);
 
-            return departmentInfos;
+            return departmentsInfos;
         }
 
         public DepartmentInfo GetDepartmentById(int departmentId) {
@@ -33,19 +33,27 @@ namespace Manager.Services
             return departmentInfo;
         }
 
+        public IEnumerable<EmployeeInfo> GetAllMembersOfADepartment(int departmentId)
+        {
+            var employees = _departmentRepository.GetAllMembersOfADepartment(departmentId);
+            var employeesInfos = _mapper.Map<IEnumerable<EmployeeInfo>>(employees);
+
+            return employeesInfos;
+        }
+
+        public IEnumerable<ProjectInfo> GetAllProjectsOfADepartment(int departmentId) {
+            var projects = _departmentRepository.GetAllProjectsOfADepartment(departmentId);
+            var projectsInfos = _mapper.Map<IEnumerable<ProjectInfo>>(projects);
+
+            return projectsInfos;
+        }
+
         public OperationResult AddDepartment(AddDepartmentInputInfo inputInfo)
         {
             var newDepartment = _mapper.Map<Department>(inputInfo);
             _departmentRepository.AddDepartment(newDepartment);
 
             return new OperationResult(true, Messages.SuccessfullyAddedDepartment);
-        }
-
-        public OperationResult DeleteDepartment(int departmentId)
-        {
-            _departmentRepository.DeleteDepartment(departmentId);
-
-            return new OperationResult(true, Messages.SuccessfullyDeletedDepartment);
         }
 
         public OperationResult UpdateDepartment(UpdateDepartmentInputInfo inputInfo)
@@ -59,11 +67,21 @@ namespace Manager.Services
 
             department.Name = inputInfo.Name;
 
-            _departmentRepository.UpdateDepartment(department);
-
-            //_departmentRepository.Save();
+            _departmentRepository.Save();
 
             return new OperationResult(true, Messages.SuccessfullyUpdatedDepartment);
+        }
+
+        public OperationResult DeleteDepartment(int departmentId) {
+            var department = _departmentRepository.GetDepartmentById(departmentId);
+
+            if (department == null) {
+                return new OperationResult(false, Messages.ErrorWhileDeletingDepartment);
+            }
+
+            _departmentRepository.DeleteDepartment(department);
+
+            return new OperationResult(true, Messages.SuccessfullyDeletedDepartment);
         }
     }
 }

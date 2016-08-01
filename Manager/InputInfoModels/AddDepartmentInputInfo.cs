@@ -5,7 +5,7 @@ namespace Manager.InputInfoModels
     public class AddDepartmentInputInfo
     {
         public string Name { get; set; }
-        public  DepartmentManager { get; set; }
-        public Office Office { get; set; }
+        public int DepartmentManagerId { get; set; }
+        public int OfficeId { get; set; }
     }
 }

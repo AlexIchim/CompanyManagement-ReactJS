@@ -26,22 +26,26 @@ namespace DataAccess.Repositories
             return _context.Departments.SingleOrDefault(d=>d.Id == departmentId);
         }
 
+        public IEnumerable<Employee> GetAllMembersOfADepartment(int departmentId)
+        {
+            Department department = _context.Departments.SingleOrDefault(d => d.Id == departmentId);
+            return department.Employees;
+        }
+
+        public IEnumerable<Project> GetAllProjectsOfADepartment(int departmentId) {
+            Department department = _context.Departments.SingleOrDefault(d => d.Id == departmentId);
+            return department.Projects;
+        }
+
         public void AddDepartment(Department department)
         {
             _context.Departments.Add(department);
             Save();
         }
 
-        public void DeleteDepartment(int departmentId)
+        public void DeleteDepartment(Department department)
         {
-            Department department = _context.Departments.SingleOrDefault(d => d.Id == departmentId);
             _context.Departments.Remove(department);
-            Save();
-        }
-
-        public void UpdateDepartment(Department department)
-        {
-            _context.Entry(department).State = EntityState.Modified;
             Save();
         }
 
