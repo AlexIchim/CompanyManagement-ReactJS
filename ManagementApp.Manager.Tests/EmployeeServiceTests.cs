@@ -82,6 +82,19 @@ namespace ManagementApp.Manager.Tests
         }
 
         [Test]
+        public void GetById_CallsGetByIdFromRepository()
+        {
+            //Arrange
+            var employee = new Employee { Id = 1, Name = "George" };
+            var employeeInfo = new EmployeeInfo { Id = 1, Name = "George" };
+            //Act
+            _employeeService.GetById(employee.Id);
+
+            //Assert
+            _employeeRepositoryMock.Verify(x => x.GetById(employee.Id), Times.Once);
+        }
+
+        [Test]
         public void GetById_ReturnsTheCorrectEmployee()
         {
             //Arrange
