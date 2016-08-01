@@ -41,6 +41,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="IDepartmentRepository.cs" />
+    <Compile Include="IOfficeRepository.cs" />
+    <Compile Include="IProjectRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

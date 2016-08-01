@@ -1,0 +1,41 @@
+﻿using System.Linq;
+using AutoMapper;
+using Domain.Models;
+using Manager.InfoModels;
+using Manager.InputInfoModels;
+
+namespace Manager.Mapper
+{
+    public class MappingConfig : Profile
+    {
+        public MappingConfig()
+        {
+            CreateMap<AddDepartmentInputInfo, Department>();
+<<<<<<< HEAD
+            CreateMap<Office, OfficeInfo>();
+
+            CreateMap<Employee, EmployeeInfo>();
+            CreateMap<Employee, EmployeeAllocationInfo>();
+            CreateMap<Department, DepartmentInfo>().ForMember(
+                 di => di.NbrOfEmployees,
+                 d => d.MapFrom(src => src.Employees.Count)
+             ).ForMember(
+                 di => di.NbrOfProjects,
+                 d => d.MapFrom(src => src.Projects.Count)
+             ).ForMember(
+                 di => di.DepartmentManager,
+                 d => d.MapFrom(src => src.DepartmentManager.Name)
+             );
+
+=======
+            CreateMap<Employee, EmployeeInfo>();
+            CreateMap<Project, ProjectInfo>().ForMember(
+                pi => pi.EmployeesNumber,
+                proj => proj.MapFrom(src => src.EmployeeProjects.Count)
+            );
+            CreateMap<Employee, MemberInfo>();
+>>>>>>> capac-andreimuresan
+            
+        }
+    }
+}
