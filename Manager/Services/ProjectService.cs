@@ -4,6 +4,7 @@ using Domain.Models;
 using Manager.InfoModels;
 using Manager.InputInfoModels;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Manager.Services
 {
@@ -45,10 +46,16 @@ namespace Manager.Services
 
         }
 
-        public IEnumerable<EmployeeInfo> GetAllMembersFromProject(int projectId)
+        public IEnumerable<AssignmentInfo> GetAllMembersFromProject(int projectId)
         {
-            var employees = _projectRepository.GetAllMembersFromProject(projectId);
-            return _mapper.Map<IEnumerable<EmployeeInfo>>(employees);
+            var assignments = _projectRepository.GetAllAssignmentsFromProject(projectId);
+            var assignmentsInfo = new List<AssignmentInfo>();
+            foreach (Assignment assignment in assignments)
+            {
+                AssignmentInfo assignmentInfo = new AssignmentInfo(assignment.Employee.Name, assignment.Employee.Position, assignment.Allocation);
+                assignmentsInfo.Add(assignmentInfo);
+            }
+            return assignmentsInfo;
         }
 
         public int GetAllocationOfEmployeeFromProject(int projectId, int employeeId)

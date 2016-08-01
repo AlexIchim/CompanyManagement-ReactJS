@@ -13,7 +13,7 @@ namespace Contracts
         void Save();
         IEnumerable<Project> GetAll();
         Project GetById(int id);
-        IEnumerable<Employee> GetAllMembersFromProject(int projectId);
+        IEnumerable<Assignment> GetAllAssignmentsFromProject(int projectId);
         int GetAllocationOfEmployeeFromProject(int projectId, int employeeId);
         int GetNrTeamMembers(int projectId);
     }

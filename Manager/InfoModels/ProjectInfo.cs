@@ -5,9 +5,10 @@ namespace Manager.InfoModels
 {
     public class ProjectInfo
     {
+
         public string Name { get; set; }
         public int NrMembers { get; set; }
         public string Duration { get; set; }
-        public virtual Status Status { get; set; }
+        public Status Status { get; set; }
     }
 }

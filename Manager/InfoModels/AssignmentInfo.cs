@@ -7,11 +7,16 @@ using System.Threading.Tasks;
 
 namespace Manager.InfoModels
 {
-    public class EmployeeInfo
+    public class AssignmentInfo
     {
+        public AssignmentInfo(string name, Position position, int allocation)
+        {
+            this.Name = name;
+            this.Position = position;
+            this.Allocation = allocation;
+        }
         public string Name { get; set; }
         public Position Position { get; set; }
         public int Allocation { get; set; }
-        
     }
 }

@@ -58,6 +58,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="InfoModels\AssignmentInfo.cs" />
     <Compile Include="InfoModels\DepartmentInfo.cs" />
     <Compile Include="InfoModels\EmployeeInfo.cs" />
     <Compile Include="InfoModels\ProjectInfo.cs" />

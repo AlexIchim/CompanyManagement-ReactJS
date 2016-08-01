@@ -35,20 +35,12 @@ namespace DataAccess.Repositories
             return _context.Projects.SingleOrDefault(p => p.Id == id);
         }
 
-        public IEnumerable<Employee> GetAllMembersFromProject(int projectId)
+        public IEnumerable<Assignment> GetAllAssignmentsFromProject(int projectId)
 
         {
-       
             ICollection<Employee> allEmployees = new List<Employee>();
             var assignments = _context.Assignments.Where(ep => ep.ProjectId == projectId);
-
-            foreach (Assignment asgn in assignments)
-            {
-                //int employeeId = asgn.EmployeeId;
-                //Employee employee = _context.Employees.SingleOrDefault(p => p.Id == employeeId);
-                allEmployees.Add(asgn.Employee);
-            }
-            return allEmployees.ToArray();
+            return assignments.ToArray();
         }
 
         public int GetAllocationOfEmployeeFromProject(int projectId, int employeeId)
