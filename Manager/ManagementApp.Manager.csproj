@@ -65,9 +65,11 @@
     <Compile Include="InfoModels\ProjectInfo.cs" />
     <Compile Include="InfoModels\DepartmentInfo.cs" />
     <Compile Include="InfoModels\OfficeInfo.cs" />
+    <Compile Include="InputInfoModels\AddOfficeInputInfo.cs" />
     <Compile Include="InputInfoModels\AddPositionInputInfo.cs" />
     <Compile Include="InputInfoModels\UpdateDepartmentInputInfo.cs" />
     <Compile Include="InputInfoModels\AddDepartmentInputInfo.cs" />
+    <Compile Include="InputInfoModels\UpdateOfficeInputInfo.cs" />
     <Compile Include="InputInfoModels\UpdatePositionInputInfo.cs" />
     <Compile Include="Mapper\MappingConfig.cs" />
     <Compile Include="OperationResult.cs" />
@@ -82,6 +84,7 @@
     <Compile Include="Services\DepartmentService.cs" />
     <Compile Include="Services\OfficeService.cs" />
     <Compile Include="Services\PositionService.cs" />
+    <Compile Include="Validators\OfficeValidator.cs" />
     <Compile Include="Validators\PositionValidator.cs" />
   </ItemGroup>
   <ItemGroup>

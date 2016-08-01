@@ -162,4 +162,49 @@
   <data name="ErrorWhileUpdatingPosition_InvalidId" xml:space="preserve">
     <value>'Error while updating position: Invalid id'</value>
   </data>
+  <data name="ErrorWhileAddingOffice_AddressTooLong" xml:space="preserve">
+    <value>'Office could not be added: Address too long.'</value>
+  </data>
+  <data name="ErrorWhileAddingOffice_EmptyAddress" xml:space="preserve">
+    <value>'Office could not be added: Address fied is empty.'</value>
+  </data>
+  <data name="ErrorWhileAddingOffice_EmptyName" xml:space="preserve">
+    <value>'Office could not be added: Name fied is empty.'</value>
+  </data>
+  <data name="ErrorWhileAddingOffice_EmptyPhone" xml:space="preserve">
+    <value>'Office could not be added: Phone fied is empty.'</value>
+  </data>
+  <data name="ErrorWhileAddingOffice_NameTooLong" xml:space="preserve">
+    <value>'Office could not be added: Name too long.'</value>
+  </data>
+  <data name="ErrorWhileAddingOffice_PhoneTooLong" xml:space="preserve">
+    <value>'Office could not be added: Phone too long.'</value>
+  </data>
+  <data name="ErrorWhileUpdatingOffice_AddressTooLong" xml:space="preserve">
+    <value>'Office could not be updated: Address too long.'</value>
+  </data>
+  <data name="ErrorWhileUpdatingOffice_EmptyAddress" xml:space="preserve">
+    <value>'Office could not be updated Address fied is empty.'</value>
+  </data>
+  <data name="ErrorWhileUpdatingOffice_EmptyName" xml:space="preserve">
+    <value>'Office could not be updated Name fied is empty.'</value>
+  </data>
+  <data name="ErrorWhileUpdatingOffice_EmptyPhone" xml:space="preserve">
+    <value>'Office could not be updated Phone fied is empty.'</value>
+  </data>
+  <data name="ErrorWhileUpdatingOffice_InvalidId" xml:space="preserve">
+    <value>'Error while updating office: Invalid id'</value>
+  </data>
+  <data name="ErrorWhileUpdatingOffice_NameTooLong" xml:space="preserve">
+    <value>'Office could not be updated: Name too long.'</value>
+  </data>
+  <data name="ErrorWhileUpdatingOffice_PhoneTooLong" xml:space="preserve">
+    <value>'Office could not be updated: Phone too long.'</value>
+  </data>
+  <data name="SuccessfullyAddedOffice" xml:space="preserve">
+    <value>'Office was added with success'</value>
+  </data>
+  <data name="SuccessfullyUpdatedOffice" xml:space="preserve">
+    <value>'Office was updated with success'</value>
+  </data>
 </root>
