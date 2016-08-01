@@ -70,11 +70,11 @@ namespace Manager.Services
 
             if (employee == null)
             {
-                return new OperationResult(false, Messages.ErrorWhileDeletingEmployee);
+                return new OperationResult(false, Messages.ErrorWhileReleasingEmployee);
             }
 
-            _employeeRepository.Delete(employee);
-            return new OperationResult(true, Messages.SuccessfullyDeletedEmployee);
+            _employeeRepository.Delete(id);
+            return new OperationResult(true, Messages.SuccessfullyReleasedEmployee);
         }
     }
 }

@@ -61,9 +61,10 @@ namespace DataAccess.Repositories
             return _context.Employees.SingleOrDefault(e => e.Id == id);
         }
 
-        public void Delete(Employee employee)
+        public void Delete(int id)
         {
-            _context.Employees.Remove(employee);
+            _context.Employees.Find(id).ReleaseDate = DateTime.Now;
+            _context.ProjectAllocations.RemoveRange(_context.ProjectAllocations.Where(x => x.EmployeeId == id));
             Save();
         }
         public void Save()

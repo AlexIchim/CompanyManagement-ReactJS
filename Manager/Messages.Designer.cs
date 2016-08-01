@@ -79,20 +79,20 @@ namespace Manager {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to &apos;Employee does not exist&apos;.
-        /// </summary>
-        public static string ErrorWhileDeletingEmployee {
-            get {
-                return ResourceManager.GetString("ErrorWhileDeletingEmployee", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to &apos;Project coud not be deleted.&apos;.
         /// </summary>
         public static string ErrorWhileDeletingProject {
             get {
                 return ResourceManager.GetString("ErrorWhileDeletingProject", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to &apos;Employee does not exist&apos;.
+        /// </summary>
+        public static string ErrorWhileReleasingEmployee {
+            get {
+                return ResourceManager.GetString("ErrorWhileReleasingEmployee", resourceCulture);
             }
         }
         
@@ -160,20 +160,20 @@ namespace Manager {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to &apos;Employee was deleted with success&apos;.
-        /// </summary>
-        public static string SuccessfullyDeletedEmployee {
-            get {
-                return ResourceManager.GetString("SuccessfullyDeletedEmployee", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to &apos;Successfully deleted project.&apos;.
         /// </summary>
         public static string SuccessfullyDeletedProject {
             get {
                 return ResourceManager.GetString("SuccessfullyDeletedProject", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to &apos;Employee was released with success&apos;.
+        /// </summary>
+        public static string SuccessfullyReleasedEmployee {
+            get {
+                return ResourceManager.GetString("SuccessfullyReleasedEmployee", resourceCulture);
             }
         }
         
