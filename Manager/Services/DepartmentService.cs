@@ -65,7 +65,7 @@ namespace Manager.Services
             return employeeInfos;
         }
 
-       
+
 
         public OperationResult Update(UpdateDepartmentInputInfo inputInfo)
         {
@@ -80,6 +80,13 @@ namespace Manager.Services
             _departmentRepository.Save();
 
             return new OperationResult(true, Messages.SuccessfullyUpdatedDepartment);
+        }
+
+        public OperationResult AddEmployeeToDepartment(AddEmployeeToDepartmentInputInfo inputInfo)
+        {
+            var newEp = _mapper.Map<Employee>(inputInfo);
+            _departmentRepository.AddEmployeeToDepartment(newEp);
+            return new OperationResult(true, Messages.SuccessfullyAddedDepartment);
         }
     }
 }

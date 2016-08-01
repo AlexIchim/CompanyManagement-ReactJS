@@ -56,5 +56,13 @@ namespace DataAccess.Repositories
             var array = _context.Departments.SingleOrDefault(d => d.Id == id);
             return array.Employees;
         }
+
+        public void AddEmployeeToDepartment(Employee ep)
+        {
+            //Employee employee = _context.Employees.SingleOrDefault(e => e.Id == ep.Id);
+
+            _context.Employees.Add(ep);
+            _context.SaveChanges();
+        }
     }
 }

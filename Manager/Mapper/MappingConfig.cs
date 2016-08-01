@@ -1,5 +1,4 @@
-﻿using System.Linq;
-using AutoMapper;
+﻿using AutoMapper;
 using Domain.Models;
 using Manager.InfoModels;
 using Manager.InputInfoModels;
@@ -20,8 +19,8 @@ namespace Manager.Mapper
                 proj => proj.MapFrom(src => src.EmployeeProjects.Count)
             );
             CreateMap<Employee, MemberInfo>();
- 
-            
+
+
             CreateMap<Department, DepartmentInfo>().ForMember(
                  di => di.NbrOfEmployees,
                  d => d.MapFrom(src => src.Employees.Count)
@@ -34,6 +33,8 @@ namespace Manager.Mapper
              );
 
             CreateMap<AddEmployeeToProjectInputInfo, EmployeeProject>();
+
+            CreateMap<AddEmployeeToDepartmentInputInfo, Employee>();
 
 
         }
