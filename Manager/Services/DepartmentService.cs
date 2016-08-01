@@ -86,7 +86,7 @@ namespace Manager.Services
         {
             var newEp = _mapper.Map<Employee>(inputInfo);
             _departmentRepository.AddEmployeeToDepartment(newEp);
-            return new OperationResult(true, Messages.SuccessfullyAddedDepartment);
+            return new OperationResult(true, Messages.SuccessfullyAddedEmployee);
         }
     }
 }
