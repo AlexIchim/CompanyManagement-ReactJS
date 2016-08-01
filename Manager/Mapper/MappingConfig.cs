@@ -11,19 +11,20 @@ namespace Manager.Mapper
         {
             CreateMap<Department, DepartmentInfo>()
             .ForMember(
-                departmentInfo => departmentInfo.NumberOfEmployees,
+                departmentInfo => departmentInfo.NumberOfEmployees, 
+                department => department.MapFrom(src => src.Employees.Count))
+            .ForMember(
+                 departmentInfo => departmentInfo.NumberOfProjects,
+                 department => department.MapFrom(src => src.Projects.Count))
+            .ForMember(
+                 departmentInfo => departmentInfo.DepartmentManager,
+                 department => department.MapFrom(src => src.DepartmentManager.Name)
+             );
             CreateMap<Office, OfficeInfo>();
+
             CreateMap<AddOfficeInputInfo, Office>();
 
-                department => department.MapFrom(src => src.Employees.Count)
-            .ForMember(
-                departmentInfo => departmentInfo.NumberOfProjects,
-                department => department.MapFrom(src => src.Projects.Count)
-            )
-            .ForMember(
-                departmentInfo => departmentInfo.DepartmentManager,
-                department => department.MapFrom(src => src.DepartmentManager.Name)
-            );
+                
 
             CreateMap<AddDepartmentInputInfo, Department>();
             CreateMap<AddEmployeeInputInfo, Employee>();

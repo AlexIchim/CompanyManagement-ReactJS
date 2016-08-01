@@ -25,7 +25,7 @@ namespace Manager.Services
         {
           
             Project newProject = _mapper.Map<Project>(infoInput);
-            newProject.Department = _departmentRepository.GetById(infoInput.DepartmentId);
+            newProject.Department = _departmentRepository.GetDepartmentById(infoInput.DepartmentId);
             _projectRepository.Add(newProject);
 
             return new OperationResult(true, Messages.SuccessfullyAddedProject);

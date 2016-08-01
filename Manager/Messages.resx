@@ -159,4 +159,10 @@
   <data name="ErrorWhileDeletingEmployee" xml:space="preserve">
     <value>'Employee could not be deleted'</value>
   </data>
+  <data name="ErrorWhileDeletingDepartment" xml:space="preserve">
+    <value>'Department could not be deleted'</value>
+  </data>
+  <data name="SuccessfullyDeletedDepartment" xml:space="preserve">
+    <value>'Department was deleted with success'</value>
+  </data>
 </root>
