@@ -129,6 +129,13 @@ namespace DataAccess.Migrations {
                 Allocation = 30
             };
 
+            Assignment assignment4 = new Assignment()
+            {
+                Employee = employee2,
+                Project = project,
+                Allocation = 30
+            };
+
             Employee employee4 = new Employee() {
                 Name = "Name4",
                 Address = "Address4",
@@ -172,7 +179,8 @@ namespace DataAccess.Migrations {
                 p => new { p.EmployeeId, p.ProjectId },
                 assignment,
                 assignment2,
-                assignment3
+                assignment3,
+                assignment4
                 );
 
             //  This method will be called after migrating to the latest version.

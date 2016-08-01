@@ -12,8 +12,10 @@ namespace Manager.Mapper
             CreateMap<Department, DepartmentInfo>()
             .ForMember(
                 departmentInfo => departmentInfo.NumberOfEmployees,
+            CreateMap<Office, OfficeInfo>();
+            CreateMap<AddOfficeInputInfo, Office>();
+
                 department => department.MapFrom(src => src.Employees.Count)
-            )
             .ForMember(
                 departmentInfo => departmentInfo.NumberOfProjects,
                 department => department.MapFrom(src => src.Projects.Count)
@@ -24,10 +26,17 @@ namespace Manager.Mapper
             );
 
             CreateMap<AddDepartmentInputInfo, Department>();
+            CreateMap<AddEmployeeInputInfo, Employee>();
+            CreateMap<Project, ProjectInfo>().ForMember(projectInfo => projectInfo.NrMembers,
+                                                        project => project.MapFrom(src => src.Assignments.Count));
+            CreateMap<AddProjectInputInfo, Project>();
 
             CreateMap<Employee, EmployeeInfo>();
 
             CreateMap<Project, ProjectInfo>();
+            CreateMap<Employee, EmployeeInfo>();
+            CreateMap<AssignmentInfo, Assignment>();
+
         }
     }
 }
