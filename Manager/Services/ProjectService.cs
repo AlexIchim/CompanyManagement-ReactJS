@@ -2,6 +2,7 @@
 using Contracts;
 using Domain.Models;
 using Manager.InfoModels;
+using Manager.InputInfoModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -38,6 +39,13 @@ namespace Manager.Services
             var employees = _projectRepository.GetByProjectId(projectId);
             var employeeInfos = _mapper.Map<IEnumerable<EmployeeInfo>>(employees);
             return employeeInfos;
+        }
+
+        public OperationResult Add(AddProjectInputInfo inputInfo)
+        {
+            var newProject = _mapper.Map<Project>(inputInfo);
+            _projectRepository.Add(newProject);
+            return new OperationResult(true, Messages.SuccessfullyAddedProject);
         }
     }
 }

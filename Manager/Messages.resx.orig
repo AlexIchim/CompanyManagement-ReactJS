@@ -123,10 +123,13 @@
   <data name="SuccessfullyAddedDepartment" xml:space="preserve">
     <value>'Department was added with success'</value>
   </data>
+<<<<<<< HEAD
   <data name="SuccessfullyAddedOffice" xml:space="preserve">
     <value>'Office was added with success'</value>
+=======
   <data name="SuccessfullyAddedProject" xml:space="preserve">
     <value>'Porject was successfully added'</value>
+>>>>>>> origin/capac-cristina
   </data>
   <data name="SuccessfullyUpdatedDepartment" xml:space="preserve">
     <value>'Department was updated with success'</value>

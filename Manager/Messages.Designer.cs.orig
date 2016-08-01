@@ -81,9 +81,11 @@ namespace Manager {
         /// <summary>
         ///   Looks up a localized string similar to &apos;Office was added with success&apos;.
         /// </summary>
+        public static string SuccessfullyAddedOffice {
         public static string SuccessfullyAddedProject {
             get {
                 return ResourceManager.GetString("SuccessfullyAddedProject", resourceCulture);
+                return ResourceManager.GetString("SuccessfullyAddedOffice", resourceCulture);
             }
         }
         

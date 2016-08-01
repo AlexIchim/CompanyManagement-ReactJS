@@ -36,6 +36,16 @@ namespace DataAccess.Repositories
             return _context.EmployeeProjects.Where (p => p.ProjectId == ProjectId);
         }
 
+        public void Add(Project project)
+        {
+            _context.Projects.Add(project);
+            Save();
+        }
+
+        public void Save()
+        {
+            _context.SaveChanges();
+        }
         
     }
 }
