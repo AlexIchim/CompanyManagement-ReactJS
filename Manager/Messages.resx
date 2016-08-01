@@ -135,4 +135,7 @@
   <data name="SuccessfullyUpdatedEmployee" xml:space="preserve">
     <value>'Employee was updated with success'</value>
   </data>
+  <data name="EmployeeNotFound" xml:space="preserve">
+    <value>'Employee was not found'</value>
+  </data>
 </root>

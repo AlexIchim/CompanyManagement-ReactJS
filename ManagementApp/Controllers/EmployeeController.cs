@@ -22,6 +22,14 @@ namespace ManagementApp.Controllers
             return Json(result);
         }
 
+        [Route("getById")]
+        [HttpGet]
+        public IHttpActionResult GetById(int id)
+        {
+            var result = _employeeService.GetById(id);
+            return Json(result);
+        }
+
         [Route("add")]
         [HttpPost]
         public IHttpActionResult Add([FromBody] AddEmployeeInputInfo inputInfo)

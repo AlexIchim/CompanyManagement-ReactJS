@@ -25,7 +25,15 @@ namespace Manager.Services
 
             return employeeInfos;
         }
-        
+
+        public EmployeeInfo GetById(int id)
+        {
+            var employee = _employeeRepository.GetById(id);
+            var employeeInfo = _mapper.Map<EmployeeInfo>(employee);
+
+            return employeeInfo;
+        }
+
         public OperationResult Add(AddEmployeeInputInfo inputInfo)
         {
             var newEmployee = _mapper.Map<Employee>(inputInfo);

@@ -82,6 +82,23 @@ namespace ManagementApp.Manager.Tests
         }
 
         [Test]
+        public void GetById_ReturnsTheCorrectEmployee()
+        {
+            //Arrange
+            var employee = new Employee { Id = 1, Name = "George" };
+            var employeeInfo = new EmployeeInfo { Id = 1, Name = "George" };
+
+            _employeeRepositoryMock.Setup(m => m.GetById(employee.Id)).Returns(employee);
+            _mapperMock.Setup(m => m.Map<EmployeeInfo>(employee)).Returns(employeeInfo);
+
+            //Act - apeleaza metoda care vreau sa fie testata
+            var result = _employeeService.GetById(employee.Id);
+
+            //Assert
+            Assert.AreEqual(1, result.Id);
+        }
+
+        [Test]
         public void Add_ReturnsSuccessfulMessage()
         {
             //Arrange
