@@ -10,7 +10,7 @@ namespace Domain.Models
 
         public int OfficeId { get; set; }
 
-        public Office Office { get; set; }
+        public virtual Office Office { get; set; }
 
         public virtual Employee DepartmentManager { get; set; }
 
