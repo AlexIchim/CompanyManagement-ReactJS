@@ -61,9 +61,16 @@ namespace DataAccess.Repositories
             return _context.Employees.SingleOrDefault(e => e.Id == id);
         }
 
+        public void Delete(Employee employee)
+        {
+            _context.Employees.Remove(employee);
+            Save();
+        }
         public void Save()
         {
             _context.SaveChanges();
         }
+
+       
     }
 }

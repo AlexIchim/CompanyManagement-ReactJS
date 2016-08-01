@@ -62,5 +62,19 @@ namespace Manager.Services
 
             return employeeAllocationInfos;
         }
+
+
+        public OperationResult Delete(int id)
+        {
+            var employee = _employeeRepository.GetById(id);
+
+            if (employee == null)
+            {
+                return new OperationResult(false, Messages.ErrorWhileDeletingEmployee);
+            }
+
+            _employeeRepository.Delete(employee);
+            return new OperationResult(true, Messages.SuccessfullyDeletedEmployee);
+        }
     }
 }

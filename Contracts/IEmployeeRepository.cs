@@ -14,6 +14,7 @@ namespace Contracts
         IEnumerable<Employee> GetAllDepartmentManagers();
         IEnumerable<Tuple<string, int>> GetAllocationsByEmployeeId(int id);
         Employee GetById(int id);
+        void Delete(Employee employee);
         void Save();
 
     }
