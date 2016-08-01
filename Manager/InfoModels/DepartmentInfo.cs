@@ -11,6 +11,7 @@ namespace Manager.InfoModels
         public int OfficeId { get; set; }
 
         //custom: 
+        public string DepartmentManagerName { get; set; }
         public int EmployeeCount { get; set; }
         public int ProjectCount { get; set; }
     }
