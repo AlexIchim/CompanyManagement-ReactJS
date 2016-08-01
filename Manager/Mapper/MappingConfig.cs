@@ -9,10 +9,19 @@ namespace Manager.Mapper
     {
         public MappingConfig()
         {
+            CreateMap<Office, OfficeInfo>();
+            CreateMap<AddOfficeInputInfo, Office>();
+
             CreateMap<Department, DepartmentInfo>();
             CreateMap<Employee, EmployeeInfo>();
             CreateMap<AddDepartmentInputInfo, Department>();
             CreateMap<AddEmployeeInputInfo, Employee>();
+            CreateMap<Project, ProjectInfo>().ForMember(projectInfo => projectInfo.NrMembers,
+                                                        project => project.MapFrom(src => src.Assignments.Count));
+            CreateMap<AddProjectInputInfo, Project>();
+            CreateMap<Employee, EmployeeInfo>();
+            CreateMap<AssignmentInfo, Assignment>();
+
         }
     }
 }

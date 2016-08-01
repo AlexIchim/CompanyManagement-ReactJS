@@ -62,6 +62,8 @@ namespace ManagementApp.App_Start
         {
             builder.RegisterType<DepartmentRepository>().As<IDepartmentRepository>();
             builder.RegisterType<EmployeeRepository>().As<IEmployeeRepository>();
+            builder.RegisterType<ProjectRepository>().As<IProjectRepository>();
+            builder.RegisterType<OfficeRepository>().As<IOfficeRepository>();
         }
 
     }

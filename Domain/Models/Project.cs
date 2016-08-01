@@ -20,8 +20,8 @@ namespace Domain.Models {
         }
         public int Id { get; set; }
         public string Name { get; set; }
-        public Department Department { get; set; }
-        public ICollection<Assignment> Assignments { get; set; }
+        public virtual Department Department { get; set; }
+        public virtual ICollection<Assignment> Assignments { get; set; }
         public string Duration { get; set; }
         public Status Status { get; set; }
     }
