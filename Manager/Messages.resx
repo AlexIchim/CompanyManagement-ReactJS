@@ -126,11 +126,11 @@
   <data name="ErrorWhileDeletingProject" xml:space="preserve">
     <value>'Project coud not be deleted.'</value>
   </data>
-  <data name="ErrorWhileDeletingEmployee" xml:space="preserve">
+  <data name="ErrorWhileReleasingEmployee" xml:space="preserve">
     <value>'Employee does not exist'</value>
   </data>
-  <data name="ErrorWhileUpdatingDepartment" xml:space="preserve">
-    <value>'Department could not be modified'</value>
+  <data name="ErrorWhileUpdatingDepartment_InvalidId" xml:space="preserve">
+    <value>'Department could not be modified: Invalid department id'</value>
   </data>
   <data name="ErrorWhileUpdatingPosition" xml:space="preserve">
     <value>'Position could not be modified.'</value>
@@ -147,8 +147,8 @@
   <data name="SuccessfullyAddedPosition" xml:space="preserve">
     <value>'Position was added with success'</value>
   </data>
-  <data name="SuccessfullyDeletedEmployee" xml:space="preserve">
-    <value>'Employee was deleted with success'</value>
+  <data name="SuccessfullyReleasedEmployee" xml:space="preserve">
+    <value>'Employee was released with success'</value>
   </data>
   <data name="SuccessfullyDeletedProject" xml:space="preserve">
     <value>'Successfully deleted project.'</value>
@@ -161,6 +161,21 @@
   </data>
   <data name="ErrorWhileUpdatingPosition_InvalidId" xml:space="preserve">
     <value>'Error while updating position: Invalid id'</value>
+  </data>
+  <data name="ErrorWhileAddingDepartment_EmptyName" xml:space="preserve">
+    <value>'Department could not be added: Name field is empty.'</value>
+  </data>
+  <data name="ErrorWhileAddingDepartment_NameTooLong" xml:space="preserve">
+    <value>'Department could not be updated: Name too long.'</value>
+  </data>
+  <data name="ErrorWhileAddingDepartment" xml:space="preserve">
+    <value>'Department already exist in this office'</value>
+  </data>
+  <data name="ErrorWhileAddingDepartment_OfficeIdInvalid" xml:space="preserve">
+    <value>'Department could not be added: OfficeId invalid.'</value>
+  </data>
+  <data name="ErrorWhileUpdatingDepartment_OfficeIdInvalid" xml:space="preserve">
+    <value>'Department could not be updated: OfficeId invalid.'</value>
   </data>
   <data name="AllocationIdInvalid" xml:space="preserve">
     <value>'Allocation id invalid.'</value>

@@ -86,6 +86,7 @@
     <Compile Include="Services\OfficeService.cs" />
     <Compile Include="Services\PositionService.cs" />
     <Compile Include="Validators\AllocationValidator.cs" />
+    <Compile Include="Validators\DepartmentValidator.cs" />
     <Compile Include="Validators\PositionValidator.cs" />
   </ItemGroup>
   <ItemGroup>

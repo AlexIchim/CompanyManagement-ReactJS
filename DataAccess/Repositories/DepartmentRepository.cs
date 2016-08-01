@@ -4,6 +4,7 @@ using System.Linq;
 using Contracts;
 using DataAccess.Context;
 using Domain.Models;
+using System;
 
 namespace DataAccess.Repositories
 {
@@ -25,7 +26,10 @@ namespace DataAccess.Repositories
         {
             return _context.Departments.SingleOrDefault(d => d.Id == Id);
         }
-
+        public Department GetByName(string name, int officeId)
+        {
+            return _context.Departments.SingleOrDefault(d => d.Name == name && d.OfficeId == officeId);
+        }
         public IEnumerable<Project> GetProjectsByDepartmentId(int id)
         {
             var dept = _context.Departments.SingleOrDefault(d => d.Id == id);
@@ -52,15 +56,37 @@ namespace DataAccess.Repositories
             }
         }
 
-        public void Add(Department department)
+        public void Add(Department department, int? departmentManagerId)
         {
+            if (departmentManagerId != null)
+            {
+                Employee departmentManager = _context.Employees.First(e => e.Id == departmentManagerId);
+                department.DepartmentManager = departmentManager;
+            }
             _context.Departments.Add(department);
+            Save();
+        }
+        public void Update(Department department, int? departmentManagerId)
+        {
+            if (departmentManagerId != null)
+            {
+                Employee departmentManager = _context.Employees.First(e => e.Id == departmentManagerId);
+                department.DepartmentManager = departmentManager;
+                _context.Departments.First(d => d.Id == department.Id).DepartmentManager = departmentManager;
+            }
             Save();
         }
 
         public void Save()
         {
-            _context.SaveChanges();
+            try
+            {
+                _context.SaveChanges();
+            }
+            catch (Exception ex)
+            {
+                Console.Write(ex.InnerException);
+            }
         }
     }
 }
