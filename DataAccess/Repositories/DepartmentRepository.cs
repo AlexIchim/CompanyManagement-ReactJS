@@ -58,7 +58,7 @@ namespace DataAccess.Repositories
 
         public IEnumerable<Employee> GetAllDepartmentMembers(int id)
         {
-            var array = _context.Departments.Include("Employees").SingleOrDefault(d => d.Id == id);
+            var array = _context.Departments.SingleOrDefault(d => d.Id == id);
             return array.Employees;
         }
     }

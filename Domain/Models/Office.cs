@@ -1,12 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 
 namespace Domain.Models
 {
-    public class Office{
+    public class Office
+    {
 
         public int Id { get; set; }
 
@@ -18,6 +15,6 @@ namespace Domain.Models
 
         public byte[] Image { get; set; }
 
-        public ICollection<Department> Departments { get; set; }
+        public virtual ICollection<Department> Departments { get; set; }
     }
 }

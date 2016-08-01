@@ -15,6 +15,7 @@ namespace Manager.Mapper
             CreateMap<Employee, EmployeeInfo>();
             CreateMap<Employee, MemberInfo>();
 
+
         }
     }
 }
