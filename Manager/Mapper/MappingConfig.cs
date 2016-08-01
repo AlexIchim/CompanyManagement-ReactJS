@@ -9,6 +9,9 @@ namespace Manager.Mapper
     {
         public MappingConfig()
         {
+            CreateMap<Office, OfficeInfo>();
+            CreateMap<AddOfficeInputInfo, Office>();
+
             CreateMap<Department, DepartmentInfo>();
             CreateMap<AddDepartmentInputInfo, Department>();
 

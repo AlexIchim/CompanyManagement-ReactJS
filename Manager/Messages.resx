@@ -117,16 +117,30 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="ErrorWhileDeletingOffice" xml:space="preserve">
+    <value>'Office could not be deleted'</value>
+  </data>
   <data name="ErrorWhileUpdatingDepartment" xml:space="preserve">
     <value>'Department could not be modified'</value>
+  </data>
+  <data name="ErrorWhileUpdatingOffice" xml:space="preserve">
+    <value>'Office could not be modified'</value>
   </data>
   <data name="SuccessfullyAddedDepartment" xml:space="preserve">
     <value>'Department was added with success'</value>
   </data>
   <data name="SuccessfullyAddedProject" xml:space="preserve">
     <value>'Project was added with success'</value>
+  <data name="SuccessfullyAddedOffice" xml:space="preserve">
+    <value>'Office was added with success'</value>
+  </data>
+  <data name="SuccessfullyDeletedOffice" xml:space="preserve">
+    <value>'Office was deleted with success'</value>
   </data>
   <data name="SuccessfullyUpdatedDepartment" xml:space="preserve">
     <value>'Department was updated with success'</value>
+  </data>
+  <data name="SuccessfullyUpdatedOffice" xml:space="preserve">
+    <value>'Office was updated with success'</value>
   </data>
 </root>

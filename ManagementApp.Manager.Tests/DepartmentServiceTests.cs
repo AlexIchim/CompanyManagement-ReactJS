@@ -9,7 +9,7 @@ using Manager.InputInfoModels;
 using Manager.Services;
 using Moq;
 using NUnit.Framework;
-
+/*
 namespace ManagementApp.Manager.Tests
 {
     [TestFixture]
