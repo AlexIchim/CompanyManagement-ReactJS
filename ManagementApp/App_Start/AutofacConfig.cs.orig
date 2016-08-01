@@ -61,8 +61,11 @@ namespace ManagementApp.App_Start
         private static void RegisterRepository(ContainerBuilder builder)
         {
             builder.RegisterType<DepartmentRepository>().As<IDepartmentRepository>();
+<<<<<<< HEAD
             builder.RegisterType<OfficeRepository>().As<IOfficeRepository>();
+=======
             builder.RegisterType<ProjectRepository>().As<IProjectRepository>();
+>>>>>>> capac-cristina
         }
 
     }

@@ -177,8 +177,11 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\DepartmentController.cs" />
+<<<<<<< HEAD
     <Compile Include="Controllers\OfficeController.cs" />
+=======
     <Compile Include="Controllers\ProjectController.cs" />
+>>>>>>> capac-cristina
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
