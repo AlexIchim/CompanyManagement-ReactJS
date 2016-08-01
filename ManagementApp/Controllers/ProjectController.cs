@@ -76,6 +76,13 @@ namespace ManagementApp.Controllers
             var result = _projectService.Update(inputInfo);
             return Json(result);
         }
+        [Route("editAllocation")]
+        [HttpPut]
+        public IHttpActionResult EditAllcation([FromBody] EditAllocationInputInfo inputInfo)
+        {
+            var result = _projectService.EditAllocation(inputInfo);
+            return Json(result);
+        }
 
 
     }

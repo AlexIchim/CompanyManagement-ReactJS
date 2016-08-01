@@ -156,4 +156,10 @@
   <data name="SuccessfullyUpdatedProject" xml:space="preserve">
     <value>'Project was updated with success'</value>
   </data>
+  <data name="ErrorWhileEditingAllocation" xml:space="preserve">
+    <value>'Allocation could not be modified'</value>
+  </data>
+  <data name="SuccessfullyEditedAllocation" xml:space="preserve">
+    <value>'Allocation was updated with success'</value>
+  </data>
 </root>

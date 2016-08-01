@@ -1,4 +1,5 @@
-﻿using AutoMapper;
+﻿using System;
+using AutoMapper;
 using Contracts;
 using Domain.Models;
 using Manager.InfoModels;
@@ -94,6 +95,16 @@ namespace Manager.Services
             _projectRepository.Save();
 
             return new OperationResult(true, Messages.SuccessfullyUpdatedProject);
+        }
+
+        public OperationResult EditAllocation(EditAllocationInputInfo inputInfo)
+        {
+            Boolean found = _projectRepository.editAllocation(inputInfo.projectId, inputInfo.employeeId, inputInfo.Allocation);
+            if (found == true)
+            {
+                return new OperationResult(true, Messages.SuccessfullyEditedAllocation);
+            }
+            return new OperationResult(false, Messages.ErrorWhileEditingAllocation);
         }
     }
 }

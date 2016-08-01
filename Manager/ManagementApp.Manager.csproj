@@ -65,6 +65,7 @@
     <Compile Include="InfoModels\OfficeInfo.cs" />
     <Compile Include="InputInfoModels\AddOfficeInputInfo.cs" />
     <Compile Include="InputInfoModels\AddProjectInputInfo.cs" />
+    <Compile Include="InputInfoModels\EditAllocationInputInfo.cs" />
     <Compile Include="InputInfoModels\UpdateDepartmentInputInfo.cs" />
     <Compile Include="InputInfoModels\AddDepartmentInputInfo.cs" />
     <Compile Include="InputInfoModels\UpdateOfficeInputInfo.cs" />

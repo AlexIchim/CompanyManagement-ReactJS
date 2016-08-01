@@ -79,6 +79,15 @@ namespace Manager {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to &apos;Allocation could not be modified&apos;.
+        /// </summary>
+        public static string ErrorWhileEditingAllocation {
+            get {
+                return ResourceManager.GetString("ErrorWhileEditingAllocation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to &apos;Department could not be modified&apos;.
         /// </summary>
         public static string ErrorWhileUpdatingDepartment {
@@ -147,6 +156,15 @@ namespace Manager {
         public static string SuccessfullyDeletedProject {
             get {
                 return ResourceManager.GetString("SuccessfullyDeletedProject", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to &apos;Allocation was updated with success&apos;.
+        /// </summary>
+        public static string SuccessfullyEditedAllocation {
+            get {
+                return ResourceManager.GetString("SuccessfullyEditedAllocation", resourceCulture);
             }
         }
         
