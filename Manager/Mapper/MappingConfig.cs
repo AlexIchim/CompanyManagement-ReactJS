@@ -9,8 +9,21 @@ namespace Manager.Mapper
     {
         public MappingConfig()
         {
-            CreateMap<Department, DepartmentInfo>();
             CreateMap<AddDepartmentInputInfo, Department>();
+            CreateMap<Office, OfficeInfo>();
+
+            CreateMap<Department, DepartmentInfo>().ForMember(
+                 di => di.NbrOfEmployees,
+                 d => d.MapFrom(src => src.Employees.Count)
+             ).ForMember(
+                 di => di.NbrOfProjects,
+                 d => d.MapFrom(src => src.Projects.Count)
+             ).ForMember(
+                 di => di.DepartmentManager,
+                 d => d.MapFrom(src => src.DepartmentManager.Name)
+             );
+
+            
         }
     }
 }
