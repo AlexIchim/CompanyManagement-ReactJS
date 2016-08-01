@@ -22,7 +22,7 @@ namespace ManagementApp.Controllers
             return Json(result);
         }
 
-        [Route("getAll")]
+        [Route("getAllProjects")]
         [HttpGet]
         public IHttpActionResult GetAll()
         {

@@ -50,7 +50,7 @@ namespace ManagementApp.Manager.Tests
             Assert.AreEqual(Messages.SuccessfullyAddedProject, result.Message);
         }
         [Test]
-        public void GetAll_ReturnsAListOfDepartments()
+        public void GetAll_ReturnsAListOfProjects()
         {
             //Arrange
             var projects = new List<Project>
@@ -75,7 +75,7 @@ namespace ManagementApp.Manager.Tests
         }
 
 
-
+        public void
         private Project CreateProject(string name, Department department, string duration, Status status)
         {
             var project = new Project
