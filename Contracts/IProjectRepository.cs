@@ -11,6 +11,8 @@ namespace Contracts
     public interface IProjectRepository
     {
         void Add(Project project);
+        void Delete(Project project);
+        Boolean editAllocation(int projectId, int employeeId, int newAllocation);
         void Save();
         IEnumerable<Project> GetAll();
         Project GetById(int id);

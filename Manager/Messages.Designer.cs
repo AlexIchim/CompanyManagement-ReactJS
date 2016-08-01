@@ -88,6 +88,24 @@ namespace Manager {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to &apos;Project could not be deleted&apos;.
+        /// </summary>
+        public static string ErrorWhileDeletingProject {
+            get {
+                return ResourceManager.GetString("ErrorWhileDeletingProject", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to &apos;Allocation could not be modified&apos;.
+        /// </summary>
+        public static string ErrorWhileEditingAllocation {
+            get {
+                return ResourceManager.GetString("ErrorWhileEditingAllocation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to &apos;Department could not be modified&apos;.
         /// </summary>
         public static string ErrorWhileUpdatingDepartment {
@@ -111,6 +129,15 @@ namespace Manager {
         public static string ErrorWhileUpdatingOffice {
             get {
                 return ResourceManager.GetString("ErrorWhileUpdatingOffice", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to &apos;Project could not be modified&apos;.
+        /// </summary>
+        public static string ErrorWhileUpdatingProject {
+            get {
+                return ResourceManager.GetString("ErrorWhileUpdatingProject", resourceCulture);
             }
         }
         
@@ -178,6 +205,24 @@ namespace Manager {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to &apos;Project was deleted successfully&apos;.
+        /// </summary>
+        public static string SuccessfullyDeletedProject {
+            get {
+                return ResourceManager.GetString("SuccessfullyDeletedProject", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to &apos;Allocation was updated with success&apos;.
+        /// </summary>
+        public static string SuccessfullyEditedAllocation {
+            get {
+                return ResourceManager.GetString("SuccessfullyEditedAllocation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to &apos;Department was updated with success&apos;.
         /// </summary>
         public static string SuccessfullyUpdatedDepartment {
@@ -201,6 +246,15 @@ namespace Manager {
         public static string SuccessfullyUpdatedOffice {
             get {
                 return ResourceManager.GetString("SuccessfullyUpdatedOffice", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to &apos;Project was updated with success&apos;.
+        /// </summary>
+        public static string SuccessfullyUpdatedProject {
+            get {
+                return ResourceManager.GetString("SuccessfullyUpdatedProject", resourceCulture);
             }
         }
     }

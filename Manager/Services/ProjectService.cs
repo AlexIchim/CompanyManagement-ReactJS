@@ -3,6 +3,7 @@ using Contracts;
 using Domain.Models;
 using Manager.InfoModels;
 using Manager.InputInfoModels;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -23,12 +24,43 @@ namespace Manager.Services
 
         public OperationResult Add(AddProjectInputInfo infoInput)
         {
-          
             Project newProject = _mapper.Map<Project>(infoInput);
             newProject.Department = _departmentRepository.GetDepartmentById(infoInput.DepartmentId);
             _projectRepository.Add(newProject);
 
             return new OperationResult(true, Messages.SuccessfullyAddedProject);
+        }
+
+        public OperationResult Delete(int projectId) {
+            Project project = _projectRepository.GetById(projectId);
+            if (project == null) {
+                return new OperationResult(false, Messages.ErrorWhileDeletingProject);
+            }
+            _projectRepository.Delete(project);
+            return new OperationResult(true, Messages.SuccessfullyDeletedProject);
+        }
+
+        public OperationResult Update(UpdateProjectInputInfo inputInfo) {
+            var project = _projectRepository.GetById(inputInfo.Id);
+            if (project == null) {
+                return new OperationResult(false, Messages.ErrorWhileUpdatingProject);
+            }
+
+            project.Name = inputInfo.Name;
+            project.Duration = inputInfo.Duration;
+            project.Status = inputInfo.Status;
+
+            _projectRepository.Save();
+
+            return new OperationResult(true, Messages.SuccessfullyUpdatedProject);
+        }
+
+        public OperationResult EditAllocation(EditAllocationInputInfo inputInfo) {
+            Boolean found = _projectRepository.editAllocation(inputInfo.projectId, inputInfo.employeeId, inputInfo.Allocation);
+            if (found == true) {
+                return new OperationResult(true, Messages.SuccessfullyEditedAllocation);
+            }
+            return new OperationResult(false, Messages.ErrorWhileEditingAllocation);
         }
 
         public IEnumerable<ProjectInfo> GetAll()
@@ -52,7 +84,12 @@ namespace Manager.Services
             var assignmentsInfo = new List<AssignmentInfo>();
             foreach (Assignment assignment in assignments)
             {
-                AssignmentInfo assignmentInfo = new AssignmentInfo(assignment.Employee.Name, assignment.Employee.Position, assignment.Allocation);
+                AssignmentInfo assignmentInfo = new AssignmentInfo
+                {
+                    Name = assignment.Employee.Name,
+                    Position = assignment.Employee.Position,
+                    Allocation = assignment.Allocation
+                };
                 assignmentsInfo.Add(assignmentInfo);
             }
             return assignmentsInfo;

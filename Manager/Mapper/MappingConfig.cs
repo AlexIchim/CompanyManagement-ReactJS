@@ -19,25 +19,21 @@ namespace Manager.Mapper
             .ForMember(
                  departmentInfo => departmentInfo.DepartmentManager,
                  department => department.MapFrom(src => src.DepartmentManager.Name)
-             );
-            CreateMap<Office, OfficeInfo>();
+            );
+            CreateMap<AddDepartmentInputInfo, Department>();
 
+            CreateMap<Office, OfficeInfo>();
             CreateMap<AddOfficeInputInfo, Office>();
 
-                
-
-            CreateMap<AddDepartmentInputInfo, Department>();
+            CreateMap<Employee, EmployeeInfo>();
             CreateMap<AddEmployeeInputInfo, Employee>();
-            CreateMap<Project, ProjectInfo>().ForMember(projectInfo => projectInfo.NrMembers,
-                                                        project => project.MapFrom(src => src.Assignments.Count));
+
+            CreateMap<Project, ProjectInfo>()
+            .ForMember(
+                projectInfo => projectInfo.NrMembers,
+                project => project.MapFrom(src => src.Assignments.Count)
+            );
             CreateMap<AddProjectInputInfo, Project>();
-
-            CreateMap<Employee, EmployeeInfo>();
-
-            CreateMap<Project, ProjectInfo>();
-            CreateMap<Employee, EmployeeInfo>();
-            CreateMap<AssignmentInfo, Assignment>();
-
         }
     }
 }

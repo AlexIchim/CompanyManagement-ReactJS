@@ -18,14 +18,18 @@ namespace ManagementApp.Manager.Tests
     {
         private DepartmentService _departmentService;
         private Mock<IDepartmentRepository> _departmentRepositoryMock;
+        private Mock<IEmployeeRepository> _employeeRepositoryMock;
+        private Mock<IOfficeRepository> _officeRepositoryMock;
         private Mock<IMapper> _mapperMock;
 
         [SetUp]
         public void PerTestSetup()
         {
             _departmentRepositoryMock = new Mock<IDepartmentRepository>();
+            _employeeRepositoryMock = new Mock<IEmployeeRepository>();
+            _officeRepositoryMock = new Mock<IOfficeRepository>();
             _mapperMock = new Mock<IMapper>();
-            _departmentService = new DepartmentService(_mapperMock.Object, _departmentRepositoryMock.Object);
+            _departmentService = new DepartmentService(_mapperMock.Object, _departmentRepositoryMock.Object, _employeeRepositoryMock.Object, _officeRepositoryMock.Object);
         }
 
         [Test]

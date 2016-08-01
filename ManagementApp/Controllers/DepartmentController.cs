@@ -22,21 +22,21 @@ namespace ManagementApp.Controllers
             return Json(result);
         }
 
-        [Route("getById")]
+        [Route("getById/{departmentId}")]
         [HttpGet]
         public IHttpActionResult GetDepartmentById(int departmentId) {
             var result = _departmentService.GetDepartmentById(departmentId);
             return Json(result);
         }
 
-        [Route("getMembersOfDepartment")]
+        [Route("getMembersOfDepartment/{departmentId}")]
         [HttpGet]
         public IHttpActionResult GetAllMembersOfADepartment(int departmentId) {
             var result = _departmentService.GetAllMembersOfADepartment(departmentId);
             return Json(result);
         }
 
-        [Route("getProjectsOfDepartment")]
+        [Route("getProjectsOfDepartment/{departmentId}")]
         [HttpGet]
         public IHttpActionResult GetAllProjectsOfADepartment(int departmentId) {
             var result = _departmentService.GetAllProjectsOfADepartment(departmentId);
@@ -51,15 +51,16 @@ namespace ManagementApp.Controllers
             return Json(result);
         }
 
-        [Route("delete")]
+        [Route("delete/{departmentId}")]
         [HttpDelete]
-        public void Delete(int id) 
+        public IHttpActionResult Delete(int departmentId) 
         {
-            var result = _departmentService.DeleteDepartment(id);
+            var result = _departmentService.DeleteDepartment(departmentId);
+            return Json(result);
         }
 
         [Route("update")]
-        [HttpPost]
+        [HttpPut]
         public IHttpActionResult Update([FromBody]UpdateDepartmentInputInfo inputInfo)
         {
             var result = _departmentService.UpdateDepartment(inputInfo);

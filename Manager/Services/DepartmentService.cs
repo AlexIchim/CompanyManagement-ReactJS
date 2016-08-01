@@ -10,11 +10,15 @@ namespace Manager.Services
     public class DepartmentService
     {
         private readonly IDepartmentRepository _departmentRepository;
+        private readonly IEmployeeRepository _employeeRepository;
+        private readonly IOfficeRepository _officeRepository;
         private readonly IMapper _mapper;
 
-        public DepartmentService(IMapper mapper, IDepartmentRepository departmentRepository)
+        public DepartmentService(IMapper mapper, IDepartmentRepository departmentRepository, IEmployeeRepository employeeRepository, IOfficeRepository officeRepository)
         {
             _departmentRepository = departmentRepository;
+            _employeeRepository = employeeRepository;
+            _officeRepository = officeRepository;
             _mapper = mapper;
         }
 
@@ -51,6 +55,9 @@ namespace Manager.Services
         public OperationResult AddDepartment(AddDepartmentInputInfo inputInfo)
         {
             var newDepartment = _mapper.Map<Department>(inputInfo);
+            newDepartment.DepartmentManager = _employeeRepository.GetById(inputInfo.DepartmentManagerId);
+            newDepartment.Office = _officeRepository.GetById(inputInfo.OfficeId);
+
             _departmentRepository.AddDepartment(newDepartment);
 
             return new OperationResult(true, Messages.SuccessfullyAddedDepartment);
@@ -66,6 +73,7 @@ namespace Manager.Services
             }
 
             department.Name = inputInfo.Name;
+            department.DepartmentManager = _employeeRepository.GetById(inputInfo.DepartmentManagerId);
 
             _departmentRepository.Save();
 
