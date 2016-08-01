@@ -10,17 +10,21 @@ namespace Manager.Services
     public class ProjectService
     {
         private readonly IProjectRepository _projectRepository;
+        private readonly IDepartmentRepository _departmentRepository;
         private readonly IMapper _mapper;
 
-        public ProjectService(IMapper mapper, IProjectRepository projectRepository)
+        public ProjectService(IMapper mapper, IProjectRepository projectRepository, IDepartmentRepository departmentRepository)
         {
             _projectRepository = projectRepository;
             _mapper = mapper;
+            _departmentRepository = departmentRepository;
         }
 
         public OperationResult Add(AddProjectInputInfo infoInput)
         {
-            var newProject = _mapper.Map<Project>(infoInput);
+          
+            Project newProject = _mapper.Map<Project>(infoInput);
+            newProject.Department = _departmentRepository.GetById(infoInput.DepartmentId);
             _projectRepository.Add(newProject);
 
             return new OperationResult(true, Messages.SuccessfullyAddedProject);
