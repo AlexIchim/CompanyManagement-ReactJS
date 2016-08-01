@@ -30,7 +30,6 @@ namespace ManagementApp.Controllers
             return Json(result);
         }
 
-
         [Route("add")]
         [HttpPost]
         public IHttpActionResult Add([FromBody] AddDepartmentInputInfo inputInfo)

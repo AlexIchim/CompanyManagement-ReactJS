@@ -33,6 +33,15 @@ namespace ManagementApp.Controllers
             return Json(result);
         }
 
+        [Route("getAvailableEmployees")]
+        [HttpGet]
+        public IHttpActionResult GetgetAvailableEmployees(int? departmentId = null, int? positionId = null)
+        {
+            var result = _employeeService.GetAvailableEmployees(departmentId, positionId);
+            return Json(result);
+        }
+
+
         [Route("getById")]
         [HttpGet]
         public IHttpActionResult GetById(int id)

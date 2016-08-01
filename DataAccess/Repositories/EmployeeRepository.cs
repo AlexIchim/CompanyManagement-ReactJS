@@ -19,6 +19,20 @@ namespace DataAccess.Repositories
             return _context.Employees.ToArray();
         }
 
+        public IEnumerable<Employee> GetAvailable(int? departmentId, int? positionId)
+        {
+            return _context.Employees.Where(
+                e => (
+                    (
+                        e.ProjectAllocations.Count == 0 ||
+                        e.ProjectAllocations.Select(a => a.AllocationPercentage).Sum() < 100
+                    ) &&
+                    (departmentId == null || e.DepartmentId == departmentId) &&
+                    (positionId == null || e.PositionId == positionId)
+                )
+            ).ToArray();
+        }
+
         public IEnumerable<Employee> GetAllDepartmentManagers()
         {
             return _context.Employees.Where(e => e.Position.Id == 1).ToArray();
