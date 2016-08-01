@@ -11,5 +11,7 @@ namespace Contracts
     {
         IEnumerable<Employee> GetByProjectId(int ProjectId);
         IQueryable<EmployeeProject> GetEmployeesAllocation(int ProjectId);
+
+        void AddEmployeeToProject(EmployeeProject ep);
     }
 }
