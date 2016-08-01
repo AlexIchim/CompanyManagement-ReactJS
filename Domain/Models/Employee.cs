@@ -1,10 +1,6 @@
-﻿using System;
+﻿using Domain.Enums;
+using System;
 using System.Collections.Generic;
-using System.Globalization;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Domain.Enums;
 
 namespace Domain.Models
 {
@@ -12,7 +8,7 @@ namespace Domain.Models
     {
         public Employee()
         {
-            
+
         }
         public Employee(int id, string name, string address, DateTime employmentDate, DateTime releaseDate, int totalAllocation, JobType jobType, PositionType positionType, int departmentId)
         {
@@ -25,9 +21,8 @@ namespace Domain.Models
             JobType = jobType;
             PositionType = positionType;
             DepartmentId = departmentId;
-        
-        }
 
+        }
         public int Id { get; set; }
 
         public string Name { get; set; }

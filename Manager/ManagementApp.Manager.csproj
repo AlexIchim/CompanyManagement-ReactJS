@@ -62,6 +62,8 @@
     <Compile Include="InfoModels\OfficeInfo.cs" />
     <Compile Include="InfoModels\EmployeeAllocationInfo.cs" />
     <Compile Include="InfoModels\EmployeeInfo.cs" />
+    <Compile Include="InfoModels\MemberInfo.cs" />
+    <Compile Include="InfoModels\ProjectInfo.cs" />
     <Compile Include="InputInfoModels\UpdateDepartmentInputInfo.cs" />
     <Compile Include="InputInfoModels\AddDepartmentInputInfo.cs" />
     <Compile Include="Mapper\MappingConfig.cs" />

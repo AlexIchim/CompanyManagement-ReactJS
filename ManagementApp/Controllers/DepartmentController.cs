@@ -1,6 +1,6 @@
-﻿using System.Web.Http;
-using Manager.InputInfoModels;
+﻿using Manager.InputInfoModels;
 using Manager.Services;
+using System.Web.Http;
 
 namespace ManagementApp.Controllers
 {
@@ -22,6 +22,41 @@ namespace ManagementApp.Controllers
             return Json(result);
         }
 
+        [Route("getAllDepartmentProjects")]
+        [HttpGet]
+        public IHttpActionResult GetAllDepartmentProjects(int inputInfo)
+        {
+            var result = _departmentService.GetAllDepartmentProjects(inputInfo);
+            return Json(result);
+        }
+
+        [Route("getAllDepartmentMembers")]
+        [HttpGet]
+        public IHttpActionResult GetAllDepartmentMembers(int inputInfo)
+        {
+            var result = _departmentService.GetAllDepartmentMembers(inputInfo);
+            return Json(result);
+        }
+
+
+
+        [Route("GetAllUnAllocatedEmployeesOnProject")]
+        [HttpGet]
+        public IHttpActionResult GetAllUnAllocatedEmployeesOnProject()
+        {
+            var result = _departmentService.GetAllUnAllocatedEmployeesOnProject();
+            return Json(result);
+        }
+
+        [Route("GetEmployeesThatAreNotFullyAllocated")]
+        [HttpGet]
+        public IHttpActionResult GetEmployeesThatAreNotFullyAllocated()
+        {
+            var result = _departmentService.GetEmployeesThatAreNotFullyAllocated();
+            return Json(result);
+        }
+
+
         [Route("add")]
         [HttpPost]
         public IHttpActionResult Add([FromBody] AddDepartmentInputInfo inputInfo)
@@ -37,5 +72,7 @@ namespace ManagementApp.Controllers
             var result = _departmentService.Update(inputInfo);
             return Json(result);
         }
+
+
     }
 }

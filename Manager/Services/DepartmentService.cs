@@ -1,9 +1,9 @@
-﻿using System.Collections.Generic;
-using AutoMapper;
+﻿using AutoMapper;
 using Contracts;
 using Domain.Models;
 using Manager.InfoModels;
 using Manager.InputInfoModels;
+using System.Collections.Generic;
 
 namespace Manager.Services
 {
@@ -25,7 +25,46 @@ namespace Manager.Services
 
             return departmentInfos;
         }
-        
+
+        public IEnumerable<ProjectInfo> GetAllDepartmentProjects(int inputInfo)
+        {
+            var newProject = _mapper.Map<int>(inputInfo);
+            var projects = _departmentRepository.GetAllDepartmentProjects(newProject);
+            if (projects == null)
+            {
+                return null;
+            }
+            var projectInfos = _mapper.Map<IEnumerable<ProjectInfo>>(projects);
+            return projectInfos;
+        }
+
+        public IEnumerable<MemberInfo> GetAllDepartmentMembers(int inputInfo)
+        {
+            var newMember = _mapper.Map<int>(inputInfo);
+            var members = _departmentRepository.GetAllDepartmentMembers(newMember);
+            if (members == null)
+            {
+                return null;
+            }
+            var memberInfos = _mapper.Map<IEnumerable<MemberInfo>>(members);
+            return memberInfos;
+        }
+
+
+        public IEnumerable<EmployeeInfo> GetAllUnAllocatedEmployeesOnProject()
+        {
+            var employees = _departmentRepository.GetAllUnAllocatedEmployeesOnProject();
+            var employeeInfos = _mapper.Map<IEnumerable<EmployeeInfo>>(employees);
+            return employeeInfos;
+        }
+
+        public IEnumerable<EmployeeInfo> GetEmployeesThatAreNotFullyAllocated()
+        {
+            var employees = _departmentRepository.GetEmployeesThatAreNotFullyAllocated();
+            var employeeInfos = _mapper.Map<IEnumerable<EmployeeInfo>>(employees);
+            return employeeInfos;
+        }
+
         public OperationResult Add(AddDepartmentInputInfo inputInfo)
         {
             var newDepartment = _mapper.Map<Department>(inputInfo);

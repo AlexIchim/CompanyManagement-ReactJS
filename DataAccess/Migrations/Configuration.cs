@@ -1,7 +1,6 @@
-using System;
-using System.Net.Sockets;
 using Domain.Enums;
 using Domain.Models;
+using System;
 
 namespace DataAccess.Migrations
 {
@@ -32,16 +31,17 @@ namespace DataAccess.Migrations
             };
 
             Employee e2 = new Employee()
-                {
-                    Id = 2,
-                    Name = "Cristina",
-                    Address = "Fagaras",
-                    EmploymentDate = new DateTime(2010, 6, 21),
-                    ReleaseDate = new DateTime(2011, 6, 10),
-                    TotalAllocation = 40,
-                    JobType = JobType.PartTime4,
-                    PositionType = PositionType.Developer,
-                    DepartmentId = 1};
+            {
+                Id = 2,
+                Name = "Cristina",
+                Address = "Fagaras",
+                EmploymentDate = new DateTime(2010, 6, 21),
+                ReleaseDate = new DateTime(2011, 6, 10),
+                TotalAllocation = 40,
+                JobType = JobType.PartTime4,
+                PositionType = PositionType.Developer,
+                DepartmentId = 1
+            };
 
             Employee e3 = new Employee()
             {
@@ -171,25 +171,25 @@ namespace DataAccess.Migrations
 
             context.Offices.AddOrUpdate(
               o => o.Id,
-              new Office { Id = 1,Name = "Cluj", Address = "Cluj", PhoneNumber = "123456"},
-              new Office { Id = 2,Name = "Bucuresti", Address = "Cluj", PhoneNumber = "123456" },
-              new Office { Id = 3 ,Name = "London", Address = "Cluj", PhoneNumber = "123456" }
+              new Office { Id = 1, Name = "Cluj", Address = "Cluj", PhoneNumber = "123456" },
+              new Office { Id = 2, Name = "Bucuresti", Address = "Cluj", PhoneNumber = "123456" },
+              new Office { Id = 3, Name = "London", Address = "Cluj", PhoneNumber = "123456" }
             );
 
             context.Departments.AddOrUpdate(
-                d=>d.Id,
-                new Department { Id = 1, Name = ".Net", OfficeId=1},
-                new Department { Id = 2, Name = "Java", OfficeId = 1},
-                new Department { Id = 3, Name = "PHP", OfficeId = 1},
-                new Department { Id = 4, Name = "JavaScript", OfficeId = 1},
-                new Department { Id = 5, Name = ".Net", OfficeId = 2},
-                new Department { Id = 6, Name = "Java", OfficeId = 2}
+                d => d.Id,
+                new Department { Id = 1, Name = ".Net", OfficeId = 1 },
+                new Department { Id = 2, Name = "Java", OfficeId = 1 },
+                new Department { Id = 3, Name = "PHP", OfficeId = 1 },
+                new Department { Id = 4, Name = "JavaScript", OfficeId = 1 },
+                new Department { Id = 5, Name = ".Net", OfficeId = 2 },
+                new Department { Id = 6, Name = "Java", OfficeId = 2 }
             );
 
             context.Employees.AddOrUpdate(
-                e=>e.Id,
+                e => e.Id,
                 e1,
-                e2, 
+                e2,
                 e3,
                 e4,
                 e5,
@@ -204,7 +204,7 @@ namespace DataAccess.Migrations
 
             context.Projects.AddOrUpdate(
                 p => p.Id,
-                new Project { Id = 1, Name ="A", Status = "Done", DepartmentId = 1},
+                new Project { Id = 1, Name = "A", Status = "Done", DepartmentId = 1 },
                 new Project { Id = 2, Name = "B", Status = "Done", DepartmentId = 1 },
                 new Project { Id = 3, Name = "C", Status = "Done", DepartmentId = 2 },
                 new Project { Id = 4, Name = "D", Status = "Done", DepartmentId = 1 }
@@ -213,8 +213,8 @@ namespace DataAccess.Migrations
             context.EmployeeProjects.AddOrUpdate(
 
                 p => p.ProjectId,
-                new EmployeeProject { EmployeeId=1, ProjectId= 2, Allocation = 10},
-                new EmployeeProject { EmployeeId=1, ProjectId= 1, Allocation = 10},
+                new EmployeeProject { EmployeeId = 1, ProjectId = 2, Allocation = 10 },
+                new EmployeeProject { EmployeeId = 1, ProjectId = 1, Allocation = 10 },
                 new EmployeeProject { EmployeeId = 2, ProjectId = 2, Allocation = 40 },
                 new EmployeeProject { EmployeeId = 3, ProjectId = 2, Allocation = 20 },
                 new EmployeeProject { EmployeeId = 3, ProjectId = 3, Allocation = 10 },
@@ -242,9 +242,9 @@ namespace DataAccess.Migrations
                 context.Employees.Single(t => t.Id == 7);
             context.Departments.Single(t => t.Id == 3).DepartmentManager =
                 context.Employees.Single(t => t.Id == 6);
-          
+
             context.SaveChanges();
         }
+    
     }
 }
-
