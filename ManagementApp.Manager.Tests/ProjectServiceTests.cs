@@ -73,9 +73,7 @@ namespace ManagementApp.Manager.Tests
             //Assert
             Assert.AreEqual(2, result.Count());
         }
-
-
-        public void
+        
         private Project CreateProject(string name, Department department, string duration, Status status)
         {
             var project = new Project
