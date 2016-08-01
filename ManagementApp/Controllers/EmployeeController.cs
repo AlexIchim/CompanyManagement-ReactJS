@@ -58,5 +58,12 @@ namespace ManagementApp.Controllers
             return Json(result);
         }
 
+        [Route("delete/{employeeId}")]
+        [HttpDelete]
+        public IHttpActionResult Delete(int employeeId)
+        {
+            var result = _employeeService.Delete(employeeId);
+            return Json(result);
+        }
     }
 }
