@@ -28,7 +28,8 @@ namespace Manager.Services
                 {
                     Id = proj.EmployeeId,
                     Name = proj.Employee.Name,
-                    Allocation = proj.Allocation
+                    Allocation = proj.Allocation,
+                    PositionType = proj.Employee.PositionType
                 }).ToList();
         }
 
