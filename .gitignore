@@ -31,3 +31,4 @@ packages
 .vs/
 frontend/node_modules
 *.dll
+.idea

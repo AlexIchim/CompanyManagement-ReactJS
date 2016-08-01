@@ -15,7 +15,6 @@
   "homepage": "https://bitbucket.org/binaryk/personalwork#readme",
   "devDependencies": {
     "autoprefixer-loader": "^3.2.0",
-    "babel": "^6.5.2",
     "babel-core": "^6.11.4",
     "babel-loader": "^6.2.4",
     "babel-plugin-transform-react-jsx": "^6.8.0",
