@@ -59,18 +59,15 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="InfoModels\DepartmentInfo.cs" />
+    <Compile Include="InfoModels\OfficeInfo.cs" />
+    <Compile Include="InfoModels\EmployeeAllocationInfo.cs" />
     <Compile Include="InfoModels\EmployeeInfo.cs" />
     <Compile Include="InfoModels\MemberInfo.cs" />
     <Compile Include="InfoModels\ProjectInfo.cs" />
 <<<<<<< HEAD
-    <Compile Include="InfoModels\OfficeInfo.cs" />
 =======
-    <Compile Include="InfoModels\EmployeeAllocationInfo.cs" />
-    <Compile Include="InfoModels\EmployeeInfo.cs" />
->>>>>>> capac-cristina
-    <Compile Include="InputInfoModels\GetDepartmentMembersInputInfo.cs" />
     <Compile Include="InputInfoModels\GetDepartmentProjectsInputInfo.cs" />
->>>>>>> origin/capac-Adi
+>>>>>>> capac-Adi
     <Compile Include="InputInfoModels\UpdateDepartmentInputInfo.cs" />
     <Compile Include="InputInfoModels\AddDepartmentInputInfo.cs" />
     <Compile Include="Mapper\MappingConfig.cs" />
@@ -82,11 +79,8 @@
       <DependentUpon>Messages.resx</DependentUpon>
     </Compile>
     <Compile Include="Services\DepartmentService.cs" />
-<<<<<<< HEAD
     <Compile Include="Services\OfficeService.cs" />
-=======
     <Compile Include="Services\ProjectService.cs" />
->>>>>>> capac-cristina
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

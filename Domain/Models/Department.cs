@@ -16,8 +16,8 @@ namespace Domain.Models
 
         public virtual ICollection<Employee> Employees { get; set; }
 
-        //virtual?
         public virtual ICollection<Project> Projects { get; set; }
+
 
 
     }

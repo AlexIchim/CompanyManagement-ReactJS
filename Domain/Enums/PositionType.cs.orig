@@ -17,6 +17,6 @@ namespace Domain.Enums
         DepartmentManager=6
 =======
         DepartmentManager = 6
->>>>>>> capac-andreimuresan
+>>>>>>> capac-Adi
     }
 }

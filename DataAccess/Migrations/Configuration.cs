@@ -6,7 +6,6 @@ namespace DataAccess.Migrations
 {
     using System.Data.Entity.Migrations;
     using System.Linq;
-
     internal sealed class Configuration : DbMigrationsConfiguration<DataAccess.Context.DbContext>
     {
         public Configuration()
@@ -16,6 +15,13 @@ namespace DataAccess.Migrations
 
         protected override void Seed(DataAccess.Context.DbContext context)
         {
+
+            context.Offices.AddOrUpdate(
+              o => o.Id,
+              new Office { Id = 1, Name = "Cluj", Address = "Calea Motilor 62", PhoneNumber = "0364 101 203" },
+              new Office { Id = 2, Name = "Bucuresti", Address = "Calea Serban Voda Nr. 133", PhoneNumber = "021 301.33.00" },
+              new Office { Id = 3, Name = "London", Address = "Arundel House, 4 Palace Green,", PhoneNumber = "44 20 7937 9666" }
+            );
 
             Employee e1 = new Employee()
             {
@@ -168,14 +174,6 @@ namespace DataAccess.Migrations
                 DepartmentId = 6
             };
 
-
-            context.Offices.AddOrUpdate(
-              o => o.Id,
-              new Office { Id = 1, Name = "Cluj", Address = "Cluj", PhoneNumber = "123456" },
-              new Office { Id = 2, Name = "Bucuresti", Address = "Cluj", PhoneNumber = "123456" },
-              new Office { Id = 3, Name = "London", Address = "Cluj", PhoneNumber = "123456" }
-            );
-
             context.Departments.AddOrUpdate(
                 d => d.Id,
                 new Department { Id = 1, Name = ".Net", OfficeId = 1 },
@@ -245,6 +243,5 @@ namespace DataAccess.Migrations
 
             context.SaveChanges();
         }
-    
     }
 }
