@@ -28,12 +28,12 @@ namespace DataAccess.Repositories
 
         public IEnumerable<Employee> GetAllMembersOfADepartment(int departmentId)
         {
-            Department department = _context.Departments.SingleOrDefault(d => d.Id == departmentId);
+            var department = GetDepartmentById(departmentId);
             return department.Employees;
         }
 
         public IEnumerable<Project> GetAllProjectsOfADepartment(int departmentId) {
-            Department department = _context.Departments.SingleOrDefault(d => d.Id == departmentId);
+            var department = GetDepartmentById(departmentId);
             return department.Projects;
         }
 

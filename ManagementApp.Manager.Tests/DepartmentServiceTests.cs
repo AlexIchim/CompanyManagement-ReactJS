@@ -371,11 +371,6 @@ namespace ManagementApp.Manager.Tests
             _departmentRepositoryMock.Verify(x => x.Save(), Times.Never);
         }
 
-        [Test]
-            Assert.AreEqual(result.MessageList.Count, 1);
-            Assert.AreEqual(Messages.SuccessfullyDeletedDepartment, result.MessageList[0]);
-            Assert.AreEqual(result.MessageList.Count, 1);
-            Assert.AreEqual(Messages.ErrorWhileDeletingDepartment, result.MessageList[0]);
         private Office CreateOffice(string name, string address, string phone, int? id = null)
         {
             var office = new Office {

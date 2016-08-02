@@ -93,6 +93,7 @@ namespace ManagementApp.Manager.Tests
             _projectRepositoryMock.Verify(x => x.Add(project), Times.Once);
 
         }
+
         [Test]
         public void AddAssignment_ReturnsSuccessfulMessage()
         {
@@ -112,7 +113,8 @@ namespace ManagementApp.Manager.Tests
 
             //Assert
             Assert.IsTrue(result.Success);
-            Assert.AreEqual(Messages.SuccessfullyAddedNewAssignment, result.Message);
+            Assert.AreEqual(result.MessageList.Count, 1);
+            Assert.AreEqual(result.MessageList[0], Messages.SuccessfullyAddedNewAssignment);
         }
 
         [Test]
@@ -269,7 +271,8 @@ namespace ManagementApp.Manager.Tests
 
             //Assert
             Assert.IsTrue(result.Success);
-            Assert.AreEqual(Messages.SuccessfullyDeletedEmployeeFromProject, result.Message);
+            Assert.AreEqual(result.MessageList.Count, 1);
+            Assert.AreEqual(result.MessageList[0], Messages.SuccessfullyDeletedEmployeeFromProject);
         }
 
         [Test]
@@ -297,7 +300,8 @@ namespace ManagementApp.Manager.Tests
 
             //Assert
             Assert.IsFalse(result.Success);
-            Assert.AreEqual(Messages.ErrorWhileDeletingEmployeeFromProject, result.Message);
+            Assert.AreEqual(result.MessageList.Count, 1);
+            Assert.AreEqual(result.MessageList[0], Messages.ErrorWhileDeletingEmployeeFromProject);
         }
         [Test]
         public void Update_ReturnsSuccessfulMessage_WhenProjectExists()
