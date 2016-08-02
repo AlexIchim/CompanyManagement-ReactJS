@@ -44,14 +44,7 @@ namespace Manager.Services
             _projectRepository.Add(newProject);
             return new OperationResult(true, Messages.SuccessfullyAddedProject);
         }
-        public OperationResult AddEmployeeToProject(AddEmployeeToProjectInputInfo inputInfo)
-        {
-
-            var newEp = _mapper.Map<EmployeeProject>(inputInfo);
-            _projectRepository.AddEmployeeToProject(newEp);
-            return new OperationResult(true, Messages.SuccessfullyAddedEmployeeToProject);
-            return new OperationResult(true, Messages.SuccessfullyAddedDepartment);
-        }
+       
 
         public OperationResult Delete(int projectId)
         {
@@ -61,24 +54,7 @@ namespace Manager.Services
             return new OperationResult(true, Messages.SuccessfullyDeletedProject);
         }
 
-        public OperationResult UpdatePartialAllocation(UpdateAllocationInputInfo inputInfo)
-        {
-            var employeeProjects = _projectRepository.GetEmployeeProjectById(inputInfo.ProjectId).ToList();
-            if (employeeProjects != null)
-            {
-                EmployeeProject ep = employeeProjects.Where(e => e.EmployeeId == inputInfo.EmployeeId).SingleOrDefault();
-                if (ep != null)
-                {
-                    ep.Allocation = inputInfo.Allocation;
-                    _projectRepository.Save();
-                    return new OperationResult(true, Messages.SuccessfullyUpdatedPartialAllocation);
-                }
-            }
-            return new OperationResult(false, Messages.ErrorWhileUpdatingDepartment);
-        }
-
-
-
+        
         public OperationResult UpdateProject(UpdateProjectInputInfo inputInfo)
         {
             var updatedProject = _projectRepository.GetProjectById(inputInfo.Id);

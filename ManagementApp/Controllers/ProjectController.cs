@@ -39,14 +39,6 @@ namespace ManagementApp.Controllers
             return Json(result);
         }
 
-        [Route("addEmployeeToProject")]
-        [HttpPost]
-        public IHttpActionResult AddEmployeeToProject([FromBody] AddEmployeeToProjectInputInfo inputInfo)
-        {
-           
-            var result = _projectService.AddEmployeeToProject(inputInfo);
-            return Json(result);
-        }
 
         [Route("delete")]
         [HttpDelete]
@@ -63,13 +55,6 @@ namespace ManagementApp.Controllers
             var result = _projectService.UpdateProject(inputInfo);
             return Json(result);
         }
-        [Route("updatePartialAllocation")]
-        [HttpPut]
-        public IHttpActionResult Update ([FromBody] UpdateAllocationInputInfo inputInfo)
-        {
-            
-            var result = _projectService.UpdatePartialAllocation(inputInfo);
-            return Json(result);
-        }
+        
     }
 }

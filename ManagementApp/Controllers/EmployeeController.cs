@@ -44,6 +44,24 @@ namespace ManagementApp.Controllers
 
         }
 
+        [Route("addEmployeeToProject")]
+        [HttpPost]
+        public IHttpActionResult AddEmployeeToProject([FromBody] AddEmployeeToProjectInputInfo inputInfo)
+        {
+
+            var result = _employeeService.AddEmployeeToProject(inputInfo);
+            return Json(result);
+        }
+
+        [Route("updatePartialAllocation")]
+        [HttpPut]
+        public IHttpActionResult Update([FromBody] UpdateAllocationInputInfo inputInfo)
+        {
+
+            var result = _employeeService.UpdatePartialAllocation(inputInfo);
+            return Json(result);
+        }
+
 
 
     }

@@ -168,5 +168,7 @@
   <data name="ErrorWhileUpdatingProject" xml:space="preserve">
     <value>'Project could not be updated'</value>
   </data>
-  
+  <data name="ErrorAddingEmployeeToProject" xml:space="preserve">
+    <value>'Error adding employee to project'</value>
+  </data>
 </root>

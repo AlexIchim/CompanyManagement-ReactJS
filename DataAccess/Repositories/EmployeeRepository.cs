@@ -40,10 +40,13 @@ namespace DataAccess.Repositories
             }
 
             var employee = _context.Employees.SingleOrDefault(e => e.Id == employeeId);
-            employee.ReleaseDate= DateTime.Now;
 
-            Save();
-
+            if (employee != null)
+            {
+                employee.ReleaseDate = DateTime.Now;
+                Save();
+            }
+            
         }
 
         public Employee GetById(int employeeId)
@@ -51,7 +54,46 @@ namespace DataAccess.Repositories
             return _context.Employees.SingleOrDefault(o => o.Id == employeeId);
         }
 
-       
+        public int ComputeTotalAllocation(int employeeId)
+        {
+            var array = _context.EmployeeProjects.Where(ep => ep.EmployeeId == employeeId).ToList();
+
+            int totalAllocation = 0;
+
+            foreach (var ep in array)
+            {
+                totalAllocation += ep.Allocation;
+            }
+
+            return totalAllocation;
+        }
+
+        public void UpdateTotalAllocation(int employeeId, int totalAllocation)
+        {
+            var employee = _context.Employees.SingleOrDefault(e => e.Id == employeeId);
+
+            if (employee != null)
+            {
+                employee.TotalAllocation = totalAllocation;
+                Save();
+            }
+            
+        }
+
+        public void AddEmployeeToProject(EmployeeProject ep)
+        {
+            Employee employee = _context.Employees.SingleOrDefault(e => e.Id == ep.EmployeeId);
+            Project project = _context.Projects.SingleOrDefault(p => p.Id == ep.ProjectId);
+            ep.Employee = employee;
+            ep.Project = project;
+            _context.EmployeeProjects.Add(ep);
+            Save();
+        }
+
+        public IEnumerable<EmployeeProject> GetEmployeeProjectById(int projectId)
+        {
+            return _context.EmployeeProjects.Where(ep => ep.ProjectId == projectId).ToList();
+        }
 
     }
 }

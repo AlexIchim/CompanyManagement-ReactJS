@@ -18,15 +18,7 @@ namespace DataAccess.Repositories
             _context = context;
         }
 
-        public void AddEmployeeToProject(EmployeeProject ep)
-        {
-            Employee employee = _context.Employees.SingleOrDefault(e => e.Id == ep.EmployeeId);
-            Project project = _context.Projects.SingleOrDefault(p => p.Id == ep.ProjectId);
-            ep.Employee = employee;
-            ep.Project = project;
-            _context.EmployeeProjects.Add(ep);
-            _context.SaveChanges();
-        }
+
         public IEnumerable<Employee> GetEmployeeByProjectId(int projectid)
         {
             List<Employee> array = new List<Employee>();
@@ -52,10 +44,7 @@ namespace DataAccess.Repositories
             return _context.Projects.Where(p => p.Id == projectId).SingleOrDefault();
         }
 
-        public IEnumerable <EmployeeProject> GetEmployeeProjectById(int projectId)
-        {
-            return _context.EmployeeProjects.Where(ep => ep.ProjectId == projectId).ToList();
-        }
+       
         public void Add(Project project)
         {
             _context.Projects.Add(project);
@@ -73,7 +62,17 @@ namespace DataAccess.Repositories
             {
                 foreach (EmployeeProject employeeProject in employeeProjects)
                 {
+                    var employee = _context.Employees.SingleOrDefault(e => e.Id == employeeProject.EmployeeId);
+
+                    int totalAllocation = employee.TotalAllocation;
+
+                    int newTotalAllocation = totalAllocation - employeeProject.Allocation;
+
+                    employee.TotalAllocation = newTotalAllocation;
+
                     _context.EmployeeProjects.Remove(employeeProject);
+                    
+
                 }
             }
             if (project != null)
@@ -83,5 +82,9 @@ namespace DataAccess.Repositories
             Save();
         }
 
+        public IEnumerable<EmployeeProject> GetEmployeeProjectById(int projectId)
+        {
+            return _context.EmployeeProjects.Where(ep => ep.ProjectId == projectId).ToList();
+        }
     }
 }
