@@ -1,10 +1,4 @@
-<<<<<<< HEAD
 ﻿using AutoMapper;
-=======
-﻿ using System.Collections.Generic;
-using System.Linq;
-using AutoMapper;
->>>>>>> origin/capac-andreimuresan
 using Contracts;
 using Domain.Models;
 using Manager;
@@ -68,13 +62,13 @@ namespace ManagementApp.Manager.Tests
             {
                 CreateEmployee("Adi",0,1),
                 CreateEmployee("Cristina",0,2),
-                CreateEmployee("Patricia",60,3)
+              //  CreateEmployee("Patricia",60,3)
             };
             var employeesinfo = new List<EmployeeInfo>
             {
                 CreateEmployeeInfo(1,"Adi",0),
                 CreateEmployeeInfo(2,"Cristina",0),
-                CreateEmployeeInfo(3,"Patricia",60)
+               // CreateEmployeeInfo(3,"Patricia",60)
             };
 
             _departmentRepositoryMock.Setup(m => m.GetAllUnAllocatedEmployeesOnProject()).Returns(employees);
@@ -86,7 +80,11 @@ namespace ManagementApp.Manager.Tests
             var result = _departmentService.GetAllUnAllocatedEmployeesOnProject();
 
             //Assert
+<<<<<<< HEAD
             Assert.AreEqual(2, result.Count());
+=======
+            Assert.AreEqual(3,result.Count());
+>>>>>>> capac-andreimuresan
 
         }
 

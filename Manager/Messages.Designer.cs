@@ -68,13 +68,21 @@ namespace Manager {
                 return ResourceManager.GetString("ErrorWhileUpdatingDepartment", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to &apos;Error: Employee does not exist&apos;.
+        ///   Looks up a localized string similar to &apos;Project could not be updated&apos;.
         /// </summary>
-        public static string ErrorWhileUpdatingEmployee {
-            get {
-                return ResourceManager.GetString("ErrorWhileUpdatingEmployee", resourceCulture);
+        public static string ErrorWhileUpdatingEmployee
+        {
+            get { return ResourceManager.GetString("ErrorWhileUpdatingEmployee", resourceCulture); }
+        }
+
+        public static string ErrorWhileUpdatingProject {
+
+            get
+            {
+                return ResourceManager.GetString("ErrorWhileUpdatingProject", resourceCulture);
             }
         }
         
@@ -95,18 +103,26 @@ namespace Manager {
                 return ResourceManager.GetString("SuccessfullyAddedDepartment", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to &apos;Employee was added with success&apos;.
+        ///   Looks up a localized string similar to &apos;Employee to project was successfully added&apos;.
         /// </summary>
-        public static string SuccessfullyAddedEmployee {
+        public static string SuccessfullyAddedEmployee
+        {
+            get { return ResourceManager.GetString("SuccessfullyAddedEmployee", resourceCulture); }
+        }
+
+        public static string SuccessfullyAddedEmployeeToProject {
             get {
-                return ResourceManager.GetString("SuccessfullyAddedEmployee", resourceCulture);
+           
+                return ResourceManager.GetString("SuccessfullyAddedEmployeeToProject", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to &apos;Office was added with success&apos;.
+        ///   Looks up a localized string similar to &apos;Project was successfully added&apos;.
         /// </summary>
         public static string SuccessfullyAddedOffice {
             get {
@@ -149,13 +165,19 @@ namespace Manager {
                 return ResourceManager.GetString("SuccessfullyUpdatedDepartment", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to &apos;Successfully updated employee&apos;.
+        ///   Looks up a localized string similar to &apos;Project was updated with success&apos;.
         /// </summary>
-        public static string SuccessfullyUpdatedEmployee {
-            get {
-                return ResourceManager.GetString("SuccessfullyUpdatedEmployee", resourceCulture);
+        public static string SuccessfullyUpdatedEmployee
+        {
+            get { return ResourceManager.GetString("SuccessfullyUpdatedEmployee", resourceCulture); }
+        }
+
+        public static string SuccessfullyUpdatedProject {
+           
+              get {  return ResourceManager.GetString("SuccessfullyUpdatedProject", resourceCulture);
             }
         }
         

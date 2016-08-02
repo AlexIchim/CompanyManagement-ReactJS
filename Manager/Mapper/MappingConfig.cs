@@ -38,6 +38,7 @@ namespace Manager.Mapper
             CreateMap<EmployeeProject, ProjectsOfAnEmployeeInfo>();
             CreateMap<AddProjectInputInfo,Project>();
             CreateMap<AddEmployeeToProjectInputInfo, EmployeeProject>();
+            CreateMap<UpdateProjectInputInfo, Project>();
 
             CreateMap<AddEmployeeToDepartmentInputInfo, Employee>();
 
