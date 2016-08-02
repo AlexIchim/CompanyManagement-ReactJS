@@ -15,8 +15,6 @@ namespace DataAccess.Context
         public DbSet<Project> Projects { get; set; }
         public DbSet<Employee> Employees { get; set; }
         public DbSet<Assignment> Assignments { get; set; }
-        public DbSet<ProjectAllocation> ProjectAllocations { get; set; }
-        public DbSet<Position> Positions { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {

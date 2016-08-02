@@ -1,4 +1,6 @@
 using System.Collections.Generic;
+using Domain.Models;
+
 namespace DataAccess.Migrations {
     using System;
     using System.Data.Entity;
@@ -159,7 +161,7 @@ namespace DataAccess.Migrations {
                 office2,
                 office3
                 );
-
+            context.Departments.AddOrUpdate(
                 p => p.Id,
                 department,
                 department2,
