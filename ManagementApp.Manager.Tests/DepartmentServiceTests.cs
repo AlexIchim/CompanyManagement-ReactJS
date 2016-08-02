@@ -46,7 +46,7 @@ namespace ManagementApp.Manager.Tests
             _mapperMock.Setup(m => m.Map<IEnumerable<DepartmentInfo>>(departments)).Returns(departmentsInfo);
 
             //Act - apeleaza metoda care vreau sa fie testata
-           var result = _departmentService.GetAll();
+            var result = _departmentService.GetAll();
 
             //Assert
             Assert.AreEqual(2, result.Count());
@@ -68,7 +68,7 @@ namespace ManagementApp.Manager.Tests
         public void Add_CallsAddFromRepository()
         {
             //Arrange
-            var departmentInputInfo = new AddDepartmentInputInfo {Name = "javascript"};
+            var departmentInputInfo = new AddDepartmentInputInfo { Name = "javascript" };
             var department = new Department { Name = "javascript" };
 
             _mapperMock.Setup(m => m.Map<Department>(departmentInputInfo)).Returns(department);
@@ -104,9 +104,9 @@ namespace ManagementApp.Manager.Tests
         public void Update_ReturnsSuccessfulMessage_WhenDepartmentExists()
         {
             //Arrange
-            var departmentInputInfo = new UpdateDepartmentInputInfo {Id = 1, Name = "php" };
+            var departmentInputInfo = new UpdateDepartmentInputInfo { Id = 1, Name = "php" };
             var department = new Department { Id = 1, Name = "java" };
-            
+
             _departmentRepositoryMock.Setup(m => m.GetById(departmentInputInfo.Id)).Returns(department);
 
             //Act
@@ -182,13 +182,13 @@ namespace ManagementApp.Manager.Tests
 
         private Department CreateDepartment(string name, int? id = null)
         {
-            var department =  new Department
+            var department = new Department
             {
                 Name = name
             };
             if (id != null)
             {
-                department.Id = (int) id;
+                department.Id = (int)id;
             }
             return department;
         }
