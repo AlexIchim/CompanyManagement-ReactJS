@@ -38,9 +38,9 @@ namespace Manager.Services
             return projectInfo;
         }
 
-        public IEnumerable<ProjectEmployeeInfo> GetEmployeesByProjectId(int id)
+        public IEnumerable<ProjectEmployeeInfo> GetEmployeesByProjectId(int id, int? pageSize = null, int? pageNumber = null)
         {
-            var tuples = _projectRepository.GetEmployeesByProjectId(id);
+            var tuples = _projectRepository.GetEmployeesByProjectId(id, pageSize, pageNumber);
 
             var res = tuples.Select(t => new ProjectEmployeeInfo()
             {

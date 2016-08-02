@@ -39,9 +39,9 @@ namespace Manager.Services
             return employeeInfos;
         }
 
-        public IEnumerable<EmployeeInfo> GetAvailableEmployees(int? departmentId, int? positionId)
+        public IEnumerable<EmployeeInfo> GetAvailableEmployees(int? departmentId, int? positionId, int? pageSize = null, int? pageNumber = null)
         {
-            var employees = _employeeRepository.GetAvailable(departmentId, positionId);
+            var employees = _employeeRepository.GetAvailable(departmentId, positionId, pageSize, pageNumber);
             var employeeInfos = _mapper.Map<IEnumerable<EmployeeInfo>>(employees);
 
             return employeeInfos;
