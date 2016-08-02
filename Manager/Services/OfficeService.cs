@@ -16,11 +16,16 @@ namespace Manager.Services
     {
         private readonly IOfficeRepository _officeRepository;
         private readonly IMapper _mapper;
+        private readonly AddOfficeValidator _addOfficeValidator;
+        private readonly UpdateOfficeValidator _updateOfficeValidator;
 
         public OfficeService(IMapper mapper, IOfficeRepository officeRepository)
         {
             _officeRepository = officeRepository;
             _mapper = mapper;
+
+            _addOfficeValidator=new AddOfficeValidator();
+            _updateOfficeValidator=new UpdateOfficeValidator();
         }
 
         public IEnumerable<OfficeInfo> GetAll()
@@ -33,13 +38,11 @@ namespace Manager.Services
 
         public OperationResult Add(AddOfficeInputInfo inputInfo)
         {
-            AddOfficeValidator validator=new AddOfficeValidator();
-            var result =validator.Validate(inputInfo);
-            if (!result.IsValid)
+            var validationResult =_addOfficeValidator.Validate(inputInfo);
+            if (!validationResult.IsValid)
             {
-                return new OperationResult(false, result);
+                return new OperationResult(false, validationResult);
             }
-
 
             var newOffice = _mapper.Map<Office>(inputInfo);
             _officeRepository.Add(newOffice);
@@ -49,6 +52,12 @@ namespace Manager.Services
 
         public OperationResult Update(UpdateOfficeInputInfo inputInfo)
         {
+            var validationResult = _updateOfficeValidator.Validate(inputInfo);
+            if (!validationResult.IsValid)
+            {
+                return new OperationResult(false, validationResult);
+            }
+
             var office = _officeRepository.GetById(inputInfo.Id);
 
             if (office == null)
