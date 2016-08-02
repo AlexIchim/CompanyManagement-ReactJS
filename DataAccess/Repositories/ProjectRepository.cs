@@ -31,6 +31,11 @@ namespace DataAccess.Repositories
             _context.Projects.Remove(project);
             _context.SaveChanges();
         }
+        public void DeleteEmployeeFromProject(Assignment assignment)
+        {
+            _context.Assignments.Remove(assignment);
+            _context.SaveChanges();
+        }
 
         public Assignment GetAssignmentById(int employeeId, int projectId)
         {
@@ -70,12 +75,6 @@ namespace DataAccess.Repositories
             int nr = assignments.Count();
             return nr;
 
-        }
-
-        public void DeleteEmployeeFromProject(Assignment assignment)
-        {
-            _context.Assignments.Remove(assignment);
-            _context.SaveChanges();
         }
     }
 
