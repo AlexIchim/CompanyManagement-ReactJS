@@ -17,18 +17,24 @@ namespace Manager.Services
         private readonly IProjectRepository _projectRepository;
         private readonly IDepartmentRepository _departmentRepository;
         private readonly IMapper _mapper;
+        private readonly AddProjectValidator _addProjectValidator;
+        private readonly UpdateProjectValidator _updateProjectValidator;
+        private readonly AddAssignmentValidator _addAssignmentValidator;
 
         public ProjectService(IMapper mapper, IProjectRepository projectRepository, IDepartmentRepository departmentRepository)
         {
             _projectRepository = projectRepository;
             _mapper = mapper;
             _departmentRepository = departmentRepository;
+
+            _addProjectValidator = new AddProjectValidator();
+            _updateProjectValidator = new UpdateProjectValidator();
+            _addAssignmentValidator = new AddAssignmentValidator();
         }
 
         public OperationResult Add(AddProjectInputInfo infoInput)
         {
-            AddProjectValidator validator = new AddProjectValidator();
-            var result = validator.Validate(infoInput);
+            var result = _addProjectValidator.Validate(infoInput);
             if (result.IsValid)
             {
                 Project newProject = _mapper.Map<Project>(infoInput);
@@ -43,8 +49,8 @@ namespace Manager.Services
 
         public OperationResult AddAssignment(AddAssignmentInputInfo infoInput)
         {
-            AddAssignmentValidator validator = new AddAssignmentValidator();
-            var result = validator.Validate(infoInput);
+            
+            var result = _addAssignmentValidator.Validate(infoInput);
             if (result.IsValid)
             {
                 Assignment newAssignment = _mapper.Map<Assignment>(infoInput);
@@ -78,8 +84,7 @@ namespace Manager.Services
 
 
         public OperationResult Update(UpdateProjectInputInfo inputInfo) {
-            UpdateProjectValidator validator = new UpdateProjectValidator();
-            var result = validator.Validate(inputInfo);
+            var result = _updateProjectValidator.Validate(inputInfo);
             if (result.IsValid)
             {
                 var project = _projectRepository.GetById(inputInfo.Id);

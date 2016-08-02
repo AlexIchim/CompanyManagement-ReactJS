@@ -25,7 +25,13 @@ namespace Manager.Mapper
             CreateMap<Office, OfficeInfo>();
             CreateMap<AddOfficeInputInfo, Office>();
 
-            CreateMap<Employee, EmployeeInfo>();
+            CreateMap<Employee, EmployeeInfo>()
+                .ForMember(
+                    employeeInfo => employeeInfo.JobType,
+                    employee => employee.MapFrom(src => src.JobType.ToString()))
+                .ForMember(
+                    employeeInfo => employeeInfo.Position,
+                    employee => employee.MapFrom(src => src.Position.ToString())); ;
             CreateMap<AddEmployeeInputInfo, Employee>();
 
             CreateMap<Project, ProjectInfo>()

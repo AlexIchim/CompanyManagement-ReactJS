@@ -4,6 +4,7 @@ using Contracts;
 using Domain.Models;
 using Manager.InfoModels;
 using Manager.InputInfoModels;
+using Manager.Validators;
 
 namespace Manager.Services
 {
@@ -11,11 +12,16 @@ namespace Manager.Services
     {
         private readonly IEmployeeRepository _employeeRepository;
         private readonly IMapper _mapper;
+        private readonly AddEmployeeValidator _addEmployeeValidator;
+        private readonly UpdateEmployeeValidator _updateEmployeeValidator;
 
         public EmployeeService(IMapper mapper, IEmployeeRepository employeeRepository)
         {
             _employeeRepository = employeeRepository;
             _mapper = mapper;
+
+            _addEmployeeValidator = new AddEmployeeValidator();
+            _updateEmployeeValidator = new UpdateEmployeeValidator();
         }
 
         public IEnumerable<EmployeeInfo> GetAll()
@@ -36,6 +42,11 @@ namespace Manager.Services
 
         public OperationResult Add(AddEmployeeInputInfo inputInfo)
         {
+            var validationResult = _addEmployeeValidator.Validate(inputInfo);
+            if (!validationResult.IsValid) {
+                return new OperationResult(false, validationResult);
+            }
+
             var newEmployee = _mapper.Map<Employee>(inputInfo);
             _employeeRepository.Add(newEmployee);
 
@@ -44,6 +55,11 @@ namespace Manager.Services
 
         public OperationResult Update(UpdateEmployeeInputInfo inputInfo)
         {
+            var validationResult = _updateEmployeeValidator.Validate(inputInfo);
+            if (!validationResult.IsValid) {
+                return new OperationResult(false, validationResult);
+            }
+
             var employee = _employeeRepository.GetById(inputInfo.Id);
 
             if (employee == null)

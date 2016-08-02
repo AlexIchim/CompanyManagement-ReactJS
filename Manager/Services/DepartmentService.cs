@@ -4,6 +4,7 @@ using Contracts;
 using Domain.Models;
 using Manager.InfoModels;
 using Manager.InputInfoModels;
+using Manager.Validators;
 
 namespace Manager.Services
 {
@@ -13,6 +14,8 @@ namespace Manager.Services
         private readonly IEmployeeRepository _employeeRepository;
         private readonly IOfficeRepository _officeRepository;
         private readonly IMapper _mapper;
+        private readonly AddDepartmentValidator _addDepartmentValidator;
+        private readonly UpdateDepartmentValidator _updateDepartmentValidator;
 
         public DepartmentService(IMapper mapper, IDepartmentRepository departmentRepository, IEmployeeRepository employeeRepository, IOfficeRepository officeRepository)
         {
@@ -20,6 +23,9 @@ namespace Manager.Services
             _employeeRepository = employeeRepository;
             _officeRepository = officeRepository;
             _mapper = mapper;
+
+            _addDepartmentValidator = new AddDepartmentValidator();
+            _updateDepartmentValidator = new UpdateDepartmentValidator();
         }
 
         public IEnumerable<DepartmentInfo> GetAllDepartments()
@@ -54,6 +60,11 @@ namespace Manager.Services
 
         public OperationResult AddDepartment(AddDepartmentInputInfo inputInfo)
         {
+            var validationResult = _addDepartmentValidator.Validate(inputInfo);
+            if (!validationResult.IsValid) {
+                return new OperationResult(false, validationResult);
+            }
+
             var newDepartment = _mapper.Map<Department>(inputInfo);
             newDepartment.DepartmentManager = _employeeRepository.GetById(inputInfo.DepartmentManagerId);
             newDepartment.Office = _officeRepository.GetById(inputInfo.OfficeId);
@@ -65,6 +76,11 @@ namespace Manager.Services
 
         public OperationResult UpdateDepartment(UpdateDepartmentInputInfo inputInfo)
         {
+            var validationResult = _updateDepartmentValidator.Validate(inputInfo);
+            if (!validationResult.IsValid) {
+                return new OperationResult(false, validationResult);
+            }
+
             var department = _departmentRepository.GetDepartmentById(inputInfo.Id);
 
             if (department == null)
@@ -80,16 +96,5 @@ namespace Manager.Services
             return new OperationResult(true, Messages.SuccessfullyUpdatedDepartment);
         }
 
-        public OperationResult DeleteDepartment(int departmentId) {
-            var department = _departmentRepository.GetDepartmentById(departmentId);
-
-            if (department == null) {
-                return new OperationResult(false, Messages.ErrorWhileDeletingDepartment);
-            }
-
-            _departmentRepository.DeleteDepartment(department);
-
-            return new OperationResult(true, Messages.SuccessfullyDeletedDepartment);
-        }
     }
 }
