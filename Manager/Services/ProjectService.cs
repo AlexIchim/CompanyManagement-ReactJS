@@ -3,12 +3,8 @@ using Contracts;
 using Domain.Models;
 using Manager.InfoModels;
 using Manager.InputInfoModels;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Manager.InputInfoModels;
 
 namespace Manager.Services
 {
@@ -50,7 +46,7 @@ namespace Manager.Services
         }
         public OperationResult AddEmployeeToProject(AddEmployeeToProjectInputInfo inputInfo)
         {
-            
+
             var newEp = _mapper.Map<EmployeeProject>(inputInfo);
             _projectRepository.AddEmployeeToProject(newEp);
             return new OperationResult(true, Messages.SuccessfullyAddedDepartment);
@@ -59,7 +55,7 @@ namespace Manager.Services
         public OperationResult Delete(int projectId)
         {
             Project project = _projectRepository.GetProjectById(projectId);
-            IEnumerable <EmployeeProject> employeeProject = _projectRepository.GetEmployeeProjectByid(projectId);
+            IEnumerable<EmployeeProject> employeeProject = _projectRepository.GetEmployeeProjectByid(projectId);
             _projectRepository.Delete(project, employeeProject);
             return new OperationResult(true, Messages.SuccessfullyDeletedProject);
         }

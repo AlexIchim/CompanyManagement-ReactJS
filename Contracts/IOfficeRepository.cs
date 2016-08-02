@@ -11,5 +11,12 @@ namespace Contracts
 
         void Add(Department department, int? departmentManagerId);
         void AddOffice(Office office);
+
+        Department GetById(int id);
+        Employee GetEmployeeById(int? id);
+
+        void Save();
+
+
     }
 }

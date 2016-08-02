@@ -1,5 +1,4 @@
 ﻿using Manager.InputInfoModels;
-using Manager.InputInfoModels;
 using Manager.Services;
 using System.Web.Http;
 
@@ -45,6 +44,14 @@ namespace ManagementApp.Controllers
         public IHttpActionResult AddDepartment([FromBody] AddDepartmentInputInfo inputInfo)
         {
             var result = _officeService.AddDepartment(inputInfo);
+            return Json(result);
+        }
+
+        [Route("UpdateDepartment")]
+        [HttpPut]
+        public IHttpActionResult UpdateDepartment([FromBody]UpdateDepartmentInputInfo inputInfo)
+        {
+            var result = _officeService.UpdateDepartment(inputInfo);
             return Json(result);
         }
 
