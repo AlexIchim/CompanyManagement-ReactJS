@@ -40,7 +40,7 @@ namespace ManagementApp.Controllers
         public IHttpActionResult Update([FromBody] UpdateOfficeInputInfo inputInfo)
         {
             var result = _officeService.Update(inputInfo);
-            return Json(result);
+            return Json(result); 
         }
 
         [Route("delete")]

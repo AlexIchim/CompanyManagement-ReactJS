@@ -52,7 +52,7 @@ namespace ManagementApp.Controllers
 
         [Route("getById")]
         [HttpGet]
-        public IHttpActionResult GetById([FromBody] int id)
+        public IHttpActionResult GetById(int id)
         {
             var result = _projectService.GetById(id);
             return Json(result);
@@ -80,5 +80,6 @@ namespace ManagementApp.Controllers
             var result = _projectService.GetNrTeamMembers(projectId);
             return Json(result);
         }
+       
     }
 }

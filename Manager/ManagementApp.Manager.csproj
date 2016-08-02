@@ -84,6 +84,15 @@
     <Compile Include="Services\DepartmentService.cs" />
     <Compile Include="Services\ProjectService.cs" />
     <Compile Include="Services\OfficeService.cs" />
+    <Compile Include="Validators\AddDepartmentValidator.cs" />
+    <Compile Include="Validators\AddEmployeeValidator.cs" />
+    <Compile Include="Validators\AddOfficeValidator.cs" />
+    <Compile Include="Validators\AddProjectValidator.cs" />
+    <Compile Include="Validators\EditAllocationValidator.cs" />
+    <Compile Include="Validators\UpdateDepartmentValidator.cs" />
+    <Compile Include="Validators\UpdateEmployeeValidator.cs" />
+    <Compile Include="Validators\UpdateOfficeValidator.cs" />
+    <Compile Include="Validators\UpdateProjectValidator.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

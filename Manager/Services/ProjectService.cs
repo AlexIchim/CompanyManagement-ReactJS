@@ -1,4 +1,5 @@
-﻿using AutoMapper;
+﻿using System;
+using AutoMapper;
 using Contracts;
 using Domain.Models;
 using Manager.InfoModels;
@@ -40,6 +41,7 @@ namespace Manager.Services
             return new OperationResult(true, Messages.SuccessfullyDeletedProject);
         }
 
+       
         public OperationResult Update(UpdateProjectInputInfo inputInfo) {
             var project = _projectRepository.GetById(inputInfo.Id);
             if (project == null) {
@@ -104,5 +106,7 @@ namespace Manager.Services
         {
             return _projectRepository.GetNrTeamMembers(projectId);
         }
+
+    
     }
 }
