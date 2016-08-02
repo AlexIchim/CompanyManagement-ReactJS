@@ -10,7 +10,6 @@ namespace Contracts
         IEnumerable<Employee> GetAllMembersOfADepartment(int departmentId);
         IEnumerable<Project> GetAllProjectsOfADepartment(int departmentId);
         void AddDepartment(Department department);
-        void DeleteDepartment(Department department);
         void Save();
     }
 }

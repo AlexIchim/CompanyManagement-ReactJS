@@ -1,4 +1,5 @@
-﻿using Domain.Models;
+﻿using System;
+using Domain.Models;
 
 namespace Manager.InfoModels
 {
@@ -6,8 +7,11 @@ namespace Manager.InfoModels
     {
         public int Id { get; set; }
         public string Name { get; set; }
-        public Position Position { get; set; }
-        public int Allocation { get; set; }
-        
+        public string Address { get; set; }
+        public DateTime EmploymentDate { get; set; }
+        public DateTime TerminationDate { get; set; }
+        public string JobType { get; set; }
+        public string Position { get; set; }
+        public int Allocation { get; set; }    
     }
 }

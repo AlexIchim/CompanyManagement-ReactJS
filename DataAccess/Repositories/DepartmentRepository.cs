@@ -43,12 +43,6 @@ namespace DataAccess.Repositories
             Save();
         }
 
-        public void DeleteDepartment(Department department)
-        {
-            _context.Departments.Remove(department);
-            Save();
-        }
-
         public void Save()
         {
             _context.SaveChanges();

@@ -51,14 +51,6 @@ namespace ManagementApp.Controllers
             return Json(result);
         }
 
-        [Route("delete/{departmentId}")]
-        [HttpDelete]
-        public IHttpActionResult Delete(int departmentId) 
-        {
-            var result = _departmentService.DeleteDepartment(departmentId);
-            return Json(result);
-        }
-
         [Route("update")]
         [HttpPut]
         public IHttpActionResult Update([FromBody]UpdateDepartmentInputInfo inputInfo)

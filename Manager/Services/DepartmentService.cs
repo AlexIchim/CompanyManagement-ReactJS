@@ -80,16 +80,5 @@ namespace Manager.Services
             return new OperationResult(true, Messages.SuccessfullyUpdatedDepartment);
         }
 
-        public OperationResult DeleteDepartment(int departmentId) {
-            var department = _departmentRepository.GetDepartmentById(departmentId);
-
-            if (department == null) {
-                return new OperationResult(false, Messages.ErrorWhileDeletingDepartment);
-            }
-
-            _departmentRepository.DeleteDepartment(department);
-
-            return new OperationResult(true, Messages.SuccessfullyDeletedDepartment);
-        }
     }
 }
