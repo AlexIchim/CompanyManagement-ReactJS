@@ -123,20 +123,20 @@
   <data name="SuccessfullyAddedDepartment" xml:space="preserve">
     <value>'Department was added with success'</value>
   </data>
+<<<<<<< HEAD
   <data name="SuccessfullyAddedOffice" xml:space="preserve">
     <value>'Office was added with success'</value>
-  </data>
-	<data name="SuccessfullyAddedProject" xml:space="preserve">
+=======
+  <data name="SuccessfullyAddedProject" xml:space="preserve">
     <value>'Porject was successfully added'</value>
-	  </data>
-  <data name="SuccessfullyAddedEmployee" xml:space="preserve">
-    <value>'Employee was added with success'</value>
-  </data>
-  <data name="SuccessfullyDeletedEmployee" xml:space="preserve">
-    <value>'Employee was successfully deleted'</value>
   </data>
   <data name="SuccessfullyDeletedProject" xml:space="preserve">
     <value>'Project was deleted with success.'</value>
+=======
+  <data name="SuccessfullyAddedEmployee" xml:space="preserve">
+    <value>'Employee was added with success'</value>
+>>>>>>> capac-Adi
+>>>>>>> origin/capac-cristina
   </data>
   <data name="SuccessfullyUpdatedDepartment" xml:space="preserve">
     <value>'Department was updated with success'</value>

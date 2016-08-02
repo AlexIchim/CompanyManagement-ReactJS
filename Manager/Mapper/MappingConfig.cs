@@ -20,8 +20,8 @@ namespace Manager.Mapper
                 proj => proj.MapFrom(src => src.EmployeeProjects.Count)
             );
             CreateMap<Employee, MemberInfo>();
- 
-            
+
+
             CreateMap<Department, DepartmentInfo>().ForMember(
                  di => di.NbrOfEmployees,
                  d => d.MapFrom(src => src.Employees.Count)
@@ -33,6 +33,13 @@ namespace Manager.Mapper
                  d => d.MapFrom(src => src.DepartmentManager.Name)
              );
 
+            CreateMap<AddOfficeInputInfo, Office>();
+
+            CreateMap<EmployeeProject, ProjectsOfAnEmployeeInfo>();
+            CreateMap<AddProjectInputInfo,Project>();
+            CreateMap<AddEmployeeToProjectInputInfo, EmployeeProject>();
+
+            CreateMap<AddEmployeeToDepartmentInputInfo, Employee>();
 
         }
     }

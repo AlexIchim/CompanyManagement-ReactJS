@@ -7,7 +7,7 @@ namespace Contracts
     {
         IEnumerable<Department> GetAll();
         Department GetById(int id);
-        void Add(Department department);
+
         void Save();
 
         IEnumerable<Project> GetAllDepartmentProjects(int id);
@@ -16,7 +16,9 @@ namespace Contracts
 
 
         IEnumerable<Employee> GetEmployeesThatAreNotFullyAllocated();
-        
+
         IEnumerable<Employee> GetAllDepartmentMembers(int id);
+
+        void AddEmployeeToDepartment(Employee employee);
     }
 }

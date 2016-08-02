@@ -25,13 +25,6 @@ namespace DataAccess.Repositories
             return _context.Departments.SingleOrDefault(d => d.Id == id);
         }
 
-        public void Add(Department department)
-        {
-            _context.Departments.Add(department);
-            Save();
-        }
-
-
 
         public void Save()
         {
@@ -48,7 +41,7 @@ namespace DataAccess.Repositories
 
         public IEnumerable<Employee> GetAllUnAllocatedEmployeesOnProject()
         {
-            var array = _context.Employees.Where(e => e.TotalAllocation==0);
+            var array = _context.Employees.Where(e => e.TotalAllocation == 0);
             return array.ToArray();
         }
 
@@ -62,6 +55,14 @@ namespace DataAccess.Repositories
         {
             var array = _context.Departments.SingleOrDefault(d => d.Id == id);
             return array.Employees;
+        }
+
+        public void AddEmployeeToDepartment(Employee employee)
+        {
+            //Employee employee = _context.Employees.SingleOrDefault(e => e.Id == ep.Id);
+
+            _context.Employees.Add(employee);
+            _context.SaveChanges();
         }
     }
 }

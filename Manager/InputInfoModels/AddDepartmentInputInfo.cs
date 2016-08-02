@@ -5,5 +5,7 @@
         public string Name { get; set; }
 
         public int OfficeId { get; set; }
+
+        public int? DepartmentManagerId { get; set; }
     }
 }

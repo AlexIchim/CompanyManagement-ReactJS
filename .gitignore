@@ -29,6 +29,8 @@ _ReSharper*/
 [Tt]est[Rr]esult*
 packages
 .vs/
-frontend/node_modules
+~$nagement use cases.docx
+node_modules/
 *.dll
 .idea
+
