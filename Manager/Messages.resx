@@ -207,4 +207,10 @@
   <data name="SuccessfullyUpdatedAllocation" xml:space="preserve">
     <value>'Successfully updated allocation'</value>
   </data>
+  <data name="ErrorWhileUpdatingDepartment_EmptyName" xml:space="preserve">
+    <value>Department could not be updated: Name field is empty.</value>
+  </data>
+  <data name="ErrorWhileUpdatingDepartment_NameTooLong" xml:space="preserve">
+    <value>Department could not be updated: Name too long.</value>
+  </data>
 </root>

@@ -79,14 +79,7 @@ namespace DataAccess.Repositories
 
         public void Save()
         {
-            try
-            {
-                _context.SaveChanges();
-            }
-            catch (Exception ex)
-            {
-                Console.Write(ex.InnerException);
-            }
+            _context.SaveChanges();
         }
     }
 }
