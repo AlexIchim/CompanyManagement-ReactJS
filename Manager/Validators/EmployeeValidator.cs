@@ -58,7 +58,7 @@ namespace Manager.Validators
             return EmploymentHoursValidationResult.Success;
         }
 
-        private static EmploymentDateValidationResult ValidateEmploymentDate(DateTime employmentDate)
+        private static EmploymentDateValidationResult ValidateEmploymentDate(DateTime? employmentDate)
         {
             if(employmentDate == null)
             {
