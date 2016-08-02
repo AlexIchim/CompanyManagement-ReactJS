@@ -86,5 +86,10 @@ namespace DataAccess.Repositories
         {
             return _context.EmployeeProjects.Where(ep => ep.ProjectId == projectId).ToList();
         }
+
+        public IEnumerable<Project> GetAllDepartmentProjects(Department department)
+        { 
+            return department.Projects;
+        }
     }
 }

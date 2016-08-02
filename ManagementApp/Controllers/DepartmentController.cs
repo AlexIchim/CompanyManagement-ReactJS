@@ -24,14 +24,6 @@ namespace ManagementApp.Controllers
             return Json(result);
         }
 
-        [Route("getAllDepartmentProjects")]
-        [HttpGet]
-        public IHttpActionResult GetAllDepartmentProjects(int inputInfo)
-        {
-            var result = _departmentService.GetAllDepartmentProjects(inputInfo);
-            return Json(result);
-        }
-
         
         [Route("GetAllUnAllocatedEmployeesOnProject")]
         [HttpGet]

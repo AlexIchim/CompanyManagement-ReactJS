@@ -21,6 +21,6 @@ namespace Contracts
 
         IEnumerable<EmployeeProject> GetEmployeeProjectById(int projectId);
 
-
+        IEnumerable<Project> GetAllDepartmentProjects(Department department);
     }
 }

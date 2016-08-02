@@ -55,6 +55,14 @@ namespace ManagementApp.Controllers
             var result = _projectService.UpdateProject(inputInfo);
             return Json(result);
         }
-        
+
+        [Route("getAllDepartmentProjects")]
+        [HttpGet]
+        public IHttpActionResult GetAllDepartmentProjects(int inputInfo)
+        {
+            var result = _projectService.GetAllDepartmentProjects(inputInfo);
+            return Json(result);
+        }
+
     }
 }

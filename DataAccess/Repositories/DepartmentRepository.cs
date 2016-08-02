@@ -32,14 +32,6 @@ namespace DataAccess.Repositories
             _context.SaveChanges();
         }
 
-
-        public IEnumerable<Project> GetAllDepartmentProjects(int id)
-        {
-            //var array = _context.Departments.Include("Projects").SingleOrDefault(d => d.Id == id);
-            var array = _context.Departments.SingleOrDefault(d => d.Id == id);
-            return array.Projects;
-        }
-
         public IEnumerable<Employee> GetAllUnAllocatedEmployeesOnProject()
         {
             var array = _context.Employees.Where(e => e.TotalAllocation == 0);
