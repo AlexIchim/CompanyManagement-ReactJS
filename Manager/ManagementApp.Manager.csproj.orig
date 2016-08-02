@@ -66,10 +66,11 @@
     <Compile Include="InfoModels\ProjectInfo.cs" />
 <<<<<<< HEAD
     <Compile Include="InfoModels\ProjectsOfAnEmployeeInfo.cs" />
-    <Compile Include="InputInfoModels\AddProjectInputInfo.cs" />
 =======
+    <Compile Include="InputInfoModels\AddEmployeeToDepartmentInputInfo.cs" />
+>>>>>>> capac-Adi
     <Compile Include="InputInfoModels\AddEmployeeToProjectInputInfo.cs" />
->>>>>>> capac-andreimuresan
+    <Compile Include="InputInfoModels\AddProjectInputInfo.cs" />
     <Compile Include="InputInfoModels\UpdateDepartmentInputInfo.cs" />
     <Compile Include="InputInfoModels\AddDepartmentInputInfo.cs" />
     <Compile Include="Mapper\MappingConfig.cs" />

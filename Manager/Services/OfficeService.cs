@@ -1,12 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using AutoMapper;
+﻿using AutoMapper;
 using Contracts;
 using Domain.Models;
 using Manager.InfoModels;
+using Manager.InputInfoModels;
+using System.Collections.Generic;
 
 namespace Manager.Services
 {
@@ -37,6 +34,14 @@ namespace Manager.Services
 
             return departmentInfos;
 
+        }
+
+        public OperationResult Add(AddDepartmentInputInfo inputInfo)
+        {
+            var newDepartment = _mapper.Map<Department>(inputInfo);
+            _officeRepository.Add(newDepartment, inputInfo.DepartmentManagerId);
+
+            return new OperationResult(true, Messages.SuccessfullyAddedDepartment);
         }
     }
 }
