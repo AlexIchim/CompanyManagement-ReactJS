@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Manager.InputInfoModels
 {
-   public  class EditAllocationInputInfo
+   public class EditAllocationInputInfo
     {
        public int projectId { get; set; }
        public int employeeId { get; set; }

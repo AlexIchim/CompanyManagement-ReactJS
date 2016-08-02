@@ -74,24 +74,7 @@ namespace DataAccess.Repositories
 
         }
 
-        public void Delete(Project project)
-        {
-            _context.Projects.Remove(project);
-            _context.SaveChanges();
-        }
-
-        public Boolean editAllocation(int projectId, int employeeId, int newAllocation)
-        {
-            Assignment assignment =
-                _context.Assignments.SingleOrDefault(a => a.ProjectId == projectId && a.EmployeeId == employeeId);
-            if (assignment == null)
-            {
-                return false;
-            }
-            assignment.Allocation = newAllocation;
-            _context.SaveChanges();
-            return true;
-        }
+    
     }
 
 }

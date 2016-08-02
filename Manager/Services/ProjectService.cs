@@ -41,6 +41,7 @@ namespace Manager.Services
             return new OperationResult(true, Messages.SuccessfullyDeletedProject);
         }
 
+       
         public OperationResult Update(UpdateProjectInputInfo inputInfo) {
             var project = _projectRepository.GetById(inputInfo.Id);
             if (project == null) {
@@ -106,42 +107,6 @@ namespace Manager.Services
             return _projectRepository.GetNrTeamMembers(projectId);
         }
 
-        public OperationResult Delete(int projectId)
-        {
-            Project project = _projectRepository.GetById(projectId);
-            if (project == null)
-            {
-                return new OperationResult(false, Messages.ErrorWhileDeletingProject);
-            }
-            _projectRepository.Delete(project);
-            return new OperationResult(true, Messages.SuccessfullyDeletedProject);
-        }
-
-        public OperationResult Update(UpdateProjectInputInfo inputInfo)
-        {
-            var project = _projectRepository.GetById(inputInfo.Id);
-            if (project == null)
-            {
-                return new OperationResult(false, Messages.ErrorWhileUpdatingProject);
-            }
-
-            project.Name = inputInfo.Name;
-            project.Duration = inputInfo.Duration;
-            project.Status = inputInfo.Status;
-
-            _projectRepository.Save();
-
-            return new OperationResult(true, Messages.SuccessfullyUpdatedProject);
-        }
-
-        public OperationResult EditAllocation(EditAllocationInputInfo inputInfo)
-        {
-            Boolean found = _projectRepository.editAllocation(inputInfo.projectId, inputInfo.employeeId, inputInfo.Allocation);
-            if (found == true)
-            {
-                return new OperationResult(true, Messages.SuccessfullyEditedAllocation);
-            }
-            return new OperationResult(false, Messages.ErrorWhileEditingAllocation);
-        }
+    
     }
 }
