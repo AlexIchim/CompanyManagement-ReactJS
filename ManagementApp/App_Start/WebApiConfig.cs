@@ -2,6 +2,7 @@
 using ManagementApp.App_Start;
 using System.Web.Http;
 using Newtonsoft.Json.Serialization;
+using System.Web.Http.Cors;
 
 namespace ManagementApp
 {
@@ -18,6 +19,15 @@ namespace ManagementApp
 
             // Web API routes
             config.MapHttpAttributeRoutes();
+
+
+            var cors = new EnableCorsAttribute("*", "*", "GET");
+
+            config.EnableCors();
+
+
+
+
 
             config.Routes.MapHttpRoute(
                 name: "DefaultApi",

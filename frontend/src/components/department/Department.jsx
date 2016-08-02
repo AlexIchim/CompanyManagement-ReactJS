@@ -1,15 +1,60 @@
 import React, { Component } from 'react';
 import {Link} from 'react-router';
+import * as $ from 'jquery';
+import configs from '../helpers/calls'
+
+
+const Tr = (props) => {
+    return(
+        <tr>
+            <td>{ props.node.Name } </td>
+            <td>{props.node.DepartmentManager}</td>
+            <td>{props.node.NbrOfEmployees}</td>
+            <td>{props.node.NbrOfProjects}</td>
+            <td><a href="#"> View employees | </a>
+                <a href="#"> View projects | </a>
+                <a href="#"> Edit </a></td>
+        </tr>
+    )
+}
 
 export default class Department extends React.Component {
 
     constructor() {
         super();
+        this.state = {
+            dep: []
+        }
+    }
+    
+    componentWillMount(){
+        console.log(configs);
+        $.ajax({
+            method: 'GET',
+            url: configs.baseUrl + 'api/office/getAllDepOffice?officeId=1',
+            success: function (data) {
+                console.log(data, this);
+                this.setState({
+                    dep: data
+                })
+            }.bind(this)
+        })
     }
 
-    
-    
+
+
     render() {
+
+        const items = this.state.dep.map((el, x) => {
+            return (
+                <Tr
+                node = {el}
+                key= {x}
+
+                /> 
+            )
+        });
+
 
         return (
 
@@ -28,6 +73,7 @@ export default class Department extends React.Component {
                     </thead>
                     <tbody>
 
+                    {items}
                   
 
                     </tbody>
