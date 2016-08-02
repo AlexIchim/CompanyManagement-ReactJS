@@ -32,6 +32,14 @@ namespace Manager.Services
             return new OperationResult(true, Messages.SuccessfullyAddedProject);
         }
 
+        public OperationResult AddAssignment(int employeeId, int projectId, int allocation)
+        {
+            Assignment assignment = new Assignment {EmployeeId = employeeId, ProjectId = projectId, Allocation = allocation};
+            _projectRepository.AddAssignment(assignment);
+
+            return new OperationResult(true, Messages.SuccessfullyAddedNewAssignment);
+        }
+
         public OperationResult Delete(int projectId) {
             Project project = _projectRepository.GetById(projectId);
             if (project == null) {
@@ -41,7 +49,18 @@ namespace Manager.Services
             return new OperationResult(true, Messages.SuccessfullyDeletedProject);
         }
 
-       
+        public OperationResult DeleteEmployeeFromProject(int employeeId, int projectId)
+        {
+            Assignment assignment = _projectRepository.GetAssignmentById(employeeId, projectId);
+            if (assignment == null)
+            {
+                return new OperationResult(false, Messages.ErrorWhileDeletingEmployeeFromProject);
+            }
+            _projectRepository.DeleteEmployeeFromProject(assignment);
+            return new OperationResult(true, Messages.SuccessfullyDeletedEmployeeFromProject);
+        }
+
+
         public OperationResult Update(UpdateProjectInputInfo inputInfo) {
             var project = _projectRepository.GetById(inputInfo.Id);
             if (project == null) {
@@ -57,12 +76,16 @@ namespace Manager.Services
             return new OperationResult(true, Messages.SuccessfullyUpdatedProject);
         }
 
-        public OperationResult EditAllocation(EditAllocationInputInfo inputInfo) {
-            Boolean found = _projectRepository.editAllocation(inputInfo.projectId, inputInfo.employeeId, inputInfo.Allocation);
-            if (found == true) {
-                return new OperationResult(true, Messages.SuccessfullyEditedAllocation);
+        public OperationResult EditAllocation(EditAllocationInputInfo inputInfo)
+        {
+            Assignment assignment = _projectRepository.GetAssignmentById(inputInfo.employeeId, inputInfo.projectId);
+            if (assignment == null)
+            {
+                return new OperationResult(false, Messages.ErrorWhileEditingAllocation);
             }
-            return new OperationResult(false, Messages.ErrorWhileEditingAllocation);
+            assignment.Allocation = inputInfo.Allocation;
+            _projectRepository.Save();
+            return new OperationResult(true, Messages.SuccessfullyEditedAllocation);
         }
 
         public IEnumerable<ProjectInfo> GetAll()
@@ -80,20 +103,11 @@ namespace Manager.Services
 
         }
 
-        public IEnumerable<AssignmentInfo> GetAllMembersFromProject(int projectId)
+        public IEnumerable<ProjectMemberInfo> GetMembersFromProject(int projectId)
         {
-            var assignments = _projectRepository.GetAllAssignmentsFromProject(projectId);
-            var assignmentsInfo = new List<AssignmentInfo>();
-            foreach (Assignment assignment in assignments)
-            {
-                AssignmentInfo assignmentInfo = new AssignmentInfo
-                {
-                    Name = assignment.Employee.Name,
-                    Position = assignment.Employee.Position,
-                    Allocation = assignment.Allocation
-                };
-                assignmentsInfo.Add(assignmentInfo);
-            }
+            var assignments = _projectRepository.GetMembersFromProject(projectId);
+            var assignmentsInfo = _mapper.Map<IEnumerable<ProjectMemberInfo>>(assignments);
+
             return assignmentsInfo;
         }
 

@@ -98,8 +98,87 @@ namespace ManagementApp.Manager.Tests
             Assert.AreEqual(2, result.Count());
         }
 
-      
-        private Project CreateProject(string name, Department department, string duration, Status status)
+        [Test]
+        public void GetProjectById_ReturnsProject()
+        {
+            //Arrange
+            var project = CreateProject("Project1", new Department(), "2 months", Status.Finished);
+            var projectInfo = CreateProjectInfo("Project1", 1, "2 months", Status.Finished);
+
+            _mapperMock.Setup(m => m.Map<ProjectInfo>(project)).Returns(projectInfo);
+            _projectRepositoryMock.Setup(m => m.GetById(1)).Returns(project);
+
+            //Act
+            var result = _projectService.GetById(1);
+
+            //Assert
+            Assert.AreEqual(projectInfo, result);
+        }
+
+        [Test]
+        public void GetProjectById_CallsGetByIdFromRepository()
+        {
+            //Act
+            _projectService.GetById(1);
+            
+            //Assert
+            _projectRepositoryMock.Verify(x => x.GetById(1), Times.Once);
+        }
+
+        [Test]
+        public void GetAllAssignmentsFromProject_ReturnsAssignments()
+        {
+            
+            //Arrange
+            Project project = CreateProject("Project1", new Department(), "2 months", Status.Finished,1);
+            Employee employee = CreateEmployee("Employee1", "Address1",1);
+            var assignment = new List<Assignment>
+            {
+                CreateAssignment(1, 1, employee, project, 20)
+            };
+            var assignmentInfo = new List<ProjectMemberInfo>
+            {
+                CreateAssignmentInfo("Employee1", Position.Developer, 20)
+            };
+            project.Assignments.Add(assignment[0]);
+            employee.Assignments.Add(assignment[0]);
+
+            _mapperMock.Setup(m => m.Map < IEnumerable<ProjectMemberInfo>>(assignment)).Returns(assignmentInfo);
+            _projectRepositoryMock.Setup(m => m.GetMembersFromProject(1)).Returns(assignment);
+
+            //Act
+            var result = _projectService.GetMembersFromProject(1);
+
+            //Assert
+            CollectionAssert.AreEqual(assignmentInfo, result);
+
+        }
+
+        private Employee CreateEmployee(string name, string address, int?  id=null)
+        {
+            var employee = new Employee
+            {
+                Name = name,
+                Address = address
+            };
+            if (id != null)
+            {
+                employee.Id = (int)id;
+            }
+            return employee;
+        }
+        private Assignment CreateAssignment(int employeeId, int projectId, Employee employee, Project project, int allocation)
+        {
+            return new Assignment
+            {
+                EmployeeId = employeeId,
+                ProjectId = projectId,
+                Project = project,
+                Employee = employee,
+                Allocation = allocation
+            };
+        }
+        private Project CreateProject(string name, Department department, string duration, Status status, int? id=null)
         {
             var project = new Project
             {
@@ -108,20 +187,33 @@ namespace ManagementApp.Manager.Tests
                 Duration = duration,
                 Status = status
             };
+            if (id != null)
+            {
+                project.Id = (int)id;
+            }
             return project;
         }
 
-        private ProjectInfo CreateProjectInfo(string Name, int NrMembers, string Duration, Status status)
+        private ProjectInfo CreateProjectInfo(string name, int nrMembers, string duration, Status status)
         {
             return new ProjectInfo
             {
-                Name = Name,
-                NrMembers = NrMembers,
-                Duration = Duration,
+                Name = name,
+                NrMembers = nrMembers,
+                Duration = duration,
                 Status = status
             };
         }
 
+        private ProjectMemberInfo CreateAssignmentInfo(string name, Position position, int allocation)
+        {
+            return new ProjectMemberInfo
+            {
+                Name = name,
+                Position = position,
+                Allocation = allocation
+            };
+        }
         private AddProjectInputInfo CreateProjectAddInputInfo(string name, int departmentId, string duration,
             string status)
         {
@@ -136,7 +228,7 @@ namespace ManagementApp.Manager.Tests
         }
 
         [Test]
-        public void Delete_CalssDeleteFromRepository_WhenProjectExists()
+        public void Delete_CallsDeleteFromRepository_WhenProjectExists()
         {
             //Arrange
             var projectId = 1;

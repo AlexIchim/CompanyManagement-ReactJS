@@ -79,6 +79,15 @@ namespace Manager {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to &apos;Employee could not be deleted from Project&apos;.
+        /// </summary>
+        public static string ErrorWhileDeletingEmployeeFromProject {
+            get {
+                return ResourceManager.GetString("ErrorWhileDeletingEmployeeFromProject", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to &apos;Office could not be deleted&apos;.
         /// </summary>
         public static string ErrorWhileDeletingOffice {
@@ -160,6 +169,15 @@ namespace Manager {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to &apos;Assignment was added with success&apos;.
+        /// </summary>
+        public static string SuccessfullyAddedNewAssignment {
+            get {
+                return ResourceManager.GetString("SuccessfullyAddedNewAssignment", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to &apos;Office was added with success&apos;.
         /// </summary>
         public static string SuccessfullyAddedOffice {
@@ -192,6 +210,15 @@ namespace Manager {
         public static string SuccessfullyDeletedEmployee {
             get {
                 return ResourceManager.GetString("SuccessfullyDeletedEmployee", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to &apos;Employee was deleted from Project with success&apos;.
+        /// </summary>
+        public static string SuccessfullyDeletedEmployeeFromProject {
+            get {
+                return ResourceManager.GetString("SuccessfullyDeletedEmployeeFromProject", resourceCulture);
             }
         }
         

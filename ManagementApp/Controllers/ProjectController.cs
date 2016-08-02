@@ -22,10 +22,26 @@ namespace ManagementApp.Controllers
             return Json(result);
         }
 
+        [Route("addAssignment")]
+        [HttpPost]
+        public IHttpActionResult AddAssignment(int employeeId, int projectId, int allocation)
+        {
+            var result = _projectService.AddAssignment(employeeId, projectId, allocation);
+            return Json(result);
+        }
+
         [Route("delete")]
         [HttpDelete]
         public IHttpActionResult Delete(int projectId) {
             var result = _projectService.Delete(projectId);
+            return Json(result);
+        }
+
+        [Route("deleteEmployeeFromProject")]
+        [HttpDelete]
+        public IHttpActionResult DeleteEmployeeFromProject(int employeeId, int projectId)
+        {
+            var result = _projectService.DeleteEmployeeFromProject(employeeId, projectId);
             return Json(result);
         }
 
@@ -58,11 +74,11 @@ namespace ManagementApp.Controllers
             return Json(result);
         }
 
-        [Route("getAllProjectMembers")]
+        [Route("getMembersFromProject")]
         [HttpGet]
-        public IHttpActionResult GetAllMembersFromProject( int projectId)
+        public IHttpActionResult GetMembersFromProject( int projectId)
         {
-            var result = _projectService.GetAllMembersFromProject(projectId);
+            var result = _projectService.GetMembersFromProject(projectId);
             return Json(result);
         }
 

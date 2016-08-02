@@ -11,13 +11,14 @@ namespace Contracts
     public interface IProjectRepository
     {
         void Add(Project project);
+        void AddAssignment(Assignment assignment);
         void Delete(Project project);
-        Boolean editAllocation(int projectId, int employeeId, int newAllocation);
+        void DeleteEmployeeFromProject(Assignment assignment);
+        Assignment GetAssignmentById(int employeeId, int projectId);
         void Save();
         IEnumerable<Project> GetAll();
         Project GetById(int id);
-        IEnumerable<Assignment> GetAllAssignmentsFromProject(int projectId);
-        //IEnumerable<Employee> GetAllAvailableEmployes([Optional]string department);
+        IEnumerable<Assignment> GetMembersFromProject(int projectId);
         int GetAllocationOfEmployeeFromProject(int projectId, int employeeId);
         int GetNrTeamMembers(int projectId);
       
