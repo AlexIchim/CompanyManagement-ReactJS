@@ -69,13 +69,7 @@ namespace Manager.Services
             return new OperationResult(true, Messages.SuccessfullyAddedDepartment);
         }
 
-        public OperationResult AddEmployeeToDepartment(AddEmployeeToDepartmentInputInfo inputInfo)
-        {
-            var newEp = _mapper.Map<Employee>(inputInfo);
-            newEp.TotalAllocation = 0;
-            _departmentRepository.AddEmployeeToDepartment(newEp);
-            return new OperationResult(true, Messages.SuccessfullyAddedEmployee);
-        }
+        
 
         public OperationResult AddDepartment(AddDepartmentInputInfo inputInfo)
         {

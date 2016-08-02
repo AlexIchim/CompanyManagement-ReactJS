@@ -52,13 +52,7 @@ namespace DataAccess.Repositories
             return array.ToArray();
         } 
 
-        public void AddEmployeeToDepartment(Employee employee)
-        {
-            //Employee employee = _context.Employees.SingleOrDefault(e => e.Id == ep.Id);
-
-            _context.Employees.Add(employee);
-            _context.SaveChanges();
-        }
+       
 
         public void Add(Department department, int? departmentManagerId)
         {

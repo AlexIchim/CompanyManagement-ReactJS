@@ -70,6 +70,15 @@ namespace Manager {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to &apos;Error adding employee&apos; .
+        /// </summary>
+        public static string ErrorAddingEmployee {
+            get {
+                return ResourceManager.GetString("ErrorAddingEmployee", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to &apos;Error adding employee to project&apos;.
         /// </summary>
         public static string ErrorAddingEmployeeToProject {

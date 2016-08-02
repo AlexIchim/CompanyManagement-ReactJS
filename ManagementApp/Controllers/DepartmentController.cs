@@ -49,13 +49,7 @@ namespace ManagementApp.Controllers
             return Json(result);
         }
 
-        [Route("addEmployeeToDepartment")]
-        [HttpPost]
-        public IHttpActionResult AddEmployeeToDepartment([FromBody] AddEmployeeToDepartmentInputInfo inputInfo)
-        {
-            var result = _departmentService.AddEmployeeToDepartment(inputInfo);
-            return Json(result);
-        }
+        
 
         [Route("addDepartment")]
         [HttpPost]

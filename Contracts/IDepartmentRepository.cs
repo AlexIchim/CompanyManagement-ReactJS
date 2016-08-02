@@ -17,7 +17,6 @@ namespace Contracts
 
         IEnumerable<Employee> GetEmployeesThatAreNotFullyAllocated();
 
-        void AddEmployeeToDepartment(Employee employee);
 
         void Add(Department department, int? departmentManagerId);
 

@@ -130,6 +130,19 @@ namespace Manager.Services
 
             return null;
         }
+        public OperationResult AddEmployee(AddEmployeeToDepartmentInputInfo inputInfo)
+        {
+            var newEp = _mapper.Map<Employee>(inputInfo);
 
+            var department = _departmentRepository.GetDepartmentById(inputInfo.DepartmentId);
+            if (department != null)
+            {
+                newEp.TotalAllocation = 0;
+                _employeeRepository.AddEmployee(newEp);
+                return new OperationResult(true, Messages.SuccessfullyAddedEmployee);
+            }
+
+            return new OperationResult(false, Messages.ErrorAddingEmployee );
+        }
     }
 }

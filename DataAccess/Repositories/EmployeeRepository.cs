@@ -99,6 +99,10 @@ namespace DataAccess.Repositories
         {
                 return department.Employees;         
         }
-
+        public void AddEmployee(Employee employee)
+        {
+            _context.Employees.Add(employee);
+            Save();
+        }
     }
 }
