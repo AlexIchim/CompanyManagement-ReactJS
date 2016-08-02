@@ -29,8 +29,9 @@ _ReSharper*/
 [Tt]est[Rr]esult*
 packages
 .vs/
-~$nagement use cases.docx
-node_modules/
+frontend/node_modules
+<<<<<<< HEAD
+=======
 *.dll
 .idea
-
+>>>>>>> capac
