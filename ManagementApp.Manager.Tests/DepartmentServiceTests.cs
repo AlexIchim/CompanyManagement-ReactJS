@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using AutoMapper;
 using Contracts;
@@ -17,82 +18,250 @@ namespace ManagementApp.Manager.Tests
     {
         private DepartmentService _departmentService;
         private Mock<IDepartmentRepository> _departmentRepositoryMock;
+        private Mock<IEmployeeRepository> _employeeRepositoryMock;
+        private Mock<IOfficeRepository> _officeRepositoryMock;
         private Mock<IMapper> _mapperMock;
 
         [SetUp]
         public void PerTestSetup()
         {
             _departmentRepositoryMock = new Mock<IDepartmentRepository>();
+            _employeeRepositoryMock = new Mock<IEmployeeRepository>();
+            _officeRepositoryMock = new Mock<IOfficeRepository>();
             _mapperMock = new Mock<IMapper>();
-            _departmentService = new DepartmentService(_mapperMock.Object, _departmentRepositoryMock.Object);
+            _departmentService = new DepartmentService(_mapperMock.Object, _departmentRepositoryMock.Object, _employeeRepositoryMock.Object, _officeRepositoryMock.Object);
         }
 
         [Test]
-        public void GetAll_ReturnsAListOfDepartments()
+        public void GetAllDepartments_ReturnsAListOfDepartments()
         {
-            //Arrange - aranjezi ce date vrei sa iti intre, ce rezultate de pe moc sa intoarca
+            //Arrange
+            var offices = new List<Office>
+            {
+                CreateOffice("Office1", "Address1", "Phone1", 1),
+                CreateOffice("Office2", "Address2", "Phone2", 2)
+            };
+
+            var departmentManagers = new List<Employee>
+            {
+                CreateEmployee("Manager1", "Address1", new DateTime(2016, 1, 1), JobTypes.fullTime, Position.Developer, null,
+                    1),
+                CreateEmployee("Manager2", "Address2", new DateTime(2016, 2, 2), JobTypes.fullTime, Position.Developer, null,
+                    2)
+            };
+
             var departments = new List<Department>
             {
-                CreateDepartment("Java", 1),
-                CreateDepartment(".Net", 2)
+                CreateDepartment("Java", departmentManagers[0], offices[0], 1),
+                CreateDepartment(".Net", departmentManagers[1], offices[1], 2),
             };
+
             var departmentsInfo = new List<DepartmentInfo>
             {
-                CreateDepartmentInfo(1, "Java"),
-                CreateDepartmentInfo(2, ".Net")
+                CreateDepartmentInfo(1, "Java", "Manager1", 0, 0),
+                CreateDepartmentInfo(2, ".Net", "Manager2", 0, 0)
             };
 
-            _departmentRepositoryMock.Setup(m => m.GetAll()).Returns(departments);
+            _departmentRepositoryMock.Setup(m => m.GetAllDepartments()).Returns(departments);
             _mapperMock.Setup(m => m.Map<IEnumerable<DepartmentInfo>>(departments)).Returns(departmentsInfo);
 
-            //Act - apeleaza metoda care vreau sa fie testata
-           var result = _departmentService.GetAll();
+            //Act
+            var result = _departmentService.GetAllDepartments();
 
             //Assert
             Assert.AreEqual(2, result.Count());
         }
 
         [Test]
-        public void GetAll_CallsGetAllFromRepository()
+        public void GetAllDepartments_CallsGetAllDepartmentsFromRepository()
         {
             //Arrange
 
             //Act
-            _departmentService.GetAll();
+            _departmentService.GetAllDepartments();
 
             //Assert
-            _departmentRepositoryMock.Verify(x => x.GetAll(), Times.Once);
+            _departmentRepositoryMock.Verify(x => x.GetAllDepartments(), Times.Once);
         }
 
         [Test]
-        public void Add_CallsAddFromRepository()
+        public void GetDepartmentById_ReturnsDepartment()
         {
             //Arrange
-            var departmentInputInfo = new AddDepartmentInputInfo {Name = "javascript"};
-            var department = new Department { Name = "javascript" };
+            var office = CreateOffice("Office1", "Address1", "Phone1", 1);
+            var departmentManager = CreateEmployee("Employee1", "Address1", new DateTime(2016, 1, 1), JobTypes.fullTime, Position.Developer, null, 1);
+            var department = CreateDepartment("Java", departmentManager, office, 1);
+            var departmentInfo = CreateDepartmentInfo(1, "Java", "Manager1", 0, 0);
 
-            _mapperMock.Setup(m => m.Map<Department>(departmentInputInfo)).Returns(department);
-            _departmentRepositoryMock.Setup(m => m.Add(department));
+            _mapperMock.Setup(m => m.Map<DepartmentInfo>(department)).Returns(departmentInfo);
+            _departmentRepositoryMock.Setup(m => m.GetDepartmentById(1)).Returns(department);
 
             //Act
-            _departmentService.Add(departmentInputInfo);
+            var result = _departmentService.GetDepartmentById(1);
 
             //Assert
-            _departmentRepositoryMock.Verify(x => x.Add(department), Times.Once);
+            Assert.AreEqual(departmentInfo, result);
         }
 
         [Test]
-        public void Add_ReturnsSuccessfulMessage()
-        {
+        public void GetDepartmentById_CallsGetDepartmentByIdFromRepository() {
             //Arrange
-            var departmentInputInfo = new AddDepartmentInputInfo { Name = "javascript" };
-            var department = CreateDepartment("javascript");
-
-            _mapperMock.Setup(m => m.Map<Department>(departmentInputInfo)).Returns(department);
-            _departmentRepositoryMock.Setup(m => m.Add(department));
 
             //Act
-            var result = _departmentService.Add(departmentInputInfo);
+            _departmentService.GetDepartmentById(1);
+
+            //Assert
+            _departmentRepositoryMock.Verify(x => x.GetDepartmentById(1), Times.Once);
+        }
+
+        [Test]
+        public void GetAllMembersOfADepartment_ReturnsDepartmentMembers()
+        {
+            //Arrange
+            var office = CreateOffice("Office1", "Address1", "Phone1", 1);
+
+            var employees = new List<Employee>
+            {
+                CreateEmployee("Employee1", "Address1", new DateTime(2016, 1, 1), JobTypes.fullTime, Position.Developer, null, 1),
+                CreateEmployee("Employee2", "Address2", new DateTime(2016, 2, 2), JobTypes.fullTime, Position.Developer, null, 2)
+            };
+
+            var department = CreateDepartment("Java", employees[0], office, 1);
+            department.Employees.Add(employees[0]);
+            department.Employees.Add(employees[1]);
+
+            var employeesInfo = new List<EmployeeInfo>
+            {
+                CreateEmployeeInfo(1, "Employee1"),
+                CreateEmployeeInfo(2, "Employee2")
+            };
+
+            _mapperMock.Setup(m => m.Map<IEnumerable<EmployeeInfo>>(employees)).Returns(employeesInfo);
+            _departmentRepositoryMock.Setup(m => m.GetAllMembersOfADepartment(1)).Returns(employees);
+
+            //Act
+            var result = _departmentService.GetAllMembersOfADepartment(1);
+
+            //Assert
+            CollectionAssert.AreEqual(employeesInfo, result);
+        }
+
+        [Test]
+        public void GetAllMembersOfADepartment_CallsGetAllMembersOfADepartmentFromrepository() {
+            //Arrange
+
+            //Act
+            _departmentService.GetAllMembersOfADepartment(1);
+
+            //Assert
+            _departmentRepositoryMock.Verify(x => x.GetAllMembersOfADepartment(1), Times.Once);
+        }
+
+        [Test]
+        public void GetAllProjectsOfADepartment_ReturnsDepartmentProjects() {
+            //Arrange
+            var office = CreateOffice("Office1", "Address1", "Phone1", 1);
+
+            var employees = new List<Employee>
+            {
+                CreateEmployee("Employee1", "Address1", new DateTime(2016, 1, 1), JobTypes.fullTime, Position.Developer, null, 1),
+                CreateEmployee("Employee2", "Address2", new DateTime(2016, 2, 2), JobTypes.fullTime, Position.Developer, null, 2)
+            };
+
+            var department = CreateDepartment("Java", employees[0], office, 1);
+
+            var projects = new List<Project>
+            {
+                CreateProject("Project1", department, "variable", Status.NotStartedYet, 1),
+                CreateProject("Project2", department, "variable", Status.NotStartedYet, 2)
+            };
+
+            department.Projects.Add(projects[0]);
+            department.Projects.Add(projects[1]);
+
+            var projectsInfo = new List<ProjectInfo>
+            {
+                CreateProjectInfo(1, "Project1"),
+                CreateProjectInfo(2, "Project2")
+            };
+
+            _mapperMock.Setup(m => m.Map<IEnumerable<ProjectInfo>>(projects)).Returns(projectsInfo);
+            _departmentRepositoryMock.Setup(m => m.GetAllProjectsOfADepartment(1)).Returns(projects);
+
+            //Act
+            var result = _departmentService.GetAllProjectsOfADepartment(1);
+
+            //Assert
+            CollectionAssert.AreEqual(projectsInfo, result);
+        }
+
+        [Test]
+        public void GetAllProjectsOfADepartment_CallsGetAllProjectsOfADepartmentFromrepository() {
+            //Arrange
+
+            //Act
+            _departmentService.GetAllProjectsOfADepartment(1);
+
+            //Assert
+            _departmentRepositoryMock.Verify(x => x.GetAllProjectsOfADepartment(1), Times.Once);
+        }
+
+
+        [Test]
+        public void AddDepartment_CallsAddDepartmentFromRepository()
+        {
+            //Arrange
+            var office = CreateOffice("Office1", "Address1", "Phone1", 1);
+            var employee = CreateEmployee("Employee1", "Address1", new DateTime(2016, 1, 1), JobTypes.fullTime, Position.Developer, null, 1);
+
+            var departmentInputInfo = new AddDepartmentInputInfo
+            {
+                Name = "javascript",
+                DepartmentManagerId = 1,
+                OfficeId = 1         
+            };
+
+            var department = new Department
+            {
+                Name = "javascript",
+                DepartmentManager = employee,
+                Office = office            
+            };
+
+            _mapperMock.Setup(m => m.Map<Department>(departmentInputInfo)).Returns(department);
+            _departmentRepositoryMock.Setup(m => m.AddDepartment(department));
+
+            //Act
+            _departmentService.AddDepartment(departmentInputInfo);
+
+            //Assert
+            _departmentRepositoryMock.Verify(x => x.AddDepartment(department), Times.Once);
+        }
+
+        [Test]
+        public void AddDepartment_ReturnsSuccessfulMessage()
+        {
+            //Arrange
+            var office = CreateOffice("Office1", "Address1", "Phone1", 1);
+            var employee = CreateEmployee("Employee1", "Address1", new DateTime(2016, 1, 1), JobTypes.fullTime, Position.Developer, null, 1);
+
+            var departmentInputInfo = new AddDepartmentInputInfo {
+                Name = "javascript",
+                DepartmentManagerId = 1,
+                OfficeId = 1
+            };
+
+            var department = new Department {
+                Name = "javascript",
+                DepartmentManager = employee,
+                Office = office
+            };
+
+            _mapperMock.Setup(m => m.Map<Department>(departmentInputInfo)).Returns(department);
+            _departmentRepositoryMock.Setup(m => m.AddDepartment(department));
+
+            //Act
+            var result = _departmentService.AddDepartment(departmentInputInfo);
 
             //Assert
             Assert.IsTrue(result.Success);
@@ -101,16 +270,24 @@ namespace ManagementApp.Manager.Tests
 
 
         [Test]
-        public void Update_ReturnsSuccessfulMessage_WhenDepartmentExists()
+        public void UpdateDepartment_ReturnsSuccessfulMessage_WhenDepartmentExists()
         {
             //Arrange
-            var departmentInputInfo = new UpdateDepartmentInputInfo {Id = 1, Name = "php" };
-            var department = new Department { Id = 1, Name = "java" };
+            var office = CreateOffice("Office1", "Address1", "Phone1", 1);
+            var employee = CreateEmployee("Employee1", "Address1", new DateTime(2016, 1, 1), JobTypes.fullTime, Position.Developer, null, 1);
             
-            _departmentRepositoryMock.Setup(m => m.GetById(departmentInputInfo.Id)).Returns(department);
+            var departmentInputInfo = new UpdateDepartmentInputInfo {Id = 1, Name = "php", DepartmentManagerId = 2};
+            var department = new Department {
+                Id = 1,
+                Name = "javascript",
+                DepartmentManager = employee,
+                Office = office
+            };
+
+            _departmentRepositoryMock.Setup(m => m.GetDepartmentById(departmentInputInfo.Id)).Returns(department);
 
             //Act
-            var result = _departmentService.Update(departmentInputInfo);
+            var result = _departmentService.UpdateDepartment(departmentInputInfo);
 
             //Assert
             Assert.IsTrue(result.Success);
@@ -118,47 +295,58 @@ namespace ManagementApp.Manager.Tests
         }
 
         [Test]
-        public void Update_CallsGetByIdFromRepository_WhenDepartmentExists()
+        public void UpdateDepartment_CallsGetDepartmentByIdFromRepository_WhenDepartmentExists()
         {
             //Arrange
-            var departmentInputInfo = new UpdateDepartmentInputInfo { Id = 1, Name = "php" };
-            var department = new Department { Id = 1, Name = "java" };
+            var office = CreateOffice("Office1", "Address1", "Phone1", 1);
+            var employee = CreateEmployee("Employee1", "Address1", new DateTime(2016, 1, 1), JobTypes.fullTime, Position.Developer, null, 1);
+            
+            var departmentInputInfo = new UpdateDepartmentInputInfo { Id = 1, Name = "php", DepartmentManagerId = 2 };
+            var department = new Department {
+                Id = 1,
+                Name = "javascript",
+                DepartmentManager = employee,
+                Office = office
+            };
 
-            _departmentRepositoryMock.Setup(m => m.GetById(departmentInputInfo.Id)).Returns(department);
+            _departmentRepositoryMock.Setup(m => m.GetDepartmentById(departmentInputInfo.Id)).Returns(department);
 
             //Act
-            _departmentService.Update(departmentInputInfo);
+            _departmentService.UpdateDepartment(departmentInputInfo);
 
             //Assert
-            _departmentRepositoryMock.Verify(x => x.GetById(departmentInputInfo.Id), Times.Once);
+            _departmentRepositoryMock.Verify(x => x.GetDepartmentById(departmentInputInfo.Id), Times.Once);
         }
 
         [Test]
-        public void Update_CallsSaveFromRepository_WhenDepartmentExists()
+        public void UpdateDepartment_CallsSaveFromRepository_WhenDepartmentExists()
         {
             //Arrange
-            var departmentInputInfo = new UpdateDepartmentInputInfo { Id = 1, Name = "php" };
-            var department = new Department { Id = 1, Name = "java" };
+            var office = CreateOffice("Office1", "Address1", "Phone1", 1);
+            var employee = CreateEmployee("Employee1", "Address1", new DateTime(2016, 1, 1), JobTypes.fullTime, Position.Developer, null, 1);
+            
+            var departmentInputInfo = new UpdateDepartmentInputInfo { Id = 1, Name = "php", DepartmentManagerId = 2 };
+            var department = CreateDepartment("Java", employee, office, 1);
 
-            _departmentRepositoryMock.Setup(m => m.GetById(departmentInputInfo.Id)).Returns(department);
+            _departmentRepositoryMock.Setup(m => m.GetDepartmentById(departmentInputInfo.Id)).Returns(department);
 
             //Act
-            _departmentService.Update(departmentInputInfo);
+            _departmentService.UpdateDepartment(departmentInputInfo);
 
             //Assert
             _departmentRepositoryMock.Verify(x => x.Save(), Times.Once);
         }
 
         [Test]
-        public void Update_ReturnsErrorMessage_WhenDepartmentDoesNotExists()
+        public void UpdateDepartment_ReturnsErrorMessage_WhenDepartmentDoesNotExists()
         {
             //Arrange
-            var departmentInputInfo = new UpdateDepartmentInputInfo { Id = 1, Name = "php" };
+            var departmentInputInfo = new UpdateDepartmentInputInfo { Id = 1, Name = "php", DepartmentManagerId = 2 };
 
-            _departmentRepositoryMock.Setup(m => m.GetById(departmentInputInfo.Id)).Returns((Department)null);
+            _departmentRepositoryMock.Setup(m => m.GetDepartmentById(departmentInputInfo.Id)).Returns((Department)null);
 
             //Act
-            var result = _departmentService.Update(departmentInputInfo);
+            var result = _departmentService.UpdateDepartment(departmentInputInfo);
 
             //Assert
             Assert.IsFalse(result.Success);
@@ -166,25 +354,158 @@ namespace ManagementApp.Manager.Tests
         }
 
         [Test]
-        public void Update_DoesNotCallSaveFromRepository_WhenDepartmentDoesNotExists()
+        public void UpdateDepartment_DoesNotCallSaveFromRepository_WhenDepartmentDoesNotExists()
         {
             //Arrange
-            var departmentInputInfo = new UpdateDepartmentInputInfo { Id = 1, Name = "php" };
+            var departmentInputInfo = new UpdateDepartmentInputInfo { Id = 1, Name = "php", DepartmentManagerId = 2 };
 
-            _departmentRepositoryMock.Setup(m => m.GetById(departmentInputInfo.Id)).Returns((Department)null);
+            _departmentRepositoryMock.Setup(m => m.GetDepartmentById(departmentInputInfo.Id)).Returns((Department)null);
 
             //Act
-            _departmentService.Update(departmentInputInfo);
+            _departmentService.UpdateDepartment(departmentInputInfo);
 
             //Assert
             _departmentRepositoryMock.Verify(x => x.Save(), Times.Never);
         }
 
-        private Department CreateDepartment(string name, int? id = null)
+        [Test]
+        public void DeleteDepartment_ReturnsSuccessfulMessage_WhenDepartmentExists() {
+            //Arrange
+            var office = CreateOffice("Office1", "Address1", "Phone1", 1);
+            var employee = CreateEmployee("Employee1", "Address1", new DateTime(2016, 1, 1), JobTypes.fullTime, Position.Developer, null, 1);
+
+            var department = new Department {
+                Id = 1,
+                Name = "javascript",
+                DepartmentManager = employee,
+                Office = office
+            };
+
+            _departmentRepositoryMock.Setup(m => m.GetDepartmentById(1)).Returns(department);
+
+            //Act
+            var result = _departmentService.DeleteDepartment(1);
+
+            //Assert
+            Assert.IsTrue(result.Success);
+            Assert.AreEqual(Messages.SuccessfullyDeletedDepartment, result.Message);
+        }
+
+        [Test]
+        public void DeleteDepartment_CallsGetDepartmentByIdFromRepository_WhenDepartmentExists() {
+            //Arrange
+            var office = CreateOffice("Office1", "Address1", "Phone1", 1);
+            var employee = CreateEmployee("Employee1", "Address1", new DateTime(2016, 1, 1), JobTypes.fullTime, Position.Developer, null, 1);
+
+            var department = new Department {
+                Id = 1,
+                Name = "javascript",
+                DepartmentManager = employee,
+                Office = office
+            };
+
+            _departmentRepositoryMock.Setup(m => m.GetDepartmentById(1)).Returns(department);
+
+            //Act
+            _departmentService.DeleteDepartment(1);
+
+            //Assert
+            _departmentRepositoryMock.Verify(x => x.GetDepartmentById(1), Times.Once);
+        }
+
+        [Test]
+        public void DeleteDepartment_ReturnsErrorMessage_WhenDepartmentDoesNotExists() {
+            //Arrange
+            _departmentRepositoryMock.Setup(m => m.GetDepartmentById(1)).Returns((Department)null);
+
+            //Act
+            var result = _departmentService.DeleteDepartment(1);
+
+            //Assert
+            Assert.IsFalse(result.Success);
+            Assert.AreEqual(Messages.ErrorWhileDeletingDepartment, result.Message);
+        }
+
+        [Test]
+        public void DeleteDepartment_CallsDeleteDepartmentFromRepository_WhenDepartmentExists() {
+            //Arrange
+            var office = CreateOffice("Office1", "Address1", "Phone1", 1);
+            var employee = CreateEmployee("Employee1", "Address1", new DateTime(2016, 1, 1), JobTypes.fullTime, Position.Developer, null, 1);
+
+            var department = CreateDepartment("Java", employee, office, 1);
+
+            _departmentRepositoryMock.Setup(m => m.GetDepartmentById(1)).Returns(department);
+
+            //Act
+            _departmentService.DeleteDepartment(1);
+
+            //Assert
+            _departmentRepositoryMock.Verify(x => x.DeleteDepartment(department), Times.Once);
+        }
+
+        [Test]
+        public void DeleteDepartment_DoesNotCallDeleteDepartmentFromRepository_WhenDepartmentDoesNotExists() {
+            //Arrange
+            _departmentRepositoryMock.Setup(m => m.GetDepartmentById(1)).Returns((Department)null);
+
+            //Act
+            _departmentService.DeleteDepartment(1);
+
+            //Assert
+            _departmentRepositoryMock.Verify(x => x.DeleteDepartment(null), Times.Never);
+        }
+
+        private Office CreateOffice(string name, string address, string phone, int? id = null)
+        {
+            var office = new Office {
+                Name = name,
+                Address = address,
+                Phone = phone
+            };
+            if (id != null) {
+                office.Id = (int)id;
+            }
+            return office;
+        }
+
+        private Employee CreateEmployee(string name, string address, DateTime employmentDate, JobTypes jobType,
+            Position position, Department department, int? id = null)
+        {
+            var employee = new Employee {
+                Name = name,
+                Address = address,
+                EmploymentDate = employmentDate,
+                JobType = jobType,
+                Position = position,
+                Department = department
+            };
+            if (id != null) {
+                employee.Id = (int)id;
+            }
+            return employee;
+        }
+
+        private Project CreateProject(string name, Department department, string duration, Status status, int? id = null)
+        {
+            var project = new Project {
+                Name = name,
+                Department = department,
+                Duration = duration,
+                Status = status
+            };
+            if (id != null) {
+                project.Id = (int)id;
+            }
+            return project;
+        }
+
+        private Department CreateDepartment(string name, Employee departmentManager, Office office, int? id = null)
         {
             var department =  new Department
             {
-                Name = name
+                Name = name,
+                DepartmentManager = departmentManager,
+                Office = office
             };
             if (id != null)
             {
@@ -193,10 +514,27 @@ namespace ManagementApp.Manager.Tests
             return department;
         }
 
-        private DepartmentInfo CreateDepartmentInfo(int id, string name)
+        private DepartmentInfo CreateDepartmentInfo(int id, string name, string departmentManager, int numberOfEmployees, int numberOfProjects)
         {
             return new DepartmentInfo
             {
+                Id = id,
+                Name = name,
+                DepartmentManager = departmentManager,
+                NumberOfEmployees = numberOfEmployees,
+                NumberOfProjects = numberOfProjects
+            };
+        }
+
+        private EmployeeInfo CreateEmployeeInfo(int id, string name) {
+            return new EmployeeInfo {
+                Id = id,
+                Name = name
+            };
+        }
+
+        private ProjectInfo CreateProjectInfo(int id, string name) {
+            return new ProjectInfo {
                 Id = id,
                 Name = name
             };

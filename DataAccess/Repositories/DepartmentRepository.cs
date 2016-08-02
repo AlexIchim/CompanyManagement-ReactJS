@@ -1,8 +1,9 @@
 ﻿using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using Contracts;
-using DataAccess.Context;
 using Domain.Models;
+using DbContext = DataAccess.Context.DbContext;
 
 namespace DataAccess.Repositories
 {
@@ -15,22 +16,39 @@ namespace DataAccess.Repositories
             _context = context;
         }
 
-        public IEnumerable<Department> GetAll()
+        public IEnumerable<Department> GetAllDepartments()
         {
             return _context.Departments.ToArray();
         }
 
-        public Department GetById(int id)
+        public Department GetDepartmentById(int departmentId)
         {
-            return _context.Departments.SingleOrDefault(d=>d.Id == id);
+            return _context.Departments.SingleOrDefault(d=>d.Id == departmentId);
         }
 
-        public void Add(Department department)
+        public IEnumerable<Employee> GetAllMembersOfADepartment(int departmentId)
+        {
+            Department department = _context.Departments.SingleOrDefault(d => d.Id == departmentId);
+            return department.Employees;
+        }
+
+        public IEnumerable<Project> GetAllProjectsOfADepartment(int departmentId) {
+            Department department = _context.Departments.SingleOrDefault(d => d.Id == departmentId);
+            return department.Projects;
+        }
+
+        public void AddDepartment(Department department)
         {
             _context.Departments.Add(department);
             Save();
         }
-        
+
+        public void DeleteDepartment(Department department)
+        {
+            _context.Departments.Remove(department);
+            Save();
+        }
+
         public void Save()
         {
             _context.SaveChanges();

@@ -18,7 +18,28 @@ namespace ManagementApp.Controllers
         [HttpGet]
         public IHttpActionResult GetAll()
         {
-            var result = _departmentService.GetAll();
+            var result = _departmentService.GetAllDepartments();
+            return Json(result);
+        }
+
+        [Route("getById/{departmentId}")]
+        [HttpGet]
+        public IHttpActionResult GetDepartmentById(int departmentId) {
+            var result = _departmentService.GetDepartmentById(departmentId);
+            return Json(result);
+        }
+
+        [Route("getMembersOfDepartment/{departmentId}")]
+        [HttpGet]
+        public IHttpActionResult GetAllMembersOfADepartment(int departmentId) {
+            var result = _departmentService.GetAllMembersOfADepartment(departmentId);
+            return Json(result);
+        }
+
+        [Route("getProjectsOfDepartment/{departmentId}")]
+        [HttpGet]
+        public IHttpActionResult GetAllProjectsOfADepartment(int departmentId) {
+            var result = _departmentService.GetAllProjectsOfADepartment(departmentId);
             return Json(result);
         }
 
@@ -26,15 +47,23 @@ namespace ManagementApp.Controllers
         [HttpPost]
         public IHttpActionResult Add([FromBody] AddDepartmentInputInfo inputInfo)
         {
-            var result = _departmentService.Add(inputInfo);
+            var result = _departmentService.AddDepartment(inputInfo);
+            return Json(result);
+        }
+
+        [Route("delete/{departmentId}")]
+        [HttpDelete]
+        public IHttpActionResult Delete(int departmentId) 
+        {
+            var result = _departmentService.DeleteDepartment(departmentId);
             return Json(result);
         }
 
         [Route("update")]
-        [HttpPost]
+        [HttpPut]
         public IHttpActionResult Update([FromBody]UpdateDepartmentInputInfo inputInfo)
         {
-            var result = _departmentService.Update(inputInfo);
+            var result = _departmentService.UpdateDepartment(inputInfo);
             return Json(result);
         }
     }

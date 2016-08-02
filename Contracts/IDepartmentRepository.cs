@@ -5,9 +5,12 @@ namespace Contracts
 {
     public interface IDepartmentRepository
     {
-        IEnumerable<Department> GetAll();
-        Department GetById(int id);
-        void Add(Department department);
+        IEnumerable<Department> GetAllDepartments();
+        Department GetDepartmentById(int departmentId);
+        IEnumerable<Employee> GetAllMembersOfADepartment(int departmentId);
+        IEnumerable<Project> GetAllProjectsOfADepartment(int departmentId);
+        void AddDepartment(Department department);
+        void DeleteDepartment(Department department);
         void Save();
     }
 }

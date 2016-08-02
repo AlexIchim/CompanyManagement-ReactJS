@@ -22,6 +22,26 @@ namespace ManagementApp.Controllers
             return Json(result);
         }
 
+        [Route("delete")]
+        [HttpDelete]
+        public IHttpActionResult Delete(int projectId) {
+            var result = _projectService.Delete(projectId);
+            return Json(result);
+        }
+
+        [Route("update")]
+        [HttpPut]
+        public IHttpActionResult Update([FromBody] UpdateProjectInputInfo inputInfo) {
+            var result = _projectService.Update(inputInfo);
+            return Json(result);
+        }
+        [Route("editAllocation")]
+        [HttpPut]
+        public IHttpActionResult EditAllcation([FromBody] EditAllocationInputInfo inputInfo) {
+            var result = _projectService.EditAllocation(inputInfo);
+            return Json(result);
+        }
+
         [Route("getAllProjects")]
         [HttpGet]
         public IHttpActionResult GetAll()
@@ -60,7 +80,6 @@ namespace ManagementApp.Controllers
             var result = _projectService.GetNrTeamMembers(projectId);
             return Json(result);
         }
-
         [Route("delete")]
         [HttpDelete]
         public IHttpActionResult Delete(int projectId)
@@ -83,7 +102,5 @@ namespace ManagementApp.Controllers
             var result = _projectService.EditAllocation(inputInfo);
             return Json(result);
         }
-
-
     }
 }
