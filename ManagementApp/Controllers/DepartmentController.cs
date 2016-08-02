@@ -24,24 +24,7 @@ namespace ManagementApp.Controllers
             return Json(result);
         }
 
-        [Route("getAllDepartmentProjects")]
-        [HttpGet]
-        public IHttpActionResult GetAllDepartmentProjects(int inputInfo)
-        {
-            var result = _departmentService.GetAllDepartmentProjects(inputInfo);
-            return Json(result);
-        }
-
-        [Route("getAllDepartmentMembers")]
-        [HttpGet]
-        public IHttpActionResult GetAllDepartmentMembers(int inputInfo)
-        {
-            var result = _departmentService.GetAllDepartmentMembers(inputInfo);
-            return Json(result);
-        }
-
-
-
+        
         [Route("GetAllUnAllocatedEmployeesOnProject")]
         [HttpGet]
         public IHttpActionResult GetAllUnAllocatedEmployeesOnProject()
@@ -58,20 +41,29 @@ namespace ManagementApp.Controllers
             return Json(result);
         }
 
-        [Route("addEmployeeToDepartment")]
+        [Route("addDepartment")]
         [HttpPost]
-        public IHttpActionResult AddEmployeeToDepartment([FromBody] AddEmployeeToDepartmentInputInfo inputInfo)
+        public IHttpActionResult AddDepartment([FromBody] AddDepartmentInputInfo inputInfo)
         {
-            var result = _departmentService.AddEmployeeToDepartment(inputInfo);
+            var result = _departmentService.AddDepartment(inputInfo);
             return Json(result);
         }
 
-       
+        [Route("getAllDepartmentManagers")]
+        [HttpGet]
+        public IHttpActionResult GetAllDepartmentManagers()
+        {
+            var result = _departmentService.GetAllDepartmentManagers();
+            return Json(result);
+        }
 
-
-
-
-
+        [Route("UpdateDepartment")]
+        [HttpPut]
+        public IHttpActionResult UpdateDepartment([FromBody]UpdateDepartmentInputInfo inputInfo)
+        {
+            var result = _departmentService.UpdateDepartment(inputInfo);
+            return Json(result);
+        }
 
     }
 }

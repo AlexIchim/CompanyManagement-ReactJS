@@ -35,7 +35,7 @@ export default class Employee extends React.Component{
     componentWillMount(){
         $.ajax({
             method: 'GET',
-            url: configs.baseUrl + 'api/department/getAllDepartmentMembers?inputInfo=' + this.props.routeParams.departmentId,
+            url: configs.baseUrl + 'api/employee/getAllDepartmentEmployees?inputInfo=' + this.props.routeParams.departmentId,
             success: function(data){
                 this.setState({
                     emp: data

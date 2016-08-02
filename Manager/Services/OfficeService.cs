@@ -38,35 +38,12 @@ namespace Manager.Services
 
         }
 
-        public OperationResult AddDepartment(AddDepartmentInputInfo inputInfo)
-        {
-            var newDepartment = _mapper.Map<Department>(inputInfo);
-            _officeRepository.Add(newDepartment, inputInfo.DepartmentManagerId);
-            return new OperationResult(true, Messages.SuccessfullyAddedDepartment);
-        }
         public OperationResult Add(AddOfficeInputInfo inputInfo)
         {
 
             var newOffice = _mapper.Map<Office>(inputInfo);
             _officeRepository.AddOffice(newOffice);
             return new OperationResult(true, Messages.SuccessfullyAddedOffice);
-        }
-
-        public OperationResult UpdateDepartment(UpdateDepartmentInputInfo inputInfo)
-        {
-            var department = _officeRepository.GetById(inputInfo.Id);
-
-            if (department == null)
-            {
-                return new OperationResult(false, Messages.ErrorWhileUpdatingDepartment);
-            }
-            dm = _officeRepository.GetEmployeeById(inputInfo.DepartmentManagerId);
-
-            department.Name = inputInfo.Name;
-            department.DepartmentManager = dm;
-            _officeRepository.Save();
-
-            return new OperationResult(true, Messages.SuccessfullyUpdatedDepartment);
         }
 
         public OperationResult UpdateOffice(UpdateOfficeInputInfo inputInfo)

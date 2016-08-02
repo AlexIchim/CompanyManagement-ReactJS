@@ -31,7 +31,7 @@ namespace Domain.Models
 
         public DateTime EmploymentDate { get; set; }
 
-        public DateTime ReleaseDate { get; set; }
+        public DateTime? ReleaseDate { get; set; }
 
         public int TotalAllocation { get; set; }
 

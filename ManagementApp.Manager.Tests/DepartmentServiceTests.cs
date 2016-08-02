@@ -139,7 +139,7 @@ namespace ManagementApp.Manager.Tests
             var departmentInputInfo = new UpdateDepartmentInputInfo { Id = 1, Name = "php" };
             var department = new Department { Id = 1, Name = "java" };
 
-            _departmentRepositoryMock.Setup(m => m.GetById(departmentInputInfo.Id)).Returns(department);
+            _departmentRepositoryMock.Setup(m => m.GetDepartmentById(departmentInputInfo.Id)).Returns(department);
 
             //Act
             var result = _departmentService.Update(departmentInputInfo);
@@ -156,13 +156,13 @@ namespace ManagementApp.Manager.Tests
             var departmentInputInfo = new UpdateDepartmentInputInfo { Id = 1, Name = "php" };
             var department = new Department { Id = 1, Name = "java" };
 
-            _departmentRepositoryMock.Setup(m => m.GetById(departmentInputInfo.Id)).Returns(department);
+            _departmentRepositoryMock.Setup(m => m.GetDepartmentById(departmentInputInfo.Id)).Returns(department);
 
             //Act
             _departmentService.Update(departmentInputInfo);
 
             //Assert
-            _departmentRepositoryMock.Verify(x => x.GetById(departmentInputInfo.Id), Times.Once);
+            _departmentRepositoryMock.Verify(x => x.GetDepartmentById(departmentInputInfo.Id), Times.Once);
         }
 
         [Test]
@@ -172,7 +172,7 @@ namespace ManagementApp.Manager.Tests
             var departmentInputInfo = new UpdateDepartmentInputInfo { Id = 1, Name = "php" };
             var department = new Department { Id = 1, Name = "java" };
 
-            _departmentRepositoryMock.Setup(m => m.GetById(departmentInputInfo.Id)).Returns(department);
+            _departmentRepositoryMock.Setup(m => m.GetDepartmentById(departmentInputInfo.Id)).Returns(department);
 
             //Act
             _departmentService.Update(departmentInputInfo);
@@ -187,7 +187,7 @@ namespace ManagementApp.Manager.Tests
             //Arrange
             var departmentInputInfo = new UpdateDepartmentInputInfo { Id = 1, Name = "php" };
 
-            _departmentRepositoryMock.Setup(m => m.GetById(departmentInputInfo.Id)).Returns((Department)null);
+            _departmentRepositoryMock.Setup(m => m.GetDepartmentById(departmentInputInfo.Id)).Returns((Department)null);
 
             //Act
             var result = _departmentService.Update(departmentInputInfo);
@@ -203,7 +203,7 @@ namespace ManagementApp.Manager.Tests
             //Arrange
             var departmentInputInfo = new UpdateDepartmentInputInfo { Id = 1, Name = "php" };
 
-            _departmentRepositoryMock.Setup(m => m.GetById(departmentInputInfo.Id)).Returns((Department)null);
+            _departmentRepositoryMock.Setup(m => m.GetDepartmentById(departmentInputInfo.Id)).Returns((Department)null);
 
             //Act
             _departmentService.Update(departmentInputInfo);

@@ -1,10 +1,12 @@
 ﻿using System.Web.Http;
 using Manager.InputInfoModels;
 using Manager.Services;
+using System.Web.Http.Cors;
 
 namespace ManagementApp.Controllers
 {
     [RoutePrefix("api/project")]
+    [EnableCors("*", "*", "GET")]
     public class ProjectController : ApiController
     {
         
@@ -15,11 +17,11 @@ namespace ManagementApp.Controllers
             _projectService = projectService;
         }
        
-        [Route("getEmployeeByProjectId")]
+        [Route("getEmployeesByProjectId")]
         [HttpGet]
-        public IHttpActionResult GetEmployeeByProjectId(int projectId)
+        public IHttpActionResult GetEmployeesByProjectId(int projectId)
         {
-            var result = _projectService.GetByProjectId(projectId);
+            var result = _projectService.GetEmployeesByProjectId(projectId);
             return Json(result);
         }
 
@@ -55,6 +57,14 @@ namespace ManagementApp.Controllers
             var result = _projectService.UpdateProject(inputInfo);
             return Json(result);
         }
-        
+
+        [Route("getAllDepartmentProjects")]
+        [HttpGet]
+        public IHttpActionResult GetAllDepartmentProjects(int inputInfo)
+        {
+            var result = _projectService.GetAllDepartmentProjects(inputInfo);
+            return Json(result);
+        }
+
     }
 }
