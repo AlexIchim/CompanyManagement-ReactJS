@@ -26,31 +26,6 @@ namespace Manager.Services
             return departmentInfos;
         }
 
-        public IEnumerable<ProjectInfo> GetAllDepartmentProjects(int inputInfo)
-        {
-            var newProject = _mapper.Map<int>(inputInfo);
-            var projects = _departmentRepository.GetAllDepartmentProjects(newProject);
-            if (projects == null)
-            {
-                return null;
-            }
-            var projectInfos = _mapper.Map<IEnumerable<ProjectInfo>>(projects);
-            return projectInfos;
-        }
-
-        public IEnumerable<MemberInfo> GetAllDepartmentMembers(int inputInfo)
-        {
-            var newMember = _mapper.Map<int>(inputInfo);
-            var members = _departmentRepository.GetAllDepartmentMembers(newMember);
-            if (members == null)
-            {
-                return null;
-            }
-            var memberInfos = _mapper.Map<IEnumerable<MemberInfo>>(members);
-            return memberInfos;
-        }
-
-
         public IEnumerable<EmployeeInfo> GetAllUnAllocatedEmployeesOnProject()
         {
             var employees = _departmentRepository.GetAllUnAllocatedEmployeesOnProject();
@@ -82,13 +57,7 @@ namespace Manager.Services
             return new OperationResult(true, Messages.SuccessfullyAddedDepartment);
         }
 
-        public OperationResult AddEmployeeToDepartment(AddEmployeeToDepartmentInputInfo inputInfo)
-        {
-            var newEp = _mapper.Map<Employee>(inputInfo);
-            newEp.TotalAllocation = 0;
-            _departmentRepository.AddEmployeeToDepartment(newEp);
-            return new OperationResult(true, Messages.SuccessfullyAddedEmployee);
-        }
+        
 
         public OperationResult AddDepartment(AddDepartmentInputInfo inputInfo)
         {

@@ -7,19 +7,14 @@ namespace Contracts
     public interface IDepartmentRepository
     {
         IEnumerable<Department> GetAll();
-        Department GetDepartmentById(int id);
+        Department GetDepartmentById(int? id);
 
         void Save();
-
-        IEnumerable<Project> GetAllDepartmentProjects(int id);
 
         IEnumerable<Employee> GetAllUnAllocatedEmployeesOnProject();
 
         IEnumerable<Employee> GetEmployeesThatAreNotFullyAllocated();
 
-        IEnumerable<Employee> GetAllDepartmentMembers(int id);
-
-        void AddEmployeeToDepartment(Employee employee);
 
         void Add(Department department, int? departmentManagerId);
 

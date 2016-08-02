@@ -70,11 +70,38 @@ namespace Manager {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to &apos;Error adding employee&apos; .
+        /// </summary>
+        public static string ErrorAddingEmployee {
+            get {
+                return ResourceManager.GetString("ErrorAddingEmployee", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to &apos;Error adding employee to project&apos;.
         /// </summary>
         public static string ErrorAddingEmployeeToProject {
             get {
                 return ResourceManager.GetString("ErrorAddingEmployeeToProject", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to &apos;Error: Employee could not be deleted.&apos;.
+        /// </summary>
+        public static string ErrorDeletingEmployee {
+            get {
+                return ResourceManager.GetString("ErrorDeletingEmployee", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to &apos;Error adding project.&apos;.
+        /// </summary>
+        public static string ErrorWhileAddingProject {
+            get {
+                return ResourceManager.GetString("ErrorWhileAddingProject", resourceCulture);
             }
         }
         

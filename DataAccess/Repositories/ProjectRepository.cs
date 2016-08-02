@@ -19,7 +19,7 @@ namespace DataAccess.Repositories
         }
 
 
-        public IEnumerable<Employee> GetEmployeeByProjectId(int projectid)
+        public IEnumerable<Employee> GetEmployeesByProjectId(int projectid)
         {
             List<Employee> array = new List<Employee>();
             var proj = _context.EmployeeProjects.Where(ep => ep.ProjectId == projectid);
@@ -41,7 +41,7 @@ namespace DataAccess.Repositories
 
         public Project GetProjectById(int projectId)
         {
-            return _context.Projects.Where(p => p.Id == projectId).SingleOrDefault();
+            return _context.Projects.SingleOrDefault(p => p.Id == projectId);
         }
 
        
@@ -85,6 +85,11 @@ namespace DataAccess.Repositories
         public IEnumerable<EmployeeProject> GetEmployeeProjectById(int projectId)
         {
             return _context.EmployeeProjects.Where(ep => ep.ProjectId == projectId).ToList();
+        }
+
+        public IEnumerable<Project> GetAllDepartmentProjects(Department department)
+        { 
+            return department.Projects;
         }
     }
 }
