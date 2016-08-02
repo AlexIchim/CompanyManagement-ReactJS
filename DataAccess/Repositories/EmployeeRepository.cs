@@ -4,6 +4,7 @@ using Domain.Models;
 using DataAccess.Context;
 using System.Linq;
 using System;
+using DataAccess.Extensions;
 
 namespace DataAccess.Repositories
 {
@@ -20,7 +21,7 @@ namespace DataAccess.Repositories
             return _context.Employees.ToArray();
         }
 
-        public IEnumerable<Employee> GetAvailable(int? departmentId, int? positionId)
+        public IEnumerable<Employee> GetAvailable(int? departmentId, int? positionId, int? pageSize = null, int? pageNumber = null)
         {
             return _context.Employees.Where(
                 e => (
@@ -31,7 +32,9 @@ namespace DataAccess.Repositories
                     (departmentId == null || e.DepartmentId == departmentId) &&
                     (positionId == null || e.PositionId == positionId)
                 )
-            ).ToArray();
+            )
+            .OrderBy(e => e.Name)
+            .Paginate(pageSize, pageNumber).ToArray();
         }
 
         public IEnumerable<Employee> GetAllDepartmentManagers()

@@ -44,7 +44,7 @@ namespace DataAccess.Repositories
             }
         }
 
-        public IEnumerable<Employee> GetEmployeesByDepartmentId(int id)
+        public IEnumerable<Employee> GetEmployeesByDepartmentId(int id, int? pageSize = null, int? pageNumber = null)
         {
             var dept = _context.Departments.SingleOrDefault(d => d.Id == id);
             if (dept == null)
@@ -53,7 +53,7 @@ namespace DataAccess.Repositories
             }
             else
             {
-                return dept.Employees.ToArray();
+                return dept.Employees.Paginate(pageSize, pageNumber).ToArray();
             }
         }
 

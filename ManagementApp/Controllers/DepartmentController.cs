@@ -32,9 +32,9 @@ namespace ManagementApp.Controllers
 
         [Route("getEmployeesByDepartmentId")]
         [HttpGet]
-        public IHttpActionResult GetEmployeesByDepartmentId(int ID)
+        public IHttpActionResult GetEmployeesByDepartmentId(int ID, int? pageSize = null, int? pageNumber = null)
         {
-            var result = _departmentService.GetEmployeesByDepartmentId(ID);
+            var result = _departmentService.GetEmployeesByDepartmentId(ID, pageSize, pageNumber);
             return Json(result);
         }
 
