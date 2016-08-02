@@ -63,6 +63,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="OfficeServiceTests.cs" />
+    <Compile Include="AllocationServiceTest.cs" />
     <Compile Include="PositionServiceTests.cs" />
     <Compile Include="DepartmentServiceTests.cs" />
     <Compile Include="ProjectServiceTests.cs" />

@@ -16,6 +16,13 @@ namespace Manager.Validators
             AddAllocationInputInfo info)
         {
             var employee = employeeRepository.GetById(info.EmployeeId);
+            var project = projectRepository.GetById(info.ProjectId);
+
+            if (project == null)
+            {
+                return new OperationResult(false, Messages.ErrorWhileAddingAllocation + " " + Messages.ProjectInvalidId);
+            }
+
             if (employee == null)
             {
                 return new OperationResult(false, Messages.ErrorWhileAddingAllocation + " " + Messages.EmployeeIdInvalid);
