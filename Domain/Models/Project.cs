@@ -5,8 +5,10 @@ using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Domain.Models {
-    public enum Status {
+namespace Domain.Models
+{
+    public enum Status
+    {
         NotStartedYet,
         InProgress,
         OnHold,

@@ -25,9 +25,9 @@ namespace ManagementApp.Manager.Tests
         [SetUp]
         public void PerTestSetup()
         {
-            _officeRepositoryMock=new Mock<IOfficeRepository>();
-            _mapperMock=new Mock<IMapper>();
-            _officeService=new OfficeService(_mapperMock.Object, _officeRepositoryMock.Object);
+            _officeRepositoryMock = new Mock<IOfficeRepository>();
+            _mapperMock = new Mock<IMapper>();
+            _officeService = new OfficeService(_mapperMock.Object, _officeRepositoryMock.Object);
         }
 
         [Test]
@@ -51,12 +51,12 @@ namespace ManagementApp.Manager.Tests
 
             _officeRepositoryMock.Setup(m => m.GetAll()).Returns(offices);
             _mapperMock.Setup(m => m.Map<IEnumerable<OfficeInfo>>(offices)).Returns(officeInfos);
-            
+
             //Act
             var result = _officeService.GetAll();
 
             //Assert
-            Assert.AreEqual(2,result.Count());
+            Assert.AreEqual(2, result.Count());
         }
 
         [Test]
@@ -68,7 +68,7 @@ namespace ManagementApp.Manager.Tests
             _officeService.GetAll();
 
             //Assert
-            _officeRepositoryMock.Verify(x=>x.GetAll(),Times.Once);
+            _officeRepositoryMock.Verify(x => x.GetAll(), Times.Once);
         }
 
         [Test]
@@ -79,12 +79,12 @@ namespace ManagementApp.Manager.Tests
                 "TestName1",
                 "TestAddress1",
                 "0700000000",
-                new byte[] {0,0,0});
+                new byte[] { 0, 0, 0 });
             var office = CreateOffice(null,
                 "TestName1",
                 "TestAddress1",
                 "0700000000",
-                new byte[] {0, 0, 0});
+                new byte[] { 0, 0, 0 });
 
             _mapperMock.Setup(m => m.Map<Office>(addOfficeInputInfo)).Returns(office);
             _officeRepositoryMock.Setup(m => m.Add(office));
@@ -93,7 +93,7 @@ namespace ManagementApp.Manager.Tests
             _officeService.Add(addOfficeInputInfo);
 
             //Assert
-            _officeRepositoryMock.Verify(x=>x.Add(office), Times.Once);
+            _officeRepositoryMock.Verify(x => x.Add(office), Times.Once);
         }
 
         [Test]
@@ -131,13 +131,13 @@ namespace ManagementApp.Manager.Tests
                 "TestName1",
                 "TestAddress1",
                 "0700000000",
-                new byte[] {0, 0, 0});
+                new byte[] { 0, 0, 0 });
             var office = CreateOffice(
                 1,
                 "TestName1",
                 "TestAddress1",
                 "0700000000",
-                new byte[] {0, 0, 0});
+                new byte[] { 0, 0, 0 });
 
 
             _officeRepositoryMock.Setup(m => m.GetById(updateOfficeInputInfo.Id)).Returns(office);
@@ -173,7 +173,7 @@ namespace ManagementApp.Manager.Tests
             var result = _officeService.Update(updateOfficeInputInfo);
 
             //Assert
-            _officeRepositoryMock.Verify(x=>x.GetById(updateOfficeInputInfo.Id),Times.Once);
+            _officeRepositoryMock.Verify(x => x.GetById(updateOfficeInputInfo.Id), Times.Once);
         }
 
         [Test]
@@ -213,7 +213,7 @@ namespace ManagementApp.Manager.Tests
                 "0700000000",
                 new byte[] { 0, 0, 0 });
 
-            _officeRepositoryMock.Setup(m => m.GetById(updateOfficeInputInfo.Id)).Returns((Office) null);
+            _officeRepositoryMock.Setup(m => m.GetById(updateOfficeInputInfo.Id)).Returns((Office)null);
             //Act
             var result = _officeService.Update(updateOfficeInputInfo);
 
@@ -279,7 +279,7 @@ namespace ManagementApp.Manager.Tests
             _officeService.Delete(officeId);
 
             //Assert
-            _officeRepositoryMock.Verify(m=>m.Delete(office),Times.Once);
+            _officeRepositoryMock.Verify(m => m.Delete(office), Times.Once);
         }
         [Test]
         public void Delete_DoesNotCallDeleteFromRepository_WhenOfficeDoesNotExist()

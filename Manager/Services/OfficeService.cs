@@ -47,7 +47,7 @@ namespace Manager.Services
             var newOffice = _mapper.Map<Office>(inputInfo);
             _officeRepository.Add(newOffice);
 
-            return new OperationResult(true,Messages.SuccessfullyAddedOffice);
+            return new OperationResult(true, Messages.SuccessfullyAddedOffice);
         }
 
         public OperationResult Update(UpdateOfficeInputInfo inputInfo)
@@ -79,7 +79,7 @@ namespace Manager.Services
         {
             var office = _officeRepository.GetById(officeId);
 
-            if (office==null)
+            if (office == null)
             {
                 return new OperationResult(false, Messages.ErrorWhileDeletingOffice);
             }

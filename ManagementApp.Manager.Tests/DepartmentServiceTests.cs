@@ -276,7 +276,7 @@ namespace ManagementApp.Manager.Tests
             //Arrange
             var office = CreateOffice("Office1", "Address1", "Phone1", 1);
             var employee = CreateEmployee("Employee1", "Address1", new DateTime(2016, 1, 1), JobTypes.fullTime, Position.Developer, null, 1);
-            
+
             var departmentInputInfo = new UpdateDepartmentInputInfo {Id = 1, Name = "php", DepartmentManagerId = 2};
             var department = new Department {
                 Id = 1,
@@ -417,7 +417,7 @@ namespace ManagementApp.Manager.Tests
 
         private Department CreateDepartment(string name, Employee departmentManager, Office office, int? id = null)
         {
-            var department =  new Department
+            var department = new Department
             {
                 Name = name,
                 DepartmentManager = departmentManager,
@@ -425,7 +425,7 @@ namespace ManagementApp.Manager.Tests
             };
             if (id != null)
             {
-                department.Id = (int) id;
+                department.Id = (int)id;
             }
             return department;
         }

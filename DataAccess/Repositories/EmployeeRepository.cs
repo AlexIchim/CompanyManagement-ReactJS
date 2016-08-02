@@ -1,5 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.Remoting.Messaging;
 using Contracts;
 using DataAccess.Context;
 using Domain.Models;
@@ -27,8 +29,9 @@ namespace DataAccess.Repositories
 
         public void Add(Employee employee)
         {
+            employee.EmploymentDate = DateTime.Now;
             _context.Employees.Add(employee);
-            Save();
+            _context.SaveChanges();
         }
         
         public void Save()
@@ -36,10 +39,12 @@ namespace DataAccess.Repositories
             _context.SaveChanges();
         }
 
-        public void Delete(Employee employee)
+        public void Delete(int employeeId, DateTime releaseDate)
         {
-            _context.Employees.Remove(employee);
-            _context.SaveChanges();
+            var employee = GetById(employeeId);
+            employee.ReleasedDate = releaseDate;
+            Save();
         }
+
     }
 }

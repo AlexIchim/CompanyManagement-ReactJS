@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using AutoMapper;
 using Contracts;
 using Domain.Models;
@@ -73,17 +74,44 @@ namespace Manager.Services
             return new OperationResult(true, Messages.SuccessfullyUpdatedEmployee);
         }
 
-        public OperationResult Delete(int employeeId)
+        public OperationResult Delete(int employeeId, DateTime releaseDate)
         {
-            var office = _employeeRepository.GetById(employeeId);
+            var employee = _employeeRepository.GetById(employeeId);
 
-            if (office == null)
+            if (employee == null)
             {
                 return new OperationResult(false, Messages.ErrorWhileDeletingEmployee);
             }
 
-            _employeeRepository.Delete(office);
+            _employeeRepository.Delete(employee.Id, releaseDate);
             return new OperationResult(true, Messages.SuccessfullyDeletedEmployee);
+        }
+
+        public int GetRemainingAllocation(int employeeId)
+        {
+            var employee = _employeeRepository.GetById(employeeId);
+            int totalAllocation = 0;
+            foreach (var assignment in employee.Assignments)
+            {
+                totalAllocation += assignment.Allocation;
+            }
+            int remainingAllocation = 100 - totalAllocation;
+
+            return remainingAllocation;
+        }
+
+        public IEnumerable<ProjectInfo> GetProjectsOfEmployee(int employeeId)
+        {
+            var employee = _employeeRepository.GetById(employeeId);
+            var projects = new List<Project>();
+            foreach (var assignment in employee.Assignments)
+            {
+                projects.Add(assignment.Project);
+            }
+
+            var projectsInfos = _mapper.Map<IEnumerable<ProjectInfo>>(projects);
+
+            return projectsInfos;
         }
 
     }

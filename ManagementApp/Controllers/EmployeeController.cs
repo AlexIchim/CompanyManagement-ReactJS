@@ -1,4 +1,5 @@
-﻿using System.Web.Http;
+﻿using System;
+using System.Web.Http;
 using Manager.InputInfoModels;
 using Manager.Services;
 
@@ -22,7 +23,7 @@ namespace ManagementApp.Controllers
             return Json(result);
         }
 
-        [Route("getById")]
+        [Route("getById/{id}")]
         [HttpGet]
         public IHttpActionResult GetById(int id)
         {
@@ -46,11 +47,11 @@ namespace ManagementApp.Controllers
             return Json(result);
         }
 
-        [Route("delete")]
+        [Route("delete/{employeeId}")]
         [HttpDelete]
         public IHttpActionResult Delete(int employeeId)
         {
-            var result = _employeeService.Delete(employeeId);
+            var result = _employeeService.Delete(employeeId, DateTime.Now);
             return Json(result);
         }
     }

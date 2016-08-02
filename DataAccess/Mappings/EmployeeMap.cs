@@ -6,8 +6,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DataAccess.Mappings {
-    public class EmployeeMap: EntityTypeConfiguration<Employee> {
+namespace DataAccess.Mappings
+{
+    public class EmployeeMap : EntityTypeConfiguration<Employee>
+    {
 
         public EmployeeMap()
         {
