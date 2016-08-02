@@ -10,22 +10,17 @@ namespace Manager.Validators
 {
     static class PositionValidator
     {
-        private static OperationResult ValidateName(string name)
+        public static OperationResult Validate(AddPositionInputInfo info)
         {
-            if (String.IsNullOrEmpty(name))
+            if (String.IsNullOrEmpty(info.Name))
             {
                 return new OperationResult(false, Messages.ErrorWhileAddingPosition_EmptyName);
             }
-            else if (name.Length > 100)
+            else if (info.Name.Length > 100)
             {
                 return new Manager.OperationResult(false, Messages.ErrorWhileAddingPosition_NameTooLong);
             }
             else return new OperationResult(true, Messages.SuccessfullyAddedPosition);
-        }
-
-        public static OperationResult Validate(AddPositionInputInfo info)
-        {
-            return ValidateName(info.Name);
         }
 
         public static OperationResult Validate(UpdatePositionInputInfo info)
@@ -34,10 +29,15 @@ namespace Manager.Validators
             {
                 return new OperationResult(false, Messages.ErrorWhileUpdatingPosition_InvalidId);
             }
-            else
+            else if (String.IsNullOrEmpty(info.Name))
             {
-                return ValidateName(info.Name);
+                return new OperationResult(false, Messages.ErrorWhileUpdatingPosition_EmptyName);
             }
+            else if (info.Name.Length > 100)
+            {
+                return new Manager.OperationResult(false, Messages.ErrorWhileUpdatingPosition_NameTooLong);
+            }
+            else return new OperationResult(true, Messages.SuccessfullyUpdatedPosition);
         }
     }
 }
