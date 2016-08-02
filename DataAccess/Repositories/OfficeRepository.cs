@@ -3,6 +3,7 @@ using System.Linq;
 using Contracts;
 using DataAccess.Context;
 using Domain.Models;
+using DataAccess.Extensions;
 
 namespace DataAccess.Repositories
 {
@@ -25,7 +26,7 @@ namespace DataAccess.Repositories
             return _context.Offices.SingleOrDefault(d => d.Id == id);
         }
 
-        public IEnumerable<Department> GetDepartmentsByOfficeId(int officeId)
+        public IEnumerable<Department> GetDepartmentsByOfficeId(int officeId, int? pageSize = null, int? pageNumber = null)
         {
             var office = _context.Offices.SingleOrDefault(d => d.Id == officeId);
 
@@ -35,7 +36,7 @@ namespace DataAccess.Repositories
             }
             else
             {
-                return office.Departments.ToArray();
+                return office.Departments.Paginate(pageSize, pageNumber).ToArray();
             }
         }
 

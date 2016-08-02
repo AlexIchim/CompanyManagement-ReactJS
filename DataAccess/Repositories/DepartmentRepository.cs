@@ -5,6 +5,7 @@ using Contracts;
 using DataAccess.Context;
 using Domain.Models;
 using System;
+using DataAccess.Extensions;
 
 namespace DataAccess.Repositories
 {
@@ -30,7 +31,7 @@ namespace DataAccess.Repositories
         {
             return _context.Departments.SingleOrDefault(d => d.Name == name && d.OfficeId == officeId);
         }
-        public IEnumerable<Project> GetProjectsByDepartmentId(int id)
+        public IEnumerable<Project> GetProjectsByDepartmentId(int id, int? pageSize = null, int? pageNumber = null)
         {
             var dept = _context.Departments.SingleOrDefault(d => d.Id == id);
             if (dept == null)
@@ -39,7 +40,7 @@ namespace DataAccess.Repositories
             }
             else
             {
-                return dept.Projects.ToArray();
+                return dept.Projects.Paginate(pageSize, pageNumber).ToArray();
             }
         }
 

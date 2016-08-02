@@ -24,9 +24,9 @@ namespace ManagementApp.Controllers
 
         [Route("getProjectsByDepartmentId")]
         [HttpGet]
-        public IHttpActionResult GetProjectsByDepartmentId(int ID)
+        public IHttpActionResult GetProjectsByDepartmentId(int ID, int? pageSize = null, int? pageNumber = null)
         {
-            var result = _departmentService.GetProjectsByDepartmentId(ID);
+            var result = _departmentService.GetProjectsByDepartmentId(ID, pageSize, pageNumber);
             return Json(result);
         }
 
