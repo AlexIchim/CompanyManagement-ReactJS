@@ -1,15 +1,14 @@
 using System.Collections.Generic;
-using Domain.Models;
-
 namespace DataAccess.Migrations {
     using System;
+    using System.Data.Entity;
     using System.Data.Entity;
     using System.Data.Entity.Migrations;
     using System.Linq;
 
     internal sealed class Configuration : DbMigrationsConfiguration<DataAccess.Context.DbContext> {
         public Configuration() {
-            AutomaticMigrationsEnabled = false;
+            AutomaticMigrationsEnabled = true;
         }
 
         protected override void Seed(DataAccess.Context.DbContext context) {
@@ -161,7 +160,6 @@ namespace DataAccess.Migrations {
                 office3
                 );
 
-            context.Departments.AddOrUpdate(
                 p => p.Id,
                 department,
                 department2,

@@ -16,5 +16,10 @@ namespace Domain.Models
         public virtual ICollection<Project> Projects { get; set; }
         public virtual Employee DepartmentManager { get; set; }
         public Office Office { get; set; }
+        public Office Office { get; set; }
+
+        public ICollection<Employee> Employees { get; set; }
+
+        public ICollection<Project> Projects { get; set; }
     }
 }
