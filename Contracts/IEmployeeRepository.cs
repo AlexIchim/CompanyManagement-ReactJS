@@ -12,5 +12,9 @@ namespace Contracts
         IEnumerable<EmployeeProject> GetProjectByEmployeeId(int employeeId);
 
         void ReleaseEmployee(int employeeId);
+
+        Employee GetById(int employeeId);
+
+        void Save();
     }
 }

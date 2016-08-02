@@ -70,6 +70,24 @@ namespace Manager {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to &apos;Error: Employee does not exist&apos;.
+        /// </summary>
+        public static string ErrorWhileUpdatingEmployee {
+            get {
+                return ResourceManager.GetString("ErrorWhileUpdatingEmployee", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to &apos;Error: Office does not exist&apos;.
+        /// </summary>
+        public static string ErrorWhileUpdatingOffice {
+            get {
+                return ResourceManager.GetString("ErrorWhileUpdatingOffice", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to &apos;Department was added with success&apos;.
         /// </summary>
         public static string SuccessfullyAddedDepartment {
@@ -77,19 +95,21 @@ namespace Manager {
                 return ResourceManager.GetString("SuccessfullyAddedDepartment", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to &apos;Employee was added with success&apos;.
+        /// </summary>
+        public static string SuccessfullyAddedEmployee {
+            get {
+                return ResourceManager.GetString("SuccessfullyAddedEmployee", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to &apos;Office was added with success&apos;.
         /// </summary>
-        public static string SuccessfullyAddedEmployee
-        {
-            get { return ResourceManager.GetString("SuccessfullyAddedEmployee", resourceCulture); }
-        }
-
         public static string SuccessfullyAddedOffice {
-            get
-            {
+            get {
                 return ResourceManager.GetString("SuccessfullyAddedOffice", resourceCulture);
             }
         }
@@ -102,21 +122,22 @@ namespace Manager {
                 return ResourceManager.GetString("SuccessfullyAddedProject", resourceCulture);
             }
         }
-
+        
         /// <summary>
-        ///   Looks up a localized string similar to &apos;Project was deleted with success.&apos;.
         ///   Looks up a localized string similar to &apos;Employee was successfully deleted&apos;.
         /// </summary>
-        public static string SuccessfullyDeletedProject
-        {
-            get { return ResourceManager.GetString("SuccessfullyDeletedProject", resourceCulture); }
-        }
-
         public static string SuccessfullyDeletedEmployee {
-
-            get
-            {
+            get {
                 return ResourceManager.GetString("SuccessfullyDeletedEmployee", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to &apos;Project was deleted with success.&apos;.
+        /// </summary>
+        public static string SuccessfullyDeletedProject {
+            get {
+                return ResourceManager.GetString("SuccessfullyDeletedProject", resourceCulture);
             }
         }
         
@@ -126,6 +147,24 @@ namespace Manager {
         public static string SuccessfullyUpdatedDepartment {
             get {
                 return ResourceManager.GetString("SuccessfullyUpdatedDepartment", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to &apos;Successfully updated employee&apos;.
+        /// </summary>
+        public static string SuccessfullyUpdatedEmployee {
+            get {
+                return ResourceManager.GetString("SuccessfullyUpdatedEmployee", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to &apos;Office was successfully updated&apos;.
+        /// </summary>
+        public static string SuccessfullyUpdatedOffice {
+            get {
+                return ResourceManager.GetString("SuccessfullyUpdatedOffice", resourceCulture);
             }
         }
     }
