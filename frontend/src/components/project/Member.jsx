@@ -31,7 +31,7 @@ export default class Member extends React.Component{
     componentWillMount(){
         $.ajax({
             method: 'GET',
-            url: configs.baseUrl + 'api/project/getAllDepartmentProjects?inputInfo=' + this.props.routeParams.departmentId,
+            url: configs.baseUrl + 'api/project/getEmployeeByProjectId?projectId=' + this.props.routeParams.projectId,
             success: function(data){
                 this.setState({
                     members: data
