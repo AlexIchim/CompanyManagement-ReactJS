@@ -61,6 +61,24 @@ namespace Manager {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to &apos;Assignment could not be added&apos;.
+        /// </summary>
+        public static string ErrorWhileAddingAssignment {
+            get {
+                return ResourceManager.GetString("ErrorWhileAddingAssignment", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to &apos;Project could not be added&apos;.
+        /// </summary>
+        public static string ErrorWhileAddingProject {
+            get {
+                return ResourceManager.GetString("ErrorWhileAddingProject", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to &apos;Department could not be deleted&apos;.
         /// </summary>
         public static string ErrorWhileDeletingDepartment {

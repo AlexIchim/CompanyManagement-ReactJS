@@ -7,6 +7,8 @@ using Manager.InputInfoModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using FluentValidation.Results;
+using Manager.Validators;
 
 namespace Manager.Services
 {
@@ -25,19 +27,33 @@ namespace Manager.Services
 
         public OperationResult Add(AddProjectInputInfo infoInput)
         {
-            Project newProject = _mapper.Map<Project>(infoInput);
-            newProject.Department = _departmentRepository.GetDepartmentById(infoInput.DepartmentId);
-            _projectRepository.Add(newProject);
+            AddProjectValidator validator = new AddProjectValidator();
+            var result = validator.Validate(infoInput);
+            if (result.IsValid)
+            {
+                Project newProject = _mapper.Map<Project>(infoInput);
+                newProject.Department = _departmentRepository.GetDepartmentById(infoInput.DepartmentId);
+                _projectRepository.Add(newProject);
 
-            return new OperationResult(true, Messages.SuccessfullyAddedProject);
+                return new OperationResult(true, Messages.SuccessfullyAddedProject);
+            }
+            return new OperationResult(false, Messages.ErrorWhileAddingProject);
+
         }
 
         public OperationResult AddAssignment(AddAssignmentInputInfo infoInput)
         {
-            Assignment newAssignment = _mapper.Map<Assignment>(infoInput);
-            _projectRepository.AddAssignment(newAssignment);
+            AddAssignmentValidator validator = new AddAssignmentValidator();
+            var result = validator.Validate(infoInput);
+            if (result.IsValid)
+            {
+                Assignment newAssignment = _mapper.Map<Assignment>(infoInput);
+                _projectRepository.AddAssignment(newAssignment);
 
-            return new OperationResult(true, Messages.SuccessfullyAddedNewAssignment);
+                return new OperationResult(true, Messages.SuccessfullyAddedNewAssignment);
+            }
+            return new OperationResult(false, Messages.ErrorWhileAddingAssignment);
+
         }
 
         public OperationResult Delete(int projectId) {
@@ -62,30 +78,45 @@ namespace Manager.Services
 
 
         public OperationResult Update(UpdateProjectInputInfo inputInfo) {
-            var project = _projectRepository.GetById(inputInfo.Id);
-            if (project == null) {
-                return new OperationResult(false, Messages.ErrorWhileUpdatingProject);
+            UpdateProjectValidator validator = new UpdateProjectValidator();
+            var result = validator.Validate(inputInfo);
+            if (result.IsValid)
+            {
+                var project = _projectRepository.GetById(inputInfo.Id);
+                if (project == null)
+                {
+                    return new OperationResult(false, Messages.ErrorWhileUpdatingProject);
+                }
+
+                project.Name = inputInfo.Name;
+                project.Duration = inputInfo.Duration;
+                project.Status = inputInfo.Status;
+
+                _projectRepository.Save();
+
+                return new OperationResult(true, Messages.SuccessfullyUpdatedProject);
             }
-
-            project.Name = inputInfo.Name;
-            project.Duration = inputInfo.Duration;
-            project.Status = inputInfo.Status;
-
-            _projectRepository.Save();
-
-            return new OperationResult(true, Messages.SuccessfullyUpdatedProject);
+            return new OperationResult(false, Messages.ErrorWhileDeletingProject);
+           
         }
 
         public OperationResult EditAllocation(EditAllocationInputInfo inputInfo)
         {
-            Assignment assignment = _projectRepository.GetAssignmentById(inputInfo.employeeId, inputInfo.projectId);
-            if (assignment == null)
+            EditAllocationValidator validator = new EditAllocationValidator();
+            var result = validator.Validate(inputInfo);
+            if (result.IsValid)
             {
-                return new OperationResult(false, Messages.ErrorWhileEditingAllocation);
+                Assignment assignment = _projectRepository.GetAssignmentById(inputInfo.employeeId, inputInfo.projectId);
+                if (assignment == null)
+                {
+                    return new OperationResult(false, Messages.ErrorWhileEditingAllocation);
+                }
+                assignment.Allocation = inputInfo.Allocation;
+                _projectRepository.Save();
+                return new OperationResult(true, Messages.SuccessfullyEditedAllocation);
             }
-            assignment.Allocation = inputInfo.Allocation;
-            _projectRepository.Save();
-            return new OperationResult(true, Messages.SuccessfullyEditedAllocation);
+            return new OperationResult(false, Messages.ErrorWhileEditingAllocation);
+          
         }
 
         public IEnumerable<ProjectInfo> GetAll()
