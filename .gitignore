@@ -29,3 +29,6 @@ _ReSharper*/
 [Tt]est[Rr]esult*
 packages
 .vs/
+frontend/node_modules
+*.dll
+.idea
