@@ -62,8 +62,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="OfficeServiceTests.cs" />
     <Compile Include="PositionServiceTests.cs" />
     <Compile Include="DepartmentServiceTests.cs" />
+    <Compile Include="ProjectServiceTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
