@@ -37,11 +37,17 @@ namespace Manager.Mapper
             CreateMap<AddEmployeeToProjectInputInfo, EmployeeProject>();
 
 <<<<<<< HEAD
-=======
             CreateMap<AddEmployeeToDepartmentInputInfo, Employee>();
 
+<<<<<<< HEAD
+            CreateMap<AddOfficeInputInfo, Office>();
 
 >>>>>>> capac-Adi
+
+=======
+            CreateMap<EmployeeProject, ProjectsOfAnEmployeeInfo>();
+            CreateMap<AddProjectInputInfo,Project>();
+>>>>>>> origin/capac-cristina
         }
     }
 }

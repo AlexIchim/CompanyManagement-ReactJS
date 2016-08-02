@@ -9,7 +9,10 @@ namespace Contracts
 
         IEnumerable<Department> GetAllDepartmentsOfAnOffice(int officeId);
 
+<<<<<<< HEAD
         void Add(Department department, int? departmentManagerId);
+=======
         void AddOffice(Office office);
+>>>>>>> capac-Patricia
     }
 }

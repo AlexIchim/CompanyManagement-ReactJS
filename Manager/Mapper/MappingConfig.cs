@@ -33,6 +33,8 @@ namespace Manager.Mapper
                  d => d.MapFrom(src => src.DepartmentManager.Name)
              );
 
+            CreateMap<AddOfficeInputInfo, Office>();
+
             CreateMap<EmployeeProject, ProjectsOfAnEmployeeInfo>();
             CreateMap<AddProjectInputInfo,Project>();
             CreateMap<AddEmployeeToProjectInputInfo, EmployeeProject>();

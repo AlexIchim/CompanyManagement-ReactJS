@@ -1,5 +1,4 @@
-﻿using System.Linq;
-using AutoMapper;
+﻿using AutoMapper;
 using Domain.Models;
 using Manager.InfoModels;
 using Manager.InputInfoModels;
@@ -11,11 +10,22 @@ namespace Manager.Mapper
         public MappingConfig()
         {
             CreateMap<AddDepartmentInputInfo, Department>();
-<<<<<<< HEAD
             CreateMap<Office, OfficeInfo>();
 
             CreateMap<Employee, EmployeeInfo>();
             CreateMap<Employee, EmployeeAllocationInfo>();
+            CreateMap<Project, ProjectInfo>().ForMember(
+                pi => pi.EmployeesNumber,
+                proj => proj.MapFrom(src => src.EmployeeProjects.Count)
+            );
+            CreateMap<Employee, MemberInfo>();
+<<<<<<< HEAD
+
+
+=======
+ 
+            
+>>>>>>> capac-Patricia
             CreateMap<Department, DepartmentInfo>().ForMember(
                  di => di.NbrOfEmployees,
                  d => d.MapFrom(src => src.Employees.Count)
@@ -26,16 +36,29 @@ namespace Manager.Mapper
                  di => di.DepartmentManager,
                  d => d.MapFrom(src => src.DepartmentManager.Name)
              );
+<<<<<<< HEAD
+
+            CreateMap<EmployeeProject, ProjectsOfAnEmployeeInfo>();
+            CreateMap<AddProjectInputInfo,Project>();
+            CreateMap<AddEmployeeToProjectInputInfo, EmployeeProject>();
+
+<<<<<<< HEAD
+=======
+            CreateMap<AddEmployeeToDepartmentInputInfo, Employee>();
+
+
+>>>>>>> capac-Adi
+=======
+
+<<<<<<< HEAD
+            CreateMap<AddOfficeInputInfo, Office>();
+
 
 =======
-            CreateMap<Employee, EmployeeInfo>();
-            CreateMap<Project, ProjectInfo>().ForMember(
-                pi => pi.EmployeesNumber,
-                proj => proj.MapFrom(src => src.EmployeeProjects.Count)
-            );
-            CreateMap<Employee, MemberInfo>();
->>>>>>> capac-andreimuresan
-            
+            CreateMap<EmployeeProject, ProjectsOfAnEmployeeInfo>();
+            CreateMap<AddProjectInputInfo,Project>();
+>>>>>>> origin/capac-cristina
+>>>>>>> capac-Patricia
         }
     }
 }

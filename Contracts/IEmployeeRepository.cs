@@ -10,5 +10,7 @@ namespace Contracts
     public interface IEmployeeRepository
     {
         IEnumerable<EmployeeProject> GetProjectByEmployeeId(int employeeId);
+
+        void ReleaseEmployee(int employeeId);
     }
 }

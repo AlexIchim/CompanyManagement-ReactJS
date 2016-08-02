@@ -64,6 +64,7 @@
     <Compile Include="InfoModels\EmployeeInfo.cs" />
     <Compile Include="InfoModels\MemberInfo.cs" />
     <Compile Include="InfoModels\ProjectInfo.cs" />
+    <Compile Include="InputInfoModels\AddOfficeInputInfo.cs" />
     <Compile Include="InfoModels\ProjectsOfAnEmployeeInfo.cs" />
     <Compile Include="InputInfoModels\AddEmployeeToDepartmentInputInfo.cs" />
     <Compile Include="InputInfoModels\AddEmployeeToProjectInputInfo.cs" />
