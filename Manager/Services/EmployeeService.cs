@@ -84,5 +84,19 @@ namespace Manager.Services
             return remainingAllocation;
         }
 
+        public IEnumerable<ProjectInfo> GetProjectsOfEmployee(int employeeId)
+        {
+            var employee = _employeeRepository.GetById(employeeId);
+            var projects = new List<Project>();
+            foreach (var assignment in employee.Assignments)
+            {
+                projects.Add(assignment.Project);
+            }
+
+            var projectsInfos = _mapper.Map<IEnumerable<ProjectInfo>>(projects);
+
+            return projectsInfos;
+        }
+
     }
 }

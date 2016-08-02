@@ -272,6 +272,44 @@ namespace ManagementApp.Manager.Tests
             Assert.AreEqual(40, result);
         }
 
+        [Test]
+        public void GetProjects_ReturnsTheCorrectListOfProjectsForAnEmployee()
+        {
+            //Arrange
+            var employee = new Employee { Id = 2 };
+
+            var assignment1 = CreateAssignment(2, 0, 20);
+            var assignment2 = CreateAssignment(2, 1, 40);
+
+            var project1 = CreateProject("Bubble", 5);
+            var project2 = CreateProject("Butter", 4);
+            var projects = new List<Project>
+            {
+                project1,
+                project2
+            };
+
+            var projectInfo1 = CreateProjectInfo("Bubble", 5);
+            var projectInfo2 = CreateProjectInfo("Butter", 4);
+            var projectsInfo = new List<ProjectInfo>
+            {
+                projectInfo1,
+                projectInfo2
+            };
+
+            assignment1.Project = project1;
+            assignment2.Project = project2;
+            employee.Assignments.Add(assignment1);
+            employee.Assignments.Add(assignment2);
+
+            _mapperMock.Setup(m => m.Map<IEnumerable<ProjectInfo>>(projects)).Returns(projectsInfo);
+            _employeeRepositoryMock.Setup(m => m.GetById(employee.Id)).Returns(employee);
+            //Act 
+            var result = _employeeService.GetProjectsOfEmployee(employee.Id);
+            //Assert
+            Assert.AreEqual(projectsInfo, result);
+        }
+
         private Assignment CreateAssignment(int employeeId, int projectId, int allocation)
         {
             var assignment = new Assignment
@@ -295,6 +333,30 @@ namespace ManagementApp.Manager.Tests
             return employee;
         }
 
+        private ProjectInfo CreateProjectInfo(string name, int? id = null)
+        {
+            var projectInfo = new ProjectInfo
+            {
+                Name = name,
+            };
+            if (id != null)
+            {
+                projectInfo.Id = (int)id;
+            }
+            return projectInfo;
+        }
+        private Project CreateProject(string name, int? id = null)
+        {
+            var project = new Project
+            {
+                Name = name,
+            };
+            if (id != null)
+            {
+                project.Id = (int)id;
+            }
+            return project;
+        }
         private EmployeeInfo CreateEmployeeInfo(int id, string name)
         {
             return new EmployeeInfo
