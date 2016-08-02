@@ -7,7 +7,7 @@ namespace Contracts
     public interface IDepartmentRepository
     {
         IEnumerable<Department> GetAll();
-        Department GetById(int id);
+        Department GetDepartmentById(int id);
 
         void Save();
 
@@ -26,5 +26,7 @@ namespace Contracts
         bool IsDepartmentManager(int? employeeId);
 
         IEnumerable<Employee> GetAllDepartmentManagers();
+
+        Employee GetEmployeeById(int? id);
     }
 }

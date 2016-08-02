@@ -82,14 +82,13 @@ namespace ManagementApp.Controllers
             return Json(result);
         }
 
-
-
-
-
-
-
-
-
+        [Route("UpdateDepartment")]
+        [HttpPut]
+        public IHttpActionResult UpdateDepartment([FromBody]UpdateDepartmentInputInfo inputInfo)
+        {
+            var result = _departmentService.UpdateDepartment(inputInfo);
+            return Json(result);
+        }
 
     }
 }

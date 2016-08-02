@@ -69,7 +69,7 @@ namespace Manager.Services
 
         public OperationResult Update(UpdateDepartmentInputInfo inputInfo)
         {
-            var department = _departmentRepository.GetById(inputInfo.Id);
+            var department = _departmentRepository.GetDepartmentById(inputInfo.Id);
 
             if (department == null)
             {
@@ -112,6 +112,32 @@ namespace Manager.Services
             var departmentManagersInfo= _mapper.Map<IEnumerable<EmployeeInfo>>(departmentManagers);
 
             return departmentManagersInfo;
+        }
+
+        public OperationResult UpdateDepartment(UpdateDepartmentInputInfo inputInfo)
+        {
+            var department = _departmentRepository.GetDepartmentById(inputInfo.Id);
+
+            if (department == null)
+            {
+                return new OperationResult(false, Messages.ErrorWhileUpdatingDepartment);
+            }
+
+            var dm = _departmentRepository.GetEmployeeById(inputInfo.DepartmentManagerId);
+
+            if (dm != null && _departmentRepository.IsDepartmentManager(dm.Id))
+            {
+                department.Name = inputInfo.Name;
+                department.DepartmentManager = dm;
+                _departmentRepository.Save();
+                return new OperationResult(true, Messages.SuccessfullyUpdatedDepartment);
+            }
+
+            return new OperationResult(false, Messages.ErrorWhileUpdatingDepartment);
+                     
+            
+
+            
         }
     }
 }

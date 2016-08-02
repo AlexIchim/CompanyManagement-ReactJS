@@ -46,23 +46,6 @@ namespace Manager.Services
             return new OperationResult(true, Messages.SuccessfullyAddedOffice);
         }
 
-        public OperationResult UpdateDepartment(UpdateDepartmentInputInfo inputInfo)
-        {
-            var department = _officeRepository.GetById(inputInfo.Id);
-
-            if (department == null)
-            {
-                return new OperationResult(false, Messages.ErrorWhileUpdatingDepartment);
-            }
-            dm = _officeRepository.GetEmployeeById(inputInfo.DepartmentManagerId);
-
-            department.Name = inputInfo.Name;
-            department.DepartmentManager = dm;
-            _officeRepository.Save();
-
-            return new OperationResult(true, Messages.SuccessfullyUpdatedDepartment);
-        }
-
         public OperationResult UpdateOffice(UpdateOfficeInputInfo inputInfo)
         {
             var office = _officeRepository.GetOfficeById(inputInfo.Id);

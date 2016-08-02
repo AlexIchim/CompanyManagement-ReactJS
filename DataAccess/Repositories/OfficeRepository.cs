@@ -28,11 +28,6 @@ namespace DataAccess.Repositories
 
         }
 
-        public Department GetById(int id)
-        {
-            return _context.Departments.SingleOrDefault(d => d.Id == id);
-        }
-
         public void AddOffice(Office office)
         {
             _context.Offices.Add(office);
@@ -48,11 +43,7 @@ namespace DataAccess.Repositories
         {
             return _context.Offices.SingleOrDefault(o => o.Id == officeId);
         }
-        public Employee GetEmployeeById(int? id)
-        {
-
-            return _context.Employees.SingleOrDefault(e => e.Id == id);
-        }
+      
 
     }
 }

@@ -21,7 +21,7 @@ namespace DataAccess.Repositories
             return _context.Departments.ToArray();
         }
 
-        public Department GetById(int id)
+        public Department GetDepartmentById(int id)
         {
             return _context.Departments.SingleOrDefault(d => d.Id == id);
         }
@@ -91,6 +91,12 @@ namespace DataAccess.Repositories
         {
             return _context.Employees.Where(e => e.PositionType == PositionType.DepartmentManager);
         }
-    
-  }
+
+        public Employee GetEmployeeById(int? id)
+        {
+
+            return _context.Employees.SingleOrDefault(e => e.Id == id);
+        }
+
+    }
 }
