@@ -41,6 +41,7 @@ namespace Manager.Mapper
                 .ForMember(
                     assignmentInfo => assignmentInfo.Position,
                     assignment => assignment.MapFrom(src => src.Employee.Position));
+            CreateMap<AddAssignmentInputInfo, Assignment>();
 
         }
     }

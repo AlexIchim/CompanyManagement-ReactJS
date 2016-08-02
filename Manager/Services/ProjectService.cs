@@ -32,10 +32,10 @@ namespace Manager.Services
             return new OperationResult(true, Messages.SuccessfullyAddedProject);
         }
 
-        public OperationResult AddAssignment(int employeeId, int projectId, int allocation)
+        public OperationResult AddAssignment(AddAssignmentInputInfo infoInput)
         {
-            Assignment assignment = new Assignment {EmployeeId = employeeId, ProjectId = projectId, Allocation = allocation};
-            _projectRepository.AddAssignment(assignment);
+            Assignment newAssignment = _mapper.Map<Assignment>(infoInput);
+            _projectRepository.AddAssignment(newAssignment);
 
             return new OperationResult(true, Messages.SuccessfullyAddedNewAssignment);
         }

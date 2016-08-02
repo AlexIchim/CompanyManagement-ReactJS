@@ -64,15 +64,50 @@ namespace ManagementApp.Manager.Tests
         }
 
         [Test]
+        public void Add_CallsAddFromRepository()
+        {
+            //Arrange
+            var projectInputInfo = new AddProjectInputInfo
+            {
+                Name = "Project1",
+                DepartmentId = 1,
+                Duration = "3 months",
+                Status = "In progress"
+            };
+            var project = new Project
+            {
+                Name = "Project1",
+                Department = new Department(),
+                Duration = "3 months",
+                Status = Status.InProgress
+            };
+
+            _mapperMock.Setup(m => m.Map<Project>(projectInputInfo)).Returns(project);
+            _projectRepositoryMock.Setup(m => m.Add(project));
+
+            //Act
+            var result = _projectService.Add(projectInputInfo);
+
+            //Assert
+            _projectRepositoryMock.Verify(x => x.Add(project), Times.Once);
+
+        }
+        [Test]
         public void AddAssignment_ReturnsSuccessfulMessage()
         {
             //Arrange
-            var assignmnet = CreateAssignment(1, 1, new Employee(), new Project(), 10);
+            var assignmnet = CreateAssignment(1, 1, 10);
+            var assignmentInputInfo = new AddAssignmentInputInfo
+            {
+                EmployeeId = 1,
+                Allocation = 10,
+                ProjectId = 1
+            };
+            _mapperMock.Setup(m => m.Map<Assignment>(assignmentInputInfo)).Returns(assignmnet);
             _projectRepositoryMock.Setup(m => m.AddAssignment(assignmnet));
 
             //Act
-            var result = _projectService.AddAssignment(assignmnet.EmployeeId, assignmnet.ProjectId,
-                assignmnet.Allocation);
+            var result = _projectService.AddAssignment(assignmentInputInfo);
 
             //Assert
             Assert.IsTrue(result.Success);
@@ -83,17 +118,24 @@ namespace ManagementApp.Manager.Tests
         public void AddAssignment_CallsAddAssignmentFromRepository()
         {
             //Arrange
-            var assignmnet = CreateAssignment(1, 1, new Employee(), new Project(), 10);
-            _projectRepositoryMock.Setup(m => m.AddAssignment(assignmnet));
+            var assignment = CreateAssignment(1, 1,  10);
+            var assignmentInputInfo = new AddAssignmentInputInfo
+            {
+                EmployeeId = 1,
+                Allocation = 10,
+                ProjectId = 1
+            };
+            _mapperMock.Setup(m => m.Map<Assignment>(assignmentInputInfo)).Returns(assignment);
+
+            _projectRepositoryMock.Setup(m => m.AddAssignment(assignment));
 
             //Act
-             _projectService.AddAssignment(assignmnet.EmployeeId, assignmnet.ProjectId,
-                assignmnet.Allocation);
+             _projectService.AddAssignment(assignmentInputInfo);
             
             //Assert
-            _projectRepositoryMock.Verify(x => x.AddAssignment(assignmnet), Times.Once);
+            _projectRepositoryMock.Verify(x => x.AddAssignment(assignment), Times.Once);
         }
-
+        
         [Test]
         public void GetAll_CallsGetAllFromRepository()
         {
@@ -164,7 +206,7 @@ namespace ManagementApp.Manager.Tests
             Employee employee = CreateEmployee("Employee1", "Address1",1);
             var assignment = new List<Assignment>
             {
-                CreateAssignment(1, 1, employee, project, 20)
+                CreateAssignment(1, 1,  20)
             };
             var assignmentInfo = new List<ProjectMemberInfo>
             {
@@ -217,7 +259,7 @@ namespace ManagementApp.Manager.Tests
         public void DeleteEmployeeFromProject_ReturnsSuccessfulMesasge_WhenProjectExists()
         {
             //Arrange
-            var assignment = CreateAssignment(1, 1, new Employee(), new Project(), 10);
+            var assignment = CreateAssignment(1, 1, 10);
             _projectRepositoryMock.Setup(m => m.GetAssignmentById(1, 1)).Returns(assignment);
             _projectRepositoryMock.Setup(m => m.DeleteEmployeeFromProject(assignment));
 
@@ -233,7 +275,7 @@ namespace ManagementApp.Manager.Tests
         public void DeleteEmployeeFromProject_CallsGetAssignmentByIdFromRepository()
         {
             //Arrange
-            var assignment = CreateAssignment(1, 1, new Employee(), new Project(), 10);
+            var assignment = CreateAssignment(1, 1, 10);
             _projectRepositoryMock.Setup(m => m.GetAssignmentById(1, 1)).Returns(assignment);
 
             //Act
@@ -392,14 +434,12 @@ namespace ManagementApp.Manager.Tests
             }
             return employee;
         }
-        private Assignment CreateAssignment(int employeeId, int projectId, Employee employee, Project project, int allocation)
+        private Assignment CreateAssignment(int employeeId, int projectId,  int allocation)
         {
             return new Assignment
             {
                 EmployeeId = employeeId,
                 ProjectId = projectId,
-                Project = project,
-                Employee = employee,
                 Allocation = allocation
             };
         }

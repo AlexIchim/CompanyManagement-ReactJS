@@ -24,9 +24,9 @@ namespace ManagementApp.Controllers
 
         [Route("addAssignment")]
         [HttpPost]
-        public IHttpActionResult AddAssignment(int employeeId, int projectId, int allocation)
+        public IHttpActionResult AddAssignment([FromBody] AddAssignmentInputInfo inputInfo)
         {
-            var result = _projectService.AddAssignment(employeeId, projectId, allocation);
+            var result = _projectService.AddAssignment(inputInfo);
             return Json(result);
         }
 
