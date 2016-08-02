@@ -133,16 +133,14 @@ namespace ManagementApp.Manager.Tests
         }
 
         [Test]
-        public void Update_ReturnsErrorMessage_WhenProjectNot()
+        public void Update_ReturnsErrorMessage_WhenInvalidId()
         {
             //Arrange
             var projectInputInfo = new UpdateProjectInputInfo { Id = 1, Name = "Project", Status = "In progress", Duration = 6, DepartmentId = 1 };
-            var project = new Project { Name = "Project", Status = "In progress", Duration = 6, DepartmentId = 1 };
 
             var department = new Department { OfficeId = 1, Name = "Java" };
             _departmentRepositoryMock.Setup(m => m.GetById(projectInputInfo.DepartmentId.Value)).Returns(department);
 
-            _mapperMock.Setup(m => m.Map<Project>(projectInputInfo)).Returns(project);
             _projectRepositoryMock.Setup(m => m.GetById(projectInputInfo.Id)).Returns((Project)null);
 
             //Act
@@ -153,72 +151,237 @@ namespace ManagementApp.Manager.Tests
             Assert.AreEqual(Messages.ErrorWhileUpdatingProject_InvalidId, result.Message);
         }
 
-
         [Test]
-        public void Add_ReturnsErrorMessageOnInvalidNameInput()
+        public void Add_ReturnsErrorMessageOnEmptyName()
         {
             //Arrange
-            var department = new Department {OfficeId = 1, Name = "Java"};
+            var department = new Department { OfficeId = 1, Name = "Java" };
 
-            
             var projectInputInfoNameEmpty = new AddProjectInputInfo { Name = "", Status = "In progress", Duration = 6, DepartmentId = 1 };
             var projectNameEmpty = new Project { Name = "", Status = "In progress", Duration = 6, DepartmentId = 1 };
-
-            var projectInputInfoNameTooLong = new AddProjectInputInfo { Name = new string('$', 101), Status = "In progress", Duration = 6, DepartmentId = 1 };
-            var projectNameTooLong = new Project { Name = new string('$', 101), Status = "In progress", Duration = 6, DepartmentId = 1 };
 
             _departmentRepositoryMock.Setup(m => m.GetById(projectInputInfoNameEmpty.DepartmentId)).Returns(department);
 
 
             _mapperMock.Setup(m => m.Map<Project>(projectInputInfoNameEmpty)).Returns(projectNameEmpty);
-            _mapperMock.Setup(m => m.Map<Project>(projectInputInfoNameTooLong)).Returns(projectNameTooLong);
             _projectRepositoryMock.Setup(m => m.Add(projectNameEmpty));
-            _projectRepositoryMock.Setup(m => m.Add(projectNameTooLong));
 
             //Act
             var resultNameEmpty = _projectService.Add(projectInputInfoNameEmpty);
-            var resultNameTooLong = _projectService.Add(projectInputInfoNameTooLong);
 
 
             //Assert
             Assert.IsFalse(resultNameEmpty.Success);
             Assert.AreEqual(Messages.ErrorWhileAddingProject + Messages.ProjectNameEmpty, resultNameEmpty.Message);
+        }
+
+        [Test]
+        public void Add_ReturnsErrorMessageOnNameTooLong()
+        {
+            //Arrange
+            var department = new Department { OfficeId = 1, Name = "Java" };
+
+            var projectInputInfoNameTooLong = new AddProjectInputInfo { Name = new string('$', 101), Status = "In progress", Duration = 6, DepartmentId = 1 };
+            var projectNameTooLong = new Project { Name = new string('$', 101), Status = "In progress", Duration = 6, DepartmentId = 1 };
+
+            _departmentRepositoryMock.Setup(m => m.GetById(projectInputInfoNameTooLong.DepartmentId)).Returns(department);
+
+
+            _mapperMock.Setup(m => m.Map<Project>(projectInputInfoNameTooLong)).Returns(projectNameTooLong);
+            _projectRepositoryMock.Setup(m => m.Add(projectNameTooLong));
+
+            //Act
+            var resultNameTooLong = _projectService.Add(projectInputInfoNameTooLong);
+
+
+            //Assert
             Assert.IsFalse(resultNameTooLong.Success);
             Assert.AreEqual(Messages.ErrorWhileAddingProject + Messages.ProjectNameTooLong, resultNameTooLong.Message);
         }
 
         [Test]
-        public void Add_ReturnsErrorMessageOnInvalidStatusInput()
+        public void Add_ReturnsErrorMessageOnStatusNotEmpty()
         {
             //Arrange
             var department = new Department { OfficeId = 1, Name = "Java" };
 
             var projectInputInfoStatusEmpty = new AddProjectInputInfo { Name = "New Project", Status = "", Duration = 6, DepartmentId = 1 };
-            var projectStatusEmpty = new Project { Name = "New Project", Status = "", Duration = 6, DepartmentId = 1 };
-
-            var projectInputInfoStatusTooLong = new AddProjectInputInfo { Name = "New Project", Status = new string('$', 101), Duration = 6, DepartmentId = 1 };
-            var projectStatusTooLong = new Project { Name = "New project", Status = new string('$', 101), Duration = 6, DepartmentId = 1 };
+            var projectStatusEmpty = new Project { Name = "New Project", Status = "", Duration = 6, DepartmentId = 1 };      
 
             _departmentRepositoryMock.Setup(m => m.GetById(projectInputInfoStatusEmpty.DepartmentId)).Returns(department);
 
 
             _mapperMock.Setup(m => m.Map<Project>(projectInputInfoStatusEmpty)).Returns(projectStatusEmpty);
-            _mapperMock.Setup(m => m.Map<Project>(projectInputInfoStatusTooLong)).Returns(projectStatusTooLong);
             _projectRepositoryMock.Setup(m => m.Add(projectStatusEmpty));
-            _projectRepositoryMock.Setup(m => m.Add(projectStatusTooLong));
 
             //Act
             var resultStatusEmpty = _projectService.Add(projectInputInfoStatusEmpty);
-            var resultStatusTooLong = _projectService.Add(projectInputInfoStatusTooLong);
-
 
             //Assert
             Assert.IsFalse(resultStatusEmpty.Success);
             Assert.AreEqual(Messages.ErrorWhileAddingProject + Messages.ProjectStatusEmpty, resultStatusEmpty.Message);
+        }
+
+        [Test]
+        public void Add_ReturnsErrorMessageOnStatusTooLong()
+        {
+            //Arrange
+            var department = new Department { OfficeId = 1, Name = "Java" };
+            var projectInputInfoStatusTooLong = new AddProjectInputInfo { Name = "New Project", Status = new string('$', 101), Duration = 6, DepartmentId = 1 };
+            var projectStatusTooLong = new Project { Name = "New project", Status = new string('$', 101), Duration = 6, DepartmentId = 1 };
+
+            _departmentRepositoryMock.Setup(m => m.GetById(projectInputInfoStatusTooLong.DepartmentId)).Returns(department);
+
+            _mapperMock.Setup(m => m.Map<Project>(projectInputInfoStatusTooLong)).Returns(projectStatusTooLong);
+            _projectRepositoryMock.Setup(m => m.Add(projectStatusTooLong));
+
+            //Act
+            var resultStatusTooLong = _projectService.Add(projectInputInfoStatusTooLong);
+
+            //Assert
             Assert.IsFalse(resultStatusTooLong.Success);
             Assert.AreEqual(Messages.ErrorWhileAddingProject + Messages.ProjectStatusTooLong, resultStatusTooLong.Message);
         }
 
+
+        [Test]
+        public void Update_ReturnsErrorMessage_WhenNameEmpty()
+        {
+            //Arrange
+            var projectInputInfo = new UpdateProjectInputInfo { Id = 1, Name = "", Status = "In progress", Duration = 6, DepartmentId = 1 };
+            var project = new Project { Name = "", Status = "In progress", Duration = 6, DepartmentId = 1 };
+
+            var department = new Department { OfficeId = 1, Name = "Java" };
+            _departmentRepositoryMock.Setup(m => m.GetById(projectInputInfo.DepartmentId.Value)).Returns(department);
+
+            _projectRepositoryMock.Setup(m => m.GetById(projectInputInfo.Id)).Returns(project);
+
+            //Act
+            var result = _projectService.Update(projectInputInfo);
+
+            //Assert
+            Assert.IsFalse(result.Success);
+            Assert.AreEqual(Messages.ErrorWhileUpdatingProject + Messages.ProjectNameEmpty, result.Message);
+        }
+
+
+        [Test]
+        public void Update_ReturnsErrorMessage_WhenNameTooLong()
+        {
+            //Arrange
+            var projectInputInfo = new UpdateProjectInputInfo { Id = 1, Name = new string('*', 101), Status = "In progress", Duration = 6, DepartmentId = 1 };
+            var project = new Project { Name = new string('*', 101), Status = "In progress", Duration = 6, DepartmentId = 1 };
+
+            var department = new Department { OfficeId = 1, Name = "Java" };
+            _departmentRepositoryMock.Setup(m => m.GetById(projectInputInfo.DepartmentId.Value)).Returns(department);
+
+            _projectRepositoryMock.Setup(m => m.GetById(projectInputInfo.Id)).Returns(project);
+
+            //Act
+            var result = _projectService.Update(projectInputInfo);
+
+            //Assert
+            Assert.IsFalse(result.Success);
+            Assert.AreEqual(Messages.ErrorWhileUpdatingProject + Messages.ProjectNameTooLong, result.Message);
+        }
+
+
+        [Test]
+        public void Update_ReturnsErrorMessage_WhenStatusEmpty()
+        {
+            //Arrange
+            var projectInputInfo = new UpdateProjectInputInfo { Id = 1, Name = "Project", Status = "", Duration = 6, DepartmentId = 1 };
+            var project = new Project { Name = "Project", Status = "In progress", Duration = 6, DepartmentId = 1 };
+
+            var department = new Department { OfficeId = 1, Name = "Java" };
+            _departmentRepositoryMock.Setup(m => m.GetById(projectInputInfo.DepartmentId.Value)).Returns(department);
+
+            _projectRepositoryMock.Setup(m => m.GetById(projectInputInfo.Id)).Returns(project);
+
+            //Act
+            var result = _projectService.Update(projectInputInfo);
+
+            //Assert
+            Assert.IsFalse(result.Success);
+            Assert.AreEqual(Messages.ErrorWhileUpdatingProject + Messages.ProjectStatusEmpty, result.Message);
+        }
+
+
+        [Test]
+        public void Update_ReturnsErrorMessage_WhenStatusTooLong()
+        {
+            //Arrange
+            var projectInputInfo = new UpdateProjectInputInfo { Id = 1, Name = "Project", Status = new string('*', 101), Duration = 6, DepartmentId = 1 };
+            var project = new Project { Name = "Project", Status = new string('*', 101), Duration = 6, DepartmentId = 1 };
+
+            var department = new Department { OfficeId = 1, Name = "Java" };
+            _departmentRepositoryMock.Setup(m => m.GetById(projectInputInfo.DepartmentId.Value)).Returns(department);
+
+            _projectRepositoryMock.Setup(m => m.GetById(projectInputInfo.Id)).Returns(project);
+
+            //Act
+            var result = _projectService.Update(projectInputInfo);
+
+            //Assert
+            Assert.IsFalse(result.Success);
+            Assert.AreEqual(Messages.ErrorWhileUpdatingProject + Messages.ProjectStatusTooLong, result.Message);
+        }
+
+        [Test]
+        public void Update_CallsGetByIdFromRepository_WhenProjectExists()
+        {
+            //Arrange
+            var projectInputInfo = new UpdateProjectInputInfo { Id = 1, Name = "Project", Status = "In progress", Duration = 6, DepartmentId = 1 };
+            var project = new Project { Name = "Project", Status = "In progress", Duration = 6, DepartmentId = 1 };
+
+            var department = new Department { OfficeId = 1, Name = "Java" };
+            _departmentRepositoryMock.Setup(m => m.GetById(projectInputInfo.DepartmentId.Value)).Returns(department);
+
+            _projectRepositoryMock.Setup(m => m.GetById(projectInputInfo.Id)).Returns(project);
+
+            //Act
+            _projectService.Update(projectInputInfo);
+
+            //Assert
+            _projectRepositoryMock.Verify(x => x.GetById(projectInputInfo.Id), Times.Once);
+        }
+
+        [Test]
+        public void Update_CallsSaveFromRepository_WhenProjectExists()
+        {
+            //Arrange
+            var projectInputInfo = new UpdateProjectInputInfo { Id = 1, Name = "Project", Status = "In progress", Duration = 6, DepartmentId = 1 };
+            var project = new Project { Name = "Project", Status = "In progress", Duration = 6, DepartmentId = 1 };
+
+            var department = new Department { OfficeId = 1, Name = "Java" };
+            _departmentRepositoryMock.Setup(m => m.GetById(projectInputInfo.DepartmentId.Value)).Returns(department);
+
+            _projectRepositoryMock.Setup(m => m.GetById(projectInputInfo.Id)).Returns(project);
+
+            //Act
+            _projectService.Update(projectInputInfo);
+
+            //Assert
+            _projectRepositoryMock.Verify(x => x.Save(), Times.Once);
+        }
+
+        [Test]
+        public void Update_DoesNotCallSaveFromRepository_WhenProjectDoesNotExists()
+        {
+            //Arrange
+            var projectInputInfo = new UpdateProjectInputInfo { Id = 1, Name = "Project", Status = "In progress", Duration = 6, DepartmentId = 1 };
+
+            var department = new Department { OfficeId = 1, Name = "Java" };
+            _departmentRepositoryMock.Setup(m => m.GetById(projectInputInfo.DepartmentId.Value)).Returns(department);
+
+            _projectRepositoryMock.Setup(m => m.GetById(projectInputInfo.Id)).Returns((Project) null);
+
+            //Act
+            _projectService.Update(projectInputInfo);
+
+            //Assert
+            _projectRepositoryMock.Verify(x => x.Save(), Times.Never);
+        }
 
 
         private Project CreateProject(string name, string status, int? duration, int? departmentId)
