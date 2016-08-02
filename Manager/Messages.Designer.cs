@@ -88,6 +88,15 @@ namespace Manager {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to &apos;Error: Employee could not be deleted.&apos;.
+        /// </summary>
+        public static string ErrorDeletingEmployee {
+            get {
+                return ResourceManager.GetString("ErrorDeletingEmployee", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to &apos;Department could not be modified&apos;.
         /// </summary>
         public static string ErrorWhileUpdatingDepartment {

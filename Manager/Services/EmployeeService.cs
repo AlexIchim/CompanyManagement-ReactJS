@@ -37,32 +37,44 @@ namespace Manager.Services
 
         public OperationResult ReleaseEmployee(int employeeId)
         {
-            _employeeRepository.ReleaseEmployee(employeeId);
-            _employeeRepository.UpdateTotalAllocation(employeeId,0);
-            return new OperationResult(true, Messages.SuccessfullyDeletedEmployee);
+            var employee = _employeeRepository.GetById(employeeId);
+
+            if (employee != null)
+            {
+                _employeeRepository.ReleaseEmployee(employeeId);
+                _employeeRepository.UpdateTotalAllocation(employeeId, 0);
+                return new OperationResult(true, Messages.SuccessfullyDeletedEmployee);
+            }
+
+            return new OperationResult(false, Messages.ErrorDeletingEmployee);
+
         }
 
         public OperationResult UpdateEmployee(UpdateEmployeeInputInfo inputInfo)
         {
-            var employee = _employeeRepository.GetById(inputInfo.Id);
-            //verify department
+            
+            var department = _departmentRepository.GetDepartmentById(inputInfo.DepartmentId);
 
-            if (employee == null)
+            if (department != null)
             {
-                return new OperationResult(false, Messages.ErrorWhileUpdatingEmployee);
+                var employee = _employeeRepository.GetById(inputInfo.Id);
+
+                if (employee != null)
+                {
+                    employee.Name = inputInfo.Name;
+                    employee.Address = inputInfo.Address;
+                    employee.EmploymentDate = inputInfo.EmploymentDate;
+                    employee.ReleaseDate = inputInfo.ReleaseDate;
+                    employee.JobType = inputInfo.JobType;
+                    employee.PositionType = inputInfo.PositionType;
+
+                    _employeeRepository.Save();
+
+                    return new OperationResult(true, Messages.SuccessfullyUpdatedEmployee);
+                   
+                }
             }
-
-            employee.Name = inputInfo.Name;
-            employee.Address = inputInfo.Address;
-            employee.EmploymentDate = inputInfo.EmploymentDate;
-            employee.ReleaseDate = inputInfo.ReleaseDate;
-            employee.JobType = inputInfo.JobType;
-            employee.PositionType = inputInfo.PositionType;
-
-            _employeeRepository.Save();
-
-            return new OperationResult(true, Messages.SuccessfullyUpdatedEmployee);
-
+            return new OperationResult(false, Messages.ErrorWhileUpdatingEmployee);
         }
 
         public OperationResult AddEmployeeToProject(AddEmployeeToProjectInputInfo inputInfo)

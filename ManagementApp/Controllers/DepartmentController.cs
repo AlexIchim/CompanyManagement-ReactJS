@@ -49,8 +49,6 @@ namespace ManagementApp.Controllers
             return Json(result);
         }
 
-        
-
         [Route("addDepartment")]
         [HttpPost]
         public IHttpActionResult AddDepartment([FromBody] AddDepartmentInputInfo inputInfo)

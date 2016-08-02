@@ -177,4 +177,7 @@
   <data name="ErrorAddingEmployee" xml:space="preserve">
     <value>'Error adding employee' </value>
   </data>
+  <data name="ErrorDeletingEmployee" xml:space="preserve">
+    <value>'Error: Employee could not be deleted.'</value>
+  </data>
 </root>
