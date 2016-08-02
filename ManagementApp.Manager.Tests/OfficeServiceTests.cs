@@ -118,7 +118,8 @@ namespace ManagementApp.Manager.Tests
 
             //Assert
             Assert.IsTrue(result.Success);
-            Assert.AreEqual(Messages.SuccessfullyAddedOffice, result.Message);
+            Assert.AreEqual(result.MessageList.Count, 1);
+            Assert.AreEqual(Messages.SuccessfullyAddedOffice, result.MessageList[0]);
         }
 
         [Test]
@@ -145,7 +146,8 @@ namespace ManagementApp.Manager.Tests
 
             //Assert
             Assert.IsTrue(result.Success);
-            Assert.AreEqual(result.Message, Messages.SuccessfullyUpdatedOffice);
+            Assert.AreEqual(result.MessageList.Count, 1);
+            Assert.AreEqual(result.MessageList[0], Messages.SuccessfullyUpdatedOffice);
         }
 
         [Test]
@@ -217,7 +219,8 @@ namespace ManagementApp.Manager.Tests
 
             //Assert
             Assert.IsFalse(result.Success);
-            Assert.AreEqual(result.Message,Messages.ErrorWhileUpdatingOffice);
+            Assert.AreEqual(result.MessageList.Count, 1);
+            Assert.AreEqual(result.MessageList[0],Messages.ErrorWhileUpdatingOffice);
         }
 
         [Test]

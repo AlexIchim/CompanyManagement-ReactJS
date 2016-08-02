@@ -60,7 +60,8 @@ namespace ManagementApp.Manager.Tests
 
             //Assert
             Assert.IsTrue(result.Success);
-            Assert.AreEqual(Messages.SuccessfullyAddedProject, result.Message);
+            Assert.AreEqual(result.MessageList.Count, 1);
+            Assert.AreEqual(Messages.SuccessfullyAddedProject, result.MessageList[0]);
         }
 
         [Test]
@@ -324,7 +325,8 @@ namespace ManagementApp.Manager.Tests
 
             //Assert
             Assert.IsTrue(result.Success);
-            Assert.AreEqual(Messages.SuccessfullyUpdatedProject, result.Message);
+            Assert.AreEqual(result.MessageList.Count,1);
+            Assert.AreEqual(Messages.SuccessfullyUpdatedProject, result.MessageList[0]);
         }
          [Test]
          public void Update_CallsGetByIdFromRepository_WhenOfficeExists()
@@ -399,7 +401,8 @@ namespace ManagementApp.Manager.Tests
 
             //Assert
             Assert.IsFalse(result.Success);
-            Assert.AreEqual(result.Message, Messages.ErrorWhileUpdatingProject);
+            Assert.AreEqual(result.MessageList.Count, 1);
+            Assert.AreEqual(result.MessageList[0], Messages.ErrorWhileUpdatingProject);
         }
 
         [Test]

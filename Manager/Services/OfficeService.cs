@@ -8,6 +8,7 @@ using Contracts;
 using Domain.Models;
 using Manager.InfoModels;
 using Manager.InputInfoModels;
+using Manager.Validators;
 
 namespace Manager.Services
 {
@@ -32,6 +33,14 @@ namespace Manager.Services
 
         public OperationResult Add(AddOfficeInputInfo inputInfo)
         {
+            AddOfficeValidator validator=new AddOfficeValidator();
+            var result =validator.Validate(inputInfo);
+            if (!result.IsValid)
+            {
+                return new OperationResult(false, result);
+            }
+
+
             var newOffice = _mapper.Map<Office>(inputInfo);
             _officeRepository.Add(newOffice);
 
