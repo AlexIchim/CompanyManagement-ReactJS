@@ -19,7 +19,6 @@ namespace Contracts
         int GetAllocationOfEmployeeFromProject(int projectId, int employeeId);
         int GetNrTeamMembers(int projectId);
         void Delete(Project project);
-
         Boolean editAllocation(int projectId, int employeeId, int newAllocation);
     }
 }
