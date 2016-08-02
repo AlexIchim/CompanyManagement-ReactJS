@@ -38,19 +38,6 @@ namespace Manager.Services
             return projectInfos;
         }
 
-        public IEnumerable<MemberInfo> GetAllDepartmentMembers(int inputInfo)
-        {
-            var newMember = _mapper.Map<int>(inputInfo);
-            var members = _departmentRepository.GetAllDepartmentMembers(newMember);
-            if (members == null)
-            {
-                return null;
-            }
-            var memberInfos = _mapper.Map<IEnumerable<MemberInfo>>(members);
-            return memberInfos;
-        }
-
-
         public IEnumerable<EmployeeInfo> GetAllUnAllocatedEmployeesOnProject()
         {
             var employees = _departmentRepository.GetAllUnAllocatedEmployeesOnProject();

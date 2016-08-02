@@ -14,11 +14,13 @@ namespace Manager.Services
     public class EmployeeService
     {
         private readonly IEmployeeRepository _employeeRepository;
+        private readonly IDepartmentRepository _departmentRepository;
         private readonly IMapper _mapper;
 
-        public EmployeeService(IMapper mapper, IEmployeeRepository employeeRepository)
+        public EmployeeService(IMapper mapper, IEmployeeRepository employeeRepository, IDepartmentRepository departmentRepository)
         {
             _employeeRepository = employeeRepository;
+            _departmentRepository = departmentRepository;
             _mapper = mapper;
         }
 
@@ -107,5 +109,27 @@ namespace Manager.Services
             }
             return new OperationResult(false, Messages.ErrorWhileUpdatingPartialAllocation);
         }
+
+        public IEnumerable<MemberInfo> GetAllDepartmentEmployees(int inputInfo)
+        {
+            var departmentId = _mapper.Map<int>(inputInfo);
+
+            var department = _departmentRepository.GetDepartmentById(departmentId);
+
+            if (department != null)
+            {
+                var members = _employeeRepository.GetAllDepartmentEmployees(department);
+
+                if (members != null)
+                {
+                    var memberInfos = _mapper.Map<IEnumerable<MemberInfo>>(members);
+                    return memberInfos;                  
+                }
+               
+            }
+
+            return null;
+        }
+
     }
 }

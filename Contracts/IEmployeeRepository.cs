@@ -24,5 +24,7 @@ namespace Contracts
         void AddEmployeeToProject(EmployeeProject ep);
 
         IEnumerable<EmployeeProject> GetEmployeeProjectById(int projectId);
+
+        IEnumerable<Employee> GetAllDepartmentEmployees(Department department);
     }
 }

@@ -62,6 +62,14 @@ namespace ManagementApp.Controllers
             return Json(result);
         }
 
+        [Route("getAllDepartmentEmployees")]
+        [HttpGet]
+        public IHttpActionResult GetAllDepartmentEmployees(int inputInfo)
+        {
+            var result = _employeeService.GetAllDepartmentEmployees(inputInfo);
+            return Json(result);
+        }
+
 
 
     }

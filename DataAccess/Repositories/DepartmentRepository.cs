@@ -50,13 +50,7 @@ namespace DataAccess.Repositories
         {
             var array = _context.Employees.Where(e => e.TotalAllocation < 100);
             return array.ToArray();
-        }
-
-        public IEnumerable<Employee> GetAllDepartmentMembers(int id)
-        {
-            var array = _context.Departments.SingleOrDefault(d => d.Id == id);
-            return array.Employees;
-        }
+        } 
 
         public void AddEmployeeToDepartment(Employee employee)
         {
