@@ -171,102 +171,124 @@ namespace Manager
         /// <summary>
         ///   Looks up a localized string similar to &apos;Error while adding employee: Empty employee name.&apos;.
         /// </summary>
-        public static string ErrorWhileAddingEmployee_EmptyEmployeeName {
-            get {
+        public static string ErrorWhileAddingEmployee_EmptyEmployeeName
+        {
+            get
+            {
                 return ResourceManager.GetString("ErrorWhileAddingEmployee_EmptyEmployeeName", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to &apos;Error while adding employee: Cannot have a negative number of employment hours.&apos;.
         /// </summary>
-        public static string ErrorWhileAddingEmployee_NegativeEmploymentHours {
-            get {
+        public static string ErrorWhileAddingEmployee_NegativeEmploymentHours
+        {
+            get
+            {
                 return ResourceManager.GetString("ErrorWhileAddingEmployee_NegativeEmploymentHours", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to Error while adding employee: No such department has been found..
         /// </summary>
-        public static string ErrorWhileAddingEmployee_NoSuchDepartment {
-            get {
+        public static string ErrorWhileAddingEmployee_NoSuchDepartment
+        {
+            get
+            {
                 return ResourceManager.GetString("ErrorWhileAddingEmployee_NoSuchDepartment", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to Error while adding employee: No such position has been found..
         /// </summary>
-        public static string ErrorWhileAddingEmployee_NoSuchPosition {
-            get {
+        public static string ErrorWhileAddingEmployee_NoSuchPosition
+        {
+            get
+            {
                 return ResourceManager.GetString("ErrorWhileAddingEmployee_NoSuchPosition", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to Error while adding employee: DepartmentId cannot be null..
         /// </summary>
-        public static string ErrorWhileAddingEmployee_NullDepartmentId {
-            get {
+        public static string ErrorWhileAddingEmployee_NullDepartmentId
+        {
+            get
+            {
                 return ResourceManager.GetString("ErrorWhileAddingEmployee_NullDepartmentId", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to &apos;Error while adding employee: Cannot have null EmploymentDate.&apos;.
         /// </summary>
-        public static string ErrorWhileAddingEmployee_NullEmploymentDate {
-            get {
+        public static string ErrorWhileAddingEmployee_NullEmploymentDate
+        {
+            get
+            {
                 return ResourceManager.GetString("ErrorWhileAddingEmployee_NullEmploymentDate", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to Error while adding employee: PositionId cannot be null..
         /// </summary>
-        public static string ErrorWhileAddingEmployee_NullPositionId {
-            get {
+        public static string ErrorWhileAddingEmployee_NullPositionId
+        {
+            get
+            {
                 return ResourceManager.GetString("ErrorWhileAddingEmployee_NullPositionId", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to &apos;Error while adding employee: Too long employee address.&apos;.
         /// </summary>
-        public static string ErrorWhileAddingEmployee_TooLongEmployeeAddress {
-            get {
+        public static string ErrorWhileAddingEmployee_TooLongEmployeeAddress
+        {
+            get
+            {
                 return ResourceManager.GetString("ErrorWhileAddingEmployee_TooLongEmployeeAddress", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to &apos;Error while adding employee: Too long e-mail address.&apos;.
         /// </summary>
-        public static string ErrorWhileAddingEmployee_TooLongEmployeeEmail {
-            get {
+        public static string ErrorWhileAddingEmployee_TooLongEmployeeEmail
+        {
+            get
+            {
                 return ResourceManager.GetString("ErrorWhileAddingEmployee_TooLongEmployeeEmail", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to &apos;Error while adding employee: Employee name too long. &apos;.
         /// </summary>
-        public static string ErrorWhileAddingEmployee_TooLongEmployeeName {
-            get {
+        public static string ErrorWhileAddingEmployee_TooLongEmployeeName
+        {
+            get
+            {
                 return ResourceManager.GetString("ErrorWhileAddingEmployee_TooLongEmployeeName", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to &apos;Error while adding employee; Cannot have a number of employment hours greater than 8.&apos;.
         /// </summary>
-        public static string ErrorWhileAddingEmployee_TooManyHours {
-            get {
+        public static string ErrorWhileAddingEmployee_TooManyHours
+        {
+            get
+            {
                 return ResourceManager.GetString("ErrorWhileAddingEmployee_TooManyHours", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to &apos;Position could not be added: Name field is empty.&apos;.
         /// </summary>
@@ -324,7 +346,7 @@ namespace Manager
 
 
         /// <summary>
-        ///   Looks up a localized string similar to &apos;Employee does not exist&apos;.
+        ///   Looks up a localized string similar to &apos;Project coud not be deleted.&apos;.
         /// </summary>
         public static string ErrorWhileReleasingEmployee
         {
@@ -376,93 +398,132 @@ namespace Manager
         /// <summary>
         ///   Looks up a localized string similar to &apos;Error while updating employee: Empty employee name.&apos;.
         /// </summary>
-        public static string ErrorWhileUpdatingEmployee_EmptyEmployeeName {
-            get {
+        public static string ErrorWhileUpdatingEmployee_EmptyEmployeeName
+        {
+            get
+            {
                 return ResourceManager.GetString("ErrorWhileUpdatingEmployee_EmptyEmployeeName", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to &apos;Error while updating employee: Invalid employee Id.&apos;.
         /// </summary>
-        public static string ErrorWhileUpdatingEmployee_InvalidId {
-            get {
+        public static string ErrorWhileUpdatingEmployee_InvalidId
+        {
+            get
+            {
                 return ResourceManager.GetString("ErrorWhileUpdatingEmployee_InvalidId", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to &apos;Error while updating employee: Negative employment hours.&apos;.
         /// </summary>
-        public static string ErrorWhileUpdatingEmployee_NegativeEmploymentHours {
-            get {
+        public static string ErrorWhileUpdatingDepartment_EmptyName
+        {
+            get
+            {
+                return ResourceManager.GetString("ErrorWhileUpdatingDepartment_EmptyName", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        /// </summary>
+        public static string ErrorWhileUpdatingEmployee_NegativeEmploymentHours
+        {
+            get
+            {
                 return ResourceManager.GetString("ErrorWhileUpdatingEmployee_NegativeEmploymentHours", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to Error while updating employee: DepartmentId cannot be null..
         /// </summary>
-        public static string ErrorWhileUpdatingEmployee_NullDepartmentId {
-            get {
+        public static string ErrorWhileUpdatingDepartment_NameTooLong
+        {
+            get
+            {
+                return ResourceManager.GetString("ErrorWhileUpdatingDepartment_NameTooLong", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        /// </summary>
+        public static string ErrorWhileUpdatingEmployee_NullDepartmentId
+        {
+            get
+            {
                 return ResourceManager.GetString("ErrorWhileUpdatingEmployee_NullDepartmentId", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to &apos;Error while updating employee: Null employment date.&apos;.
         /// </summary>
-        public static string ErrorWhileUpdatingEmployee_NullEmploymentDate {
-            get {
+        public static string ErrorWhileUpdatingEmployee_NullEmploymentDate
+        {
+            get
+            {
                 return ResourceManager.GetString("ErrorWhileUpdatingEmployee_NullEmploymentDate", resourceCulture);
             }
         }
-        
         /// <summary>
         ///   Looks up a localized string similar to Error while updating employee: PositionId cannot be null..
         /// </summary>
-        public static string ErrorWhileUpdatingEmployee_NullPositionId {
-            get {
+        public static string ErrorWhileUpdatingEmployee_NullPositionId
+        {
+            get
+            {
                 return ResourceManager.GetString("ErrorWhileUpdatingEmployee_NullPositionId", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to &apos;Error while updating employee: Too long employee address.&apos;.
         /// </summary>
-        public static string ErrorWhileUpdatingEmployee_TooLongEmployeeAddress {
-            get {
+        public static string ErrorWhileUpdatingEmployee_TooLongEmployeeAddress
+        {
+            get
+            {
                 return ResourceManager.GetString("ErrorWhileUpdatingEmployee_TooLongEmployeeAddress", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to &apos;Error while updating employee: Too long employee e-mail.&apos;.
         /// </summary>
-        public static string ErrorWhileUpdatingEmployee_TooLongEmployeeEmail {
-            get {
+        public static string ErrorWhileUpdatingEmployee_TooLongEmployeeEmail
+        {
+            get
+            {
                 return ResourceManager.GetString("ErrorWhileUpdatingEmployee_TooLongEmployeeEmail", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to &apos;Error while updating employee: Too long employee name.&apos;.
         /// </summary>
-        public static string ErrorWhileUpdatingEmployee_TooLongEmployeeName {
-            get {
+        public static string ErrorWhileUpdatingEmployee_TooLongEmployeeName
+        {
+            get
+            {
                 return ResourceManager.GetString("ErrorWhileUpdatingEmployee_TooLongEmployeeName", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to &apos;Error while updating employee: Too many employment hours.&apos;.
         /// </summary>
-        public static string ErrorWhileUpdatingEmployee_TooManyHours {
-            get {
+        public static string ErrorWhileUpdatingEmployee_TooManyHours
+        {
+            get
+            {
                 return ResourceManager.GetString("ErrorWhileUpdatingEmployee_TooManyHours", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to &apos;Position could not be modified.&apos;.
         /// </summary>
@@ -538,12 +599,14 @@ namespace Manager
         /// <summary>
         ///   Looks up a localized string similar to &apos;Employee was added with success.&apos;.
         /// </summary>
-        public static string SuccessfullyAddedEmployee {
-            get {
+        public static string SuccessfullyAddedEmployee
+        {
+            get
+            {
                 return ResourceManager.GetString("SuccessfullyAddedEmployee", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to &apos;Position was added with success&apos;.
         /// </summary>
@@ -581,7 +644,7 @@ namespace Manager
         }
 
         /// <summary>
-        ///   Looks up a localized string similar to &apos;Successfully updated allocation&apos;.
+        ///   Looks up a localized string similar to &apos;Employee was released with success&apos;.
         /// </summary>
         public static string SuccessfullyUpdatedAllocation
         {
@@ -607,12 +670,14 @@ namespace Manager
         /// <summary>
         ///   Looks up a localized string similar to &apos;Successfully updated employee.&apos;.
         /// </summary>
-        public static string SuccessfullyUpdatedEmployee {
-            get {
+        public static string SuccessfullyUpdatedEmployee
+        {
+            get
+            {
                 return ResourceManager.GetString("SuccessfullyUpdatedEmployee", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to &apos;Position was updated with success&apos;.
         /// </summary>

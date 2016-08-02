@@ -58,10 +58,8 @@ namespace Manager.Services
                     {
                         var newDepartment = _mapper.Map<Department>(inputInfo);
                         _departmentRepository.Add(newDepartment, inputInfo.DepartmentManagerId);
-
-                        return new OperationResult(true, Messages.SuccessfullyAddedDepartment);
                     }
-                    else return result;
+                    return result;
                 }
                 else return new OperationResult(false, Messages.ErrorWhileAddingDepartment);
             }
@@ -86,9 +84,8 @@ namespace Manager.Services
                     department.Name = inputInfo.Name;
                     department.OfficeId = inputInfo.OfficeId;
                     _departmentRepository.Update(department, inputInfo.DepartmentManagerId);
-                    return new OperationResult(true, Messages.SuccessfullyUpdatedDepartment);
                 }
-                else return result;
+                return result;
             }
             else return new OperationResult(false, Messages.ErrorWhileUpdatingDepartment_OfficeIdInvalid);
         }

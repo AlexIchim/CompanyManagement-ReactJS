@@ -9,36 +9,30 @@ namespace Manager.Validators
 {
     static class DepartmentValidator
     {
-        private static OperationResult ValidateName(string name)
+        public static OperationResult Validate(AddDepartmentInputInfo info)
         {
-            if (String.IsNullOrEmpty(name))
+            if (String.IsNullOrEmpty(info.Name))
             {
                 return new OperationResult(false, Messages.ErrorWhileAddingDepartment_EmptyName);
             }
-            else if (name.Length > 100)
+            else if (info.Name.Length > 100)
             {
                 return new Manager.OperationResult(false, Messages.ErrorWhileAddingDepartment_NameTooLong);
             }
-            else return null;
-        }
-        public static OperationResult Validate(AddDepartmentInputInfo info)
-        {
-            OperationResult result = ValidateName(info.Name);
-            if (result == null)
-            {
-                return new Manager.OperationResult(true, Messages.SuccessfullyAddedDepartment);
-            }
-            return result;
+            else return new Manager.OperationResult(true, Messages.SuccessfullyAddedDepartment);
         }
 
         public static OperationResult Validate(UpdateDepartmentInputInfo info)
         {
-            OperationResult result = ValidateName(info.Name);
-            if (result == null)
+            if (String.IsNullOrEmpty(info.Name))
             {
-                return new Manager.OperationResult(true, Messages.SuccessfullyUpdatedDepartment);
+                return new OperationResult(false, Messages.ErrorWhileUpdatingDepartment_EmptyName);
             }
-            return result;
+            else if (info.Name.Length > 100)
+            {
+                return new Manager.OperationResult(false, Messages.ErrorWhileUpdatingDepartment_NameTooLong);
+            }
+            else return new Manager.OperationResult(true, Messages.SuccessfullyUpdatedDepartment);
         }
     }
 }

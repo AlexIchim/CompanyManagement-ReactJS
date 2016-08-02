@@ -210,8 +210,14 @@
   <data name="ErrorWhileAddingOffice_AddressTooLong" xml:space="preserve">
     <value>'Office could not be added: Address too long.'</value>
   </data>
+  <data name="ErrorWhileUpdatingDepartment_EmptyName" xml:space="preserve">
+    <value>Department could not be updated: Name field is empty.</value>
+  </data>
   <data name="ErrorWhileAddingOffice_EmptyAddress" xml:space="preserve">
     <value>'Office could not be added: Address fied is empty.'</value>
+  </data>
+  <data name="ErrorWhileUpdatingDepartment_NameTooLong" xml:space="preserve">
+    <value>Department could not be updated: Name too long.</value>
   </data>
   <data name="ErrorWhileAddingOffice_EmptyName" xml:space="preserve">
     <value>'Office could not be added: Name fied is empty.'</value>
