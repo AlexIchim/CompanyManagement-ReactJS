@@ -69,6 +69,7 @@
     <Compile Include="InputInfoModels\AddEmployeeToDepartmentInputInfo.cs" />
     <Compile Include="InputInfoModels\AddEmployeeToProjectInputInfo.cs" />
     <Compile Include="InputInfoModels\AddProjectInputInfo.cs" />
+    <Compile Include="InputInfoModels\UpdateAllocationInputInfo.cs" />
     <Compile Include="InputInfoModels\UpdateDepartmentInputInfo.cs" />
     <Compile Include="InputInfoModels\AddDepartmentInputInfo.cs" />
     <Compile Include="Mapper\MappingConfig.cs" />

@@ -55,5 +55,13 @@ namespace ManagementApp.Controllers
             var result = _projectService.Delete(projectId);
             return Json(result);
         }
+
+        [Route("update")]
+        [HttpPut]
+        public IHttpActionResult Update ([FromBody] UpdateAllocationInputInfo inputInfo)
+        {
+            var result = _projectService.UpdatePartialAllocation(inputInfo);
+            return Json(result);
+        }
     }
 }

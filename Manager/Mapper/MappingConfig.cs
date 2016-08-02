@@ -40,6 +40,7 @@ namespace Manager.Mapper
             CreateMap<AddEmployeeToProjectInputInfo, EmployeeProject>();
 
             CreateMap<AddEmployeeToDepartmentInputInfo, Employee>();
+            
 
         }
     }
