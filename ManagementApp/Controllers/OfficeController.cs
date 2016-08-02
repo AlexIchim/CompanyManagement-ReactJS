@@ -42,14 +42,6 @@ namespace ManagementApp.Controllers
             return Json(result);
         }
 
-        [Route("addDepartment")]
-        [HttpPost]
-        public IHttpActionResult AddDepartment([FromBody] AddDepartmentInputInfo inputInfo)
-        {
-            var result = _officeService.AddDepartment(inputInfo);
-            return Json(result);
-        }
-
         [Route("UpdateDepartment")]
         [HttpPut]
         public IHttpActionResult UpdateDepartment([FromBody]UpdateDepartmentInputInfo inputInfo)

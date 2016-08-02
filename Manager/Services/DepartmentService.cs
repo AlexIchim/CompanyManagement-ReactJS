@@ -89,5 +89,21 @@ namespace Manager.Services
             _departmentRepository.AddEmployeeToDepartment(newEp);
             return new OperationResult(true, Messages.SuccessfullyAddedEmployee);
         }
+
+        public OperationResult AddDepartment(AddDepartmentInputInfo inputInfo)
+        {
+            var newDepartment = _mapper.Map<Department>(inputInfo);
+
+            var depManagerId = inputInfo.DepartmentManagerId;
+
+            if (_departmentRepository.IsDepartmentManager(depManagerId))
+            {
+                _departmentRepository.Add(newDepartment, inputInfo.DepartmentManagerId);
+                return new OperationResult(true, Messages.SuccessfullyAddedDepartment);
+            }
+
+            return new OperationResult(false, Messages.ErrorAddingDepartment);
+
+        }
     }
 }

@@ -39,14 +39,6 @@ namespace DataAccess.Repositories
             Save();
         }
 
-
-        public void Add(Department department, int? departmentManagerId)
-        {
-            Employee employee = _context.Employees.SingleOrDefault(e => e.Id == departmentManagerId);
-            department.DepartmentManager = employee;
-            _context.Departments.Add(department);
-            Save();
-        }
         public void Save()
         {
             _context.SaveChanges();

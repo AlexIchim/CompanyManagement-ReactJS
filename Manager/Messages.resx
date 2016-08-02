@@ -171,4 +171,7 @@
   <data name="ErrorAddingEmployeeToProject" xml:space="preserve">
     <value>'Error adding employee to project'</value>
   </data>
+  <data name="ErrorAddingDepartment" xml:space="preserve">
+    <value>'Error: Could not add department'</value>
+  </data>
 </root>

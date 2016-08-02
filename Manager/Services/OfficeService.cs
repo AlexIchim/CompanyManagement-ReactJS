@@ -38,12 +38,6 @@ namespace Manager.Services
 
         }
 
-        public OperationResult AddDepartment(AddDepartmentInputInfo inputInfo)
-        {
-            var newDepartment = _mapper.Map<Department>(inputInfo);
-            _officeRepository.Add(newDepartment, inputInfo.DepartmentManagerId);
-            return new OperationResult(true, Messages.SuccessfullyAddedDepartment);
-        }
         public OperationResult Add(AddOfficeInputInfo inputInfo)
         {
 
