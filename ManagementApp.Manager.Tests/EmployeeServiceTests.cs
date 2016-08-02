@@ -34,8 +34,8 @@ namespace ManagementApp.Manager.Tests
             //Arrange - aranjezi ce date vrei sa iti intre, ce rezultate de pe moc sa intoarca
             var employees = new List<Employee>
             {
-                CreateEmployee("Mike", 1),
-                CreateEmployee("Gerard", 2)
+                CreateEmployee("Mike", "Address1", 1),
+                CreateEmployee("Gerard", "Address2", 2)
             };
             var employeesInfo = new List<EmployeeInfo>
             {
@@ -66,11 +66,10 @@ namespace ManagementApp.Manager.Tests
         }
 
         [Test]
-        public void Add_CallsAddFromRepository()
-        {
+        public void Add_CallsAddFromRepository() {
             //Arrange
-            var employeeInputInfo = new AddEmployeeInputInfo { Name = "Andrew" };
-            var employee = new Employee { Name = "Andrew" };
+            var employeeInputInfo = new AddEmployeeInputInfo { Id = 1, Name = "Andrew", Address = "Address1" };
+            var employee = new Employee { Name = "Andrew", Address = "Address1", Id = 1 };
 
             _mapperMock.Setup(m => m.Map<Employee>(employeeInputInfo)).Returns(employee);
             _employeeRepositoryMock.Setup(m => m.Add(employee));
@@ -113,11 +112,10 @@ namespace ManagementApp.Manager.Tests
         }
 
         [Test]
-        public void Add_ReturnsSuccessfulMessage()
-        {
+        public void Add_ReturnsSuccessfulMessage() {
             //Arrange
-            var employeeInputInfo = new AddEmployeeInputInfo { Name = "Andrew" };
-            var employee = CreateEmployee("Andrew");
+            var employeeInputInfo = new AddEmployeeInputInfo { Id = 1, Name = "Andrew", Address = "Address1" };
+            var employee = CreateEmployee("Andrew", "Address1", 1);
 
             _mapperMock.Setup(m => m.Map<Employee>(employeeInputInfo)).Returns(employee);
             _employeeRepositoryMock.Setup(m => m.Add(employee));
@@ -323,14 +321,12 @@ namespace ManagementApp.Manager.Tests
             };
             return assignment;
         }
-        private Employee CreateEmployee(string name, int? id = null)
-        {
-            var employee = new Employee
-            {
-                Name = name
+        private Employee CreateEmployee(string name, string address, int? id = null) {
+            var employee = new Employee {
+                Name = name,
+                Address = address
             };
-            if (id != null)
-            {
+            if (id != null) {
                 employee.Id = (int)id;
             }
             return employee;

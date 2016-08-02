@@ -27,6 +27,13 @@ namespace ManagementApp.Controllers
             return Json(result);
         }
 
+        [Route("departments/{officeId}")]
+        [HttpGet]
+        public IHttpActionResult GetAllDepartmentsOfAnOffice(int officeId) {
+            var result = _officeService.GetAllDepartmentsOfAnOffice(officeId);
+            return Json(result);
+        }
+
         [Route("add")]
         [HttpPost]
         public IHttpActionResult Add([FromBody] AddOfficeInputInfo inputInfo)
@@ -43,12 +50,5 @@ namespace ManagementApp.Controllers
             return Json(result); 
         }
 
-        [Route("delete")]
-        [HttpDelete]
-        public IHttpActionResult Delete(int officeId)
-        {
-            var result = _officeService.Delete(officeId);
-            return Json(result);
-        }
     }
 }

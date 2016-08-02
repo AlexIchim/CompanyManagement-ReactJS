@@ -29,6 +29,12 @@ namespace DataAccess.Repositories
             return _context.Offices.SingleOrDefault(o => o.Id == id);
         }
 
+        public IEnumerable<Department> GetAllDepartmentsOfAnOffice(int officeId)
+        {
+            var office = GetById(officeId);
+            return office.Departments;
+        }
+
         public void Add(Office office)
         {
             _context.Offices.Add(office);
@@ -37,12 +43,6 @@ namespace DataAccess.Repositories
 
         public void Save()
         {
-            _context.SaveChanges();
-        }
-
-        public void Delete(Office office)
-        {
-            _context.Offices.Remove(office);
             _context.SaveChanges();
         }
 

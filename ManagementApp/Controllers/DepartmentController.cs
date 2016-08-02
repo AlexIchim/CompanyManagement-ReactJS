@@ -29,14 +29,14 @@ namespace ManagementApp.Controllers
             return Json(result);
         }
 
-        [Route("getMembersOfDepartment/{departmentId}")]
+        [Route("members/{departmentId}")]
         [HttpGet]
         public IHttpActionResult GetAllMembersOfADepartment(int departmentId) {
             var result = _departmentService.GetAllMembersOfADepartment(departmentId);
             return Json(result);
         }
 
-        [Route("getProjectsOfDepartment/{departmentId}")]
+        [Route("projects/{departmentId}")]
         [HttpGet]
         public IHttpActionResult GetAllProjectsOfADepartment(int departmentId) {
             var result = _departmentService.GetAllProjectsOfADepartment(departmentId);

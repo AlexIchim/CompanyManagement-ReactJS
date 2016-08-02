@@ -30,14 +30,14 @@ namespace ManagementApp.Controllers
             return Json(result);
         }
 
-        [Route("delete")]
+        [Route("delete/{projectId}")]
         [HttpDelete]
         public IHttpActionResult Delete(int projectId) {
             var result = _projectService.Delete(projectId);
             return Json(result);
         }
 
-        [Route("deleteEmployeeFromProject")]
+        [Route("deleteEmployee/{employeeId}/{projectId}")]
         [HttpDelete]
         public IHttpActionResult DeleteEmployeeFromProject(int employeeId, int projectId)
         {
@@ -58,7 +58,7 @@ namespace ManagementApp.Controllers
             return Json(result);
         }
 
-        [Route("getAllProjects")]
+        [Route("getAll")]
         [HttpGet]
         public IHttpActionResult GetAll()
         {
@@ -66,7 +66,7 @@ namespace ManagementApp.Controllers
             return Json(result);
         }
 
-        [Route("getById")]
+        [Route("getById/{id}")]
         [HttpGet]
         public IHttpActionResult GetById(int id)
         {
@@ -74,7 +74,7 @@ namespace ManagementApp.Controllers
             return Json(result);
         }
 
-        [Route("getMembersFromProject")]
+        [Route("members/{projectId}")]
         [HttpGet]
         public IHttpActionResult GetMembersFromProject( int projectId)
         {
@@ -82,14 +82,14 @@ namespace ManagementApp.Controllers
             return Json(result);
         }
 
-        [Route("getAllocation")]
+        [Route("employeeAllocation/{projectId}/{employeeId}")]
         [HttpGet]
         public IHttpActionResult GetAllocationOfEmployeeFromProject(int projectId, int employeeId)
         {
             var result = _projectService.GetAllocationOfEmployeeFromProject(projectId, employeeId);
             return Json(result);
         }
-        [Route("getNrTeamMembers")]
+        [Route("numberOfMembers/{projectId}")]
         [HttpGet]
         public IHttpActionResult GetNrTeamMembers(int projectId)
         {
