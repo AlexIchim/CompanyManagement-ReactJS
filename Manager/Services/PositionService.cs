@@ -56,9 +56,13 @@ namespace Manager.Services
             }
             else
             {
-                position.Name = inputInfo.Name;
-                _positionRepository.Save();
-                return new Manager.OperationResult(true, Messages.SuccessfullyUpdatedPosition);
+                var result = Validators.PositionValidator.Validate(inputInfo);
+                if (result.Success)
+                {
+                    position.Name = inputInfo.Name;
+                    _positionRepository.Save();
+                }
+                return result;
             }
         }
     }

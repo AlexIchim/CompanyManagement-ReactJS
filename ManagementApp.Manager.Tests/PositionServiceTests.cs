@@ -67,6 +67,24 @@ namespace ManagementApp.Manager.Tests
         }
 
         [Test]
+        public void Add_ReturnsSuccessfulMessage()
+        {
+            //Arrange
+            var positionInputInfo = new AddPositionInputInfo { Name = "QA" };
+            var position = new Position() { Name = "QA" };
+
+            _mapperMock.Setup(m => m.Map<Position>(positionInputInfo)).Returns(position);
+            _positionRepositoryMock.Setup(m => m.Add(position));
+
+            //Act
+            var result = _positionService.Add(positionInputInfo);
+
+            //Assert
+            Assert.IsTrue(result.Success);
+            Assert.AreEqual(Messages.SuccessfullyAddedPosition, result.Message);
+        }
+
+        [Test]
         public void Add_CallsAddFromRepository()
         {
             //Arrange
@@ -84,48 +102,158 @@ namespace ManagementApp.Manager.Tests
         }
 
         [Test]
-        public void Add_ReturnsErrorMessageOnInvalidInput()
+        public void Add_ReturnsErrorMessageOnEmptyName()
         {
             //Arrange
             var positionInputInfoNameEmpty = new AddPositionInputInfo { Name = "" };
             var positionNameEmpty = new Position() { Name = "" };
 
-            var positionInputInfoNameTooLong = new AddPositionInputInfo { Name = new string('*', 101) };
-            var positionNameTooLong = new Position() { Name = new string('*', 101) };
-
             _mapperMock.Setup(m => m.Map<Position>(positionInputInfoNameEmpty)).Returns(positionNameEmpty);
-            _mapperMock.Setup(m => m.Map<Position>(positionInputInfoNameTooLong)).Returns(positionNameTooLong);
             _positionRepositoryMock.Setup(m => m.Add(positionNameEmpty));
-            _positionRepositoryMock.Setup(m => m.Add(positionNameTooLong));
 
             //Act
             var resultNameEmpty = _positionService.Add(positionInputInfoNameEmpty);
-            var resultNameTooLong = _positionService.Add(positionInputInfoNameTooLong);
 
 
             //Assert
             Assert.IsFalse(resultNameEmpty.Success);
             Assert.AreEqual(Messages.ErrorWhileAddingPosition_EmptyName, resultNameEmpty.Message);
+        }
+
+        [Test]
+        public void Add_ReturnsErrorMessageOnNameTooLong()
+        {
+            //Arrange
+            var positionInputInfoNameTooLong = new AddPositionInputInfo { Name = new string('*', 101) };
+            var positionNameTooLong = new Position() { Name = new string('*', 101) };
+
+            _mapperMock.Setup(m => m.Map<Position>(positionInputInfoNameTooLong)).Returns(positionNameTooLong);
+            _positionRepositoryMock.Setup(m => m.Add(positionNameTooLong));
+
+            //Act
+            var resultNameTooLong = _positionService.Add(positionInputInfoNameTooLong);
+
+
+            //Assert
             Assert.IsFalse(resultNameTooLong.Success);
             Assert.AreEqual(Messages.ErrorWhileAddingPosition_NameTooLong, resultNameTooLong.Message);
         }
 
         [Test]
-        public void Add_ReturnsSuccessfulMessage()
+        public void Update_ReturnsSuccessfulMessage_WhenPositionExists()
         {
             //Arrange
-            var positionInputInfo = new AddPositionInputInfo { Name = "QA" };
-            var position = new Position() { Name = "QA" };
+            var positionInputInfo = new UpdatePositionInputInfo { Id = 1, Name = "NewProjectName" };
+            var position = new Position { Id = 1, Name = "Northern Safety" };
 
-            _mapperMock.Setup(m => m.Map<Position>(positionInputInfo)).Returns(position);
-            _positionRepositoryMock.Setup(m => m.Add(position));
+            _positionRepositoryMock.Setup(m => m.GetById(positionInputInfo.Id)).Returns(position);
 
             //Act
-            var result = _positionService.Add(positionInputInfo);
+            var result = _positionService.Update(positionInputInfo);
 
             //Assert
             Assert.IsTrue(result.Success);
-            Assert.AreEqual(Messages.SuccessfullyAddedPosition, result.Message);
+            Assert.AreEqual(Messages.SuccessfullyUpdatedPosition, result.Message);
         }
+
+        [Test]
+        public void Update_ReturnsErrorMessage_WhenIdInvalid()
+        {
+            //Arrange
+            var positionInputInfo = new UpdatePositionInputInfo { Id = 123, Name = "NewProjectName" };
+            Position position = null;
+
+            _positionRepositoryMock.Setup(m => m.GetById(positionInputInfo.Id)).Returns(position);
+
+            //Act
+            var result = _positionService.Update(positionInputInfo);
+
+            //Assert
+            Assert.IsFalse(result.Success);
+            Assert.AreEqual(Messages.ErrorWhileUpdatingPosition_InvalidId, result.Message);
+        }
+
+        [Test]
+        public void Update_ReturnsErrorMessage_WhenNameEmpty()
+        {
+            //Arrange
+            var positionInputInfo = new UpdatePositionInputInfo { Id = 1, Name = "" };
+            var position = new Position() { Id = 1, Name = "OldName" };
+
+            _positionRepositoryMock.Setup(m => m.GetById(positionInputInfo.Id)).Returns(position);
+
+            //Act
+            var result = _positionService.Update(positionInputInfo);
+
+            //Assert
+            Assert.IsFalse(result.Success);
+            Assert.AreEqual(Messages.ErrorWhileUpdatingPosition_EmptyName, result.Message);
+        }
+
+        [Test]
+        public void Update_ReturnsErrorMessage_WhenNameTooLong()
+        {
+            //Arrange
+            var positionInputInfo = new UpdatePositionInputInfo { Id = 1, Name = new String('a', 5000) };
+            var position = new Position() { Id = 1, Name = "OldName" };
+
+            _positionRepositoryMock.Setup(m => m.GetById(positionInputInfo.Id)).Returns(position);
+
+            //Act
+            var result = _positionService.Update(positionInputInfo);
+
+            //Assert
+            Assert.IsFalse(result.Success);
+            Assert.AreEqual(Messages.ErrorWhileUpdatingPosition_NameTooLong, result.Message);
+        }
+
+        [Test]
+        public void Update_CallsGetByIdFromRepository_WhenPositionExists()
+        {
+            //Arrange
+            var positionInputInfo = new UpdatePositionInputInfo { Id = 1, Name = "QA" };
+            var position = new Position { Id = 1, Name = "Department Manager" };
+
+            _positionRepositoryMock.Setup(m => m.GetById(positionInputInfo.Id)).Returns(position);
+
+            //Act
+            _positionService.Update(positionInputInfo);
+
+            //Assert
+            _positionRepositoryMock.Verify(x => x.GetById(positionInputInfo.Id), Times.Once);
+        }
+
+        [Test]
+        public void Update_CallsSaveFromRepository_WhenPositionExists()
+        {
+            //Arrange
+            var positionInputInfo = new UpdatePositionInputInfo { Id = 1, Name = "QA" };
+            var position = new Position { Id = 1, Name = "Department Manager" };
+
+            _positionRepositoryMock.Setup(m => m.GetById(positionInputInfo.Id)).Returns(position);
+
+            //Act
+            _positionService.Update(positionInputInfo);
+
+            //Assert
+            _positionRepositoryMock.Verify(x => x.Save(), Times.Once);
+        }
+
+        [Test]
+        public void Update_DoesNotCallSaveFromRepository_WhenPositionDoesNotExists()
+        {
+            //Arrange
+            var positionInputInfo = new UpdatePositionInputInfo { Id = 1, Name = "QA" };
+            Position position = null;
+
+            _positionRepositoryMock.Setup(m => m.GetById(positionInputInfo.Id)).Returns(position);
+
+            //Act
+            _positionService.Update(positionInputInfo);
+
+            //Assert
+            _positionRepositoryMock.Verify(x => x.Save(), Times.Never);
+        }
+
     }
 }
