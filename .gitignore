@@ -30,3 +30,4 @@ _ReSharper*/
 packages
 .vs/
 ~$nagement use cases.docx
+node_modules/
