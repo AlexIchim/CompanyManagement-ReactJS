@@ -9,39 +9,43 @@ export default class Dashboard extends React.Component{
 
     render(){
         return (
-            <div className="row">
+            <aside className="offices">
+                <div className="row">
+                    <Tile
+                        parentClass="bg-aqua"
+                        name="AAA"
+                        phone="213123"
+                        address="Address: Ajax requests"
+                        link="/department"
+                        icon="envelope-o"
+                    />
+                    <Tile
+                        parentClass="bg-green"
+                        name="BBB"
+                        phone="213123"
+                        address="Address: Sample controls"
+                        link="/department"
+                        icon="user"
+                    />
 
-
-                <Tile
-                    parentClass="bg-aqua"
-                    phone="213123"
-                    address="Address: Ajax requests"
-                    link="/change-me"
-                    icon="envelope-o"
-                />
-                <Tile
-                    parentClass="bg-green"
-                    phone="213123"
-                    address="Address: Sample controls"
-                    link="/change-me"
-                    icon="user"
-                />
-
-                <Tile
-                    parentClass="bg-yellow"
-                    phone="213123"
-                    address="Address: Sample joi validation"
-                    link="/change-me"
-                    icon="users"
-                />
-                <Tile
-                    parentClass="bg-red"
-                    phone="213123"
-                    address="Address: State manipulation demo"
-                    link="/change-me"
-                    icon="trash"
-                />
-            </div>
+                    <Tile
+                        parentClass="bg-yellow"
+                        name="CCC"
+                        phone="213123"
+                        address="Address: Sample joi validation"
+                        link="/department"
+                        icon="users"
+                    />
+                    <Tile
+                        parentClass="bg-red"
+                        name="DDD"
+                        phone="213123"
+                        address="Address: State manipulation demo"
+                        link="/department"
+                        icon="trash"
+                    />
+                </div>
+            </aside>
 
         )
     }
