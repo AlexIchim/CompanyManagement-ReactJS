@@ -265,7 +265,8 @@ namespace ManagementApp.Manager.Tests
 
             //Assert
             Assert.IsTrue(result.Success);
-            Assert.AreEqual(Messages.SuccessfullyAddedDepartment, result.Message);
+            Assert.AreEqual(result.MessageList.Count, 1);
+            Assert.AreEqual(Messages.SuccessfullyAddedDepartment, result.MessageList[0]);
         }
 
 
@@ -291,7 +292,8 @@ namespace ManagementApp.Manager.Tests
 
             //Assert
             Assert.IsTrue(result.Success);
-            Assert.AreEqual(Messages.SuccessfullyUpdatedDepartment, result.Message);
+            Assert.AreEqual(result.MessageList.Count, 1);
+            Assert.AreEqual(Messages.SuccessfullyUpdatedDepartment, result.MessageList[0]);
         }
 
         [Test]
@@ -350,7 +352,8 @@ namespace ManagementApp.Manager.Tests
 
             //Assert
             Assert.IsFalse(result.Success);
-            Assert.AreEqual(Messages.ErrorWhileUpdatingDepartment, result.Message);
+            Assert.AreEqual(result.MessageList.Count,1);
+            Assert.AreEqual(Messages.ErrorWhileUpdatingDepartment, result.MessageList[0]);
         }
 
         [Test]
@@ -388,7 +391,8 @@ namespace ManagementApp.Manager.Tests
 
             //Assert
             Assert.IsTrue(result.Success);
-            Assert.AreEqual(Messages.SuccessfullyDeletedDepartment, result.Message);
+            Assert.AreEqual(result.MessageList.Count, 1);
+            Assert.AreEqual(Messages.SuccessfullyDeletedDepartment, result.MessageList[0]);
         }
 
         [Test]
@@ -423,7 +427,8 @@ namespace ManagementApp.Manager.Tests
 
             //Assert
             Assert.IsFalse(result.Success);
-            Assert.AreEqual(Messages.ErrorWhileDeletingDepartment, result.Message);
+            Assert.AreEqual(result.MessageList.Count, 1);
+            Assert.AreEqual(Messages.ErrorWhileDeletingDepartment, result.MessageList[0]);
         }
 
         [Test]

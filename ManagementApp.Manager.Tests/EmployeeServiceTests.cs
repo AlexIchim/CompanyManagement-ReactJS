@@ -126,7 +126,8 @@ namespace ManagementApp.Manager.Tests
 
             //Assert
             Assert.IsTrue(result.Success);
-            Assert.AreEqual(Messages.SuccessfullyAddedEmployee, result.Message);
+            Assert.AreEqual(result.MessageList.Count, 1);
+            Assert.AreEqual(Messages.SuccessfullyAddedEmployee, result.MessageList[0]);
         }
 
 
@@ -144,7 +145,8 @@ namespace ManagementApp.Manager.Tests
 
             //Assert
             Assert.IsTrue(result.Success);
-            Assert.AreEqual(Messages.SuccessfullyUpdatedEmployee, result.Message);
+            Assert.AreEqual(result.MessageList.Count, 1);
+            Assert.AreEqual(Messages.SuccessfullyUpdatedEmployee, result.MessageList[0]);
         }
 
         [Test]
@@ -192,7 +194,8 @@ namespace ManagementApp.Manager.Tests
 
             //Assert
             Assert.IsFalse(result.Success);
-            Assert.AreEqual(Messages.ErrorWhileUpdatingEmployee, result.Message);
+            Assert.AreEqual(result.MessageList.Count,1);
+            Assert.AreEqual(Messages.ErrorWhileUpdatingEmployee, result.MessageList[0]);
         }
 
         [Test]
