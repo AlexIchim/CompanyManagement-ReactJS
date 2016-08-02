@@ -9,7 +9,6 @@ namespace Manager.InfoModels
         public string Name { get; set; }
         public string Status { get; set; }
         public int? Duration { get; set; }
-
         public int? DepartmentId { get; set; }
 
         // custom:

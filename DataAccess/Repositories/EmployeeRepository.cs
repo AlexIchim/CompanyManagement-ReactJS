@@ -66,6 +66,13 @@ namespace DataAccess.Repositories
             _context.Employees.Remove(employee);
             Save();
         }
+
+        public void Add(Employee employee)
+        {
+            _context.Employees.Add(employee);
+            Save();
+        }
+
         public void Save()
         {
             _context.SaveChanges();
