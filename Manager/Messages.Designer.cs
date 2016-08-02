@@ -70,6 +70,15 @@ namespace Manager {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to &apos;Project could not be updated&apos;.
+        /// </summary>
+        public static string ErrorWhileUpdatingProject {
+            get {
+                return ResourceManager.GetString("ErrorWhileUpdatingProject", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to &apos;Department was added with success&apos;.
         /// </summary>
         public static string SuccessfullyAddedDepartment {
@@ -79,7 +88,16 @@ namespace Manager {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to &apos;Porject was successfully added&apos;.
+        ///   Looks up a localized string similar to &apos;Employee to project was successfully added&apos;.
+        /// </summary>
+        public static string SuccessfullyAddedEmployeeToProject {
+            get {
+                return ResourceManager.GetString("SuccessfullyAddedEmployeeToProject", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to &apos;Project was successfully added&apos;.
         /// </summary>
         public static string SuccessfullyAddedProject {
             get {
@@ -102,6 +120,15 @@ namespace Manager {
         public static string SuccessfullyUpdatedDepartment {
             get {
                 return ResourceManager.GetString("SuccessfullyUpdatedDepartment", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to &apos;Project was updated with success&apos;.
+        /// </summary>
+        public static string SuccessfullyUpdatedProject {
+            get {
+                return ResourceManager.GetString("SuccessfullyUpdatedProject", resourceCulture);
             }
         }
     }

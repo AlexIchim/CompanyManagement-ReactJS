@@ -53,7 +53,7 @@ namespace Manager.Services
             
             var newEp = _mapper.Map<EmployeeProject>(inputInfo);
             _projectRepository.AddEmployeeToProject(newEp);
-            return new OperationResult(true, Messages.SuccessfullyAddedDepartment);
+            return new OperationResult(true, Messages.SuccessfullyAddedEmployeeToProject);
         }
 
         public OperationResult Delete(int projectId)
@@ -63,5 +63,25 @@ namespace Manager.Services
             _projectRepository.Delete(project, employeeProject);
             return new OperationResult(true, Messages.SuccessfullyDeletedProject);
         }
+
+        
+
+        public OperationResult UpdateProject(UpdateProjectInputInfo inputInfo)
+        {
+            var updatedProject = _projectRepository.GetProjectById(inputInfo.Id);
+
+            if (updatedProject == null)
+            {
+                return new OperationResult(false, Messages.ErrorWhileUpdatingProject);
+            }
+            //update
+            updatedProject.Name = inputInfo.Name;
+            updatedProject.Status = inputInfo.Status;
+            //save
+            _projectRepository.Save();
+            //result
+            return new OperationResult(true, Messages.SuccessfullyUpdatedProject);
+        }
+
     }
 }
