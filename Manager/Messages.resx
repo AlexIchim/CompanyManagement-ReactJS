@@ -147,4 +147,10 @@
   <data name="SuccessfullyUpdatedOffice" xml:space="preserve">
     <value>'Office was successfully updated'</value>
   </data>
+  <data name="ErrorWhileUpdatingEmployee" xml:space="preserve">
+    <value>'Error: Employee does not exist'</value>
+  </data>
+  <data name="SuccessfullyUpdatedEmployee" xml:space="preserve">
+    <value>'Successfully updated employee'</value>
+  </data>
 </root>

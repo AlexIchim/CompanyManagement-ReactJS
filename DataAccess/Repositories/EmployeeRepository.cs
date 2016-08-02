@@ -45,5 +45,13 @@ namespace DataAccess.Repositories
             Save();
 
         }
+
+        public Employee GetById(int employeeId)
+        {
+            return _context.Employees.SingleOrDefault(o => o.Id == employeeId);
+        }
+
+       
+
     }
 }

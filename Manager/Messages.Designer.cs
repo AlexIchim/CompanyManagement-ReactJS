@@ -70,6 +70,15 @@ namespace Manager {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to &apos;Error: Employee does not exist&apos;.
+        /// </summary>
+        public static string ErrorWhileUpdatingEmployee {
+            get {
+                return ResourceManager.GetString("ErrorWhileUpdatingEmployee", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to &apos;Error: Office does not exist&apos;.
         /// </summary>
         public static string ErrorWhileUpdatingOffice {
@@ -138,6 +147,15 @@ namespace Manager {
         public static string SuccessfullyUpdatedDepartment {
             get {
                 return ResourceManager.GetString("SuccessfullyUpdatedDepartment", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to &apos;Successfully updated employee&apos;.
+        /// </summary>
+        public static string SuccessfullyUpdatedEmployee {
+            get {
+                return ResourceManager.GetString("SuccessfullyUpdatedEmployee", resourceCulture);
             }
         }
         
