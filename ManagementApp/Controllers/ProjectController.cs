@@ -15,11 +15,11 @@ namespace ManagementApp.Controllers
             _projectService = projectService;
         }
        
-        [Route("getEmployeeByProjectId")]
+        [Route("getEmployeesByProjectId")]
         [HttpGet]
-        public IHttpActionResult GetEmployeeByProjectId(int projectId)
+        public IHttpActionResult GetEmployeesByProjectId(int projectId)
         {
-            var result = _projectService.GetByProjectId(projectId);
+            var result = _projectService.GetEmployeesByProjectId(projectId);
             return Json(result);
         }
 

@@ -19,7 +19,7 @@ namespace DataAccess.Repositories
         }
 
 
-        public IEnumerable<Employee> GetEmployeeByProjectId(int projectid)
+        public IEnumerable<Employee> GetEmployeesByProjectId(int projectid)
         {
             List<Employee> array = new List<Employee>();
             var proj = _context.EmployeeProjects.Where(ep => ep.ProjectId == projectid);

@@ -9,8 +9,8 @@ namespace Contracts
 {
     public interface IProjectRepository
     {
-        IEnumerable<Employee> GetEmployeeByProjectId(int ProjectId);
-        IQueryable<EmployeeProject> GetEmployeesAllocation(int ProjectId);
+        IEnumerable<Employee> GetEmployeesByProjectId(int projectId);
+        IQueryable<EmployeeProject> GetEmployeesAllocation(int projectId);
 
         void Save();
         Project GetProjectById(int projectId);

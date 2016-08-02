@@ -33,11 +33,23 @@ namespace Manager.Services
                 }).ToList();
         }
 
-        public IEnumerable<EmployeeInfo> GetByProjectId(int projectId)
+        public IEnumerable<EmployeeInfo> GetEmployeesByProjectId(int projectId)
         {
-            var employees = _projectRepository.GetEmployeeByProjectId(projectId);
-            var employeeInfos = _mapper.Map<IEnumerable<EmployeeInfo>>(employees);
-            return employeeInfos;
+            var project = _projectRepository.GetProjectById(projectId);
+            if (project != null)
+            {
+                var employees = _projectRepository.GetEmployeesByProjectId(projectId);
+
+                if (employees != null)
+                {
+                    var employeeInfos = _mapper.Map<IEnumerable<EmployeeInfo>>(employees);
+                    return employeeInfos;
+                }
+               
+            }
+
+            return null;
+
         }
 
         public OperationResult Add(AddProjectInputInfo inputInfo)
