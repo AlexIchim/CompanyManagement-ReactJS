@@ -15,9 +15,11 @@ namespace Manager.Services
         private readonly IPositionRepository _positionRepository;
         private readonly IMapper _mapper;
 
-        public EmployeeService(IMapper mapper, IEmployeeRepository employeeRepository)
+        public EmployeeService(IMapper mapper, IEmployeeRepository employeeRepository, IDepartmentRepository departmentRepository, IPositionRepository positionRepository)
         {
             _employeeRepository = employeeRepository;
+            _departmentRepository = departmentRepository;
+            _positionRepository = positionRepository;
             _mapper = mapper;
         }
 
@@ -95,7 +97,7 @@ namespace Manager.Services
             {
                 return new Manager.OperationResult(false, Messages.ErrorWhileAddingEmployee_NoSuchDepartment);
             }
-            else
+            else if(position == null)
             {
                 return new Manager.OperationResult(false, Messages.ErrorWhileAddingEmployee_NoSuchPosition);
             }
