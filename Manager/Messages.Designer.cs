@@ -61,6 +61,15 @@ namespace Manager {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to &apos;Error: Could not add department&apos;.
+        /// </summary>
+        public static string ErrorAddingDepartment {
+            get {
+                return ResourceManager.GetString("ErrorAddingDepartment", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to &apos;Error adding employee to project&apos;.
         /// </summary>
         public static string ErrorAddingEmployeeToProject {

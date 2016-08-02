@@ -69,7 +69,7 @@ namespace Manager.Services
 
         public OperationResult Update(UpdateDepartmentInputInfo inputInfo)
         {
-            var department = _departmentRepository.GetById(inputInfo.Id);
+            var department = _departmentRepository.GetDepartmentById(inputInfo.Id);
 
             if (department == null)
             {
@@ -88,6 +88,56 @@ namespace Manager.Services
             newEp.TotalAllocation = 0;
             _departmentRepository.AddEmployeeToDepartment(newEp);
             return new OperationResult(true, Messages.SuccessfullyAddedEmployee);
+        }
+
+        public OperationResult AddDepartment(AddDepartmentInputInfo inputInfo)
+        {
+            var newDepartment = _mapper.Map<Department>(inputInfo);
+
+            var depManagerId = inputInfo.DepartmentManagerId;
+
+            if (_departmentRepository.IsDepartmentManager(depManagerId))
+            {
+                _departmentRepository.Add(newDepartment, inputInfo.DepartmentManagerId);
+                return new OperationResult(true, Messages.SuccessfullyAddedDepartment);
+            }
+
+            return new OperationResult(false, Messages.ErrorAddingDepartment);
+
+        }
+
+        public IEnumerable<EmployeeInfo> GetAllDepartmentManagers()
+        {
+            var departmentManagers= _departmentRepository.GetAllDepartmentManagers();
+            var departmentManagersInfo= _mapper.Map<IEnumerable<EmployeeInfo>>(departmentManagers);
+
+            return departmentManagersInfo;
+        }
+
+        public OperationResult UpdateDepartment(UpdateDepartmentInputInfo inputInfo)
+        {
+            var department = _departmentRepository.GetDepartmentById(inputInfo.Id);
+
+            if (department == null)
+            {
+                return new OperationResult(false, Messages.ErrorWhileUpdatingDepartment);
+            }
+
+            var dm = _departmentRepository.GetEmployeeById(inputInfo.DepartmentManagerId);
+
+            if (dm != null && _departmentRepository.IsDepartmentManager(dm.Id))
+            {
+                department.Name = inputInfo.Name;
+                department.DepartmentManager = dm;
+                _departmentRepository.Save();
+                return new OperationResult(true, Messages.SuccessfullyUpdatedDepartment);
+            }
+
+            return new OperationResult(false, Messages.ErrorWhileUpdatingDepartment);
+                     
+            
+
+            
         }
     }
 }
