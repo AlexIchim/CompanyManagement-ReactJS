@@ -7,7 +7,7 @@ namespace Contracts
     public interface IDepartmentRepository
     {
         IEnumerable<Department> GetAll();
-        Department GetDepartmentById(int id);
+        Department GetDepartmentById(int? id);
 
         void Save();
 

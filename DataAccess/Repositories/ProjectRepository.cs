@@ -41,7 +41,7 @@ namespace DataAccess.Repositories
 
         public Project GetProjectById(int projectId)
         {
-            return _context.Projects.Where(p => p.Id == projectId).SingleOrDefault();
+            return _context.Projects.SingleOrDefault(p => p.Id == projectId);
         }
 
        

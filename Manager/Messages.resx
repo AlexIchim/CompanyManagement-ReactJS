@@ -180,4 +180,7 @@
   <data name="ErrorDeletingEmployee" xml:space="preserve">
     <value>'Error: Employee could not be deleted.'</value>
   </data>
+  <data name="ErrorWhileAddingProject" xml:space="preserve">
+    <value>'Error adding project.'</value>
+  </data>
 </root>

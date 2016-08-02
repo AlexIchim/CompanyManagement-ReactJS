@@ -43,8 +43,17 @@ namespace Manager.Services
         public OperationResult Add(AddProjectInputInfo inputInfo)
         {
             var newProject = _mapper.Map<Project>(inputInfo);
-            _projectRepository.Add(newProject);
-            return new OperationResult(true, Messages.SuccessfullyAddedProject);
+
+            var department = _departmentRepository.GetDepartmentById(inputInfo.DepartmentId);
+
+            if (department != null)
+            {
+                _projectRepository.Add(newProject);
+                return new OperationResult(true, Messages.SuccessfullyAddedProject);
+            }
+
+            return new OperationResult(false, Messages.ErrorWhileAddingProject);
+
         }
        
 
@@ -61,21 +70,22 @@ namespace Manager.Services
         {
             var updatedProject = _projectRepository.GetProjectById(inputInfo.Id);
 
-            if (updatedProject == null)
+            if (updatedProject != null)
             {
-                return new OperationResult(false, Messages.ErrorWhileUpdatingProject);
+                //update
+                updatedProject.Name = inputInfo.Name;
+                updatedProject.Status = inputInfo.Status;
+                if (inputInfo.Duration != null)
+                {
+                    updatedProject.Duration = inputInfo.Duration;
+                }
+                //save
+                _projectRepository.Save();
+                //result
+                return new OperationResult(true, Messages.SuccessfullyUpdatedProject);
+               
             }
-            //update
-            updatedProject.Name = inputInfo.Name;
-            updatedProject.Status = inputInfo.Status;
-            if (inputInfo.Duration != null)
-            {
-                updatedProject.Duration = inputInfo.Duration;
-            }
-            //save
-            _projectRepository.Save();
-            //result
-            return new OperationResult(true, Messages.SuccessfullyUpdatedProject);
+            return new OperationResult(false, Messages.ErrorWhileUpdatingProject);
         }
 
         public IEnumerable<ProjectInfo> GetAllDepartmentProjects(int inputInfo)

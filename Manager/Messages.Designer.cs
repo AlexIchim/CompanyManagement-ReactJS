@@ -97,6 +97,15 @@ namespace Manager {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to &apos;Error adding project.&apos;.
+        /// </summary>
+        public static string ErrorWhileAddingProject {
+            get {
+                return ResourceManager.GetString("ErrorWhileAddingProject", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to &apos;Department could not be modified&apos;.
         /// </summary>
         public static string ErrorWhileUpdatingDepartment {

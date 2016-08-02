@@ -21,7 +21,7 @@ namespace DataAccess.Repositories
             return _context.Departments.ToArray();
         }
 
-        public Department GetDepartmentById(int id)
+        public Department GetDepartmentById(int? id)
         {
             return _context.Departments.SingleOrDefault(d => d.Id == id);
         }
