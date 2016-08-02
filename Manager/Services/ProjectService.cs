@@ -77,6 +77,10 @@ namespace Manager.Services
             //update
             updatedProject.Name = inputInfo.Name;
             updatedProject.Status = inputInfo.Status;
+            if (inputInfo.Duration != null)
+            {
+                updatedProject.Duration = inputInfo.Duration;
+            }
             //save
             _projectRepository.Save();
             //result

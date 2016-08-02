@@ -14,5 +14,7 @@ namespace Manager.InputInfoModels
 
         public string Status { get; set; }
 
+        public int? Duration { get; set; }
+
     }
 }
