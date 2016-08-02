@@ -13,14 +13,14 @@ namespace Manager.Validators
         public UpdateDepartmentValidator()
         {
             RuleFor(m => m.Id)
-                .NotNull()
+                .NotEmpty()
                 .GreaterThan(0);
 
             RuleFor(m => m.Name).NotEmpty();
             RuleFor(m => m.Name.Length).LessThanOrEqualTo(30);
 
             RuleFor(m => m.DepartmentManagerId)
-                .NotNull()
+                .NotEmpty()
                 .GreaterThan(0);
         }
     }

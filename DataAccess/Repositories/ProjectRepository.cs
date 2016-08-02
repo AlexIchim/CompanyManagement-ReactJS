@@ -22,20 +22,24 @@ namespace DataAccess.Repositories
             Save();
         }
 
+        public void AddAssignment(Assignment assignment)
+        {
+            _context.Assignments.Add(assignment);
+            Save();
+        }
         public void Delete(Project project) {
             _context.Projects.Remove(project);
             _context.SaveChanges();
         }
-
-        public Boolean editAllocation(int projectId, int employeeId, int newAllocation) {
-            Assignment assignment =
-                _context.Assignments.SingleOrDefault(a => a.ProjectId == projectId && a.EmployeeId == employeeId);
-            if (assignment == null) {
-                return false;
-            }
-            assignment.Allocation = newAllocation;
+        public void DeleteEmployeeFromProject(Assignment assignment)
+        {
+            _context.Assignments.Remove(assignment);
             _context.SaveChanges();
-            return true;
+        }
+
+        public Assignment GetAssignmentById(int employeeId, int projectId)
+        {
+            return _context.Assignments.SingleOrDefault(a => a.ProjectId == projectId && a.EmployeeId == employeeId);
         }
 
         public void Save()
@@ -52,10 +56,9 @@ namespace DataAccess.Repositories
             return _context.Projects.SingleOrDefault(p => p.Id == id);
         }
 
-        public IEnumerable<Assignment> GetAllAssignmentsFromProject(int projectId)
+        public IEnumerable<Assignment> GetMembersFromProject(int projectId)
 
         {
-            ICollection<Employee> allEmployees = new List<Employee>();
             var assignments = _context.Assignments.Where(ep => ep.ProjectId == projectId);
             return assignments.ToArray();
         }
@@ -73,8 +76,6 @@ namespace DataAccess.Repositories
             return nr;
 
         }
-
-    
     }
 
 }

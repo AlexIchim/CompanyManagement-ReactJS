@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 namespace Manager.InfoModels
 {
-    public class AssignmentInfo
+    public class ProjectMemberInfo
     {
         public string Name { get; set; }
         public Position Position { get; set; }

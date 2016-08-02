@@ -16,7 +16,7 @@ namespace Manager.Validators
             RuleFor(m => m.Name.Length).LessThanOrEqualTo(30);
 
             RuleFor(m => m.DepartmentId)
-                .NotNull()
+                .NotEmpty()
                 .GreaterThan(0);
 
             RuleFor(m => m.Duration).NotEmpty();

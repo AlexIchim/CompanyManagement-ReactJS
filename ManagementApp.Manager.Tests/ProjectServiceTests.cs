@@ -60,10 +60,83 @@ namespace ManagementApp.Manager.Tests
 
             //Assert
             Assert.IsTrue(result.Success);
-            Assert.AreEqual(Messages.SuccessfullyAddedProject, result.Message);
+            Assert.AreEqual(result.MessageList.Count, 1);
+            Assert.AreEqual(Messages.SuccessfullyAddedProject, result.MessageList[0]);
         }
 
+        [Test]
+        public void Add_CallsAddFromRepository()
+        {
+            //Arrange
+            var projectInputInfo = new AddProjectInputInfo
+            {
+                Name = "Project1",
+                DepartmentId = 1,
+                Duration = "3 months",
+                Status = "In progress"
+            };
+            var project = new Project
+            {
+                Name = "Project1",
+                Department = new Department(),
+                Duration = "3 months",
+                Status = Status.InProgress
+            };
 
+            _mapperMock.Setup(m => m.Map<Project>(projectInputInfo)).Returns(project);
+            _projectRepositoryMock.Setup(m => m.Add(project));
+
+            //Act
+            var result = _projectService.Add(projectInputInfo);
+
+            //Assert
+            _projectRepositoryMock.Verify(x => x.Add(project), Times.Once);
+
+        }
+        [Test]
+        public void AddAssignment_ReturnsSuccessfulMessage()
+        {
+            //Arrange
+            var assignmnet = CreateAssignment(1, 1, 10);
+            var assignmentInputInfo = new AddAssignmentInputInfo
+            {
+                EmployeeId = 1,
+                Allocation = 10,
+                ProjectId = 1
+            };
+            _mapperMock.Setup(m => m.Map<Assignment>(assignmentInputInfo)).Returns(assignmnet);
+            _projectRepositoryMock.Setup(m => m.AddAssignment(assignmnet));
+
+            //Act
+            var result = _projectService.AddAssignment(assignmentInputInfo);
+
+            //Assert
+            Assert.IsTrue(result.Success);
+            Assert.AreEqual(Messages.SuccessfullyAddedNewAssignment, result.Message);
+        }
+
+        [Test]
+        public void AddAssignment_CallsAddAssignmentFromRepository()
+        {
+            //Arrange
+            var assignment = CreateAssignment(1, 1,  10);
+            var assignmentInputInfo = new AddAssignmentInputInfo
+            {
+                EmployeeId = 1,
+                Allocation = 10,
+                ProjectId = 1
+            };
+            _mapperMock.Setup(m => m.Map<Assignment>(assignmentInputInfo)).Returns(assignment);
+
+            _projectRepositoryMock.Setup(m => m.AddAssignment(assignment));
+
+            //Act
+             _projectService.AddAssignment(assignmentInputInfo);
+            
+            //Assert
+            _projectRepositoryMock.Verify(x => x.AddAssignment(assignment), Times.Once);
+        }
+        
         [Test]
         public void GetAll_CallsGetAllFromRepository()
         {
@@ -98,45 +171,63 @@ namespace ManagementApp.Manager.Tests
             Assert.AreEqual(2, result.Count());
         }
 
-      
-        private Project CreateProject(string name, Department department, string duration, Status status)
+        [Test]
+        public void GetProjectById_ReturnsProject()
         {
-            var project = new Project
-            {
-                Name = name,
-                Department = department,
-                Duration = duration,
-                Status = status
-            };
-            return project;
-        }
+            //Arrange
+            var project = CreateProject("Project1", new Department(), "2 months", Status.Finished);
+            var projectInfo = CreateProjectInfo("Project1", 1, "2 months", Status.Finished);
 
-        private ProjectInfo CreateProjectInfo(string Name, int NrMembers, string Duration, Status status)
-        {
-            return new ProjectInfo
-            {
-                Name = Name,
-                NrMembers = NrMembers,
-                Duration = Duration,
-                Status = status
-            };
-        }
+            _mapperMock.Setup(m => m.Map<ProjectInfo>(project)).Returns(projectInfo);
+            _projectRepositoryMock.Setup(m => m.GetById(1)).Returns(project);
 
-        private AddProjectInputInfo CreateProjectAddInputInfo(string name, int departmentId, string duration,
-            string status)
-        {
-            var addProjectInputInfo = new AddProjectInputInfo
-            {
-                Name = name,
-                DepartmentId = departmentId,
-                Duration = duration,
-                Status = status
-            };
-            return addProjectInputInfo;
+            //Act
+            var result = _projectService.GetById(1);
+
+            //Assert
+            Assert.AreEqual(projectInfo, result);
         }
 
         [Test]
-        public void Delete_CalssDeleteFromRepository_WhenProjectExists()
+        public void GetProjectById_CallsGetByIdFromRepository()
+        {
+            //Act
+            _projectService.GetById(1);
+            
+            //Assert
+            _projectRepositoryMock.Verify(x => x.GetById(1), Times.Once);
+        }
+
+        [Test]
+        public void GetAllAssignmentsFromProject_ReturnsAssignments()
+        {
+            
+            //Arrange
+            Project project = CreateProject("Project1", new Department(), "2 months", Status.Finished,1);
+            Employee employee = CreateEmployee("Employee1", "Address1",1);
+            var assignment = new List<Assignment>
+            {
+                CreateAssignment(1, 1,  20)
+            };
+            var assignmentInfo = new List<ProjectMemberInfo>
+            {
+                CreateAssignmentInfo("Employee1", Position.Developer, 20)
+            };
+            project.Assignments.Add(assignment[0]);
+            employee.Assignments.Add(assignment[0]);
+
+            _mapperMock.Setup(m => m.Map < IEnumerable<ProjectMemberInfo>>(assignment)).Returns(assignmentInfo);
+            _projectRepositoryMock.Setup(m => m.GetMembersFromProject(1)).Returns(assignment);
+
+            //Act
+            var result = _projectService.GetMembersFromProject(1);
+
+            //Assert
+            CollectionAssert.AreEqual(assignmentInfo, result);
+        }
+
+        [Test]
+        public void Delete_CallsDeleteFromRepository_WhenProjectExists()
         {
             //Arrange
             var projectId = 1;
@@ -166,6 +257,49 @@ namespace ManagementApp.Manager.Tests
         }
 
         [Test]
+        public void DeleteEmployeeFromProject_ReturnsSuccessfulMesasge_WhenProjectExists()
+        {
+            //Arrange
+            var assignment = CreateAssignment(1, 1, 10);
+            _projectRepositoryMock.Setup(m => m.GetAssignmentById(1, 1)).Returns(assignment);
+            _projectRepositoryMock.Setup(m => m.DeleteEmployeeFromProject(assignment));
+
+            //Act
+            var result = _projectService.DeleteEmployeeFromProject(1, 1);
+
+            //Assert
+            Assert.IsTrue(result.Success);
+            Assert.AreEqual(Messages.SuccessfullyDeletedEmployeeFromProject, result.Message);
+        }
+
+        [Test]
+        public void DeleteEmployeeFromProject_CallsGetAssignmentByIdFromRepository()
+        {
+            //Arrange
+            var assignment = CreateAssignment(1, 1, 10);
+            _projectRepositoryMock.Setup(m => m.GetAssignmentById(1, 1)).Returns(assignment);
+
+            //Act
+            _projectService.DeleteEmployeeFromProject(1, 1);
+
+            //Assert
+            _projectRepositoryMock.Verify(x => x.GetAssignmentById(1,1), Times.Once);
+        }
+
+        [Test]
+        public void DeleteEmployeeFromProject_ReturnsErrorMessage_WhenAssignmentDoesNotExist()
+        {
+            //Arrange
+            _projectRepositoryMock.Setup(m => m.GetAssignmentById(1, 1)).Returns((Assignment) null);
+
+            //Act
+            var result = _projectService.DeleteEmployeeFromProject(1, 1);
+
+            //Assert
+            Assert.IsFalse(result.Success);
+            Assert.AreEqual(Messages.ErrorWhileDeletingEmployeeFromProject, result.Message);
+        }
+        [Test]
         public void Update_ReturnsSuccessfulMessage_WhenProjectExists()
         {
             //Arrange
@@ -191,9 +325,10 @@ namespace ManagementApp.Manager.Tests
 
             //Assert
             Assert.IsTrue(result.Success);
-            Assert.AreEqual(Messages.SuccessfullyUpdatedProject, result.Message);
+            Assert.AreEqual(result.MessageList.Count,1);
+            Assert.AreEqual(Messages.SuccessfullyUpdatedProject, result.MessageList[0]);
         }
-        /* [Test]
+         [Test]
          public void Update_CallsGetByIdFromRepository_WhenOfficeExists()
          {
              //Arrange
@@ -218,8 +353,8 @@ namespace ManagementApp.Manager.Tests
              _projectService.Update(officeInputInfo);
 
              //Assert
-             _departmentRepositoryMock.Verify(x => x.GetById(officeInputInfo.Id), Times.Never);
-         }*/
+             _departmentRepositoryMock.Verify(x => x.GetDepartmentById(officeInputInfo.Id), Times.Never);
+         }
 
         [Test]
         public void Update_CallsSaveFromRepository_WhenProjectExists()
@@ -266,7 +401,8 @@ namespace ManagementApp.Manager.Tests
 
             //Assert
             Assert.IsFalse(result.Success);
-            Assert.AreEqual(result.Message, Messages.ErrorWhileUpdatingProject);
+            Assert.AreEqual(result.MessageList.Count, 1);
+            Assert.AreEqual(result.MessageList[0], Messages.ErrorWhileUpdatingProject);
         }
 
         [Test]
@@ -288,5 +424,76 @@ namespace ManagementApp.Manager.Tests
             //Assert
             _projectRepositoryMock.Verify(x => x.Save(), Times.Never);
         }
+        private Employee CreateEmployee(string name, string address, int? id = null)
+        {
+            var employee = new Employee
+            {
+                Name = name,
+                Address = address
+            };
+            if (id != null)
+            {
+                employee.Id = (int)id;
+            }
+            return employee;
+        }
+        private Assignment CreateAssignment(int employeeId, int projectId,  int allocation)
+        {
+            return new Assignment
+            {
+                EmployeeId = employeeId,
+                ProjectId = projectId,
+                Allocation = allocation
+            };
+        }
+        private Project CreateProject(string name, Department department, string duration, Status status, int? id = null)
+        {
+            var project = new Project
+            {
+                Name = name,
+                Department = department,
+                Duration = duration,
+                Status = status
+            };
+            if (id != null)
+            {
+                project.Id = (int)id;
+            }
+            return project;
+        }
+
+        private ProjectInfo CreateProjectInfo(string name, int nrMembers, string duration, Status status)
+        {
+            return new ProjectInfo
+            {
+                Name = name,
+                NrMembers = nrMembers,
+                Duration = duration,
+                Status = status
+            };
+        }
+
+        private ProjectMemberInfo CreateAssignmentInfo(string name, Position position, int allocation)
+        {
+            return new ProjectMemberInfo
+            {
+                Name = name,
+                Position = position,
+                Allocation = allocation
+            };
+        }
+        private AddProjectInputInfo CreateProjectAddInputInfo(string name, int departmentId, string duration,
+            string status)
+        {
+            var addProjectInputInfo = new AddProjectInputInfo
+            {
+                Name = name,
+                DepartmentId = departmentId,
+                Duration = duration,
+                Status = status
+            };
+            return addProjectInputInfo;
+        }
+
     }
 }

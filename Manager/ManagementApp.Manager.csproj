@@ -58,10 +58,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="InfoModels\AssignmentInfo.cs" />
+    <Compile Include="InfoModels\ProjectMemberInfo.cs" />
     <Compile Include="InfoModels\DepartmentInfo.cs" />
     <Compile Include="InfoModels\EmployeeInfo.cs" />
     <Compile Include="InfoModels\ProjectInfo.cs" />
+    <Compile Include="InputInfoModels\AddAssignmentInputInfo.cs" />
     <Compile Include="InputInfoModels\AddEmployeeInputInfo.cs" />
     <Compile Include="InputInfoModels\EditAllocationInputInfo.cs" />
     <Compile Include="InputInfoModels\UpdateEmployeeInputInfo.cs" />
@@ -84,6 +85,7 @@
     <Compile Include="Services\DepartmentService.cs" />
     <Compile Include="Services\ProjectService.cs" />
     <Compile Include="Services\OfficeService.cs" />
+    <Compile Include="Validators\AddAssignmentValidator.cs" />
     <Compile Include="Validators\AddDepartmentValidator.cs" />
     <Compile Include="Validators\AddEmployeeValidator.cs" />
     <Compile Include="Validators\AddOfficeValidator.cs" />

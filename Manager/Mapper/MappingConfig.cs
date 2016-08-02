@@ -40,6 +40,15 @@ namespace Manager.Mapper
                 project => project.MapFrom(src => src.Assignments.Count)
             );
             CreateMap<AddProjectInputInfo, Project>();
+            CreateMap<Assignment, ProjectMemberInfo>()
+                .ForMember(
+                    assignmentInfo => assignmentInfo.Name,
+                    assignment => assignment.MapFrom(src => src.Employee.Name))
+                .ForMember(
+                    assignmentInfo => assignmentInfo.Position,
+                    assignment => assignment.MapFrom(src => src.Employee.Position));
+            CreateMap<AddAssignmentInputInfo, Assignment>();
+
         }
     }
 }
