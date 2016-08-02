@@ -4,7 +4,7 @@ using DataAccess.Mappings;
 
 namespace DataAccess.Context
 {
-    public class DbContext: System.Data.Entity.DbContext
+    public class DbContext : System.Data.Entity.DbContext
     {
         public DbContext() : base("DbContext")
         {
@@ -15,6 +15,8 @@ namespace DataAccess.Context
         public DbSet<Project> Projects { get; set; }
         public DbSet<Employee> Employees { get; set; }
         public DbSet<Assignment> Assignments { get; set; }
+        public DbSet<ProjectAllocation> ProjectAllocations { get; set; }
+        public DbSet<Position> Positions { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
@@ -24,5 +26,7 @@ namespace DataAccess.Context
             modelBuilder.Configurations.Add(new OfficeMap());
             modelBuilder.Configurations.Add(new ProjectMap());
         }
+
+
     }
 }
