@@ -105,5 +105,13 @@ namespace Manager.Services
             return new OperationResult(false, Messages.ErrorAddingDepartment);
 
         }
+
+        public IEnumerable<EmployeeInfo> GetAllDepartmentManagers()
+        {
+            var departmentManagers= _departmentRepository.GetAllDepartmentManagers();
+            var departmentManagersInfo= _mapper.Map<IEnumerable<EmployeeInfo>>(departmentManagers);
+
+            return departmentManagersInfo;
+        }
     }
 }

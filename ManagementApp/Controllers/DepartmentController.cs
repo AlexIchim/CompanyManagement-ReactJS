@@ -74,6 +74,16 @@ namespace ManagementApp.Controllers
             return Json(result);
         }
 
+        [Route("getAllDepartmentManagers")]
+        [HttpGet]
+        public IHttpActionResult GetAllDepartmentManagers()
+        {
+            var result = _departmentService.GetAllDepartmentManagers();
+            return Json(result);
+        }
+
+
+
 
 
 

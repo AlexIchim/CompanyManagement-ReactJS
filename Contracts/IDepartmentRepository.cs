@@ -24,5 +24,7 @@ namespace Contracts
         void Add(Department department, int? departmentManagerId);
 
         bool IsDepartmentManager(int? employeeId);
+
+        IEnumerable<Employee> GetAllDepartmentManagers();
     }
 }

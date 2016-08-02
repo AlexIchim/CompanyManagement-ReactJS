@@ -86,6 +86,11 @@ namespace DataAccess.Repositories
 
             return false;
         }
+
+        public IEnumerable<Employee> GetAllDepartmentManagers()
+        {
+            return _context.Employees.Where(e => e.PositionType == PositionType.DepartmentManager);
+        }
     
   }
 }
