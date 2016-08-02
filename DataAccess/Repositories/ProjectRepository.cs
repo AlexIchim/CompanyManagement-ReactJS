@@ -38,6 +38,12 @@ namespace DataAccess.Repositories
             _context.Projects.Remove(project);
         }
 
+        public void Add(Project project)
+        {
+            _context.Projects.Add(project);
+            Save();
+        }
+
         public void Save()
         {
             _context.SaveChanges();

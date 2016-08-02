@@ -207,4 +207,40 @@
   <data name="SuccessfullyUpdatedOffice" xml:space="preserve">
     <value>'Office was updated with success'</value>
   </data>
+  <data name="ErrorWhileAddingProject" xml:space="preserve">
+    <value>'Error while adding project.'</value>
+  </data>
+  <data name="ErrorWhileAddingProject_DepartmentIdInvalid" xml:space="preserve">
+    <value>'Error while adding project, department invalid id.'</value>
+  </data>
+  <data name="ErrorWhileUpdatingProject" xml:space="preserve">
+    <value>'Error while updatign project.'</value>
+  </data>
+  <data name="ErrorWhileUpdatingProject_DepartmentIdInvalid" xml:space="preserve">
+    <value>'Error while updating project, department invalid id.'</value>
+  </data>
+  <data name="ErrorWhileUpdatingProject_InvalidId" xml:space="preserve">
+    <value>'Error while updating project, invalid project id.'</value>
+  </data>
+  <data name="ProjectInvalidId" xml:space="preserve">
+    <value>'Invalid project id.'</value>
+  </data>
+  <data name="ProjectNameEmpty" xml:space="preserve">
+    <value>'Project name is empty.'</value>
+  </data>
+  <data name="ProjectNameTooLong" xml:space="preserve">
+    <value>'Project name is too long.'</value>
+  </data>
+  <data name="ProjectStatusEmpty" xml:space="preserve">
+    <value>'Project status is empty.'</value>
+  </data>
+  <data name="ProjectStatusTooLong" xml:space="preserve">
+    <value>'Project status is too long.'</value>
+  </data>
+  <data name="SuccessfullyAddedProject" xml:space="preserve">
+    <value>'Successfully added project.'</value>
+  </data>
+  <data name="SuccessfullyUpdatedProject" xml:space="preserve">
+    <value>'Succsessfully updated project.'</value>
+  </data>
 </root>

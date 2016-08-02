@@ -11,5 +11,6 @@ namespace Contracts
         IEnumerable<Tuple<Employee, int>> GetEmployeesByProjectId(int id);
         void Delete(Project project);
         void Save();
+        void Add(Project project);
     }
 }

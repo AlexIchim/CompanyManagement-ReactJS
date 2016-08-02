@@ -60,16 +60,26 @@ namespace Manager.Services
 
             var result = Validators.OfficeValidator.Validate(inputInfo);
 
-            if (result.Success == true)
+            if (office != null)
             {
+                if (result.Success == true)
+                {
 
-                office.Name = inputInfo.Name;
-                office.Phone = inputInfo.Phone;
-                office.Address = inputInfo.Address;
-                _officeRepository.Save();
-                return new Manager.OperationResult(true, Messages.SuccessfullyUpdatedOffice);
+                    office.Name = inputInfo.Name;
+                    office.Phone = inputInfo.Phone;
+                    office.Address = inputInfo.Address;
+                    _officeRepository.Save();
+                    return new Manager.OperationResult(true, Messages.SuccessfullyUpdatedOffice);
+                }
+                else
+                {
+                    return result;
+                }
             }
-            return result;
+            else
+            {
+                return new OperationResult(false, Messages.ErrorWhileUpdatingOffice_InvalidId);
+            }
         }
     }
 }
