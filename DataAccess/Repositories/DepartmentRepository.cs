@@ -3,6 +3,7 @@ using DataAccess.Context;
 using Domain.Models;
 using System.Collections.Generic;
 using System.Linq;
+using Domain.Enums;
 
 namespace DataAccess.Repositories
 {
@@ -20,7 +21,7 @@ namespace DataAccess.Repositories
             return _context.Departments.ToArray();
         }
 
-        public Department GetById(int id)
+        public Department GetDepartmentById(int? id)
         {
             return _context.Departments.SingleOrDefault(d => d.Id == id);
         }
@@ -29,14 +30,6 @@ namespace DataAccess.Repositories
         public void Save()
         {
             _context.SaveChanges();
-        }
-
-
-        public IEnumerable<Project> GetAllDepartmentProjects(int id)
-        {
-            //var array = _context.Departments.Include("Projects").SingleOrDefault(d => d.Id == id);
-            var array = _context.Departments.SingleOrDefault(d => d.Id == id);
-            return array.Projects;
         }
 
         public IEnumerable<Employee> GetAllUnAllocatedEmployeesOnProject()
@@ -49,20 +42,41 @@ namespace DataAccess.Repositories
         {
             var array = _context.Employees.Where(e => e.TotalAllocation < 100);
             return array.ToArray();
-        }
+        } 
 
-        public IEnumerable<Employee> GetAllDepartmentMembers(int id)
+       
+
+        public void Add(Department department, int? departmentManagerId)
         {
-            var array = _context.Departments.SingleOrDefault(d => d.Id == id);
-            return array.Employees;
+            Employee employee = _context.Employees.SingleOrDefault(e => e.Id == departmentManagerId);
+            department.DepartmentManager = employee;
+            _context.Departments.Add(department);
+            Save();
         }
 
-        public void AddEmployeeToDepartment(Employee employee)
+        public bool IsDepartmentManager(int? employeeId)
         {
-            //Employee employee = _context.Employees.SingleOrDefault(e => e.Id == ep.Id);
+            var employee = _context.Employees.SingleOrDefault(e => e.Id == employeeId);
 
-            _context.Employees.Add(employee);
-            _context.SaveChanges();
+
+            if (employee != null && employee.PositionType == PositionType.DepartmentManager)
+            {
+                return true;
+            }
+
+            return false;
         }
+
+        public IEnumerable<Employee> GetAllDepartmentManagers()
+        {
+            return _context.Employees.Where(e => e.PositionType == PositionType.DepartmentManager);
+        }
+
+        public Employee GetEmployeeById(int? id)
+        {
+
+            return _context.Employees.SingleOrDefault(e => e.Id == id);
+        }
+
     }
 }

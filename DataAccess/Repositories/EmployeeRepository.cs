@@ -95,5 +95,14 @@ namespace DataAccess.Repositories
             return _context.EmployeeProjects.Where(ep => ep.ProjectId == projectId).ToList();
         }
 
+        public IEnumerable<Employee> GetAllDepartmentEmployees(Department department)
+        {
+                return department.Employees;         
+        }
+        public void AddEmployee(Employee employee)
+        {
+            _context.Employees.Add(employee);
+            Save();
+        }
     }
 }

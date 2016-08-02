@@ -11,11 +11,13 @@ namespace Manager.Services
     public class ProjectService
     {
         private readonly IProjectRepository _projectRepository;
+        private readonly IDepartmentRepository _departmentRepository;
         private readonly IMapper _mapper;
 
-        public ProjectService(IMapper mapper, IProjectRepository projectRepository)
+        public ProjectService(IMapper mapper, IProjectRepository projectRepository, IDepartmentRepository departmentRepository)
         {
             _projectRepository = projectRepository;
+            _departmentRepository = departmentRepository;
             _mapper = mapper;
         }
 
@@ -31,18 +33,39 @@ namespace Manager.Services
                 }).ToList();
         }
 
-        public IEnumerable<EmployeeInfo> GetByProjectId(int projectId)
+        public IEnumerable<EmployeeInfo> GetEmployeesByProjectId(int projectId)
         {
-            var employees = _projectRepository.GetEmployeeByProjectId(projectId);
-            var employeeInfos = _mapper.Map<IEnumerable<EmployeeInfo>>(employees);
-            return employeeInfos;
+            var project = _projectRepository.GetProjectById(projectId);
+            if (project != null)
+            {
+                var employees = _projectRepository.GetEmployeesByProjectId(projectId);
+
+                if (employees != null)
+                {
+                    var employeeInfos = _mapper.Map<IEnumerable<EmployeeInfo>>(employees);
+                    return employeeInfos;
+                }
+               
+            }
+
+            return null;
+
         }
 
         public OperationResult Add(AddProjectInputInfo inputInfo)
         {
             var newProject = _mapper.Map<Project>(inputInfo);
-            _projectRepository.Add(newProject);
-            return new OperationResult(true, Messages.SuccessfullyAddedProject);
+
+            var department = _departmentRepository.GetDepartmentById(inputInfo.DepartmentId);
+
+            if (department != null)
+            {
+                _projectRepository.Add(newProject);
+                return new OperationResult(true, Messages.SuccessfullyAddedProject);
+            }
+
+            return new OperationResult(false, Messages.ErrorWhileAddingProject);
+
         }
        
 
@@ -59,21 +82,40 @@ namespace Manager.Services
         {
             var updatedProject = _projectRepository.GetProjectById(inputInfo.Id);
 
-            if (updatedProject == null)
+            if (updatedProject != null)
             {
-                return new OperationResult(false, Messages.ErrorWhileUpdatingProject);
+                //update
+                updatedProject.Name = inputInfo.Name;
+                updatedProject.Status = inputInfo.Status;
+                if (inputInfo.Duration != null)
+                {
+                    updatedProject.Duration = inputInfo.Duration;
+                }
+                //save
+                _projectRepository.Save();
+                //result
+                return new OperationResult(true, Messages.SuccessfullyUpdatedProject);
+               
             }
-            //update
-            updatedProject.Name = inputInfo.Name;
-            updatedProject.Status = inputInfo.Status;
-            if (inputInfo.Duration != null)
+            return new OperationResult(false, Messages.ErrorWhileUpdatingProject);
+        }
+
+        public IEnumerable<ProjectInfo> GetAllDepartmentProjects(int inputInfo)
+        {
+            var depId = _mapper.Map<int>(inputInfo);
+
+            var department = _departmentRepository.GetDepartmentById(depId);
+            if (department != null)
             {
-                updatedProject.Duration = inputInfo.Duration;
+                var projects = _projectRepository.GetAllDepartmentProjects(department);
+                if (projects != null)
+                {
+                    var projectInfos = _mapper.Map<IEnumerable<ProjectInfo>>(projects);
+                    return projectInfos;
+                }
+                
             }
-            //save
-            _projectRepository.Save();
-            //result
-            return new OperationResult(true, Messages.SuccessfullyUpdatedProject);
+            return null;
         }
 
     }

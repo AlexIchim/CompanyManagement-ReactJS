@@ -14,11 +14,13 @@ namespace Manager.Services
     public class EmployeeService
     {
         private readonly IEmployeeRepository _employeeRepository;
+        private readonly IDepartmentRepository _departmentRepository;
         private readonly IMapper _mapper;
 
-        public EmployeeService(IMapper mapper, IEmployeeRepository employeeRepository)
+        public EmployeeService(IMapper mapper, IEmployeeRepository employeeRepository, IDepartmentRepository departmentRepository)
         {
             _employeeRepository = employeeRepository;
+            _departmentRepository = departmentRepository;
             _mapper = mapper;
         }
 
@@ -35,32 +37,44 @@ namespace Manager.Services
 
         public OperationResult ReleaseEmployee(int employeeId)
         {
-            _employeeRepository.ReleaseEmployee(employeeId);
-            _employeeRepository.UpdateTotalAllocation(employeeId,0);
-            return new OperationResult(true, Messages.SuccessfullyDeletedEmployee);
+            var employee = _employeeRepository.GetById(employeeId);
+
+            if (employee != null)
+            {
+                _employeeRepository.ReleaseEmployee(employeeId);
+                _employeeRepository.UpdateTotalAllocation(employeeId, 0);
+                return new OperationResult(true, Messages.SuccessfullyDeletedEmployee);
+            }
+
+            return new OperationResult(false, Messages.ErrorDeletingEmployee);
+
         }
 
         public OperationResult UpdateEmployee(UpdateEmployeeInputInfo inputInfo)
         {
-            var employee = _employeeRepository.GetById(inputInfo.Id);
-            //verify department
+            
+            var department = _departmentRepository.GetDepartmentById(inputInfo.DepartmentId);
 
-            if (employee == null)
+            if (department != null)
             {
-                return new OperationResult(false, Messages.ErrorWhileUpdatingEmployee);
+                var employee = _employeeRepository.GetById(inputInfo.Id);
+
+                if (employee != null)
+                {
+                    employee.Name = inputInfo.Name;
+                    employee.Address = inputInfo.Address;
+                    employee.EmploymentDate = inputInfo.EmploymentDate;
+                    employee.ReleaseDate = inputInfo.ReleaseDate;
+                    employee.JobType = inputInfo.JobType;
+                    employee.PositionType = inputInfo.PositionType;
+
+                    _employeeRepository.Save();
+
+                    return new OperationResult(true, Messages.SuccessfullyUpdatedEmployee);
+                   
+                }
             }
-
-            employee.Name = inputInfo.Name;
-            employee.Address = inputInfo.Address;
-            employee.EmploymentDate = inputInfo.EmploymentDate;
-            employee.ReleaseDate = inputInfo.ReleaseDate;
-            employee.JobType = inputInfo.JobType;
-            employee.PositionType = inputInfo.PositionType;
-
-            _employeeRepository.Save();
-
-            return new OperationResult(true, Messages.SuccessfullyUpdatedEmployee);
-
+            return new OperationResult(false, Messages.ErrorWhileUpdatingEmployee);
         }
 
         public OperationResult AddEmployeeToProject(AddEmployeeToProjectInputInfo inputInfo)
@@ -106,6 +120,41 @@ namespace Manager.Services
                 }
             }
             return new OperationResult(false, Messages.ErrorWhileUpdatingPartialAllocation);
+        }
+
+        public IEnumerable<MemberInfo> GetAllDepartmentEmployees(int inputInfo)
+        {
+            var departmentId = _mapper.Map<int>(inputInfo);
+
+            var department = _departmentRepository.GetDepartmentById(departmentId);
+
+            if (department != null)
+            {
+                var members = _employeeRepository.GetAllDepartmentEmployees(department);
+
+                if (members != null)
+                {
+                    var memberInfos = _mapper.Map<IEnumerable<MemberInfo>>(members);
+                    return memberInfos;                  
+                }
+               
+            }
+
+            return null;
+        }
+        public OperationResult AddEmployee(AddEmployeeToDepartmentInputInfo inputInfo)
+        {
+            var newEp = _mapper.Map<Employee>(inputInfo);
+
+            var department = _departmentRepository.GetDepartmentById(inputInfo.DepartmentId);
+            if (department != null)
+            {
+                newEp.TotalAllocation = 0;
+                _employeeRepository.AddEmployee(newEp);
+                return new OperationResult(true, Messages.SuccessfullyAddedEmployee);
+            }
+
+            return new OperationResult(false, Messages.ErrorAddingEmployee );
         }
     }
 }
