@@ -2,8 +2,7 @@
 using Manager.Services;
 using System.Web.Http;
 using System.Web.Http.Cors;
-
-namespace ManagementApp.Controllers 
+namespace ManagementApp.Controllers
 {
     [RoutePrefix("api/department")]
     [EnableCors("*", "*", "GET")]
@@ -24,7 +23,7 @@ namespace ManagementApp.Controllers
             return Json(result);
         }
 
-        
+
         [Route("GetAllUnAllocatedEmployeesOnProject")]
         [HttpGet]
         public IHttpActionResult GetAllUnAllocatedEmployeesOnProject()
