@@ -357,4 +357,16 @@
   <data name="ErrorWhileUpdatingEmployee_NullPositionId" xml:space="preserve">
     <value>Error while updating employee: PositionId cannot be null.</value>
   </data>
+  <data name="ErrorWhileAddingPosition_NullPositionName" xml:space="preserve">
+    <value>Error while adding position: Null position name not allowed.</value>
+  </data>
+  <data name="ErrorWhileAddingPosition_TooLongPositionName" xml:space="preserve">
+    <value>Error while adding position: Too long position name.</value>
+  </data>
+  <data name="ErrorWhileUpdatingPosition_NullPositionName" xml:space="preserve">
+    <value>Error while updating position: Null position name not allowed.</value>
+  </data>
+  <data name="ErrorWhileUpdatingPosition_TooLongPositionName" xml:space="preserve">
+    <value>Error while updating position: Too long position name.</value>
+  </data>
 </root>

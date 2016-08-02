@@ -8,11 +8,10 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Manager
-{
+namespace Manager {
     using System;
-
-
+    
+    
     /// <summary>
     ///   A strongly-typed resource class, for looking up localized strings, etc.
     /// </summary>
@@ -23,151 +22,125 @@ namespace Manager
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "4.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    public class Messages
-    {
-
+    public class Messages {
+        
         private static global::System.Resources.ResourceManager resourceMan;
-
+        
         private static global::System.Globalization.CultureInfo resourceCulture;
-
+        
         [global::System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
-        internal Messages()
-        {
+        internal Messages() {
         }
-
+        
         /// <summary>
         ///   Returns the cached ResourceManager instance used by this class.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        public static global::System.Resources.ResourceManager ResourceManager
-        {
-            get
-            {
-                if (object.ReferenceEquals(resourceMan, null))
-                {
+        public static global::System.Resources.ResourceManager ResourceManager {
+            get {
+                if (object.ReferenceEquals(resourceMan, null)) {
                     global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Manager.Messages", typeof(Messages).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
             }
         }
-
+        
         /// <summary>
         ///   Overrides the current thread's CurrentUICulture property for all
         ///   resource lookups using this strongly typed resource class.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        public static global::System.Globalization.CultureInfo Culture
-        {
-            get
-            {
+        public static global::System.Globalization.CultureInfo Culture {
+            get {
                 return resourceCulture;
             }
-            set
-            {
+            set {
                 resourceCulture = value;
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to &apos;Allocation id invalid.&apos;.
         /// </summary>
-        public static string AllocationIdInvalid
-        {
-            get
-            {
+        public static string AllocationIdInvalid {
+            get {
                 return ResourceManager.GetString("AllocationIdInvalid", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to &apos;Employee already allocated to this project.&apos;.
         /// </summary>
-        public static string EmployeeAlreadyOnProject
-        {
-            get
-            {
+        public static string EmployeeAlreadyOnProject {
+            get {
                 return ResourceManager.GetString("EmployeeAlreadyOnProject", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to &apos;Employee does not have enough unallocated time.&apos;.
         /// </summary>
-        public static string EmployeeFreeTimeNotEnough
-        {
-            get
-            {
+        public static string EmployeeFreeTimeNotEnough {
+            get {
                 return ResourceManager.GetString("EmployeeFreeTimeNotEnough", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to &apos;Invalid employee id&apos;.
         /// </summary>
-        public static string EmployeeIdInvalid
-        {
-            get
-            {
+        public static string EmployeeIdInvalid {
+            get {
                 return ResourceManager.GetString("EmployeeIdInvalid", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to &apos;Error while adding allocation:&apos;.
         /// </summary>
-        public static string ErrorWhileAddingAllocation
-        {
-            get
-            {
+        public static string ErrorWhileAddingAllocation {
+            get {
                 return ResourceManager.GetString("ErrorWhileAddingAllocation", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to &apos;Department already exist in this office&apos;.
         /// </summary>
-        public static string ErrorWhileAddingDepartment
-        {
-            get
-            {
+        public static string ErrorWhileAddingDepartment {
+            get {
                 return ResourceManager.GetString("ErrorWhileAddingDepartment", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to &apos;Department could not be added: Name field is empty.&apos;.
         /// </summary>
-        public static string ErrorWhileAddingDepartment_EmptyName
-        {
-            get
-            {
+        public static string ErrorWhileAddingDepartment_EmptyName {
+            get {
                 return ResourceManager.GetString("ErrorWhileAddingDepartment_EmptyName", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to &apos;Department could not be updated: Name too long.&apos;.
         /// </summary>
-        public static string ErrorWhileAddingDepartment_NameTooLong
-        {
-            get
-            {
+        public static string ErrorWhileAddingDepartment_NameTooLong {
+            get {
                 return ResourceManager.GetString("ErrorWhileAddingDepartment_NameTooLong", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to &apos;Department could not be added: OfficeId invalid.&apos;.
         /// </summary>
-        public static string ErrorWhileAddingDepartment_OfficeIdInvalid
-        {
-            get
-            {
+        public static string ErrorWhileAddingDepartment_OfficeIdInvalid {
+            get {
                 return ResourceManager.GetString("ErrorWhileAddingDepartment_OfficeIdInvalid", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to &apos;Error while adding employee: Empty employee name.&apos;.
         /// </summary>
@@ -268,111 +241,167 @@ namespace Manager
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to &apos;Office could not be added: Address too long.&apos;.
+        /// </summary>
+        public static string ErrorWhileAddingOffice_AddressTooLong {
+            get {
+                return ResourceManager.GetString("ErrorWhileAddingOffice_AddressTooLong", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to &apos;Office could not be added: Address fied is empty.&apos;.
+        /// </summary>
+        public static string ErrorWhileAddingOffice_EmptyAddress {
+            get {
+                return ResourceManager.GetString("ErrorWhileAddingOffice_EmptyAddress", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to &apos;Office could not be added: Name fied is empty.&apos;.
+        /// </summary>
+        public static string ErrorWhileAddingOffice_EmptyName {
+            get {
+                return ResourceManager.GetString("ErrorWhileAddingOffice_EmptyName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to &apos;Office could not be added: Phone fied is empty.&apos;.
+        /// </summary>
+        public static string ErrorWhileAddingOffice_EmptyPhone {
+            get {
+                return ResourceManager.GetString("ErrorWhileAddingOffice_EmptyPhone", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to &apos;Office could not be added: Name too long.&apos;.
+        /// </summary>
+        public static string ErrorWhileAddingOffice_NameTooLong {
+            get {
+                return ResourceManager.GetString("ErrorWhileAddingOffice_NameTooLong", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to &apos;Office could not be added: Phone too long.&apos;.
+        /// </summary>
+        public static string ErrorWhileAddingOffice_PhoneTooLong {
+            get {
+                return ResourceManager.GetString("ErrorWhileAddingOffice_PhoneTooLong", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to &apos;Position could not be added: Name field is empty.&apos;.
         /// </summary>
-        public static string ErrorWhileAddingPosition_EmptyName
-        {
-            get
-            {
+        public static string ErrorWhileAddingPosition_EmptyName {
+            get {
                 return ResourceManager.GetString("ErrorWhileAddingPosition_EmptyName", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to &apos;Position could not be updated: Name too long.&apos;.
         /// </summary>
-        public static string ErrorWhileAddingPosition_NameTooLong
-        {
-            get
-            {
+        public static string ErrorWhileAddingPosition_NameTooLong {
+            get {
                 return ResourceManager.GetString("ErrorWhileAddingPosition_NameTooLong", resourceCulture);
             }
         }
-
+        
         /// <summary>
-        ///   Looks up a localized string similar to &apos;Error while deleting allocation.&apos;.
+        ///   Looks up a localized string similar to Error while adding position: Null position name not allowed..
         /// </summary>
-        public static string ErrorWhileAddingProject
-        {
-            get
-            {
+        public static string ErrorWhileAddingPosition_NullPositionName {
+            get {
+                return ResourceManager.GetString("ErrorWhileAddingPosition_NullPositionName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Error while adding position: Too long position name..
+        /// </summary>
+        public static string ErrorWhileAddingPosition_TooLongPositionName {
+            get {
+                return ResourceManager.GetString("ErrorWhileAddingPosition_TooLongPositionName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to &apos;Error while adding project.&apos;.
+        /// </summary>
+        public static string ErrorWhileAddingProject {
+            get {
                 return ResourceManager.GetString("ErrorWhileAddingProject", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to &apos;Error while adding project, department invalid id.&apos;.
         /// </summary>
-        public static string ErrorWhileAddingProject_DepartmentIdInvalid
-        {
-            get
-            {
+        public static string ErrorWhileAddingProject_DepartmentIdInvalid {
+            get {
                 return ResourceManager.GetString("ErrorWhileAddingProject_DepartmentIdInvalid", resourceCulture);
             }
         }
-
+        
         /// <summary>
+        ///   Looks up a localized string similar to &apos;Error while deleting allocation.&apos;.
         /// </summary>
-        public static string ErrorWhileDeleteingAllocation
-        {
-            get
-            {
+        public static string ErrorWhileDeleteingAllocation {
+            get {
                 return ResourceManager.GetString("ErrorWhileDeleteingAllocation", resourceCulture);
             }
         }
-
-
-
+        
+        /// <summary>
+        ///   Looks up a localized string similar to &apos;Project coud not be deleted.&apos;.
+        /// </summary>
+        public static string ErrorWhileDeletingProject {
+            get {
+                return ResourceManager.GetString("ErrorWhileDeletingProject", resourceCulture);
+            }
+        }
+        
         /// <summary>
         ///   Looks up a localized string similar to &apos;Employee does not exist&apos;.
         /// </summary>
-        public static string ErrorWhileReleasingEmployee
-        {
-            get
-            {
+        public static string ErrorWhileReleasingEmployee {
+            get {
                 return ResourceManager.GetString("ErrorWhileReleasingEmployee", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to &apos;Error while updating allocation:&apos;.
         /// </summary>
-        public static string ErrorWhileUpdatingAllocation
-        {
-            get
-            {
+        public static string ErrorWhileUpdatingAllocation {
+            get {
                 return ResourceManager.GetString("ErrorWhileUpdatingAllocation", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to &apos;Department could not be modified: Invalid department id&apos;.
         /// </summary>
-        public static string ErrorWhileUpdatingDepartment_InvalidId
-        {
-            get
-            {
+        public static string ErrorWhileUpdatingDepartment_InvalidId {
+            get {
                 return ResourceManager.GetString("ErrorWhileUpdatingDepartment_InvalidId", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to &apos;Department could not be updated: OfficeId invalid.&apos;.
         /// </summary>
-        public static string ErrorWhileUpdatingDepartment_OfficeIdInvalid
-        {
-            get
-            {
+        public static string ErrorWhileUpdatingDepartment_OfficeIdInvalid {
+            get {
                 return ResourceManager.GetString("ErrorWhileUpdatingDepartment_OfficeIdInvalid", resourceCulture);
             }
         }
-
-
-
-
-
-
-
+        
         /// <summary>
         ///   Looks up a localized string similar to &apos;Error while updating employee: Empty employee name.&apos;.
         /// </summary>
@@ -464,77 +493,212 @@ namespace Manager
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to &apos;Office could not be updated: Address too long.&apos;.
+        /// </summary>
+        public static string ErrorWhileUpdatingOffice_AddressTooLong {
+            get {
+                return ResourceManager.GetString("ErrorWhileUpdatingOffice_AddressTooLong", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to &apos;Office could not be updated Address fied is empty.&apos;.
+        /// </summary>
+        public static string ErrorWhileUpdatingOffice_EmptyAddress {
+            get {
+                return ResourceManager.GetString("ErrorWhileUpdatingOffice_EmptyAddress", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to &apos;Office could not be updated Name fied is empty.&apos;.
+        /// </summary>
+        public static string ErrorWhileUpdatingOffice_EmptyName {
+            get {
+                return ResourceManager.GetString("ErrorWhileUpdatingOffice_EmptyName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to &apos;Office could not be updated Phone fied is empty.&apos;.
+        /// </summary>
+        public static string ErrorWhileUpdatingOffice_EmptyPhone {
+            get {
+                return ResourceManager.GetString("ErrorWhileUpdatingOffice_EmptyPhone", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to &apos;Error while updating office: Invalid id&apos;.
+        /// </summary>
+        public static string ErrorWhileUpdatingOffice_InvalidId {
+            get {
+                return ResourceManager.GetString("ErrorWhileUpdatingOffice_InvalidId", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to &apos;Office could not be updated: Name too long.&apos;.
+        /// </summary>
+        public static string ErrorWhileUpdatingOffice_NameTooLong {
+            get {
+                return ResourceManager.GetString("ErrorWhileUpdatingOffice_NameTooLong", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to &apos;Office could not be updated: Phone too long.&apos;.
+        /// </summary>
+        public static string ErrorWhileUpdatingOffice_PhoneTooLong {
+            get {
+                return ResourceManager.GetString("ErrorWhileUpdatingOffice_PhoneTooLong", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to &apos;Position could not be modified.&apos;.
         /// </summary>
-        public static string ErrorWhileUpdatingPosition
-        {
-            get
-            {
+        public static string ErrorWhileUpdatingPosition {
+            get {
                 return ResourceManager.GetString("ErrorWhileUpdatingPosition", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to &apos;Position could not be modified: Name field is empty.&apos;.
         /// </summary>
-        public static string ErrorWhileUpdatingPosition_EmptyName
-        {
-            get
-            {
+        public static string ErrorWhileUpdatingPosition_EmptyName {
+            get {
                 return ResourceManager.GetString("ErrorWhileUpdatingPosition_EmptyName", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to &apos;Error while updating position: Invalid id&apos;.
         /// </summary>
-        public static string ErrorWhileUpdatingPosition_InvalidId
-        {
-            get
-            {
+        public static string ErrorWhileUpdatingPosition_InvalidId {
+            get {
                 return ResourceManager.GetString("ErrorWhileUpdatingPosition_InvalidId", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to &apos;Position could not be modified: Name too long.&apos;.
         /// </summary>
-        public static string ErrorWhileUpdatingPosition_NameTooLong
-        {
-            get
-            {
+        public static string ErrorWhileUpdatingPosition_NameTooLong {
+            get {
                 return ResourceManager.GetString("ErrorWhileUpdatingPosition_NameTooLong", resourceCulture);
             }
         }
-
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Error while updating position: Null position name not allowed..
+        /// </summary>
+        public static string ErrorWhileUpdatingPosition_NullPositionName {
+            get {
+                return ResourceManager.GetString("ErrorWhileUpdatingPosition_NullPositionName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Error while updating position: Too long position name..
+        /// </summary>
+        public static string ErrorWhileUpdatingPosition_TooLongPositionName {
+            get {
+                return ResourceManager.GetString("ErrorWhileUpdatingPosition_TooLongPositionName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to &apos;Error while updatign project.&apos;.
+        /// </summary>
+        public static string ErrorWhileUpdatingProject {
+            get {
+                return ResourceManager.GetString("ErrorWhileUpdatingProject", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to &apos;Error while updating project, department invalid id.&apos;.
+        /// </summary>
+        public static string ErrorWhileUpdatingProject_DepartmentIdInvalid {
+            get {
+                return ResourceManager.GetString("ErrorWhileUpdatingProject_DepartmentIdInvalid", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to &apos;Error while updating project, invalid project id.&apos;.
+        /// </summary>
+        public static string ErrorWhileUpdatingProject_InvalidId {
+            get {
+                return ResourceManager.GetString("ErrorWhileUpdatingProject_InvalidId", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to &apos;Invalid project id.&apos;.
+        /// </summary>
+        public static string ProjectInvalidId {
+            get {
+                return ResourceManager.GetString("ProjectInvalidId", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to &apos;Project name is empty.&apos;.
+        /// </summary>
+        public static string ProjectNameEmpty {
+            get {
+                return ResourceManager.GetString("ProjectNameEmpty", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to &apos;Project name is too long.&apos;.
+        /// </summary>
+        public static string ProjectNameTooLong {
+            get {
+                return ResourceManager.GetString("ProjectNameTooLong", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to &apos;Project status is empty.&apos;.
+        /// </summary>
+        public static string ProjectStatusEmpty {
+            get {
+                return ResourceManager.GetString("ProjectStatusEmpty", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to &apos;Project status is too long.&apos;.
+        /// </summary>
+        public static string ProjectStatusTooLong {
+            get {
+                return ResourceManager.GetString("ProjectStatusTooLong", resourceCulture);
+            }
+        }
+        
         /// <summary>
         ///   Looks up a localized string similar to &apos;Allocation added successfully.&apos;.
         /// </summary>
-        public static string SuccessfullyAddedAllocation
-        {
-            get
-            {
+        public static string SuccessfullyAddedAllocation {
+            get {
                 return ResourceManager.GetString("SuccessfullyAddedAllocation", resourceCulture);
             }
         }
-
-
-
-
-
+        
         /// <summary>
         ///   Looks up a localized string similar to &apos;Department was added with success&apos;.
         /// </summary>
-        public static string SuccessfullyAddedDepartment
-        {
-            get
-            {
+        public static string SuccessfullyAddedDepartment {
+            get {
                 return ResourceManager.GetString("SuccessfullyAddedDepartment", resourceCulture);
             }
         }
-
-
-
+        
         /// <summary>
         ///   Looks up a localized string similar to &apos;Employee was added with success.&apos;.
         /// </summary>
@@ -545,65 +709,77 @@ namespace Manager
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to &apos;Office was added with success&apos;.
+        /// </summary>
+        public static string SuccessfullyAddedOffice {
+            get {
+                return ResourceManager.GetString("SuccessfullyAddedOffice", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to &apos;Position was added with success&apos;.
         /// </summary>
-        public static string SuccessfullyAddedPosition
-        {
-            get
-            {
+        public static string SuccessfullyAddedPosition {
+            get {
                 return ResourceManager.GetString("SuccessfullyAddedPosition", resourceCulture);
             }
         }
-
-
-
+        
         /// <summary>
+        ///   Looks up a localized string similar to &apos;Successfully added project.&apos;.
         /// </summary>
-        public static string SuccessfullyDeletedAllocation
-        {
-            get
-            {
+        public static string SuccessfullyAddedProject {
+            get {
+                return ResourceManager.GetString("SuccessfullyAddedProject", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to &apos;Successfully deleted allocation.&apos;.
+        /// </summary>
+        public static string SuccessfullyDeletedAllocation {
+            get {
                 return ResourceManager.GetString("SuccessfullyDeletedAllocation", resourceCulture);
             }
         }
-
-
-
+        
+        /// <summary>
+        ///   Looks up a localized string similar to &apos;Successfully deleted project.&apos;.
+        /// </summary>
+        public static string SuccessfullyDeletedProject {
+            get {
+                return ResourceManager.GetString("SuccessfullyDeletedProject", resourceCulture);
+            }
+        }
+        
         /// <summary>
         ///   Looks up a localized string similar to &apos;Employee was released with success&apos;.
         /// </summary>
-        public static string SuccessfullyReleasedEmployee
-        {
-            get
-            {
+        public static string SuccessfullyReleasedEmployee {
+            get {
                 return ResourceManager.GetString("SuccessfullyReleasedEmployee", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to &apos;Successfully updated allocation&apos;.
         /// </summary>
-        public static string SuccessfullyUpdatedAllocation
-        {
-            get
-            {
+        public static string SuccessfullyUpdatedAllocation {
+            get {
                 return ResourceManager.GetString("SuccessfullyUpdatedAllocation", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to &apos;Department was updated with success&apos;.
         /// </summary>
-        public static string SuccessfullyUpdatedDepartment
-        {
-            get
-            {
+        public static string SuccessfullyUpdatedDepartment {
+            get {
                 return ResourceManager.GetString("SuccessfullyUpdatedDepartment", resourceCulture);
             }
         }
-
-
-
+        
         /// <summary>
         ///   Looks up a localized string similar to &apos;Successfully updated employee.&apos;.
         /// </summary>
@@ -614,307 +790,28 @@ namespace Manager
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to &apos;Position was updated with success&apos;.
-        /// </summary>
-        public static string SuccessfullyUpdatedPosition
-        {
-            get
-            {
-                return ResourceManager.GetString("SuccessfullyUpdatedPosition", resourceCulture);
-            }
-        }
-
-
-
-        /// <summary>
-        ///   Looks up a localized string similar to &apos;Office could not be added: Address too long.&apos;.
-        /// </summary>
-        public static string ErrorWhileAddingOffice_AddressTooLong
-        {
-            get
-            {
-                return ResourceManager.GetString("ErrorWhileAddingOffice_AddressTooLong", resourceCulture);
-            }
-        }
-
-        /// <summary>
-        ///   Looks up a localized string similar to &apos;Office could not be added: Address fied is empty.&apos;.
-        /// </summary>
-        public static string ErrorWhileAddingOffice_EmptyAddress
-        {
-            get
-            {
-                return ResourceManager.GetString("ErrorWhileAddingOffice_EmptyAddress", resourceCulture);
-            }
-        }
-
-        /// <summary>
-        ///   Looks up a localized string similar to &apos;Office could not be added: Name fied is empty.&apos;.
-        /// </summary>
-        public static string ErrorWhileAddingOffice_EmptyName
-        {
-            get
-            {
-                return ResourceManager.GetString("ErrorWhileAddingOffice_EmptyName", resourceCulture);
-            }
-        }
-
-        /// <summary>
-        ///   Looks up a localized string similar to &apos;Office could not be added: Phone fied is empty.&apos;.
-        /// </summary>
-        public static string ErrorWhileAddingOffice_EmptyPhone
-        {
-            get
-            {
-                return ResourceManager.GetString("ErrorWhileAddingOffice_EmptyPhone", resourceCulture);
-            }
-        }
-
-        /// <summary>
-        ///   Looks up a localized string similar to &apos;Office could not be added: Name too long.&apos;.
-        /// </summary>
-        public static string ErrorWhileAddingOffice_NameTooLong
-        {
-            get
-            {
-                return ResourceManager.GetString("ErrorWhileAddingOffice_NameTooLong", resourceCulture);
-            }
-        }
-
-        /// <summary>
-        ///   Looks up a localized string similar to &apos;Office could not be added: Phone too long.&apos;.
-        /// </summary>
-        public static string ErrorWhileAddingOffice_PhoneTooLong
-        {
-            get
-            {
-                return ResourceManager.GetString("ErrorWhileAddingOffice_PhoneTooLong", resourceCulture);
-            }
-        }
-
-        /// <summary>
-        ///   Looks up a localized string similar to &apos;Project coud not be deleted.&apos;.
-        /// </summary>
-        public static string ErrorWhileDeletingProject
-        {
-            get
-            {
-                return ResourceManager.GetString("ErrorWhileDeletingProject", resourceCulture);
-            }
-        }
-
-        /// <summary>
-        ///   Looks up a localized string similar to &apos;Office could not be updated: Address too long.&apos;.
-        /// </summary>
-        public static string ErrorWhileUpdatingOffice_AddressTooLong
-        {
-            get
-            {
-                return ResourceManager.GetString("ErrorWhileUpdatingOffice_AddressTooLong", resourceCulture);
-            }
-        }
-
-        /// <summary>
-        ///   Looks up a localized string similar to &apos;Office could not be updated Address fied is empty.&apos;.
-        /// </summary>
-        public static string ErrorWhileUpdatingOffice_EmptyAddress
-        {
-            get
-            {
-                return ResourceManager.GetString("ErrorWhileUpdatingOffice_EmptyAddress", resourceCulture);
-            }
-        }
-
-        /// <summary>
-        ///   Looks up a localized string similar to &apos;Office could not be updated Name fied is empty.&apos;.
-        /// </summary>
-        public static string ErrorWhileUpdatingOffice_EmptyName
-        {
-            get
-            {
-                return ResourceManager.GetString("ErrorWhileUpdatingOffice_EmptyName", resourceCulture);
-            }
-        }
-
-        /// <summary>
-        ///   Looks up a localized string similar to &apos;Office could not be updated Phone fied is empty.&apos;.
-        /// </summary>
-        public static string ErrorWhileUpdatingOffice_EmptyPhone
-        {
-            get
-            {
-                return ResourceManager.GetString("ErrorWhileUpdatingOffice_EmptyPhone", resourceCulture);
-            }
-        }
-
-        /// <summary>
-        ///   Looks up a localized string similar to &apos;Error while updating office: Invalid id&apos;.
-        /// </summary>
-        public static string ErrorWhileUpdatingOffice_InvalidId
-        {
-            get
-            {
-                return ResourceManager.GetString("ErrorWhileUpdatingOffice_InvalidId", resourceCulture);
-            }
-        }
-
-        /// <summary>
-        ///   Looks up a localized string similar to &apos;Office could not be updated: Name too long.&apos;.
-        /// </summary>
-        public static string ErrorWhileUpdatingOffice_NameTooLong
-        {
-            get
-            {
-                return ResourceManager.GetString("ErrorWhileUpdatingOffice_NameTooLong", resourceCulture);
-            }
-        }
-
-        /// <summary>
-        ///   Looks up a localized string similar to &apos;Office could not be updated: Phone too long.&apos;.
-        /// </summary>
-        public static string ErrorWhileUpdatingOffice_PhoneTooLong
-        {
-            get
-            {
-                return ResourceManager.GetString("ErrorWhileUpdatingOffice_PhoneTooLong", resourceCulture);
-            }
-        }
-
-        /// <summary>
-        ///   Looks up a localized string similar to &apos;Error while updatign project.&apos;.
-        /// </summary>
-        public static string ErrorWhileUpdatingProject
-        {
-            get
-            {
-                return ResourceManager.GetString("ErrorWhileUpdatingProject", resourceCulture);
-            }
-        }
-
-        /// <summary>
-        ///   Looks up a localized string similar to &apos;Error while updating project, department invalid id.&apos;.
-        /// </summary>
-        public static string ErrorWhileUpdatingProject_DepartmentIdInvalid
-        {
-            get
-            {
-                return ResourceManager.GetString("ErrorWhileUpdatingProject_DepartmentIdInvalid", resourceCulture);
-            }
-        }
-
-        /// <summary>
-        ///   Looks up a localized string similar to &apos;Error while updating project, invalid project id.&apos;.
-        /// </summary>
-        public static string ErrorWhileUpdatingProject_InvalidId
-        {
-            get
-            {
-                return ResourceManager.GetString("ErrorWhileUpdatingProject_InvalidId", resourceCulture);
-            }
-        }
-
-        /// <summary>
-        ///   Looks up a localized string similar to &apos;Invalid project id.&apos;.
-        /// </summary>
-        public static string ProjectInvalidId
-        {
-            get
-            {
-                return ResourceManager.GetString("ProjectInvalidId", resourceCulture);
-            }
-        }
-
-        /// <summary>
-        ///   Looks up a localized string similar to &apos;Project name is empty.&apos;.
-        /// </summary>
-        public static string ProjectNameEmpty
-        {
-            get
-            {
-                return ResourceManager.GetString("ProjectNameEmpty", resourceCulture);
-            }
-        }
-
-        /// <summary>
-        ///   Looks up a localized string similar to &apos;Project name is too long.&apos;.
-        /// </summary>
-        public static string ProjectNameTooLong
-        {
-            get
-            {
-                return ResourceManager.GetString("ProjectNameTooLong", resourceCulture);
-            }
-        }
-
-        /// <summary>
-        ///   Looks up a localized string similar to &apos;Project status is empty.&apos;.
-        /// </summary>
-        public static string ProjectStatusEmpty
-        {
-            get
-            {
-                return ResourceManager.GetString("ProjectStatusEmpty", resourceCulture);
-            }
-        }
-
-        /// <summary>
-        ///   Looks up a localized string similar to &apos;Project status is too long.&apos;.
-        /// </summary>
-        public static string ProjectStatusTooLong
-        {
-            get
-            {
-                return ResourceManager.GetString("ProjectStatusTooLong", resourceCulture);
-            }
-        }
-
-        /// <summary>
-        ///   Looks up a localized string similar to &apos;Office was added with success&apos;.
-        /// </summary>
-        public static string SuccessfullyAddedOffice
-        {
-            get
-            {
-                return ResourceManager.GetString("SuccessfullyAddedOffice", resourceCulture);
-            }
-        }
-        /// <summary>
-        ///   Looks up a localized string similar to &apos;Successfully added project.&apos;.
-        /// </summary>
-        public static string SuccessfullyAddedProject
-        {
-            get
-            {
-                return ResourceManager.GetString("SuccessfullyAddedProject", resourceCulture);
-            }
-        }
-        /// <summary>
-        ///   Looks up a localized string similar to &apos;Successfully deleted project.&apos;.
-        /// </summary>
-        public static string SuccessfullyDeletedProject
-        {
-            get
-            {
-                return ResourceManager.GetString("SuccessfullyDeletedProject", resourceCulture);
-            }
-        }
-        /// <summary>
         ///   Looks up a localized string similar to &apos;Office was updated with success&apos;.
         /// </summary>
-        public static string SuccessfullyUpdatedOffice
-        {
-            get
-            {
+        public static string SuccessfullyUpdatedOffice {
+            get {
                 return ResourceManager.GetString("SuccessfullyUpdatedOffice", resourceCulture);
             }
         }
-        // <summary>
+        
+        /// <summary>
+        ///   Looks up a localized string similar to &apos;Position was updated with success&apos;.
+        /// </summary>
+        public static string SuccessfullyUpdatedPosition {
+            get {
+                return ResourceManager.GetString("SuccessfullyUpdatedPosition", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to &apos;Succsessfully updated project.&apos;.
         /// </summary>
-        public static string SuccessfullyUpdatedProject
-        {
-            get
-            {
+        public static string SuccessfullyUpdatedProject {
+            get {
                 return ResourceManager.GetString("SuccessfullyUpdatedProject", resourceCulture);
             }
         }
