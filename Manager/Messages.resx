@@ -144,6 +144,12 @@
   <data name="SuccessfullyUpdatedDepartment" xml:space="preserve">
     <value>'Department was updated with success'</value>
   </data>
+  <data name="SuccessfullyUpdatedPartialAllocation" xml:space="preserve">
+    <value>Partial allocation of an employee on a project was updated successfully.</value>
+  </data>
+  <data name="ErrorWhileUpdatingPartialAllocation" xml:space="preserve">
+    <value>Partial allocation could not be modified.</value>
+  </data>
   <data name="ErrorWhileUpdatingOffice" xml:space="preserve">
     <value>'Error: Office does not exist'</value>
   </data>

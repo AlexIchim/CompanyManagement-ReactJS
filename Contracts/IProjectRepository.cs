@@ -16,7 +16,7 @@ namespace Contracts
         Project GetProjectById(int projectId);
         void AddEmployeeToProject(EmployeeProject ep);
 
-        IEnumerable<EmployeeProject> GetEmployeeProjectByid(int projectId);
+        IEnumerable<EmployeeProject> GetEmployeeProjectById(int projectId);
 
         void Add(Project project);
 

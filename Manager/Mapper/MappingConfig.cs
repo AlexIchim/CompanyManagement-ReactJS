@@ -41,6 +41,7 @@ namespace Manager.Mapper
             CreateMap<UpdateProjectInputInfo, Project>();
 
             CreateMap<AddEmployeeToDepartmentInputInfo, Employee>();
+            
 
         }
     }

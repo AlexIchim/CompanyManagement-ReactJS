@@ -31,12 +31,20 @@ namespace ManagementApp.Controllers
             return Json(result);
         }
 
-<<<<<<< HEAD
-        [Route("add")]
+        [Route("add")]        
         [HttpPost]
         public IHttpActionResult Add([FromBody] AddProjectInputInfo inputInfo)
         {
             var result = _projectService.Add(inputInfo);
+            return Json(result);
+        }
+
+        [Route("addEmployeeToProject")]
+        [HttpPost]
+        public IHttpActionResult AddEmployeeToProject([FromBody] AddEmployeeToProjectInputInfo inputInfo)
+        {
+           
+            var result = _projectService.AddEmployeeToProject(inputInfo);
             return Json(result);
         }
 
@@ -45,13 +53,22 @@ namespace ManagementApp.Controllers
         public IHttpActionResult Delete(int projectId)
         {
             var result = _projectService.Delete(projectId);
-=======
-        [Route("addEmployeeToProject")]
-        [HttpPost]
-        public IHttpActionResult AddEmployeeToProject([FromBody] AddEmployeeToProjectInputInfo inputInfo)
+            return Json(result);
+        }
+
+<<<<<<< HEAD
+        [Route("updateProject")]
+        [HttpPut]
+        public IHttpActionResult UpdateProject([FromBody] UpdateProjectInputInfo inputInfo)
         {
-            var result = _projectService.AddEmployeeToProject(inputInfo);
->>>>>>> capac-andreimuresan
+            var result = _projectService.UpdateProject(inputInfo);
+=======
+        [Route("update")]
+        [HttpPut]
+        public IHttpActionResult Update ([FromBody] UpdateAllocationInputInfo inputInfo)
+        {
+            var result = _projectService.UpdatePartialAllocation(inputInfo);
+>>>>>>> capac-cristina
             return Json(result);
         }
     }

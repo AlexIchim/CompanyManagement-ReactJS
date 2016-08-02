@@ -52,7 +52,7 @@ namespace DataAccess.Repositories
             return _context.Projects.Where(p => p.Id == projectId).SingleOrDefault();
         }
 
-        public IEnumerable <EmployeeProject> GetEmployeeProjectByid(int projectId)
+        public IEnumerable <EmployeeProject> GetEmployeeProjectById(int projectId)
         {
             return _context.EmployeeProjects.Where(ep => ep.ProjectId == projectId).ToList();
         }

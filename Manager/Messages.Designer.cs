@@ -78,7 +78,17 @@ namespace Manager {
             get { return ResourceManager.GetString("ErrorWhileUpdatingEmployee", resourceCulture); }
         }
 
+        ///   Looks up a localized string similar to Partial allocation could not be modified..
+        /// </summary>
+        public static string ErrorWhileUpdatingPartialAllocation {
+            get {
+                return ResourceManager.GetString("ErrorWhileUpdatingPartialAllocation", resourceCulture);
+            }
+        }
+
         public static string ErrorWhileUpdatingProject {
+        
+        /// <summary>
 
             get
             {
@@ -103,19 +113,23 @@ namespace Manager {
                 return ResourceManager.GetString("SuccessfullyAddedDepartment", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to &apos;Employee was added with success&apos;.
         ///   Looks up a localized string similar to &apos;Employee to project was successfully added&apos;.
         /// </summary>
-        public static string SuccessfullyAddedEmployee
-        {
-            get { return ResourceManager.GetString("SuccessfullyAddedEmployee", resourceCulture); }
+        public static string SuccessfullyAddedEmployee {
+            get {
+                return ResourceManager.GetString("SuccessfullyAddedEmployee", resourceCulture);
+            }
         }
-
+        
         public static string SuccessfullyAddedEmployeeToProject {
             get {
            
+        /// <summary>
+        ///   Looks up a localized string similar to &apos;Office was added with success&apos;.
+        /// </summary>
                 return ResourceManager.GetString("SuccessfullyAddedEmployeeToProject", resourceCulture);
             }
         }
@@ -125,6 +139,7 @@ namespace Manager {
         ///   Looks up a localized string similar to &apos;Project was successfully added&apos;.
         /// </summary>
         public static string SuccessfullyAddedOffice {
+          
             get {
                 return ResourceManager.GetString("SuccessfullyAddedOffice", resourceCulture);
             }
@@ -143,6 +158,7 @@ namespace Manager {
         ///   Looks up a localized string similar to &apos;Employee was successfully deleted&apos;.
         /// </summary>
         public static string SuccessfullyDeletedEmployee {
+       
             get {
                 return ResourceManager.GetString("SuccessfullyDeletedEmployee", resourceCulture);
             }
@@ -173,6 +189,16 @@ namespace Manager {
         public static string SuccessfullyUpdatedEmployee
         {
             get { return ResourceManager.GetString("SuccessfullyUpdatedEmployee", resourceCulture); }
+        }
+        ///   Looks up a localized string similar to Partial allocation of an employee on a project was updated successfully..
+        /// </summary>
+        public static string SuccessfullyUpdatedPartialAllocation
+        {
+            get
+            {
+                return ResourceManager.GetString("SuccessfullyUpdatedPartialAllocation", resourceCulture);
+
+            }
         }
 
         public static string SuccessfullyUpdatedProject {

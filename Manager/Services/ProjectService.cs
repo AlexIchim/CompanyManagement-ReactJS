@@ -54,14 +54,31 @@ namespace Manager.Services
             var newEp = _mapper.Map<EmployeeProject>(inputInfo);
             _projectRepository.AddEmployeeToProject(newEp);
             return new OperationResult(true, Messages.SuccessfullyAddedEmployeeToProject);
+            return new OperationResult(true, Messages.SuccessfullyAddedDepartment);
         }
 
         public OperationResult Delete(int projectId)
         {
             Project project = _projectRepository.GetProjectById(projectId);
-            IEnumerable <EmployeeProject> employeeProject = _projectRepository.GetEmployeeProjectByid(projectId);
+            IEnumerable <EmployeeProject> employeeProject = _projectRepository.GetEmployeeProjectById(projectId);
             _projectRepository.Delete(project, employeeProject);
             return new OperationResult(true, Messages.SuccessfullyDeletedProject);
+        }
+
+        public OperationResult UpdatePartialAllocation(UpdateAllocationInputInfo inputInfo)
+        {
+            var employeeProjects = _projectRepository.GetEmployeeProjectById(inputInfo.ProjectId).ToList();
+            if (employeeProjects != null)
+            {
+                EmployeeProject ep = employeeProjects.Where(e => e.EmployeeId == inputInfo.EmployeeId).SingleOrDefault();
+                if (ep != null)
+                {
+                    ep.Allocation = inputInfo.Allocation;
+                    _projectRepository.Save();
+                    return new OperationResult(true, Messages.SuccessfullyUpdatedPartialAllocation);
+                }
+            }
+            return new OperationResult(false, Messages.ErrorWhileUpdatingDepartment);
         }
 
         
