@@ -214,12 +214,12 @@ namespace ManagementApp.Manager.Tests
         [Test]
         public void Delete_CallsGetByIdFromRepository()
         {
-            var employee = new Employee { Id = 1, Name = "George", ReleasedDate = DateTime.Now};
+            var employee = new Employee { Id = 1, Name = "George", ReleasedDate = null};
             _employeeRepositoryMock.Setup(m => m.GetById(employee.Id)).Returns(employee);
-            _employeeRepositoryMock.Setup(m => m.Delete(employee.Id, employee.ReleasedDate));
+            //_employeeRepositoryMock.Setup(m => m.Delete(employee.Id, employee.ReleasedDate));
 
             //Act
-            _employeeService.Delete(employee.Id, employee.ReleasedDate);
+            _employeeService.Delete(employee.Id, DateTime.Now);
 
             //Assert
             _employeeRepositoryMock.Verify(m => m.GetById(employee.Id), Times.Once);
@@ -228,15 +228,17 @@ namespace ManagementApp.Manager.Tests
         public void Delete_CallsDeleteFromRepository_WhenEmployeeDoesExist()
         {
             //Arrange
-            var employee = new Employee { Id = 1, Name = "George", ReleasedDate = DateTime.Today };
+            var employee = new Employee { Id = 1, Name = "George", ReleasedDate = null };
             _employeeRepositoryMock.Setup(m => m.GetById(employee.Id)).Returns(employee);
-            _employeeRepositoryMock.Setup(m => m.Delete(employee.Id, employee.ReleasedDate));
+            //_employeeRepositoryMock.Setup(m => m.Delete(employee.Id, employee.ReleasedDate));
+
+            DateTime currentTime = DateTime.Now;
 
             //Act
-            _employeeService.Delete(employee.Id, employee.ReleasedDate);
+            _employeeService.Delete(employee.Id, currentTime);
 
             //Assert
-            _employeeRepositoryMock.Verify(m => m.Delete(employee.Id, employee.ReleasedDate), Times.Once);
+            _employeeRepositoryMock.Verify(m => m.Delete(employee.Id, currentTime), Times.Once);
         }
         [Test]
         public void Delete_DoesNotCallDeleteFromRepository_WhenEmployeeDoesNotExist()
@@ -245,11 +247,12 @@ namespace ManagementApp.Manager.Tests
             var employee = new Employee { Id = 1, Name = "George", ReleasedDate = DateTime.Now };
             _employeeRepositoryMock.Setup(m => m.GetById(employee.Id)).Returns((Employee)null);
 
+            DateTime currentTime = DateTime.Now;
             //Act
-            _employeeService.Delete(employee.Id, employee.ReleasedDate);
+            _employeeService.Delete(employee.Id, currentTime);
 
             //Assert
-            _employeeRepositoryMock.Verify(m => m.Delete(employee.Id, employee.ReleasedDate), Times.Never);
+            _employeeRepositoryMock.Verify(m => m.Delete(employee.Id, currentTime), Times.Never);
         }
 
         private Employee CreateEmployee(string name, int? id = null)

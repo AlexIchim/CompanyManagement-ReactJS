@@ -42,6 +42,7 @@ namespace DataAccess.Repositories
         {
             var employee = GetById(employeeId);
             employee.ReleasedDate = releaseDate;
+            Save();
         }
     }
 }

@@ -23,7 +23,7 @@ namespace ManagementApp.Controllers
             return Json(result);
         }
 
-        [Route("getById")]
+        [Route("getById/{id}")]
         [HttpGet]
         public IHttpActionResult GetById(int id)
         {
@@ -47,11 +47,11 @@ namespace ManagementApp.Controllers
             return Json(result);
         }
 
-        [Route("delete")]
+        [Route("delete/{employeeId}")]
         [HttpDelete]
-        public IHttpActionResult Delete(int employeeId, DateTime releaseDate)
+        public IHttpActionResult Delete(int employeeId)
         {
-            var result = _employeeService.Delete(employeeId, releaseDate);
+            var result = _employeeService.Delete(employeeId, DateTime.Now);
             return Json(result);
         }
     }
