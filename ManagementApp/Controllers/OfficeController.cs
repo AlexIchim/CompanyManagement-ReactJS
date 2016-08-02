@@ -2,10 +2,12 @@
 using Manager.InputInfoModels;
 using Manager.Services;
 using System.Web.Http;
+using System.Web.Http.Cors;
 
 namespace ManagementApp.Controllers
 {
     [RoutePrefix("api/office")]
+    [EnableCors("*", "*", "GET")]
     public class OfficeController : ApiController
     {
         private readonly OfficeService _officeService;
