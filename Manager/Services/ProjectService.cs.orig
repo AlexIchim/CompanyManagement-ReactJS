@@ -42,18 +42,12 @@ namespace Manager.Services
             return employeeInfos;
         }
 
+<<<<<<< HEAD
         public OperationResult Add(AddProjectInputInfo inputInfo)
         {
             var newProject = _mapper.Map<Project>(inputInfo);
             _projectRepository.Add(newProject);
             return new OperationResult(true, Messages.SuccessfullyAddedProject);
-        }
-        public OperationResult AddEmployeeToProject(AddEmployeeToProjectInputInfo inputInfo)
-        {
-            
-            var newEp = _mapper.Map<EmployeeProject>(inputInfo);
-            _projectRepository.AddEmployeeToProject(newEp);
-            return new OperationResult(true, Messages.SuccessfullyAddedDepartment);
         }
 
         public OperationResult Delete(int projectId)
@@ -62,6 +56,13 @@ namespace Manager.Services
             IEnumerable <EmployeeProject> employeeProject = _projectRepository.GetEmployeeProjectByid(projectId);
             _projectRepository.Delete(project, employeeProject);
             return new OperationResult(true, Messages.SuccessfullyDeletedProject);
+=======
+        public OperationResult AddEmployeeToProject(AddEmployeeToProjectInputInfo inputInfo)
+        {
+            var newEp = _mapper.Map<EmployeeProject>(inputInfo);
+            _projectRepository.AddEmployeeToProject(newEp);
+            return new OperationResult(true, Messages.SuccessfullyAddedDepartment);
+>>>>>>> capac-andreimuresan
         }
     }
 }

@@ -17,6 +17,9 @@ namespace DataAccess.Repositories
         {
             _context = context;
         }
+<<<<<<< HEAD
+        public IEnumerable<Employee> GetEmployeeByProjectId(int projectid)
+=======
 
         public void AddEmployeeToProject(EmployeeProject ep)
         {
@@ -27,7 +30,8 @@ namespace DataAccess.Repositories
             _context.EmployeeProjects.Add(ep);
             _context.SaveChanges();
         }
-        public IEnumerable<Employee> GetEmployeeByProjectId(int projectid)
+        public IEnumerable<Employee> GetByProjectId(int projectid)
+>>>>>>> capac-andreimuresan
         {
             List<Employee> array = new List<Employee>();
             var proj = _context.EmployeeProjects.Where(ep => ep.ProjectId == projectid);

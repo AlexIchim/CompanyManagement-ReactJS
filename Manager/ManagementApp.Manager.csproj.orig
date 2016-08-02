@@ -65,11 +65,15 @@
     <Compile Include="InfoModels\MemberInfo.cs" />
     <Compile Include="InfoModels\ProjectInfo.cs" />
 <<<<<<< HEAD
+    <Compile Include="InfoModels\ProjectsOfAnEmployeeInfo.cs" />
     <Compile Include="InputInfoModels\AddOfficeInputInfo.cs" />
 =======
+    <Compile Include="InputInfoModels\AddEmployeeToDepartmentInputInfo.cs" />
     <Compile Include="InfoModels\ProjectsOfAnEmployeeInfo.cs" />
     <Compile Include="InputInfoModels\AddProjectInputInfo.cs" />
+    <Compile Include="InputInfoModels\AddEmployeeToProjectInputInfo.cs" />
 >>>>>>> origin/capac-cristina
+    <Compile Include="InputInfoModels\AddProjectInputInfo.cs" />
     <Compile Include="InputInfoModels\UpdateDepartmentInputInfo.cs" />
     <Compile Include="InputInfoModels\AddDepartmentInputInfo.cs" />
     <Compile Include="Mapper\MappingConfig.cs" />

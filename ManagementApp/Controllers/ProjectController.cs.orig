@@ -31,20 +31,12 @@ namespace ManagementApp.Controllers
             return Json(result);
         }
 
-        [Route("add")]        
+<<<<<<< HEAD
+        [Route("add")]
         [HttpPost]
         public IHttpActionResult Add([FromBody] AddProjectInputInfo inputInfo)
         {
             var result = _projectService.Add(inputInfo);
-            return Json(result);
-        }
-
-        [Route("addEmployeeToProject")]
-        [HttpPost]
-        public IHttpActionResult AddEmployeeToProject([FromBody] AddEmployeeToProjectInputInfo inputInfo)
-        {
-           
-            var result = _projectService.AddEmployeeToProject(inputInfo);
             return Json(result);
         }
 
@@ -53,6 +45,13 @@ namespace ManagementApp.Controllers
         public IHttpActionResult Delete(int projectId)
         {
             var result = _projectService.Delete(projectId);
+=======
+        [Route("addEmployeeToProject")]
+        [HttpPost]
+        public IHttpActionResult AddEmployeeToProject([FromBody] AddEmployeeToProjectInputInfo inputInfo)
+        {
+            var result = _projectService.AddEmployeeToProject(inputInfo);
+>>>>>>> capac-andreimuresan
             return Json(result);
         }
     }

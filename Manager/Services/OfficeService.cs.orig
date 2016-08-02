@@ -3,7 +3,10 @@ using Contracts;
 using Domain.Models;
 using Manager.InfoModels;
 using Manager.InputInfoModels;
+<<<<<<< HEAD
 using System.Collections.Generic;
+=======
+>>>>>>> capac-Patricia
 
 namespace Manager.Services
 {
@@ -36,18 +39,21 @@ namespace Manager.Services
 
         }
 
-        public OperationResult AddDepartment(AddDepartmentInputInfo inputInfo)
+<<<<<<< HEAD
+        public OperationResult Add(AddDepartmentInputInfo inputInfo)
         {
             var newDepartment = _mapper.Map<Department>(inputInfo);
             _officeRepository.Add(newDepartment, inputInfo.DepartmentManagerId);
+
             return new OperationResult(true, Messages.SuccessfullyAddedDepartment);
-        }
+=======
         public OperationResult Add(AddOfficeInputInfo inputInfo)
         {
-           
             var newOffice = _mapper.Map<Office>(inputInfo);
             _officeRepository.AddOffice(newOffice);
+
             return new OperationResult(true, Messages.SuccessfullyAddedOffice);
+>>>>>>> capac-Patricia
         }
     }
 }
