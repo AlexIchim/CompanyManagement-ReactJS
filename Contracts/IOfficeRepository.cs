@@ -17,5 +17,12 @@ namespace Contracts
 
         Office GetOfficeById(int officeId);
 
+        Department GetById(int id);
+        
+        Employee GetEmployeeById(int? id);
+
+      
+
+
     }
 }

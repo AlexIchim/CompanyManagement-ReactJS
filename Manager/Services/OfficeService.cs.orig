@@ -3,10 +3,7 @@ using Contracts;
 using Domain.Models;
 using Manager.InfoModels;
 using Manager.InputInfoModels;
-<<<<<<< HEAD
 using System.Collections.Generic;
-=======
->>>>>>> capac-Patricia
 
 namespace Manager.Services
 {
@@ -14,6 +11,7 @@ namespace Manager.Services
     {
         private readonly IOfficeRepository _officeRepository;
         private readonly IMapper _mapper;
+        private Employee dm;
 
         public OfficeService(IMapper mapper, IOfficeRepository officeRepository)
         {
@@ -39,21 +37,53 @@ namespace Manager.Services
 
         }
 
-<<<<<<< HEAD
-        public OperationResult Add(AddDepartmentInputInfo inputInfo)
+        public OperationResult AddDepartment(AddDepartmentInputInfo inputInfo)
         {
             var newDepartment = _mapper.Map<Department>(inputInfo);
             _officeRepository.Add(newDepartment, inputInfo.DepartmentManagerId);
-
             return new OperationResult(true, Messages.SuccessfullyAddedDepartment);
-=======
+        }
         public OperationResult Add(AddOfficeInputInfo inputInfo)
         {
+
             var newOffice = _mapper.Map<Office>(inputInfo);
             _officeRepository.AddOffice(newOffice);
-
             return new OperationResult(true, Messages.SuccessfullyAddedOffice);
->>>>>>> capac-Patricia
+        }
+
+        public OperationResult UpdateDepartment(UpdateDepartmentInputInfo inputInfo)
+        {
+            var department = _officeRepository.GetById(inputInfo.Id);
+
+            if (department == null)
+            {
+                return new OperationResult(false, Messages.ErrorWhileUpdatingDepartment);
+            }
+            dm = _officeRepository.GetEmployeeById(inputInfo.DepartmentManagerId);
+
+            department.Name = inputInfo.Name;
+            department.DepartmentManager = dm;
+            _officeRepository.Save();
+
+            return new OperationResult(true, Messages.SuccessfullyUpdatedDepartment);
+        }
+
+        public OperationResult UpdateOffice(UpdateOfficeInputInfo inputInfo)
+        {
+            var office = _officeRepository.GetOfficeById(inputInfo.Id);
+
+            if (office == null)
+            {
+                return new OperationResult(false, Messages.ErrorWhileUpdatingOffice);
+            }
+
+            office.Name = inputInfo.Name;
+            office.Address = inputInfo.Address;
+            office.PhoneNumber = inputInfo.PhoneNumber;
+            office.Image = inputInfo.Image;
+            _officeRepository.Save();
+
+            return new OperationResult(true, Messages.SuccessfullyUpdatedOffice);
         }
     }
 }

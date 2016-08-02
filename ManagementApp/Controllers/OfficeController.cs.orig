@@ -1,13 +1,4 @@
-<<<<<<< HEAD
 ﻿using Manager.InputInfoModels;
-=======
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.Http;
-using Manager.InputInfoModels;
->>>>>>> capac-Patricia
 using Manager.Services;
 using System.Web.Http;
 
@@ -39,15 +30,36 @@ namespace ManagementApp.Controllers
             return Json(result);
         }
 
+
         [Route("add")]
         [HttpPost]
-<<<<<<< HEAD
-        public IHttpActionResult Add([FromBody] AddDepartmentInputInfo inputInfo)
-=======
         public IHttpActionResult Add([FromBody] AddOfficeInputInfo inputInfo)
->>>>>>> capac-Patricia
         {
             var result = _officeService.Add(inputInfo);
+            return Json(result);
+        }
+
+        [Route("addDepartment")]
+        [HttpPost]
+        public IHttpActionResult AddDepartment([FromBody] AddDepartmentInputInfo inputInfo)
+        {
+            var result = _officeService.AddDepartment(inputInfo);
+            return Json(result);
+        }
+
+<<<<<<< HEAD
+        [Route("updateOffice")]
+        [HttpPut]
+        public IHttpActionResult UpdateOffice([FromBody] UpdateOfficeInputInfo inputInfo)
+        {
+            var result = _officeService.UpdateOffice(inputInfo);
+=======
+        [Route("UpdateDepartment")]
+        [HttpPut]
+        public IHttpActionResult UpdateDepartment([FromBody]UpdateDepartmentInputInfo inputInfo)
+        {
+            var result = _officeService.UpdateDepartment(inputInfo);
+>>>>>>> capac-Adi
             return Json(result);
         }
 

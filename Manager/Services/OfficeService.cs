@@ -1,4 +1,5 @@
-﻿using AutoMapper;
+﻿
+using AutoMapper;
 using Contracts;
 using Domain.Models;
 using Manager.InfoModels;
@@ -11,6 +12,7 @@ namespace Manager.Services
     {
         private readonly IOfficeRepository _officeRepository;
         private readonly IMapper _mapper;
+        private Employee dm;
 
         public OfficeService(IMapper mapper, IOfficeRepository officeRepository)
         {
@@ -44,10 +46,27 @@ namespace Manager.Services
         }
         public OperationResult Add(AddOfficeInputInfo inputInfo)
         {
-           
+
             var newOffice = _mapper.Map<Office>(inputInfo);
             _officeRepository.AddOffice(newOffice);
             return new OperationResult(true, Messages.SuccessfullyAddedOffice);
+        }
+
+        public OperationResult UpdateDepartment(UpdateDepartmentInputInfo inputInfo)
+        {
+            var department = _officeRepository.GetById(inputInfo.Id);
+
+            if (department == null)
+            {
+                return new OperationResult(false, Messages.ErrorWhileUpdatingDepartment);
+            }
+            dm = _officeRepository.GetEmployeeById(inputInfo.DepartmentManagerId);
+
+            department.Name = inputInfo.Name;
+            department.DepartmentManager = dm;
+            _officeRepository.Save();
+
+            return new OperationResult(true, Messages.SuccessfullyUpdatedDepartment);
         }
 
         public OperationResult UpdateOffice(UpdateOfficeInputInfo inputInfo)

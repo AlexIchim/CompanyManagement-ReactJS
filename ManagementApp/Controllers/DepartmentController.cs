@@ -64,13 +64,7 @@ namespace ManagementApp.Controllers
             return Json(result);
         }
 
-        [Route("update")]
-        [HttpPost]
-        public IHttpActionResult Update([FromBody]UpdateDepartmentInputInfo inputInfo)
-        {
-            var result = _departmentService.Update(inputInfo);
-            return Json(result);
-        }
+       
 
 
 

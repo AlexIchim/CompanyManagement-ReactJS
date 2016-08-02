@@ -1,14 +1,4 @@
-<<<<<<< HEAD
 ﻿using Contracts;
-=======
-﻿using System;
-using System.Collections.Generic;
-using System.Data.Entity.Core.Objects;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Contracts;
->>>>>>> capac-Patricia
 using DataAccess.Context;
 using Domain.Models;
 using System.Collections.Generic;
@@ -37,15 +27,11 @@ namespace DataAccess.Repositories
             return array.Departments;
 
         }
-<<<<<<< HEAD
-        public void Add(Department department, int? departmentManagerId)
+
+        public Department GetById(int id)
         {
-            Employee employee = _context.Employees.SingleOrDefault(e => e.Id == departmentManagerId);
-            department.DepartmentManager = employee;
-            _context.Departments.Add(department);
-            Save();
+            return _context.Departments.SingleOrDefault(d => d.Id == id);
         }
-=======
 
         public void AddOffice(Office office)
         {
@@ -53,14 +39,30 @@ namespace DataAccess.Repositories
             Save();
         }
 
->>>>>>> capac-Patricia
+
+        public void Add(Department department, int? departmentManagerId)
+        {
+            Employee employee = _context.Employees.SingleOrDefault(e => e.Id == departmentManagerId);
+            department.DepartmentManager = employee;
+            _context.Departments.Add(department);
+            Save();
+        }
         public void Save()
         {
             _context.SaveChanges();
         }
+
 <<<<<<< HEAD
+        public Office GetOfficeById(int officeId)
+        {
+            return _context.Offices.SingleOrDefault(o => o.Id == officeId);
+        }
 
 =======
->>>>>>> capac-Patricia
+        public Employee GetEmployeeById(int? id)
+        {
+            return _context.Employees.SingleOrDefault(e => e.Id == id);
+        }
+>>>>>>> capac-Adi
     }
 }
