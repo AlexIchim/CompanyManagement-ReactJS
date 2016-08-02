@@ -13,7 +13,7 @@ namespace Manager.Validators
         public AddEmployeeValidator()
         {
             RuleFor(m => m.Id)
-                .NotNull()
+                .NotEmpty()
                 .GreaterThan(0);
 
             RuleFor(m => m.Name).NotEmpty();

@@ -13,8 +13,8 @@ namespace Manager.Validators
         public AddAssignmentValidator()
         {
             RuleFor(m => m.Allocation).NotEmpty();
-            RuleFor(m => m.ProjectId).NotNull();
-            RuleFor(m => m.EmployeeId).NotNull();
+            RuleFor(m => m.ProjectId).NotEmpty();
+            RuleFor(m => m.EmployeeId).NotEmpty();
         }
     }
 }

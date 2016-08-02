@@ -85,6 +85,7 @@
     <Compile Include="Services\DepartmentService.cs" />
     <Compile Include="Services\ProjectService.cs" />
     <Compile Include="Services\OfficeService.cs" />
+    <Compile Include="Validators\AddAssignmentValidator.cs" />
     <Compile Include="Validators\AddDepartmentValidator.cs" />
     <Compile Include="Validators\AddEmployeeValidator.cs" />
     <Compile Include="Validators\AddOfficeValidator.cs" />
