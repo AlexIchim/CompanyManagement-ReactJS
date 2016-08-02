@@ -67,6 +67,13 @@ namespace DataAccess.Repositories
             _context.ProjectAllocations.RemoveRange(_context.ProjectAllocations.Where(x => x.EmployeeId == id));
             Save();
         }
+
+        public void Add(Employee employee)
+        {
+            _context.Employees.Add(employee);
+            Save();
+        }
+
         public void Save()
         {
             _context.SaveChanges();

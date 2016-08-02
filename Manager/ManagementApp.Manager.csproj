@@ -66,12 +66,14 @@
     <Compile Include="InfoModels\DepartmentInfo.cs" />
     <Compile Include="InfoModels\OfficeInfo.cs" />
     <Compile Include="InputInfoModels\AddAllocationInputInfo.cs" />
+    <Compile Include="InputInfoModels\AddEmployeeInputInfo.cs" />
     <Compile Include="InputInfoModels\AddOfficeInputInfo.cs" />
     <Compile Include="InputInfoModels\AddPositionInputInfo.cs" />
     <Compile Include="InputInfoModels\AddProjectInputInfo.cs" />
     <Compile Include="InputInfoModels\UpdateDepartmentInputInfo.cs" />
     <Compile Include="InputInfoModels\AddDepartmentInputInfo.cs" />
     <Compile Include="InputInfoModels\UpdateAllocationInputInfo.cs" />
+    <Compile Include="InputInfoModels\UpdateEmployeeInputInfo.cs" />
     <Compile Include="InputInfoModels\UpdateOfficeInputInfo.cs" />
     <Compile Include="InputInfoModels\UpdatePositionInputInfo.cs" />
     <Compile Include="InputInfoModels\UpdateProjectInputInfo.cs" />
@@ -90,6 +92,7 @@
     <Compile Include="Services\OfficeService.cs" />
     <Compile Include="Services\PositionService.cs" />
     <Compile Include="Validators\AllocationValidator.cs" />
+    <Compile Include="Validators\EmployeeValidator.cs" />
     <Compile Include="Validators\OfficeValidator.cs" />
     <Compile Include="Validators\DepartmentValidator.cs" />
     <Compile Include="Validators\PositionValidator.cs" />

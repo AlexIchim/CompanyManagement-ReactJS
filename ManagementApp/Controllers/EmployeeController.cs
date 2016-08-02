@@ -1,8 +1,5 @@
 ﻿using Manager.Services;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+using Manager.InputInfoModels;
 using System.Web.Http;
 
 namespace ManagementApp.Controllers
@@ -63,6 +60,22 @@ namespace ManagementApp.Controllers
         public IHttpActionResult Delete(int employeeId)
         {
             var result = _employeeService.Delete(employeeId);
+            return Json(result);
+        }
+
+        [Route("add")]
+        [HttpPost]
+        public IHttpActionResult Add([FromBody] AddEmployeeInputInfo inputInfo)
+        {
+            var result = _employeeService.Add(inputInfo);
+            return Json(result);
+        }
+
+        [Route("update")]
+        [HttpPut]
+        public IHttpActionResult Update([FromBody] UpdateEmployeeInputInfo inputInfo)
+        {
+            var result = _employeeService.Update(inputInfo);
             return Json(result);
         }
     }

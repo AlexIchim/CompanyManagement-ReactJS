@@ -15,6 +15,7 @@ namespace Contracts
         IEnumerable<Tuple<string, int>> GetAllocationsByEmployeeId(int id);
         Employee GetById(int id);
         void Delete(int id);
+        void Add(Employee employee);
         void Save();
 
     }
