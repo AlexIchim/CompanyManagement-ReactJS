@@ -3,7 +3,9 @@ import  {Router, Route,hashHistory, IndexRoute} from 'react-router';
 import * as ReactDOM from 'react-dom';
 import App from './components/App';
 import Department from './components/department/Department';
-import ConcertsList from './components/concertslist/ConcertsList.jsx';
+import Employee from './components/employee/Employee';
+import Project from './components/project/Project';
+import Member from './components/project/Member';
 import './assets/less/index.less';
 import Dashboard from './components/dashboard/Dashboard.jsx';
 
@@ -13,8 +15,10 @@ const Routes = () => {
         <Router history={hashHistory}>
             <Route path="/" component={App}>
                 <IndexRoute component={Dashboard}/>
-                <Route path="Department" component={Department}>
-                </Route>
+                <Route path="office/:officeId/:officeName/departments" component={Department}/>
+                <Route path="department/:departmentId/:departmentName/employees" component={Employee}/>
+                <Route path="department/:departmentId/:departmentName/projects" component={Project}/>
+                <Route path="department/project/:projectId/:projectName/members" component={Member}/>
             </Route>
         </Router>
     )
