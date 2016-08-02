@@ -41,5 +41,46 @@ namespace Manager.Services
 
             return departmentInfos;
         }
+
+        public OperationResult Add(AddOfficeInputInfo inputInfo)
+        {
+            var result = Validators.OfficeValidator.Validate(inputInfo);
+
+            if (result.Success == true)
+            {
+                _officeRepository.Add(_mapper.Map<Office>(inputInfo));
+            }
+
+            return result;
+        }
+
+        public OperationResult Update(UpdateOfficeInputInfo inputInfo)
+        {
+            var office = _officeRepository.GetById(inputInfo.Id);
+
+            var result = Validators.OfficeValidator.Validate(inputInfo);
+
+            if (office != null)
+            {
+                if (result.Success == true)
+                {
+
+                    office.Name = inputInfo.Name;
+                    office.Phone = inputInfo.Phone;
+                    office.Address = inputInfo.Address;
+                    office.Image = inputInfo.Image;
+                    _officeRepository.Save();
+                    return new Manager.OperationResult(true, Messages.SuccessfullyUpdatedOffice);
+                }
+                else
+                {
+                    return result;
+                }
+            }
+            else
+            {
+                return new OperationResult(false, Messages.ErrorWhileUpdatingOffice_InvalidId);
+            }
+        }
     }
 }

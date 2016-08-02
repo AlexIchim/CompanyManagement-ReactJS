@@ -38,6 +38,22 @@ namespace ManagementApp.Controllers
             return Json(result);
         }
 
+        [Route("add")]
+        [HttpPost]
+        public IHttpActionResult Add([FromBody] AddProjectInputInfo inputInfo)
+        {
+            var result = _projectService.Add(inputInfo);
+            return Json(result);
+        }
+
+        [Route("update")]
+        [HttpPut]
+        public IHttpActionResult Update([FromBody] UpdateProjectInputInfo inputInfo)
+        {
+            var result = _projectService.Update(inputInfo);
+            return Json(result);
+        }
+
         [Route("delete/{projectId}")]
         [HttpDelete]
         public IHttpActionResult Delete(int projectId)

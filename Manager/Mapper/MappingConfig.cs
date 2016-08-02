@@ -40,6 +40,10 @@ namespace Manager.Mapper
 
             CreateMap<AddPositionInputInfo, Position>();
             CreateMap<AddAllocationInputInfo, ProjectAllocation>();
+            CreateMap<AddOfficeInputInfo, Office>();
+            CreateMap<AddProjectInputInfo, Project>();
+
+
         }
     }
 }

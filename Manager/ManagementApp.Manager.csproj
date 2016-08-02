@@ -66,11 +66,15 @@
     <Compile Include="InfoModels\DepartmentInfo.cs" />
     <Compile Include="InfoModels\OfficeInfo.cs" />
     <Compile Include="InputInfoModels\AddAllocationInputInfo.cs" />
+    <Compile Include="InputInfoModels\AddOfficeInputInfo.cs" />
     <Compile Include="InputInfoModels\AddPositionInputInfo.cs" />
+    <Compile Include="InputInfoModels\AddProjectInputInfo.cs" />
     <Compile Include="InputInfoModels\UpdateDepartmentInputInfo.cs" />
     <Compile Include="InputInfoModels\AddDepartmentInputInfo.cs" />
     <Compile Include="InputInfoModels\UpdateAllocationInputInfo.cs" />
+    <Compile Include="InputInfoModels\UpdateOfficeInputInfo.cs" />
     <Compile Include="InputInfoModels\UpdatePositionInputInfo.cs" />
+    <Compile Include="InputInfoModels\UpdateProjectInputInfo.cs" />
     <Compile Include="Mapper\MappingConfig.cs" />
     <Compile Include="OperationResult.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -86,8 +90,10 @@
     <Compile Include="Services\OfficeService.cs" />
     <Compile Include="Services\PositionService.cs" />
     <Compile Include="Validators\AllocationValidator.cs" />
+    <Compile Include="Validators\OfficeValidator.cs" />
     <Compile Include="Validators\DepartmentValidator.cs" />
     <Compile Include="Validators\PositionValidator.cs" />
+    <Compile Include="Validators\ProjectValidator.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

@@ -38,5 +38,21 @@ namespace ManagementApp.Controllers
             return Json(result);
         }
 
+        [Route("add")]
+        [HttpPost]
+        public IHttpActionResult Add([FromBody] AddOfficeInputInfo inputInfo)
+        {
+            var result = _officeService.Add(inputInfo);
+            return Json(result);
+        }
+
+        [Route("update")]
+        [HttpPut]
+        public IHttpActionResult Update([FromBody] UpdateOfficeInputInfo inputInfo)
+        {
+            var result = _officeService.Update(inputInfo);
+            return Json(result);
+        }
+
     }
 }
