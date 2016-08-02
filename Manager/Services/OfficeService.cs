@@ -49,5 +49,23 @@ namespace Manager.Services
             _officeRepository.AddOffice(newOffice);
             return new OperationResult(true, Messages.SuccessfullyAddedOffice);
         }
+
+        public OperationResult UpdateOffice(UpdateOfficeInputInfo inputInfo)
+        {
+            var office = _officeRepository.GetOfficeById(inputInfo.Id);
+
+            if (office == null)
+            {
+                return new OperationResult(false, Messages.ErrorWhileUpdatingOffice);
+            }
+
+            office.Name = inputInfo.Name;
+            office.Address = inputInfo.Address;
+            office.PhoneNumber = inputInfo.PhoneNumber;
+            office.Image = inputInfo.Image;
+            _officeRepository.Save();
+
+            return new OperationResult(true, Messages.SuccessfullyUpdatedOffice);
+        }
     }
 }
