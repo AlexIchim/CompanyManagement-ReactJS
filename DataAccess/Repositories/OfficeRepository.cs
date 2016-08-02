@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data.Entity.Core.Objects;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Contracts;
+﻿using Contracts;
 using DataAccess.Context;
 using Domain.Models;
 using System.Collections.Generic;
@@ -34,13 +28,18 @@ namespace DataAccess.Repositories
 
         }
 
+        public Department GetById(int id)
+        {
+            return _context.Departments.SingleOrDefault(d => d.Id == id);
+        }
+
         public void AddOffice(Office office)
         {
             _context.Offices.Add(office);
             Save();
         }
 
-     
+
         public void Add(Department department, int? departmentManagerId)
         {
             Employee employee = _context.Employees.SingleOrDefault(e => e.Id == departmentManagerId);
@@ -56,6 +55,11 @@ namespace DataAccess.Repositories
         public Office GetOfficeById(int officeId)
         {
             return _context.Offices.SingleOrDefault(o => o.Id == officeId);
+        }
+        public Employee GetEmployeeById(int? id)
+        {
+
+            return _context.Employees.SingleOrDefault(e => e.Id == id);
         }
 
     }

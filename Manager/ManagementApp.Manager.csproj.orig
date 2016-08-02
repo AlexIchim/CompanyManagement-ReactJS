@@ -64,18 +64,19 @@
     <Compile Include="InfoModels\EmployeeInfo.cs" />
     <Compile Include="InfoModels\MemberInfo.cs" />
     <Compile Include="InfoModels\ProjectInfo.cs" />
-<<<<<<< HEAD
-    <Compile Include="InfoModels\ProjectsOfAnEmployeeInfo.cs" />
     <Compile Include="InputInfoModels\AddOfficeInputInfo.cs" />
-=======
-    <Compile Include="InputInfoModels\AddEmployeeToDepartmentInputInfo.cs" />
     <Compile Include="InfoModels\ProjectsOfAnEmployeeInfo.cs" />
-    <Compile Include="InputInfoModels\AddProjectInputInfo.cs" />
+    <Compile Include="InputInfoModels\AddEmployeeToDepartmentInputInfo.cs" />
     <Compile Include="InputInfoModels\AddEmployeeToProjectInputInfo.cs" />
->>>>>>> origin/capac-cristina
     <Compile Include="InputInfoModels\AddProjectInputInfo.cs" />
     <Compile Include="InputInfoModels\UpdateDepartmentInputInfo.cs" />
     <Compile Include="InputInfoModels\AddDepartmentInputInfo.cs" />
+<<<<<<< HEAD
+    <Compile Include="InputInfoModels\UpdateEmployeeInputInfo.cs" />
+    <Compile Include="InputInfoModels\UpdateOfficeInputInfo.cs" />
+=======
+    <Compile Include="InputInfoModels\UpdateProjectInputInfo.cs" />
+>>>>>>> capac-andreimuresan
     <Compile Include="Mapper\MappingConfig.cs" />
     <Compile Include="OperationResult.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

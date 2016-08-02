@@ -12,13 +12,16 @@ namespace Contracts
         IEnumerable<Employee> GetEmployeeByProjectId(int ProjectId);
         IQueryable<EmployeeProject> GetEmployeesAllocation(int ProjectId);
 
+        void Save();
         Project GetProjectById(int projectId);
         void AddEmployeeToProject(EmployeeProject ep);
 
-        IEnumerable<EmployeeProject> GetEmployeeProjectByid(int projectId);
+        IEnumerable<EmployeeProject> GetEmployeeProjectById(int projectId);
 
         void Add(Project project);
 
         void Delete(Project project, IEnumerable <EmployeeProject> employeeProject);
+
+        
     }
 }

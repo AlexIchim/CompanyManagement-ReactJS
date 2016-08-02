@@ -3,12 +3,8 @@ using Contracts;
 using Domain.Models;
 using Manager.InfoModels;
 using Manager.InputInfoModels;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Manager.InputInfoModels;
 
 namespace Manager.Services
 {
@@ -50,18 +46,59 @@ namespace Manager.Services
         }
         public OperationResult AddEmployeeToProject(AddEmployeeToProjectInputInfo inputInfo)
         {
-            
+
             var newEp = _mapper.Map<EmployeeProject>(inputInfo);
             _projectRepository.AddEmployeeToProject(newEp);
+            return new OperationResult(true, Messages.SuccessfullyAddedEmployeeToProject);
             return new OperationResult(true, Messages.SuccessfullyAddedDepartment);
         }
 
         public OperationResult Delete(int projectId)
         {
             Project project = _projectRepository.GetProjectById(projectId);
-            IEnumerable <EmployeeProject> employeeProject = _projectRepository.GetEmployeeProjectByid(projectId);
+            IEnumerable<EmployeeProject> employeeProject = _projectRepository.GetEmployeeProjectById(projectId);
             _projectRepository.Delete(project, employeeProject);
             return new OperationResult(true, Messages.SuccessfullyDeletedProject);
         }
+
+        public OperationResult UpdatePartialAllocation(UpdateAllocationInputInfo inputInfo)
+        {
+            var employeeProjects = _projectRepository.GetEmployeeProjectById(inputInfo.ProjectId).ToList();
+            if (employeeProjects != null)
+            {
+                EmployeeProject ep = employeeProjects.Where(e => e.EmployeeId == inputInfo.EmployeeId).SingleOrDefault();
+                if (ep != null)
+                {
+                    ep.Allocation = inputInfo.Allocation;
+                    _projectRepository.Save();
+                    return new OperationResult(true, Messages.SuccessfullyUpdatedPartialAllocation);
+                }
+            }
+            return new OperationResult(false, Messages.ErrorWhileUpdatingDepartment);
+        }
+
+
+
+        public OperationResult UpdateProject(UpdateProjectInputInfo inputInfo)
+        {
+            var updatedProject = _projectRepository.GetProjectById(inputInfo.Id);
+
+            if (updatedProject == null)
+            {
+                return new OperationResult(false, Messages.ErrorWhileUpdatingProject);
+            }
+            //update
+            updatedProject.Name = inputInfo.Name;
+            updatedProject.Status = inputInfo.Status;
+            if (inputInfo.Duration != null)
+            {
+                updatedProject.Duration = inputInfo.Duration;
+            }
+            //save
+            _projectRepository.Save();
+            //result
+            return new OperationResult(true, Messages.SuccessfullyUpdatedProject);
+        }
+
     }
 }
