@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System;
 using Domain.Models;
 
 namespace Contracts
@@ -9,6 +10,6 @@ namespace Contracts
         Employee GetById(int id);
         void Add(Employee department);
         void Save();
-        void Delete(Employee employee);
+        void Delete(int employeeId, DateTime releaseDate);
     }
 }

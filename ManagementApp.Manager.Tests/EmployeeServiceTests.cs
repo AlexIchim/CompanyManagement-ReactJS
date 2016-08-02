@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using AutoMapper;
 using Contracts;
@@ -213,46 +214,42 @@ namespace ManagementApp.Manager.Tests
         [Test]
         public void Delete_CallsGetByIdFromRepository()
         {
-            var employeeId = 1;
-            var employee = CreateEmployee(
-              "Mike");
-            _employeeRepositoryMock.Setup(m => m.GetById(employeeId)).Returns(employee);
-            _employeeRepositoryMock.Setup(m => m.Delete(employee));
+            var employee = new Employee { Id = 1, Name = "George", ReleasedDate = DateTime.Now};
+            _employeeRepositoryMock.Setup(m => m.GetById(employee.Id)).Returns(employee);
+            _employeeRepositoryMock.Setup(m => m.Delete(employee.Id, employee.ReleasedDate));
 
             //Act
-            _employeeService.Delete(employeeId);
+            _employeeService.Delete(employee.Id, employee.ReleasedDate);
 
             //Assert
-            _employeeRepositoryMock.Verify(m => m.GetById(employeeId), Times.Once);
+            _employeeRepositoryMock.Verify(m => m.GetById(employee.Id), Times.Once);
         }
         [Test]
         public void Delete_CallsDeleteFromRepository_WhenEmployeeDoesExist()
         {
             //Arrange
-            var employeeId = 1;
-            var employee = CreateEmployee(
-                "Mike");
-            _employeeRepositoryMock.Setup(m => m.GetById(employeeId)).Returns(employee);
-            _employeeRepositoryMock.Setup(m => m.Delete(employee));
+            var employee = new Employee { Id = 1, Name = "George", ReleasedDate = DateTime.Today };
+            _employeeRepositoryMock.Setup(m => m.GetById(employee.Id)).Returns(employee);
+            _employeeRepositoryMock.Setup(m => m.Delete(employee.Id, employee.ReleasedDate));
 
             //Act
-            _employeeService.Delete(employeeId);
+            _employeeService.Delete(employee.Id, employee.ReleasedDate);
 
             //Assert
-            _employeeRepositoryMock.Verify(m => m.Delete(employee), Times.Once);
+            _employeeRepositoryMock.Verify(m => m.Delete(employee.Id, employee.ReleasedDate), Times.Once);
         }
         [Test]
         public void Delete_DoesNotCallDeleteFromRepository_WhenEmployeeDoesNotExist()
         {
             //Arrange
-            var employeeId = 1;
-            _employeeRepositoryMock.Setup(m => m.GetById(employeeId)).Returns((Employee)null);
+            var employee = new Employee { Id = 1, Name = "George", ReleasedDate = DateTime.Now };
+            _employeeRepositoryMock.Setup(m => m.GetById(employee.Id)).Returns((Employee)null);
 
             //Act
-            _employeeService.Delete(employeeId);
+            _employeeService.Delete(employee.Id, employee.ReleasedDate);
 
             //Assert
-            _employeeRepositoryMock.Verify(m => m.Delete(null), Times.Never);
+            _employeeRepositoryMock.Verify(m => m.Delete(employee.Id, employee.ReleasedDate), Times.Never);
         }
 
         private Employee CreateEmployee(string name, int? id = null)

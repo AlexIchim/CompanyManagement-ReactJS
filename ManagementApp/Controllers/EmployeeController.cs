@@ -1,4 +1,5 @@
-﻿using System.Web.Http;
+﻿using System;
+using System.Web.Http;
 using Manager.InputInfoModels;
 using Manager.Services;
 
@@ -48,9 +49,9 @@ namespace ManagementApp.Controllers
 
         [Route("delete")]
         [HttpDelete]
-        public IHttpActionResult Delete(int employeeId)
+        public IHttpActionResult Delete(int employeeId, DateTime releaseDate)
         {
-            var result = _employeeService.Delete(employeeId);
+            var result = _employeeService.Delete(employeeId, releaseDate);
             return Json(result);
         }
     }

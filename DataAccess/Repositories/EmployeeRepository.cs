@@ -40,7 +40,8 @@ namespace DataAccess.Repositories
 
         public void Delete(int employeeId, DateTime releaseDate)
         {
-
+            var employee = GetById(employeeId);
+            employee.ReleasedDate = releaseDate;
         }
     }
 }

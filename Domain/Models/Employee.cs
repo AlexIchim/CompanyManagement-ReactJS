@@ -29,7 +29,7 @@ namespace Domain.Models {
         public Department Department { get; set; }
         public ICollection<Assignment> Assignments { get; set; }
         public DateTime EmploymentDate { get; set; }
-        public DateTime? ReleasedDate { get; set; }
+        public DateTime ReleasedDate { get; set; }
         public JobTypes JobType { get; set; }
         public Position Position { get; set; }
     }
