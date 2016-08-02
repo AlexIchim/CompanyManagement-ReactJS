@@ -1,10 +1,12 @@
 ﻿using System.Web.Http;
 using Manager.InputInfoModels;
 using Manager.Services;
+using System.Web.Http.Cors;
 
 namespace ManagementApp.Controllers
 {
     [RoutePrefix("api/project")]
+    [EnableCors("*", "*", "*")]
     public class ProjectController : ApiController
     {
         private readonly ProjectService _projectService;

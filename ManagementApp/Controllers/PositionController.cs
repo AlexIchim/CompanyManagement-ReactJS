@@ -1,10 +1,12 @@
 ﻿using System.Web.Http;
 using Manager.InputInfoModels;
 using Manager.Services;
+using System.Web.Http.Cors;
 
 namespace ManagementApp.Controllers
 {
     [RoutePrefix("api/position")]
+    [EnableCors("*", "*", "*")]
     public class PositionController : ApiController
     {
         private readonly PositionService _positionService;
