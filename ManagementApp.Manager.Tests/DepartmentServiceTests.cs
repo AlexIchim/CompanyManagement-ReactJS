@@ -12,7 +12,7 @@ using NUnit.Framework;
 
 namespace ManagementApp.Manager.Tests
 {
-    /*[TestFixture]
+    [TestFixture]
     public class DepartmentServiceTests
     {
         private DepartmentService _departmentService;
@@ -48,7 +48,7 @@ namespace ManagementApp.Manager.Tests
             _mapperMock.Setup(m => m.Map<IEnumerable<DepartmentInfo>>(departments)).Returns(departmentsInfo);
 
             //Act
-           var result = _departmentService.GetAll();
+            var result = _departmentService.GetAll();
 
             //Assert
             Assert.AreEqual(2, result.Count());
@@ -70,7 +70,7 @@ namespace ManagementApp.Manager.Tests
         public void Add_CallsAddFromRepository()
         {
             //Arrange
-            var departmentInputInfo = new AddDepartmentInputInfo {Name = "javascript", OfficeId = 2, DepartmentManagerId = 4};
+            var departmentInputInfo = new AddDepartmentInputInfo { Name = "javascript", OfficeId = 2, DepartmentManagerId = 4 };
             var department = new Department { Name = "javascript", OfficeId = 2 };
             var office = new Office { Id = 2 };
 
@@ -145,8 +145,11 @@ namespace ManagementApp.Manager.Tests
         public void Add_ReturnsErrorMessage_WhenNameIsTooLong()
         {
             //Arrange
-            var departmentInputInfo = new AddDepartmentInputInfo { Name = "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-                OfficeId = 1 };
+            var departmentInputInfo = new AddDepartmentInputInfo
+            {
+                Name = new string('a', 205),
+                OfficeId = 1
+            };
             var department = CreateDepartment("", 1);
             var office = new Office { Id = 1 };
 
@@ -201,7 +204,7 @@ namespace ManagementApp.Manager.Tests
         public void Update_ReturnsSuccessfulMessage_WhenDepartmentExists()
         {
             //Arrange
-            var departmentInputInfo = new UpdateDepartmentInputInfo {Id = 1, Name = "php" };
+            var departmentInputInfo = new UpdateDepartmentInputInfo { Id = 1, Name = "php" };
             var department = new Department { Id = 1, Name = "java" };
             var office = new Office { Id = 1 };
 
@@ -214,7 +217,7 @@ namespace ManagementApp.Manager.Tests
             //Assert
             Assert.IsTrue(result.Success);
             Assert.AreEqual(Messages.SuccessfullyUpdatedDepartment, result.Message);
-        }    
+        }
 
         [Test]
         public void Update_ReturnsErrorMessage_WhenDepartmentDoesNotExists()
@@ -257,8 +260,8 @@ namespace ManagementApp.Manager.Tests
         public void Update_ReturnsErrorMessage_WhenDepartmentNameIsTooLong()
         {
             //Arrange
-            var departmentInputInfo = new UpdateDepartmentInputInfo { Id = 1, Name = "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" };
-            var department = new Department { Id = 1, Name = "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" };
+            var departmentInputInfo = new UpdateDepartmentInputInfo { Id = 1, Name = new string('a', 205) };
+            var department = new Department { Id = 1, Name = null };
             var office = new Office { Id = 1 };
 
             _officeRepositoryMock.Setup(m => m.GetById(departmentInputInfo.OfficeId)).Returns(office);
@@ -306,14 +309,14 @@ namespace ManagementApp.Manager.Tests
 
         private Department CreateDepartment(string name, int officeId, int? id = null)
         {
-            var department =  new Department
+            var department = new Department
             {
                 Name = name,
                 OfficeId = officeId
             };
             if (id != null)
             {
-                department.Id = (int) id;
+                department.Id = (int)id;
             }
             return department;
         }
@@ -327,5 +330,5 @@ namespace ManagementApp.Manager.Tests
                 OfficeId = officeId
             };
         }
-    }*/
+    }
 }
