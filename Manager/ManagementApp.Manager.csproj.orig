@@ -65,9 +65,11 @@
     <Compile Include="InfoModels\MemberInfo.cs" />
     <Compile Include="InfoModels\ProjectInfo.cs" />
 <<<<<<< HEAD
+    <Compile Include="InfoModels\ProjectsOfAnEmployeeInfo.cs" />
+    <Compile Include="InputInfoModels\AddProjectInputInfo.cs" />
 =======
-    <Compile Include="InputInfoModels\GetDepartmentProjectsInputInfo.cs" />
->>>>>>> capac-Adi
+    <Compile Include="InputInfoModels\AddEmployeeToProjectInputInfo.cs" />
+>>>>>>> capac-andreimuresan
     <Compile Include="InputInfoModels\UpdateDepartmentInputInfo.cs" />
     <Compile Include="InputInfoModels\AddDepartmentInputInfo.cs" />
     <Compile Include="Mapper\MappingConfig.cs" />
@@ -79,6 +81,7 @@
       <DependentUpon>Messages.resx</DependentUpon>
     </Compile>
     <Compile Include="Services\DepartmentService.cs" />
+    <Compile Include="Services\EmployeeService.cs" />
     <Compile Include="Services\OfficeService.cs" />
     <Compile Include="Services\ProjectService.cs" />
   </ItemGroup>

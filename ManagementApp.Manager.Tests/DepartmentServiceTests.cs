@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+﻿ using System.Collections.Generic;
 using System.Linq;
 using AutoMapper;
 using Contracts;
@@ -70,8 +70,11 @@ namespace ManagementApp.Manager.Tests
                 CreateEmployeeInfo(2,"Cristina",0),
                 CreateEmployeeInfo(3,"Patricia",60)
             };
+
             _departmentRepositoryMock.Setup(m => m.GetAllUnAllocatedEmployeesOnProject()).Returns(employees);
             _mapperMock.Setup(m => m.Map<IEnumerable<EmployeeInfo>>(employees)).Returns(employeesinfo);
+
+
 
             //Act
             var result = _departmentService.GetAllUnAllocatedEmployeesOnProject();
