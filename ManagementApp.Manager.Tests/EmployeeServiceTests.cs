@@ -47,7 +47,7 @@ namespace ManagementApp.Manager.Tests
             _mapperMock.Setup(m => m.Map<IEnumerable<EmployeeInfo>>(employees)).Returns(employeesInfo);
 
             //Act - apeleaza metoda care vreau sa fie testata
-           var result = _employeeService.GetAll();
+            var result = _employeeService.GetAll();
 
             //Assert
             Assert.AreEqual(2, result.Count());
@@ -69,7 +69,7 @@ namespace ManagementApp.Manager.Tests
         public void Add_CallsAddFromRepository()
         {
             //Arrange
-            var employeeInputInfo = new AddEmployeeInputInfo {Name = "Andrew"};
+            var employeeInputInfo = new AddEmployeeInputInfo { Name = "Andrew" };
             var employee = new Employee { Name = "Andrew" };
 
             _mapperMock.Setup(m => m.Map<Employee>(employeeInputInfo)).Returns(employee);
@@ -135,9 +135,9 @@ namespace ManagementApp.Manager.Tests
         public void Update_ReturnsSuccessfulMessage_WhenEmployeeExists()
         {
             //Arrange
-            var employeeInputInfo = new UpdateEmployeeInputInfo {Id = 1, Name = "Lily" };
+            var employeeInputInfo = new UpdateEmployeeInputInfo { Id = 1, Name = "Lily" };
             var employee = new Employee { Id = 1, Name = "Mike" };
-            
+
             _employeeRepositoryMock.Setup(m => m.GetById(employeeInputInfo.Id)).Returns(employee);
 
             //Act
@@ -214,7 +214,7 @@ namespace ManagementApp.Manager.Tests
         [Test]
         public void Delete_CallsGetByIdFromRepository()
         {
-            var employee = new Employee { Id = 1, Name = "George", ReleasedDate = null};
+            var employee = new Employee { Id = 1, Name = "George", ReleasedDate = null };
             _employeeRepositoryMock.Setup(m => m.GetById(employee.Id)).Returns(employee);
             //_employeeRepositoryMock.Setup(m => m.Delete(employee.Id, employee.ReleasedDate));
 
@@ -255,15 +255,42 @@ namespace ManagementApp.Manager.Tests
             _employeeRepositoryMock.Verify(m => m.Delete(employee.Id, currentTime), Times.Never);
         }
 
+        [Test]
+        public void GetRemainingAllocation_ReturnsCorrectValueFromDB()
+        {
+            //Arrange
+            var employee = new Employee { Id = 2 };
+            var assignment1 = CreateAssignment(2, 0, 20);
+            var assignment2 = CreateAssignment(2, 1, 40);
+            employee.Assignments.Add(assignment1);
+            employee.Assignments.Add(assignment2);
+
+            _employeeRepositoryMock.Setup(m => m.GetById(employee.Id)).Returns(employee);
+            //Act 
+            var result = _employeeService.GetRemainingAllocation(employee.Id);
+            //Assert
+            Assert.AreEqual(40, result);
+        }
+
+        private Assignment CreateAssignment(int employeeId, int projectId, int allocation)
+        {
+            var assignment = new Assignment
+            {
+                EmployeeId = employeeId,
+                ProjectId = projectId,
+                Allocation = allocation
+            };
+            return assignment;
+        }
         private Employee CreateEmployee(string name, int? id = null)
         {
-            var employee =  new Employee
+            var employee = new Employee
             {
                 Name = name
             };
             if (id != null)
             {
-                employee.Id = (int) id;
+                employee.Id = (int)id;
             }
             return employee;
         }

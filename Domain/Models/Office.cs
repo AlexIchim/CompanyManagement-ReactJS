@@ -4,8 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Domain.Models {
-    public class Office {
+namespace Domain.Models
+{
+    public class Office
+    {
         public Office()
         {
             this.Departments = new List<Department>();

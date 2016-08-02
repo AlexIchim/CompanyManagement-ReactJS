@@ -23,7 +23,7 @@ namespace Manager.Services
 
         public OperationResult Add(AddProjectInputInfo infoInput)
         {
-          
+
             Project newProject = _mapper.Map<Project>(infoInput);
             newProject.Department = _departmentRepository.GetById(infoInput.DepartmentId);
             _projectRepository.Add(newProject);

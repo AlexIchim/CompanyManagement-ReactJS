@@ -25,7 +25,7 @@ namespace Manager.Services
 
             return departmentInfos;
         }
-        
+
         public OperationResult Add(AddDepartmentInputInfo inputInfo)
         {
             var newDepartment = _mapper.Map<Department>(inputInfo);
