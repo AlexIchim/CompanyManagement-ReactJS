@@ -4,16 +4,21 @@ import * as $ from 'jquery';
 import configs from '../helpers/calls'
 
 
+
+
 const Tr = (props) => {
+   const linkEmployees = "department/" + props.node.Id  + '/' + props.node.Name + "/employees";
+   const linkProjects = "department/" + props.node.Id  + '/' + props.node.Name + "/projects";
     return(
-        <tr>
-            <td>{ props.node.Name } </td>
+
+            <tr>
+            <td>{props.node.Name}</td>
             <td>{props.node.DepartmentManager}</td>
             <td>{props.node.NbrOfEmployees}</td>
             <td>{props.node.NbrOfProjects}</td>
-            <td><a href="#"> View employees | </a>
-                <a href="#"> View projects | </a>
-                <a href="#"> Edit </a></td>
+            <td><Link to={linkEmployees}> View employees | </Link>
+                <Link to={linkProjects}> View projects | </Link>
+                <Link to="#"> Edit </Link></td>
         </tr>
     )
 }
@@ -28,10 +33,9 @@ export default class Department extends React.Component {
     }
     
     componentWillMount(){
-        console.log(configs);
         $.ajax({
             method: 'GET',
-            url: configs.baseUrl + 'api/office/getAllDepOffice?officeId=1',
+            url: configs.baseUrl + 'api/office/getAllDepOffice?officeId=' + this.props.routeParams.officeId,
             success: function (data) {
                 console.log(data, this);
                 this.setState({
@@ -40,7 +44,7 @@ export default class Department extends React.Component {
             }.bind(this)
         })
     }
-
+    
 
 
     render() {
@@ -59,7 +63,7 @@ export default class Department extends React.Component {
         return (
 
             <div>
-                <h1>X Department </h1>
+                <h1>{this.props.routeParams.officeName + ' Departments'}  </h1>
                 <button className="btn btn-xs btn-info" > <span className="glyphicon glyphicon-plus-sign"></span> Add new department </button>
                 <table className="table table-condensed" id="table1">
                     <thead>
