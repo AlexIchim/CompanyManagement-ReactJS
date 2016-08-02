@@ -10,6 +10,12 @@ namespace Contracts
         IEnumerable<Department> GetAllDepartmentsOfAnOffice(int officeId);
 
         void Add(Department department, int? departmentManagerId);
+
         void AddOffice(Office office);
+
+        void Save();
+
+        Office GetOfficeById(int officeId);
+
     }
 }

@@ -53,5 +53,10 @@ namespace DataAccess.Repositories
             _context.SaveChanges();
         }
 
+        public Office GetOfficeById(int officeId)
+        {
+            return _context.Offices.SingleOrDefault(o => o.Id == officeId);
+        }
+
     }
 }

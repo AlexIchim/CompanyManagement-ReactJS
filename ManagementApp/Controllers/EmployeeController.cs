@@ -34,5 +34,17 @@ namespace ManagementApp.Controllers
 
         }
 
+        [Route("updateEmployee")]
+        [HttpPut]
+        public IHttpActionResult UpdateEmployee(UpdateEmployeeInputInfo inputInfo)
+        {
+            var result = _employeeService.UpdateEmployee(inputInfo);
+
+            return Json(result);
+
+        }
+
+
+
     }
 }
