@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using AutoMapper;
 using Contracts;
 using Domain.Models;
@@ -58,6 +59,13 @@ namespace Manager.Services
             return projectsInfos;
         }
 
+        public IEnumerable<ProjectInfo> FilterProjectsOfADepartmentByStatus(int departmentId, string status)
+        {
+            var projects = _departmentRepository.FilterProjectsOfADepartmentByStatus(departmentId, status);
+            var projectsInfos = _mapper.Map<IEnumerable<ProjectInfo>>(projects);
+
+            return projectsInfos;
+        }
         public OperationResult AddDepartment(AddDepartmentInputInfo inputInfo)
         {
             var validationResult = _addDepartmentValidator.Validate(inputInfo);

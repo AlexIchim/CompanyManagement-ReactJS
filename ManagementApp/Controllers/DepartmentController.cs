@@ -45,6 +45,14 @@ namespace ManagementApp.Controllers
             return Json(result);
         }
 
+        [Route("projectsByStatus")]
+        [HttpGet]
+        public IHttpActionResult FilterProjectsOfADepartmentByStatus(int departmentId, string status)
+        {
+            var result = _departmentService.FilterProjectsOfADepartmentByStatus(departmentId, status);
+            return Json(result);
+        }
+
         [Route("add")]
         [HttpPost]
         public IHttpActionResult Add([FromBody] AddDepartmentInputInfo inputInfo)

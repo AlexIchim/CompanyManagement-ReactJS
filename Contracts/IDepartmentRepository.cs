@@ -9,6 +9,7 @@ namespace Contracts
         Department GetDepartmentById(int departmentId);
         IEnumerable<Employee> GetAllMembersOfADepartment(int departmentId);
         IEnumerable<Project> GetAllProjectsOfADepartment(int departmentId);
+        IEnumerable<Project> FilterProjectsOfADepartmentByStatus(int departmentId, string status);
         void AddDepartment(Department department);
         void Save();
     }
