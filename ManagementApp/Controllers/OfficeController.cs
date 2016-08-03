@@ -4,12 +4,14 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
+using System.Web.Http.Cors;
 using Manager.InputInfoModels;
 using Manager.Services;
 
 namespace ManagementApp.Controllers
 {
     [RoutePrefix("api/office")]
+    [EnableCors("*","*","GET POST PUT")]
     public class OfficeController : ApiController
     {
         private readonly OfficeService _officeService;
@@ -27,7 +29,7 @@ namespace ManagementApp.Controllers
             return Json(result);
         }
 
-        [Route("office/{officeId}")]
+        [Route("departments/{officeId}")]
         [HttpGet]
         public IHttpActionResult GetAllDepartmentsOfAnOffice(int officeId) {
             var result = _officeService.GetAllDepartmentsOfAnOffice(officeId);

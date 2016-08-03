@@ -5,7 +5,6 @@ import App from './components/App';
 import ConcertsList from './components/concertslist/ConcertsList.jsx';
 import './assets/less/index.less';
 import Dashboard from './components/dashboard/Dashboard.jsx';
-
 const Routes = () => {
 
     return (
