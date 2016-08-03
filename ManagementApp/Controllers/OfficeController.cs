@@ -27,7 +27,7 @@ namespace ManagementApp.Controllers
             return Json(result);
         }
 
-        [Route("departments/{officeId}")]
+        [Route("office/{officeId}")]
         [HttpGet]
         public IHttpActionResult GetAllDepartmentsOfAnOffice(int officeId) {
             var result = _officeService.GetAllDepartmentsOfAnOffice(officeId);
