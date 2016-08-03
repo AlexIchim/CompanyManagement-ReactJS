@@ -5,6 +5,7 @@ import App from './components/App';
 import ConcertsList from './components/concertslist/ConcertsList.jsx';
 import './assets/less/index.less';
 import Dashboard from './components/dashboard/Dashboard.jsx';
+import Departments from './components/department/Departments.jsx'
 const Routes = () => {
 
     return (
@@ -13,6 +14,10 @@ const Routes = () => {
                 <IndexRoute component={Dashboard}/>
                 <Route path="ConcertsList" component={ConcertsList}>
                 </Route>
+
+                <Route path="office/departments/:officeId" component={Departments}>
+                </Route>
+
             </Route>
         </Router>
     )

@@ -45,7 +45,10 @@ export default class Dashboard extends React.Component{
 
     render(){
         const items=this.state.offices.map((office,index)=>{
-            return(
+        return (
+        const icons = ["user", "users", "trash", "envelope-o", "calendar-o"];
+        const items = this.state.offices.map ( (office, index) => {
+            return (
                 <Tile
                     parentClass="bg-aqua"
                     phone={office.Phone}
@@ -58,6 +61,11 @@ export default class Dashboard extends React.Component{
                 />
             );
         })
+
+        return (
+            <div className="row">
+
+                {items}
 
         let form;
         if(this.state.formToggle){
