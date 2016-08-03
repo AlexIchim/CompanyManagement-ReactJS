@@ -31,6 +31,14 @@ namespace ManagementApp.Controllers
             return Json(result, _camelCaseJsonSettings);
         }
 
+        [Route("{id}")]
+        [HttpGet]
+        public IHttpActionResult GetById(int id)
+        {
+            var result = _departmentService.GetById(id);
+            return Json(result, _camelCaseJsonSettings);
+        }
+
         [Route("{id}/projects")]
         [HttpGet]
         public IHttpActionResult GetProjectsByDepartmentId(int id, int? pageSize = null, int? pageNumber = null)

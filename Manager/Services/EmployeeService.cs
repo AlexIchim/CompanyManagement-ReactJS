@@ -96,11 +96,11 @@ namespace Manager.Services
             }
             else if (department == null)
             {
-                return new Manager.OperationResult(false, Messages.ErrorWhileAddingEmployee_NoSuchDepartment);
+                return new OperationResult(false, Messages.NoSuchDepartment);
             }
             else if (position == null)
             {
-                return new Manager.OperationResult(false, Messages.ErrorWhileAddingEmployee_NoSuchPosition);
+                return new OperationResult(false, Messages.NoSuchPosition);
             }
 
             return result;
@@ -119,7 +119,7 @@ namespace Manager.Services
                 employee.EmploymentHours = inputInfo.EmploymentHours;
                 employee.EmploymentDate = inputInfo.EmploymentDate;
                 _employeeRepository.Save();
-                return new Manager.OperationResult(true, Messages.SuccessfullyUpdatedEmployee);
+                return new OperationResult(true, Messages.SuccessfullyUpdatedEmployee);
             }
 
             return result;

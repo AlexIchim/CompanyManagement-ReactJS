@@ -87,9 +87,9 @@ namespace ManagementApp.Manager.Tests
             //Assert
 
             Assert.IsFalse(resultNameEmpty.Success);
-            Assert.AreEqual(Messages.ErrorWhileAddingEmployee_EmptyEmployeeName, resultNameEmpty.Message);
+            Assert.AreEqual(Messages.EmptyEmployeeName, resultNameEmpty.Message);
             Assert.IsFalse(resultTooLongName.Success);
-            Assert.AreEqual(Messages.ErrorWhileAddingEmployee_TooLongEmployeeName, resultTooLongName.Message);
+            Assert.AreEqual(Messages.TooLongEmployeeName, resultTooLongName.Message);
 
         }
 
@@ -143,7 +143,7 @@ namespace ManagementApp.Manager.Tests
             //Assert
 
             Assert.IsFalse(resultTooLongEmail.Success);
-            Assert.AreEqual(Messages.ErrorWhileAddingEmployee_TooLongEmployeeEmail, resultTooLongEmail.Message);
+            Assert.AreEqual(Messages.TooLongEmployeeEmail, resultTooLongEmail.Message);
 
 
         }
@@ -201,7 +201,7 @@ namespace ManagementApp.Manager.Tests
             //Assert
 
             Assert.IsFalse(resultTooLongAddress.Success);
-            Assert.AreEqual(Messages.ErrorWhileAddingEmployee_TooLongEmployeeAddress, resultTooLongAddress.Message);
+            Assert.AreEqual(Messages.TooLongEmployeeAddress, resultTooLongAddress.Message);
 
 
         }
@@ -259,7 +259,7 @@ namespace ManagementApp.Manager.Tests
             //Assert
 
             Assert.IsFalse(resultTooFewEmploymentHours.Success);
-            Assert.AreEqual(Messages.ErrorWhileAddingEmployee_NegativeEmploymentHours, resultTooFewEmploymentHours.Message);
+            Assert.AreEqual(Messages.TooFewEmploymentHours, resultTooFewEmploymentHours.Message);
 
 
         }
@@ -288,7 +288,7 @@ namespace ManagementApp.Manager.Tests
             //Assert
 
             Assert.IsFalse(resultTooManyEmploymentHours.Success);
-            Assert.AreEqual(Messages.ErrorWhileAddingEmployee_TooManyHours, resultTooManyEmploymentHours.Message);
+            Assert.AreEqual(Messages.TooManyEmploymentHours, resultTooManyEmploymentHours.Message);
 
 
         }
@@ -352,9 +352,9 @@ namespace ManagementApp.Manager.Tests
             //Assert
 
             Assert.IsFalse(resultNameEmpty.Success);
-            Assert.AreEqual(Messages.ErrorWhileUpdatingEmployee_EmptyEmployeeName, resultNameEmpty.Message);
+            Assert.AreEqual(Messages.EmptyEmployeeName, resultNameEmpty.Message);
             Assert.IsFalse(resultTooLongName.Success);
-            Assert.AreEqual(Messages.ErrorWhileUpdatingEmployee_TooLongEmployeeName, resultTooLongName.Message);
+            Assert.AreEqual(Messages.TooLongEmployeeName, resultTooLongName.Message);
 
         }
 
@@ -408,7 +408,7 @@ namespace ManagementApp.Manager.Tests
             //Assert
 
             Assert.IsFalse(resultTooLongEmail.Success);
-            Assert.AreEqual(Messages.ErrorWhileUpdatingEmployee_TooLongEmployeeEmail, resultTooLongEmail.Message);
+            Assert.AreEqual(Messages.TooLongEmployeeEmail, resultTooLongEmail.Message);
 
 
         }
@@ -466,7 +466,7 @@ namespace ManagementApp.Manager.Tests
             //Assert
 
             Assert.IsFalse(resultTooLongAddress.Success);
-            Assert.AreEqual(Messages.ErrorWhileUpdatingEmployee_TooLongEmployeeAddress, resultTooLongAddress.Message);
+            Assert.AreEqual(Messages.TooLongEmployeeAddress, resultTooLongAddress.Message);
 
 
         }
@@ -524,7 +524,7 @@ namespace ManagementApp.Manager.Tests
             //Assert
 
             Assert.IsFalse(resultTooFewEmploymentHours.Success);
-            Assert.AreEqual(Messages.ErrorWhileUpdatingEmployee_NegativeEmploymentHours, resultTooFewEmploymentHours.Message);
+            Assert.AreEqual(Messages.TooFewEmploymentHours, resultTooFewEmploymentHours.Message);
 
 
         }
@@ -553,7 +553,7 @@ namespace ManagementApp.Manager.Tests
             //Assert
 
             Assert.IsFalse(resultTooManyEmploymentHours.Success);
-            Assert.AreEqual(Messages.ErrorWhileUpdatingEmployee_TooManyHours, resultTooManyEmploymentHours.Message);
+            Assert.AreEqual(Messages.TooManyEmploymentHours, resultTooManyEmploymentHours.Message);
 
 
         }
