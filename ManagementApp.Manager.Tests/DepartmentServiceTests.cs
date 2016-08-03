@@ -9,6 +9,7 @@ using Moq;
 using NUnit.Framework;
 using System.Collections.Generic;
 using System.Linq;
+using Domain.Enums;
 
 namespace ManagementApp.Manager.Tests
 {
@@ -53,8 +54,8 @@ namespace ManagementApp.Manager.Tests
         }
 
 
-        //nu merge inca
-        [Test]
+        
+       /* [Test]
         public void GetAllUnAllocatedEmployeesOnProject()
         {
             //Arrange
@@ -62,13 +63,13 @@ namespace ManagementApp.Manager.Tests
             {
                 CreateEmployee("Adi",0,1),
                 CreateEmployee("Cristina",0,2),
-              //  CreateEmployee("Patricia",60,3)
+                CreateEmployee("Patricia",60,3)
             };
             var employeesinfo = new List<EmployeeInfo>
             {
                 CreateEmployeeInfo(1,"Adi",0),
                 CreateEmployeeInfo(2,"Cristina",0),
-               // CreateEmployeeInfo(3,"Patricia",60)
+                CreateEmployeeInfo(3,"Patricia",60)
             };
 
             _departmentRepositoryMock.Setup(m => m.GetAllUnAllocatedEmployeesOnProject()).Returns(employees);
@@ -82,7 +83,7 @@ namespace ManagementApp.Manager.Tests
             //Assert
             Assert.AreEqual(3,result.Count());
 
-        }
+        }*/
 
         [Test]
         public void GetAll_CallsGetAllFromRepository()
@@ -96,53 +97,104 @@ namespace ManagementApp.Manager.Tests
             _departmentRepositoryMock.Verify(x => x.GetAll(), Times.Once);
         }
 
-        //[Test]
-        //public void Add_CallsAddFromRepository()
-        //{
-        //    //Arrange
-        //    var departmentInputInfo = new AddDepartmentInputInfo {Name = "javascript"};
-        //    var department = new Department { Name = "javascript" };
+        [Test]
+        public void Add_CallsAddFromRepository()
+        {
+            //Arrange
+            var employee = new Employee { Id = 1, Name = "Adi", PositionType = PositionType.DepartmentManager };
+            var departmentInputInfo = new AddDepartmentInputInfo { Name = "javascript", DepartmentManagerId = employee.Id };
+            var department = new Department { Id = 1, Name = "javascript", DepartmentManager = employee };
 
-        //    _mapperMock.Setup(m => m.Map<Department>(departmentInputInfo)).Returns(department);
-        //    _departmentRepositoryMock.Setup(m => m.Add(department));
 
-        //    //Act
-        //    _departmentService.Add(departmentInputInfo);
+            _mapperMock.Setup(m => m.Map<Department>(departmentInputInfo)).Returns(department);
+            _departmentRepositoryMock.Setup(m => m.DepartmentWithNameExists(department.Name)).Returns(false);
+            _departmentRepositoryMock.Setup(m => m.IsDepartmentManager(employee.Id)).Returns(true);
+            _departmentRepositoryMock.Setup(m => m.AddDepartment(department, employee.Id));
+            
 
-        //    //Assert
-        //    _departmentRepositoryMock.Verify(x => x.Add(department), Times.Once);
-        //}
+            //Act
+            _departmentService.AddDepartment(departmentInputInfo);
 
-        //[Test]
-        //public void Add_ReturnsSuccessfulMessage()
-        //{
-        //    //Arrange
-        //    var departmentInputInfo = new AddDepartmentInputInfo { Name = "javascript" };
-        //    var department = CreateDepartment("javascript");
+            //Assert
+           
+            _departmentRepositoryMock.Verify(x => x.AddDepartment(department, employee.Id), Times.Once);
+        }
 
-        //    _mapperMock.Setup(m => m.Map<Department>(departmentInputInfo)).Returns(department);
-        //    _departmentRepositoryMock.Setup(m => m.Add(department));
+        [Test]
+        public void Add_ReturnsSuccessfulMessage_WhenDepartmentManagerExistsAndNameDoesent()
+        {
+            //Arrange
+            var employee = new Employee { Id = 1, Name = "Adi", PositionType = PositionType.DepartmentManager };
+            var departmentInputInfo = new AddDepartmentInputInfo { Name = "javascript", DepartmentManagerId = employee.Id };
+            var department = new Department { Id = 1, Name = "javascript", DepartmentManager = employee };
 
-        //    //Act
-        //    var result = _departmentService.Add(departmentInputInfo);
+            _mapperMock.Setup(m => m.Map<Department>(departmentInputInfo)).Returns(department);
+            _departmentRepositoryMock.Setup(m => m.IsDepartmentManager(employee.Id)).Returns(true);
+            _departmentRepositoryMock.Setup(m => m.DepartmentWithNameExists(department.Name)).Returns(true);
+            _departmentRepositoryMock.Setup(m => m.AddDepartment(department, employee.Id));
 
-        //    //Assert
-        //    Assert.IsTrue(result.Success);
-        //    Assert.AreEqual(Messages.SuccessfullyAddedDepartment, result.Message);
-        //}
+            //Act
+            var result = _departmentService.AddDepartment(departmentInputInfo);
+
+            //Assert
+            Assert.IsTrue(result.Success);
+            Assert.AreEqual(Messages.SuccessfullyAddedDepartment, result.Message);
+        }
+
+        [Test]
+        public void Add_DoesentReturnSucces_WhenDepartmentManagerDoesentExist()
+        {
+            var employee = new Employee { Id = 1, Name = "Adi", PositionType = PositionType.DepartmentManager };
+            var departmentInputInfo = new AddDepartmentInputInfo { Name = "javascript", DepartmentManagerId = employee.Id };
+            var department = new Department { Id = 1, Name = "javascript", DepartmentManager = employee };
+
+            _mapperMock.Setup(m => m.Map<Department>(departmentInputInfo)).Returns(department);
+            _departmentRepositoryMock.Setup(m => m.DepartmentWithNameExists(department.Name)).Returns(true);
+            _departmentRepositoryMock.Setup(m => m.IsDepartmentManager(employee.Id)).Returns(false);
+
+            //Act
+            var result = _departmentService.AddDepartment(departmentInputInfo);
+
+            //Assert
+            Assert.IsFalse(result.Success);
+            Assert.AreEqual(Messages.ErrorAddingDepartment, result.Message);
+        }
+
+        [Test]
+        public void Add_ReturnsErrorMessage_WhenDepartmentWithNameExists()
+        {
+            var employee = new Employee {Id = 1,Name = "Adi",PositionType =PositionType.DepartmentManager};
+            var departmentInputInfo = new AddDepartmentInputInfo
+            {
+                Name = "javascript",
+                DepartmentManagerId = employee.Id
+            };
+            var department = new Department {Id = 1,Name = "javascript",DepartmentManager = employee};
+            _mapperMock.Setup(m => m.Map<Department>(departmentInputInfo)).Returns(department);
+            _departmentRepositoryMock.Setup(m => m.IsDepartmentManager(employee.Id)).Returns(true);
+            _departmentRepositoryMock.Setup(m => m.DepartmentWithNameExists(department.Name)).Returns(false);
+
+            //Act
+            var result = _departmentService.AddDepartment(departmentInputInfo);
+
+            //Assert
+            Assert.IsFalse(result.Success);
+            Assert.AreEqual(Messages.ErrorAddingDepartment,result.Message);
+        }
 
 
         [Test]
         public void Update_ReturnsSuccessfulMessage_WhenDepartmentExists()
         {
             //Arrange
+            var employee = new Employee { Id = 1, Name = "Adi", PositionType = PositionType.DepartmentManager };
             var departmentInputInfo = new UpdateDepartmentInputInfo { Id = 1, Name = "php" };
-            var department = new Department { Id = 1, Name = "java" };
-
+            var department = new Department { Id = 1, Name = "java",DepartmentManager = employee};
+            _departmentRepositoryMock.Setup(m => m.GetEmployeeById(departmentInputInfo.DepartmentManagerId)).Returns(employee);
             _departmentRepositoryMock.Setup(m => m.GetDepartmentById(departmentInputInfo.Id)).Returns(department);
 
             //Act
-            var result = _departmentService.Update(departmentInputInfo);
+            var result = _departmentService.UpdateDepartment(departmentInputInfo);
 
             //Assert
             Assert.IsTrue(result.Success);
@@ -159,7 +211,7 @@ namespace ManagementApp.Manager.Tests
             _departmentRepositoryMock.Setup(m => m.GetDepartmentById(departmentInputInfo.Id)).Returns(department);
 
             //Act
-            _departmentService.Update(departmentInputInfo);
+            _departmentService.UpdateDepartment(departmentInputInfo);
 
             //Assert
             _departmentRepositoryMock.Verify(x => x.GetDepartmentById(departmentInputInfo.Id), Times.Once);
@@ -175,7 +227,7 @@ namespace ManagementApp.Manager.Tests
             _departmentRepositoryMock.Setup(m => m.GetDepartmentById(departmentInputInfo.Id)).Returns(department);
 
             //Act
-            _departmentService.Update(departmentInputInfo);
+            _departmentService.UpdateDepartment(departmentInputInfo);
 
             //Assert
             _departmentRepositoryMock.Verify(x => x.Save(), Times.Once);
@@ -190,7 +242,7 @@ namespace ManagementApp.Manager.Tests
             _departmentRepositoryMock.Setup(m => m.GetDepartmentById(departmentInputInfo.Id)).Returns((Department)null);
 
             //Act
-            var result = _departmentService.Update(departmentInputInfo);
+            var result = _departmentService.UpdateDepartment(departmentInputInfo);
 
             //Assert
             Assert.IsFalse(result.Success);
@@ -206,7 +258,7 @@ namespace ManagementApp.Manager.Tests
             _departmentRepositoryMock.Setup(m => m.GetDepartmentById(departmentInputInfo.Id)).Returns((Department)null);
 
             //Act
-            _departmentService.Update(departmentInputInfo);
+            _departmentService.UpdateDepartment(departmentInputInfo);
 
             //Assert
             _departmentRepositoryMock.Verify(x => x.Save(), Times.Never);

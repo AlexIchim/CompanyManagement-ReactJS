@@ -1,5 +1,4 @@
 ﻿using Manager.InputInfoModels;
-using Manager.InputInfoModels;
 using Manager.Services;
 using System.Web.Http;
 using System.Web.Http.Cors;

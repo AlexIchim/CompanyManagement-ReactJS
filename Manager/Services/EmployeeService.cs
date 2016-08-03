@@ -132,7 +132,7 @@ namespace Manager.Services
             {
                 var members = _employeeRepository.GetAllDepartmentEmployees(department);
 
-                if (members != null)
+                if (members.Any())
                 {
                     var memberInfos = _mapper.Map<IEnumerable<MemberInfo>>(members);
                     return memberInfos;                  

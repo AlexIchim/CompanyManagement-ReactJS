@@ -57,7 +57,6 @@ namespace DataAccess.Repositories
         public int ComputeTotalAllocation(int employeeId)
         {
             var array = _context.EmployeeProjects.Where(ep => ep.EmployeeId == employeeId).ToList();
-
             int totalAllocation = 0;
 
             foreach (var ep in array)

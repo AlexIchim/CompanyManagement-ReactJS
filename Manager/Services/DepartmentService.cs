@@ -4,6 +4,7 @@ using Domain.Models;
 using Manager.InfoModels;
 using Manager.InputInfoModels;
 using System.Collections.Generic;
+using Domain.Enums;
 
 namespace Manager.Services
 {
@@ -42,7 +43,7 @@ namespace Manager.Services
 
 
 
-        public OperationResult Update(UpdateDepartmentInputInfo inputInfo)
+        /*public OperationResult Update(UpdateDepartmentInputInfo inputInfo)
         {
             var department = _departmentRepository.GetDepartmentById(inputInfo.Id);
 
@@ -54,8 +55,8 @@ namespace Manager.Services
             department.Name = inputInfo.Name;
             _departmentRepository.Save();
 
-            return new OperationResult(true, Messages.SuccessfullyAddedDepartment);
-        }
+            return new OperationResult(true, Messages.SuccessfullyUpdatedDepartment);
+        }*/
 
         
 
@@ -65,12 +66,14 @@ namespace Manager.Services
 
             var depManagerId = inputInfo.DepartmentManagerId;
 
-            if (_departmentRepository.IsDepartmentManager(depManagerId))
-            {
-                _departmentRepository.Add(newDepartment, inputInfo.DepartmentManagerId);
+            if (!_departmentRepository.DepartmentWithNameExists(inputInfo.Name))
+            { 
+                if (_departmentRepository.IsDepartmentManager(depManagerId))
+                {
+                _departmentRepository.AddDepartment(newDepartment, inputInfo.DepartmentManagerId);
                 return new OperationResult(true, Messages.SuccessfullyAddedDepartment);
+                }
             }
-
             return new OperationResult(false, Messages.ErrorAddingDepartment);
 
         }
@@ -94,19 +97,14 @@ namespace Manager.Services
 
             var dm = _departmentRepository.GetEmployeeById(inputInfo.DepartmentManagerId);
 
-            if (dm != null && _departmentRepository.IsDepartmentManager(dm.Id))
+            if (dm != null && dm.PositionType == PositionType.DepartmentManager)
             {
-                department.Name = inputInfo.Name;
-                department.DepartmentManager = dm;
-                _departmentRepository.Save();
+                department.Name = inputInfo.Name;    
                 return new OperationResult(true, Messages.SuccessfullyUpdatedDepartment);
             }
-
-            return new OperationResult(false, Messages.ErrorWhileUpdatingDepartment);
-                     
-            
-
-            
+            department.DepartmentManager = dm;
+            _departmentRepository.Save();
+            return new OperationResult(true, Messages.SuccessfullyUpdatedDepartment);
         }
     }
 }

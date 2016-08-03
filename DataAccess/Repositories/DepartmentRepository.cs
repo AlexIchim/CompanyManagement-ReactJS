@@ -46,7 +46,7 @@ namespace DataAccess.Repositories
 
        
 
-        public void Add(Department department, int? departmentManagerId)
+        public void AddDepartment(Department department, int? departmentManagerId)
         {
             Employee employee = _context.Employees.SingleOrDefault(e => e.Id == departmentManagerId);
             department.DepartmentManager = employee;
@@ -58,13 +58,23 @@ namespace DataAccess.Repositories
         {
             var employee = _context.Employees.SingleOrDefault(e => e.Id == employeeId);
 
-
             if (employee != null && employee.PositionType == PositionType.DepartmentManager)
             {
                 return true;
             }
 
             return false;
+        }
+
+        public bool DepartmentWithNameExists(string name)
+        {
+            var department = _context.Departments.SingleOrDefault(d => d.Name == name);
+
+            if (department == null)
+            {
+                return false;
+            }
+            return true;
         }
 
         public IEnumerable<Employee> GetAllDepartmentManagers()
@@ -74,8 +84,15 @@ namespace DataAccess.Repositories
 
         public Employee GetEmployeeById(int? id)
         {
-
             return _context.Employees.SingleOrDefault(e => e.Id == id);
+        }
+
+        public bool EmployeeExists(int id)
+        {
+            var employee = _context.Employees.SingleOrDefault(e => e.Id == id);
+            if (employee != null)
+                return true;
+            return false;
         }
 
     }

@@ -100,9 +100,9 @@ namespace Manager.Services
             return new OperationResult(false, Messages.ErrorWhileUpdatingProject);
         }
 
-        public IEnumerable<ProjectInfo> GetAllDepartmentProjects(int inputInfo)
+        public IEnumerable<ProjectInfo> GetAllDepartmentProjects(int depId)
         {
-            var depId = _mapper.Map<int>(inputInfo);
+            //var depId = _mapper.Map<int>(inputInfo);
 
             var department = _departmentRepository.GetDepartmentById(depId);
             if (department != null)
