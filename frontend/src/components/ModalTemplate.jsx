@@ -3,20 +3,19 @@ import React from 'react';
 export default class ModalTemplate extends React.Component{
 
     componentDidMount() {
-        const {editDepartment} = this.refs;
-        $(editDepartment).modal('show');
+        const {formModal} = this.refs;
+        $(formModal).modal('show');
     }
 
     cancel(){
-        const {editDepartment} = this.refs;
-        $(editDepartment).modal('hide');
-        this.props.close();
+        const {formModal} = this.refs;
+        this.props['onCancelClick']();
+        $(formModal).modal('hide');
     }
 
     render(){
-        console.log('iiinside', this.props)
         return(
-            <div ref="editDepartment" className="modal fade"  tabIndex="-1" data-backdrop="static" data-keyboard="false">
+            <div ref="formModal" className="modal fade"  tabIndex="-1" data-backdrop="static" data-keyboard="false">
                 <div className="modal-dialog">
                     <div className="modal-content">
                         <div className="box info-box">
@@ -29,7 +28,7 @@ export default class ModalTemplate extends React.Component{
                                 </div>
 
                                 <div className="box-footer">
-                                    <button type="button" className="btn btn-default" onClick={this.cancel.bind(this)}> Cancel</button>
+                                    <button type="button" className="btn btn-default" onClick={this.cancel.bind(this)} > Cancel</button>
                                     <button type="submit" className="btn btn-default" onClick={this.props.store} > Edit</button>
                                 </div>
                             </form>

@@ -3,8 +3,7 @@ import Tile from './Tile';
 import * as $ from 'jquery';
 import config from '../helper';
 
-import AddForm from './AddForm';
-import EditForm from './EditForm';
+import Form from './Form';
 
 export default class Dashboard extends React.Component{
     constructor(){
@@ -21,7 +20,7 @@ export default class Dashboard extends React.Component{
                 console.log(data);
                 this.setState({
                     offices:data,
-                    formToggle:null
+                    formToggle:false
                 })
             }.bind(this)
         });
@@ -31,7 +30,21 @@ export default class Dashboard extends React.Component{
     onEditButtonClick(index){
     }
 
+    
+
+    toggleModal(){
+        this.setState({
+            offices:this.state.offices,
+            formToggle:!this.state.formToggle
+        })
+    }
+
     render(){
+        let form="";
+        if(this.state.formToggle){
+            form=<Form onCancelClick={this.toggleModal.bind(this)}/>;
+        }
+
         const items = this.state.offices.map ( (office, index) => {
             return (
                 <Tile
@@ -49,9 +62,10 @@ export default class Dashboard extends React.Component{
 
         return (
             <div className="row">
+                {form}
                 {items}
                 <button className="btn btn-success"
-                        onClick={this.onAddButtonClick.bind(this)}>
+                        onClick={this.toggleModal.bind(this)}>
                     Add
                 </button>
             </div>
