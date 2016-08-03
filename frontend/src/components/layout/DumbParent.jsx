@@ -7,7 +7,7 @@ export default class DumbParent extends React.Component {
 
     render() {
         return (
-            <div  className="wrapper">
+            <div>
                     {this.props.children}
             </div>
         );
