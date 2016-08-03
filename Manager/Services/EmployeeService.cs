@@ -89,15 +89,20 @@ namespace Manager.Services
 
         public int GetRemainingAllocation(int employeeId)
         {
+            int remainingAllocation = 100 - GetAllocation(employeeId);
+            return remainingAllocation;
+        }
+
+        public int GetAllocation(int employeeId)
+        {
             var employee = _employeeRepository.GetById(employeeId);
             int totalAllocation = 0;
             foreach (var assignment in employee.Assignments)
             {
                 totalAllocation += assignment.Allocation;
             }
-            int remainingAllocation = 100 - totalAllocation;
-
-            return remainingAllocation;
+            
+            return totalAllocation;
         }
 
         public IEnumerable<ProjectInfo> GetProjectsOfEmployee(int employeeId)
