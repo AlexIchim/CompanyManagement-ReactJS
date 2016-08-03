@@ -6,23 +6,6 @@ namespace Domain.Models
 {
     public class Employee
     {
-        public Employee()
-        {
-
-        }
-        public Employee(int id, string name, string address, DateTime employmentDate, DateTime releaseDate, int totalAllocation, JobType jobType, PositionType positionType, int departmentId)
-        {
-            Id = id;
-            Name = name;
-            Address = address;
-            EmploymentDate = employmentDate;
-            ReleaseDate = releaseDate;
-            TotalAllocation = totalAllocation;
-            JobType = jobType;
-            PositionType = positionType;
-            DepartmentId = departmentId;
-
-        }
         public int Id { get; set; }
 
         public string Name { get; set; }

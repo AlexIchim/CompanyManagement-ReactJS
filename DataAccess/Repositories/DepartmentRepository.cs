@@ -21,7 +21,7 @@ namespace DataAccess.Repositories
             return _context.Departments.ToArray();
         }
 
-        public Department GetDepartmentById(int? id)
+        public Department GetDepartmentById(int id)
         {
             return _context.Departments.SingleOrDefault(d => d.Id == id);
         }
@@ -32,21 +32,7 @@ namespace DataAccess.Repositories
             _context.SaveChanges();
         }
 
-        public IEnumerable<Employee> GetAllUnAllocatedEmployeesOnProject()
-        {
-            var array = _context.Employees.Where(e => e.TotalAllocation == 0);
-            return array.ToArray();
-        }
-
-        public IEnumerable<Employee> GetEmployeesThatAreNotFullyAllocated()
-        {
-            var array = _context.Employees.Where(e => e.TotalAllocation < 100);
-            return array.ToArray();
-        } 
-
-       
-
-        public void Add(Department department, int? departmentManagerId)
+        public void Add(Department department, int departmentManagerId)
         {
             Employee employee = _context.Employees.SingleOrDefault(e => e.Id == departmentManagerId);
             department.DepartmentManager = employee;
@@ -54,7 +40,7 @@ namespace DataAccess.Repositories
             Save();
         }
 
-        public bool IsDepartmentManager(int? employeeId)
+        public bool IsDepartmentManager(int employeeId)
         {
             var employee = _context.Employees.SingleOrDefault(e => e.Id == employeeId);
 

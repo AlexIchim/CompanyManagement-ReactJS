@@ -20,13 +20,14 @@ namespace ManagementApp.Manager.Tests
         private OfficeService _officeService;
         private Mock<IOfficeRepository> _officeRepositoryMock;
         private Mock<IMapper> _mapperMock;
+        private IOfficeValidator _officeValidator;
 
         [SetUp]
         public void PerTestSetup()
         {
             _officeRepositoryMock = new Mock<IOfficeRepository>();
             _mapperMock = new Mock<IMapper>();
-            _officeService = new OfficeService(_mapperMock.Object, _officeRepositoryMock.Object);
+            _officeService = new OfficeService(_mapperMock.Object, _officeRepositoryMock.Object, _officeValidator);
         }
 
         private Office CreateOffice( string name, string address, string phoneNumber, byte[] image, int? id = null)

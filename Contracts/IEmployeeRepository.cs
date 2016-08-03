@@ -28,5 +28,10 @@ namespace Contracts
         IEnumerable<Employee> GetAllDepartmentEmployees(Department department);
 
         void AddEmployee(Employee employee);
+
+        IEnumerable<Employee> GetAllUnAllocatedEmployeesOnProject();
+
+        IEnumerable<Employee> GetEmployeesThatAreNotFullyAllocated();
+
     }
 }

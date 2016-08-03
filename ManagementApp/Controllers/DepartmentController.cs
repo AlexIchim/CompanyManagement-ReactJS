@@ -24,23 +24,6 @@ namespace ManagementApp.Controllers
             return Json(result);
         }
 
-        
-        [Route("GetAllUnAllocatedEmployeesOnProject")]
-        [HttpGet]
-        public IHttpActionResult GetAllUnAllocatedEmployeesOnProject()
-        {
-            var result = _departmentService.GetAllUnAllocatedEmployeesOnProject();
-            return Json(result);
-        }
-
-        [Route("GetEmployeesThatAreNotFullyAllocated")]
-        [HttpGet]
-        public IHttpActionResult GetEmployeesThatAreNotFullyAllocated()
-        {
-            var result = _departmentService.GetEmployeesThatAreNotFullyAllocated();
-            return Json(result);
-        }
-
         [Route("addDepartment")]
         [HttpPost]
         public IHttpActionResult AddDepartment([FromBody] AddDepartmentInputInfo inputInfo)
