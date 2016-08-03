@@ -1,7 +1,7 @@
 import * as React from 'react';
 import Tile from './Tile';
 
-export default class Dashboard extends React.Component{
+export default class Offices extends React.Component{
     constructor(){
         super();
     }

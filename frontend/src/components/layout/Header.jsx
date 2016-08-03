@@ -13,7 +13,7 @@ const Header = () => {
                         <li className="dropdown user user-menu">
                             <a href="#" className="dropdown-toggle" data-toggle="dropdown">
                                     <span className="hidden-xs">
-                                        { Context.cursor.get('user').get('name') }
+                                        Team2
                                     </span>
                             </a>
                         </li>

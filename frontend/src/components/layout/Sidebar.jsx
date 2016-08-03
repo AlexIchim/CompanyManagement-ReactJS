@@ -3,7 +3,7 @@ import {Link} from 'react-router';
 
 const Multilevel = () => {
     return (
-        <li className="treeview">
+        <li className="treeview active">
             <a href="#">
                 <i className="fa fa-share"></i> <span>Multilevel</span>
             <span className="pull-right-container">

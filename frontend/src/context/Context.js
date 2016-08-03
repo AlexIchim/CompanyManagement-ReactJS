@@ -1,12 +1,9 @@
-import mock from '../data/user';
 import * as Immutable from 'immutable';
 import * as Cursor from 'immutable/contrib/cursor';
 import * as Rx from 'rx';
 
 
-const initialState = {
-    user : mock
-};
+const initialState = {};
 
 class Context{
 
