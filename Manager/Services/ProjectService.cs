@@ -40,12 +40,12 @@ namespace Manager.Services
 
         public IEnumerable<ProjectEmployeeInfo> GetEmployeesByProjectId(int id, int? pageSize = null, int? pageNumber = null)
         {
-            var tuples = _projectRepository.GetEmployeesByProjectId(id, pageSize, pageNumber);
+            var allocations = _projectRepository.GetEmployeesByProjectId(id, pageSize, pageNumber);
 
-            var res = tuples.Select(t => new ProjectEmployeeInfo()
+            var res = allocations.Select(a => new ProjectEmployeeInfo()
             {
-                Employee = _mapper.Map<EmployeeInfo>(t.Item1),
-                Allocation = t.Item2
+                Employee = _mapper.Map<EmployeeInfo>(a.Employee),
+                Allocation = a.AllocationPercentage
             });
 
             return res;

@@ -40,8 +40,8 @@ namespace ManagementApp.Manager.Tests
             };
             var departmentsInfo = new List<DepartmentInfo>
             {
-                CreateDepartmentInfo(1, "Java", 1),
-                CreateDepartmentInfo(2, ".Net", 2)
+                CreateDepartmentInfo(1, "Java"),
+                CreateDepartmentInfo(2, ".Net")
             };
 
             _departmentRepositoryMock.Setup(m => m.GetAll()).Returns(departments);
@@ -170,9 +170,7 @@ namespace ManagementApp.Manager.Tests
             //Arrange
             var departmentInputInfo = new UpdateDepartmentInputInfo { Id = 1, Name = "php" };
             var department = new Department { Id = 1, Name = "java" };
-            var office = new Office { Id = 1 };
 
-            _officeRepositoryMock.Setup(m => m.GetById(departmentInputInfo.OfficeId)).Returns(office);
             _departmentRepositoryMock.Setup(m => m.GetById(departmentInputInfo.Id)).Returns(department);
 
             //Act
@@ -188,9 +186,7 @@ namespace ManagementApp.Manager.Tests
             //Arrange
             var departmentInputInfo = new UpdateDepartmentInputInfo { Id = 1, Name = "php" };
             var department = new Department { Id = 1, Name = "java" };
-            var office = new Office { Id = 1 };
 
-            _officeRepositoryMock.Setup(m => m.GetById(departmentInputInfo.OfficeId)).Returns(office);
             _departmentRepositoryMock.Setup(m => m.GetById(departmentInputInfo.Id)).Returns(department);
 
             //Act
@@ -206,9 +202,7 @@ namespace ManagementApp.Manager.Tests
             //Arrange
             var departmentInputInfo = new UpdateDepartmentInputInfo { Id = 1, Name = "php" };
             var department = new Department { Id = 1, Name = "java" };
-            var office = new Office { Id = 1 };
 
-            _officeRepositoryMock.Setup(m => m.GetById(departmentInputInfo.OfficeId)).Returns(office);
             _departmentRepositoryMock.Setup(m => m.GetById(departmentInputInfo.Id)).Returns(department);
 
             //Act
@@ -224,9 +218,7 @@ namespace ManagementApp.Manager.Tests
         {
             //Arrange
             var departmentInputInfo = new UpdateDepartmentInputInfo { Id = 1, Name = "php" };
-            var office = new Office { Id = 1 };
 
-            _officeRepositoryMock.Setup(m => m.GetById(departmentInputInfo.OfficeId)).Returns(office);
             _departmentRepositoryMock.Setup(m => m.GetById(departmentInputInfo.Id)).Returns((Department)null);
 
             //Act
@@ -243,9 +235,7 @@ namespace ManagementApp.Manager.Tests
             //Arrange
             var departmentInputInfo = new UpdateDepartmentInputInfo { Id = 1, Name = "" };
             var department = new Department { Id = 1, Name = "" };
-            var office = new Office { Id = 1 };
 
-            _officeRepositoryMock.Setup(m => m.GetById(departmentInputInfo.OfficeId)).Returns(office);
             _departmentRepositoryMock.Setup(m => m.GetById(departmentInputInfo.Id)).Returns(department);
 
             //Act
@@ -262,9 +252,7 @@ namespace ManagementApp.Manager.Tests
             //Arrange
             var departmentInputInfo = new UpdateDepartmentInputInfo { Id = 1, Name = new string('a', 205) };
             var department = new Department { Id = 1, Name = null };
-            var office = new Office { Id = 1 };
 
-            _officeRepositoryMock.Setup(m => m.GetById(departmentInputInfo.OfficeId)).Returns(office);
             _departmentRepositoryMock.Setup(m => m.GetById(departmentInputInfo.Id)).Returns(department);
 
             //Act
@@ -273,23 +261,6 @@ namespace ManagementApp.Manager.Tests
             //Assert
             Assert.IsFalse(result.Success);
             Assert.AreEqual(Messages.ErrorWhileUpdatingDepartment_NameTooLong, result.Message);
-        }
-
-
-        [Test]
-        public void Update_ReturnsErrorMessage_WhenOfficeDoesNotExists()
-        {
-            //Arrange
-            var departmentInputInfo = new UpdateDepartmentInputInfo { Id = 1, Name = "php", OfficeId = 4 };
-
-            _officeRepositoryMock.Setup(m => m.GetById(departmentInputInfo.OfficeId)).Returns((Office)null);
-
-            //Act
-            var result = _departmentService.Update(departmentInputInfo);
-
-            //Assert
-            Assert.IsFalse(result.Success);
-            Assert.AreEqual(Messages.ErrorWhileUpdatingDepartment_OfficeIdInvalid, result.Message);
         }
 
         [Test]
@@ -321,13 +292,12 @@ namespace ManagementApp.Manager.Tests
             return department;
         }
 
-        private DepartmentInfo CreateDepartmentInfo(int id, string name, int officeId)
+        private DepartmentInfo CreateDepartmentInfo(int id, string name)
         {
             return new DepartmentInfo
             {
                 Id = id,
-                Name = name,
-                OfficeId = officeId
+                Name = name
             };
         }
     }

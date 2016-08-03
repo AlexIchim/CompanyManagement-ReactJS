@@ -1,9 +1,5 @@
 ﻿using Manager.InputInfoModels;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Manager.Validators
 {
@@ -15,11 +11,11 @@ namespace Manager.Validators
             {
                 return new OperationResult(false, Messages.ErrorWhileAddingDepartment_EmptyName);
             }
-            else if (info.Name.Length > 100)
+            if (info.Name.Length > 100)
             {
                 return new Manager.OperationResult(false, Messages.ErrorWhileAddingDepartment_NameTooLong);
             }
-            else return new Manager.OperationResult(true, Messages.SuccessfullyAddedDepartment);
+            return new Manager.OperationResult(true, Messages.SuccessfullyAddedDepartment);
         }
 
         public static OperationResult Validate(UpdateDepartmentInputInfo info)
@@ -28,11 +24,11 @@ namespace Manager.Validators
             {
                 return new OperationResult(false, Messages.ErrorWhileUpdatingDepartment_EmptyName);
             }
-            else if (info.Name.Length > 100)
+            if (info.Name.Length > 100)
             {
                 return new Manager.OperationResult(false, Messages.ErrorWhileUpdatingDepartment_NameTooLong);
             }
-            else return new Manager.OperationResult(true, Messages.SuccessfullyUpdatedDepartment);
+            return new Manager.OperationResult(true, Messages.SuccessfullyUpdatedDepartment);
         }
     }
 }

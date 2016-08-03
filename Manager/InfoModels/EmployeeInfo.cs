@@ -14,10 +14,11 @@ namespace Manager.InfoModels
         public string Address { get; set; }
 
         public DateTime EmploymentDate { get; set; }
-        
+
         public int EmploymentHours { get; set; }
 
         // custom:
+        public string PositionName { get; set; }
         public int TotalAllocation { get; set; }
     }
 }

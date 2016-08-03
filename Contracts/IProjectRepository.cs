@@ -8,7 +8,7 @@ namespace Contracts
     {
         IEnumerable<Project> GetAll();
         Project GetById(int id);
-        IEnumerable<Tuple<Employee, int>> GetEmployeesByProjectId(int id, int? pageSize = null, int? pageNumber = null);
+        IEnumerable<ProjectAllocation> GetEmployeesByProjectId(int id, int? pageSize = null, int? pageNumber = null);
         void Delete(Project project);
         void Save();
         void Add(Project project);

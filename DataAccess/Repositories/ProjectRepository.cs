@@ -27,12 +27,9 @@ namespace DataAccess.Repositories
             return _context.Projects.SingleOrDefault(d => d.Id == id);
         }
 
-        public IEnumerable<Tuple<Employee, int>> GetEmployeesByProjectId(int id, int? pageSize = null, int? pageNumber = null)
+        public IEnumerable<ProjectAllocation> GetEmployeesByProjectId(int id, int? pageSize = null, int? pageNumber = null)
         {
-           return _context.Projects.SingleOrDefault(d => d.Id == id)
-                .Allocations     
-                .Paginate(pageSize, pageNumber)          
-                .Select(a => new Tuple<Employee, int>(a.Employee, a.AllocationPercentage));
+            return _context.ProjectAllocations.Where(a => a.ProjectId == id).Paginate(pageSize, pageNumber).ToArray();
         }
 
         public void Delete(Project project)

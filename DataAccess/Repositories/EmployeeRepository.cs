@@ -42,21 +42,10 @@ namespace DataAccess.Repositories
             return _context.Employees.Where(e => e.Position.Id == 1).ToArray();
         }
 
-        public IEnumerable<Tuple<string, int>> GetAllocationsByEmployeeId(int id)
+
+        public IEnumerable<ProjectAllocation> GetAllocationsByEmployeeId(int id)
         {
-            var employee = _context.Employees.SingleOrDefault(e => e.Id == id);
-            if (employee == null)
-            {
-                return new Tuple<string, int>[0];
-            }
-            else
-            {
-                var query = employee.ProjectAllocations.Select(a => new Tuple<string, int>(
-                    a.Project.Name,
-                    a.AllocationPercentage
-                ));
-                return query.ToArray();
-            }
+            return _context.ProjectAllocations.Where(a => a.EmployeeId == id).ToArray();
         }
 
         public Employee GetById(int id)
@@ -82,6 +71,6 @@ namespace DataAccess.Repositories
             _context.SaveChanges();
         }
 
-       
+
     }
 }
