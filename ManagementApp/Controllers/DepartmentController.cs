@@ -1,10 +1,12 @@
 ﻿using System.Web.Http;
+using System.Web.Http.Cors;
 using Manager.InputInfoModels;
 using Manager.Services;
 
 namespace ManagementApp.Controllers
 {
     [RoutePrefix("api/department")]
+    [EnableCors("*", "*", "GET, POST, PUT")]
     public class DepartmentController : ApiController
     {
         private readonly DepartmentService _departmentService;

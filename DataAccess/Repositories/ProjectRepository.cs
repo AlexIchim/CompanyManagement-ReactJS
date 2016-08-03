@@ -76,6 +76,12 @@ namespace DataAccess.Repositories
             return nr;
 
         }
+
+        public IEnumerable<Assignment> FilterProjectMemberByRole(string role, int projectId)
+        {
+            var assignments = _context.Assignments.Where(ep => ep.ProjectId == projectId && ep.Employee.Position.ToString() == role);
+            return assignments.ToArray();
+        }
     }
 
 }

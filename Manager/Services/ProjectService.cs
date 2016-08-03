@@ -157,6 +157,14 @@ namespace Manager.Services
             return _projectRepository.GetNrTeamMembers(projectId);
         }
 
-    
+        public IEnumerable<ProjectMemberInfo> FilterProjectMemberByRole(string role, int projectId)
+        {
+            var assignments = _projectRepository.FilterProjectMemberByRole(role, projectId);
+            var assignmentsInfo = _mapper.Map<IEnumerable<ProjectMemberInfo>>(assignments);
+            return assignmentsInfo;
+        }
+
+
+
     }
 }

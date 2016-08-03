@@ -38,15 +38,22 @@ namespace Manager.Mapper
             .ForMember(
                 projectInfo => projectInfo.NrMembers,
                 project => project.MapFrom(src => src.Assignments.Count)
-            );
+            )
+            .ForMember(
+                projectInfo => projectInfo.Status,
+                project => project.MapFrom(src => src.Status.ToString()));
             CreateMap<AddProjectInputInfo, Project>();
             CreateMap<Assignment, ProjectMemberInfo>()
+                .ForMember(
+                    assignmentInfo => assignmentInfo.Id,
+                    assignment => assignment.MapFrom(src => src.EmployeeId)
+                 )
                 .ForMember(
                     assignmentInfo => assignmentInfo.Name,
                     assignment => assignment.MapFrom(src => src.Employee.Name))
                 .ForMember(
                     assignmentInfo => assignmentInfo.Position,
-                    assignment => assignment.MapFrom(src => src.Employee.Position));
+                    assignment => assignment.MapFrom(src => src.Employee.Position.ToString()));
             CreateMap<AddAssignmentInputInfo, Assignment>();
 
         }
