@@ -43,7 +43,7 @@ namespace DataAccess.Repositories
         {
             return _context.Offices.SingleOrDefault(o => o.Id == officeId);
         }
-      
+
 
     }
 }
