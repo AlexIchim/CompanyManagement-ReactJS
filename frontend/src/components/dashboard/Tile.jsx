@@ -26,12 +26,16 @@ class Tile extends React.Component{
         })
     }
 
+    storeEditInfo(){
+        //{this.storeEditInfo.bind(this)}
+    }
+
     render(){
         const props = this.props;
         const parentClass = classNames("info-box-icon", props['parentClass']);
         const icon = classNames("fa", "fa-" + props['icon']);
 
-        const modal = this.state.edit ? <Form show = {this.state.edit} element = {props['office']}  close={this.closeEditForm.bind(this)} /> : '';
+        const modal = this.state.edit ? <Form show = {this.state.edit} element = {props['office']}  close={this.closeEditForm.bind(this)}/> : '';
         console.log(modal);
 
         return (
@@ -57,10 +61,11 @@ class Tile extends React.Component{
                         <Link to={props['link']} className="small-box-footer">
                             View Departments
                         <i className="fa fa-arrow-circle-right"></i></Link>
-                        <span>
-                        <button className="small-box-top-right" onClick={this.showEditForm.bind(this)}>
-                            <i className="fa fa-pencil-square-o fa-3x"></i></button>
-                        </span>
+                        <div>
+                        <button className="editButton" onClick={this.showEditForm.bind(this)}>
+                            <i className="fa fa-pencil-square-o fa-2x"></i></button>
+                        </div>
+
                     </div>
                 </div>
                 </div>
