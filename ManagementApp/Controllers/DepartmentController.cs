@@ -24,6 +24,14 @@ namespace ManagementApp.Controllers
             return Json(result);
         }
 
+        [Route("getById")]
+        [HttpGet]
+        public IHttpActionResult GetById(int id)
+        {
+            var result = _departmentService.GetById(id);
+            return Json(result);
+        }
+
         [Route("getProjectsByDepartmentId")]
         [HttpGet]
         public IHttpActionResult GetProjectsByDepartmentId(int ID, int? pageSize = null, int? pageNumber = null)

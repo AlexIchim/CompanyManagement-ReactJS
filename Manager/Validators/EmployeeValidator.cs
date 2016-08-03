@@ -1,6 +1,5 @@
 ﻿using System;
 using Manager.InputInfoModels;
-using Manager.Services;
 
 namespace Manager.Validators
 {
@@ -9,7 +8,7 @@ namespace Manager.Validators
         public enum NameValidationResult{Success, EmptyName, TooLongName };
         public enum EmailValidationResult { Success, TooLongEmail};
         public enum AddressValidationResult { Success, TooLongAddress};
-        public enum EmploymentHoursValidationResult { Success, NegativeEmploymentHours, TooManyEmploymentHours };
+        public enum EmploymentHoursValidationResult { Success, TooFewEmploymentHours, TooManyEmploymentHours };
         public enum EmploymentDateValidationResult { Success, NullEmploymentDate};
         public enum PositionIdValidationResult { Success, NullPositionId};
         public enum DepartmentIdValidationResult { Success, NullDepartmentId};
@@ -20,7 +19,7 @@ namespace Manager.Validators
             {
                 return NameValidationResult.EmptyName;
             }
-            else if(name.Length > 100)
+            if(name.Length > 100)
             {
                 return NameValidationResult.TooLongName;
             }
@@ -49,9 +48,9 @@ namespace Manager.Validators
         {
             if(employmentHours <= 0)
             {
-                return EmploymentHoursValidationResult.NegativeEmploymentHours;
+                return EmploymentHoursValidationResult.TooFewEmploymentHours;
             }
-            else if(employmentHours > 8)
+            if(employmentHours > 8)
             {
                 return EmploymentHoursValidationResult.TooManyEmploymentHours;
             }
@@ -88,98 +87,109 @@ namespace Manager.Validators
         public static OperationResult Validate(AddEmployeeInputInfo info)
         {
             var resultOfNameValidation = ValidateName(info.Name);
-            switch (resultOfNameValidation)
-            {
-                case NameValidationResult.EmptyName: return new Manager.OperationResult(false, Messages.ErrorWhileAddingEmployee_EmptyEmployeeName);
-                case NameValidationResult.TooLongName: return new Manager.OperationResult(false, Messages.ErrorWhileAddingEmployee_TooLongEmployeeName);
-            }
-
             var resultOfEmailValidation = ValidateEmail(info.Email);
-            if(resultOfEmailValidation == EmailValidationResult.TooLongEmail)
-                return new Manager.OperationResult(false, Messages.ErrorWhileAddingEmployee_TooLongEmployeeEmail);
-
             var resultOfAddressValidation = ValidateAddress(info.Address);
-            if(resultOfAddressValidation == AddressValidationResult.TooLongAddress)
-            {
-                return new Manager.OperationResult(false, Messages.ErrorWhileAddingEmployee_TooLongEmployeeAddress);
-            }
-
             var resultOfEmploymentHoursValidation = ValidateEmploymentHours(info.EmploymentHours);
-            switch (resultOfEmploymentHoursValidation)
-            {
-                case EmploymentHoursValidationResult.NegativeEmploymentHours: return new Manager.OperationResult(false, Messages.ErrorWhileAddingEmployee_NegativeEmploymentHours);
-                case EmploymentHoursValidationResult.TooManyEmploymentHours: return new Manager.OperationResult(false, Messages.ErrorWhileAddingEmployee_TooManyHours);
-            }
-
             var resultOfEmploymentDateValidation = ValidateEmploymentDate(info.EmploymentDate);
-            if (resultOfEmploymentDateValidation == EmploymentDateValidationResult.NullEmploymentDate)
-                return new Manager.OperationResult(false, Messages.ErrorWhileAddingEmployee_NullEmploymentDate);
-
             var resultOfPositionIdValidation = ValidatePositionId(info.PositionId);
-            if(resultOfPositionIdValidation == PositionIdValidationResult.NullPositionId)
+            var resultofDepartmentIdValidation = ValidateDepartmentId(info.DepartmentId);
+            string messageToReturn = "";
+
+            if (resultOfNameValidation == NameValidationResult.EmptyName)
             {
-                return new Manager.OperationResult(false, Messages.ErrorWhileAddingEmployee_NullPositionId);
+                messageToReturn = messageToReturn + ((messageToReturn == "") ? "" : " ") + Messages.EmptyEmployeeName;
             }
-
-            var resultOfDepartmentIdValidation = ValidateDepartmentId(info.DepartmentId);
-            if(resultOfDepartmentIdValidation == DepartmentIdValidationResult.NullDepartmentId)
+            if (resultOfNameValidation == NameValidationResult.TooLongName)
             {
-                return new Manager.OperationResult(false, Messages.ErrorWhileAddingEmployee_NullDepartmentId);
+                messageToReturn = messageToReturn + ((messageToReturn == "") ? "" : " ") + Messages.TooLongEmployeeName;
             }
-
-            return new Manager.OperationResult(true, Messages.SuccessfullyAddedEmployee);
-
+            if (resultOfEmailValidation == EmailValidationResult.TooLongEmail)
+            {
+                messageToReturn = messageToReturn + ((messageToReturn == "") ? "" : " ") + Messages.TooLongEmployeeEmail;
+            }
+            if (resultOfAddressValidation == AddressValidationResult.TooLongAddress)
+            {
+                messageToReturn = messageToReturn + ((messageToReturn == "") ? "" : " ") + Messages.TooLongEmployeeAddress;
+            }
+            if (resultOfEmploymentHoursValidation == EmploymentHoursValidationResult.TooFewEmploymentHours)
+            {
+                messageToReturn = messageToReturn + ((messageToReturn == "") ? "" : " ") + Messages.TooFewEmploymentHours;
+            }
+            if (resultOfEmploymentHoursValidation == EmploymentHoursValidationResult.TooManyEmploymentHours)
+            {
+                messageToReturn = messageToReturn + ((messageToReturn == "") ? "" : " ") + Messages.TooManyEmploymentHours;
+            }
+            if (resultOfEmploymentDateValidation == EmploymentDateValidationResult.NullEmploymentDate)
+            {
+                messageToReturn = messageToReturn + ((messageToReturn == "") ? "" : " ") + Messages.NullEmploymentDate;
+            }
+            if (resultOfPositionIdValidation == PositionIdValidationResult.NullPositionId)
+            {
+                messageToReturn = messageToReturn + ((messageToReturn == "") ? "" : " ") + Messages.NullPositionId;
+            }
+            if (resultofDepartmentIdValidation == DepartmentIdValidationResult.NullDepartmentId)
+            {
+                messageToReturn = messageToReturn + ((messageToReturn == "") ? "" : " ") + Messages.NullDepartmentId;
+            }
+            if (messageToReturn == "")
+            {
+                return new OperationResult(true, Messages.SuccessfullyAddedEmployee);
+            }
+            return new OperationResult(false, messageToReturn);
         }
 
         public static OperationResult Validate(UpdateEmployeeInputInfo info)
         {
-            if(info.Id < 0)
-            {
-                return new Manager.OperationResult(false, Messages.ErrorWhileUpdatingEmployee_InvalidId);
-            }
             var resultOfNameValidation = ValidateName(info.Name);
-            switch (resultOfNameValidation)
-            {
-                case NameValidationResult.EmptyName: return new Manager.OperationResult(false, Messages.ErrorWhileUpdatingEmployee_EmptyEmployeeName);
-                case NameValidationResult.TooLongName: return new Manager.OperationResult(false, Messages.ErrorWhileUpdatingEmployee_TooLongEmployeeName);
-            }
-
             var resultOfEmailValidation = ValidateEmail(info.Email);
-            if (resultOfEmailValidation == EmailValidationResult.TooLongEmail)
-                return new Manager.OperationResult(false, Messages.ErrorWhileUpdatingEmployee_TooLongEmployeeEmail);
-
             var resultOfAddressValidation = ValidateAddress(info.Address);
+            var resultOfEmploymentHoursValidation = ValidateEmploymentHours(info.EmploymentHours);
+            var resultOfEmploymentDateValidation = ValidateEmploymentDate(info.EmploymentDate);
+            var resultOfPositionIdValidation = ValidatePositionId(info.PositionId);
+            var resultofDepartmentIdValidation = ValidateDepartmentId(info.DepartmentId);
+            string messageToReturn = "";
+
+            if (resultOfNameValidation == NameValidationResult.EmptyName)
+            {
+                messageToReturn = messageToReturn + ((messageToReturn == "") ? "" : " ")  + Messages.EmptyEmployeeName;
+            }
+            if (resultOfNameValidation == NameValidationResult.TooLongName)
+            {
+                messageToReturn = messageToReturn + ((messageToReturn == "") ? "" : " ") + Messages.TooLongEmployeeName;
+            }
+            if (resultOfEmailValidation == EmailValidationResult.TooLongEmail)
+            {
+                messageToReturn = messageToReturn + ((messageToReturn == "") ? "" : " ") + Messages.TooLongEmployeeEmail;
+            }
             if (resultOfAddressValidation == AddressValidationResult.TooLongAddress)
             {
-                return new Manager.OperationResult(false, Messages.ErrorWhileUpdatingEmployee_TooLongEmployeeAddress);
+                messageToReturn = messageToReturn + ((messageToReturn == "") ? "" : " ") + Messages.TooLongEmployeeAddress;
             }
-
-            var resultOfEmploymentHoursValidation = ValidateEmploymentHours(info.EmploymentHours);
-            switch (resultOfEmploymentHoursValidation)
+            if (resultOfEmploymentHoursValidation == EmploymentHoursValidationResult.TooFewEmploymentHours)
             {
-                case EmploymentHoursValidationResult.NegativeEmploymentHours: return new Manager.OperationResult(false, Messages.ErrorWhileUpdatingEmployee_NegativeEmploymentHours);
-                case EmploymentHoursValidationResult.TooManyEmploymentHours: return new Manager.OperationResult(false, Messages.ErrorWhileUpdatingEmployee_TooManyHours);
+                messageToReturn = messageToReturn + ((messageToReturn == "") ? "" : " ") + Messages.TooFewEmploymentHours;
             }
-
-            var resultOfEmploymentDateValidation = ValidateEmploymentDate(info.EmploymentDate);
+            if (resultOfEmploymentHoursValidation == EmploymentHoursValidationResult.TooManyEmploymentHours)
+            {
+                messageToReturn = messageToReturn + ((messageToReturn == "") ? "" : " ") + Messages.TooManyEmploymentHours;
+            }
             if (resultOfEmploymentDateValidation == EmploymentDateValidationResult.NullEmploymentDate)
             {
-                return new Manager.OperationResult(false, Messages.ErrorWhileUpdatingEmployee_NullEmploymentDate);
+                messageToReturn = messageToReturn + ((messageToReturn == "") ? "" : " ") + Messages.NullEmploymentDate;
             }
-
-            var resultOfPositionIdValidation = ValidatePositionId(info.PositionId);
             if (resultOfPositionIdValidation == PositionIdValidationResult.NullPositionId)
             {
-                return new Manager.OperationResult(false, Messages.ErrorWhileUpdatingEmployee_NullPositionId);
+                messageToReturn = messageToReturn + ((messageToReturn == "") ? "" : " ") + Messages.NullPositionId;
             }
-
-            var resultOfDepartmentIdValidation = ValidateDepartmentId(info.DepartmentId);
-            if (resultOfDepartmentIdValidation == DepartmentIdValidationResult.NullDepartmentId)
+            if (resultofDepartmentIdValidation == DepartmentIdValidationResult.NullDepartmentId)
             {
-                return new Manager.OperationResult(false, Messages.ErrorWhileUpdatingEmployee_NullDepartmentId);
+                messageToReturn = messageToReturn + ((messageToReturn == "") ? "" : " ") + Messages.NullDepartmentId;
             }
-
-            return new Manager.OperationResult(true, Messages.SuccessfullyUpdatedEmployee);
+            if (messageToReturn == "")
+            {
+                return new OperationResult(true, Messages.SuccessfullyUpdatedEmployee);
+            }
+            return new OperationResult(false, messageToReturn);
 
         }
     }
