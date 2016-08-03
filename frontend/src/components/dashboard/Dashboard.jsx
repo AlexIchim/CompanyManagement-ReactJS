@@ -2,6 +2,7 @@ import * as React from 'react';
 import Tile from './Tile';
 import * as $ from 'jquery';
 import configs from '../helpers/calls'
+import "./../../assets/less/index.less";
 
 
 
