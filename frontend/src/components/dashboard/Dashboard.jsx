@@ -43,6 +43,8 @@ export default class Dashboard extends React.Component{
                     address={element.Address}
                     link={"/office/" + element.Id + '/' + element.Name + '/' + 'departments' }
                     icon={icons[index]}
+                    office = {element}
+                    
                 />
             )
 
