@@ -8,6 +8,8 @@ export default class Dashboard extends React.Component{
         super();
     }
 
+<<<<<<< HEAD
+=======
     componentWillMount(){
         $.ajax({
             method: 'GET',
@@ -20,12 +22,30 @@ export default class Dashboard extends React.Component{
             }.bind(this)
         })
     }
+
+>>>>>>> origin/FluffyWarriors
     render(){
 
+<<<<<<< HEAD
+                <Tile
+                    parentClass="bg-green"
+                    phone="213123"
+                    address="Address: Sample controls"
+                    link="department/members/1"
+                    icon="user"
+=======
         const icons = ["user", "users", "trash", "envelope-o", "calendar-o"];
+
         const items = this.state.offices.map ( (office, index) => {
             return (
-                    link="department/members/1"
+                <Tile
+                    parentClass="bg-aqua"
+                    phone= {office.Phone}
+                    address= {office.Address}
+                    link= { "office/departments/" + office.Id }
+                    icon={icons[ Math.floor((Math.random() * (icons.length - 1)) + 0)]}
+                    key = {index}
+>>>>>>> origin/FluffyWarriors
                 />
             )
         })

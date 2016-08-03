@@ -1,0 +1,8 @@
+<<<<<<< HEAD
+export default {
+    base: "http://localhost:47867/api/"
+=======
+export default {
+    base: "http://localhost:47867/api/"
+>>>>>>> origin/FluffyWarriors
+}

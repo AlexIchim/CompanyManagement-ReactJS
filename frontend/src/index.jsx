@@ -6,6 +6,7 @@ import ConcertsList from './components/concertslist/ConcertsList.jsx';
 import './assets/less/index.less';
 import Dashboard from './components/dashboard/Dashboard.jsx';
 import Employees from './components/employee/Employees.jsx'
+import Departments from './components/department/Departments.jsx'
 
 const Routes = () => {
 
@@ -17,7 +18,9 @@ const Routes = () => {
                 </Route>
 
                 <Route path="department/members/:departmentId" component={Employees}>
+                <Route path="office/departments/:officeId" component={Departments}>
                 </Route>
+
             </Route>
         </Router>
 
