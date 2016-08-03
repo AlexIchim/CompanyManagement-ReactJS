@@ -5,7 +5,6 @@ import config from '../helper';
 
 import AddForm from './AddForm';
 import EditForm from './EditForm';
-import Modal from './Modal';
 
 export default class Dashboard extends React.Component{
     constructor(){
@@ -28,25 +27,11 @@ export default class Dashboard extends React.Component{
         });
     }
     onAddButtonClick(){
-        this.setState({
-            offices: this.state.offices,
-            formToggle: 1
-        });
-        console.log("Clicked Add Button");
     }
     onEditButtonClick(index){
-        console.log("Clicked Edit Button"+index);
-        this.setState({
-            offices: this.state.offices,
-            formToggle: 1,
-            office: index
-        });
     }
 
     render(){
-        const items=this.state.offices.map((office,index)=>{
-        return (
-        const icons = ["user", "users", "trash", "envelope-o", "calendar-o"];
         const items = this.state.offices.map ( (office, index) => {
             return (
                 <Tile
@@ -64,20 +49,6 @@ export default class Dashboard extends React.Component{
 
         return (
             <div className="row">
-
-                {items}
-
-        let form;
-        if(this.state.formToggle){
-            if(this.state.office){
-                form=<EditForm/>;
-            }else{
-                form=<AddForm/>;
-            }
-        }
-        return (
-            <div className="row">
-            {form}
                 {items}
                 <button className="btn btn-success"
                         onClick={this.onAddButtonClick.bind(this)}>
