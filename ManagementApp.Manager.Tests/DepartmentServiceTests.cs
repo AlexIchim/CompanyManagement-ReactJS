@@ -53,37 +53,77 @@ namespace ManagementApp.Manager.Tests
             Assert.AreEqual(2, result.Count());
         }
 
-
-        
-       /* [Test]
-        public void GetAllUnAllocatedEmployeesOnProject()
+        [Test]
+        public void GetAllDepartmentManagers()
         {
             //Arrange
+            var employee1 = new Employee { Id = 1, Name = "Adi", PositionType = PositionType.DepartmentManager };
+            var employee2 = new Employee { Id = 2, Name = "Ion", PositionType = PositionType.DepartmentManager };
+            /*var departments = new List<Department>
+            {
+                CreateDepartment("Java", 1),
+                CreateDepartment(".Net", 2)
+            };*/
             var employees = new List<Employee>
             {
-                CreateEmployee("Adi",0,1),
-                CreateEmployee("Cristina",0,2),
-                CreateEmployee("Patricia",60,3)
+                employee1,
+                employee2
             };
-            var employeesinfo = new List<EmployeeInfo>
+            /*departments[0].DepartmentManager = employee1;
+            departments[1].DepartmentManager = employee2;*/
+            var departmentsInfo = new List<DepartmentInfo>
+            {
+                CreateDepartmentInfo(1, "Java"),
+                CreateDepartmentInfo(2, ".Net")
+            };
+
+            var employeeInfo = new List<EmployeeInfo>
             {
                 CreateEmployeeInfo(1,"Adi",0),
-                CreateEmployeeInfo(2,"Cristina",0),
-                CreateEmployeeInfo(3,"Patricia",60)
+                CreateEmployeeInfo(2,"Ion",0),
             };
 
-            _departmentRepositoryMock.Setup(m => m.GetAllUnAllocatedEmployeesOnProject()).Returns(employees);
-            _mapperMock.Setup(m => m.Map<IEnumerable<EmployeeInfo>>(employees)).Returns(employeesinfo);
-
-
+            _departmentRepositoryMock.Setup(m => m.GetAllDepartmentManagers()).Returns(employees);
+            _mapperMock.Setup(m => m.Map<IEnumerable<EmployeeInfo>>(employees)).Returns(employeeInfo);
 
             //Act
-            var result = _departmentService.GetAllUnAllocatedEmployeesOnProject();
+            var result = _departmentService.GetAllDepartmentManagers();
 
             //Assert
-            Assert.AreEqual(3,result.Count());
+            Assert.AreEqual(2, result.Count());
+        }
 
-        }*/
+
+
+        /* [Test]
+         public void GetAllUnAllocatedEmployeesOnProject()
+         {
+             //Arrange
+             var employees = new List<Employee>
+             {
+                 CreateEmployee("Adi",0,1),
+                 CreateEmployee("Cristina",0,2),
+                 CreateEmployee("Patricia",60,3)
+             };
+             var employeesinfo = new List<EmployeeInfo>
+             {
+                 CreateEmployeeInfo(1,"Adi",0),
+                 CreateEmployeeInfo(2,"Cristina",0),
+                 CreateEmployeeInfo(3,"Patricia",60)
+             };
+
+             _departmentRepositoryMock.Setup(m => m.GetAllUnAllocatedEmployeesOnProject()).Returns(employees);
+             _mapperMock.Setup(m => m.Map<IEnumerable<EmployeeInfo>>(employees)).Returns(employeesinfo);
+
+
+
+             //Act
+             var result = _departmentService.GetAllUnAllocatedEmployeesOnProject();
+
+             //Assert
+             Assert.AreEqual(3,result.Count());
+
+         }*/
 
         [Test]
         public void GetAll_CallsGetAllFromRepository()
