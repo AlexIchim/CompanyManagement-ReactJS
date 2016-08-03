@@ -35,7 +35,7 @@ export default class Project extends React.Component{
     componentWillMount(){
         $.ajax({
             method: 'GET',
-            url: configs.baseUrl + 'api/project/getAllDepartmentProjects?inputInfo=' + this.props.routeParams.departmentId,
+            url: configs.baseUrl + 'api/project/getAllDepartmentProjects?depId=' + this.props.routeParams.departmentId,
             success: function(data){
                 this.setState({
                     proj: data
