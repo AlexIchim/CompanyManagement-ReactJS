@@ -6,6 +6,6 @@
 
         public int OfficeId { get; set; }
 
-        public int? DepartmentManagerId { get; set; }
+        public int DepartmentManagerId { get; set; }
     }
 }

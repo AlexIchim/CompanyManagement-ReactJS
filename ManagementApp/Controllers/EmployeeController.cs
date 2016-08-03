@@ -65,9 +65,9 @@ namespace ManagementApp.Controllers
 
         [Route("getAllDepartmentEmployees")]
         [HttpGet]
-        public IHttpActionResult GetAllDepartmentEmployees(int inputInfo)
+        public IHttpActionResult GetAllDepartmentEmployees(int departmentId)
         {
-            var result = _employeeService.GetAllDepartmentEmployees(inputInfo);
+            var result = _employeeService.GetAllDepartmentEmployees(departmentId);
             return Json(result);
         }
 
@@ -76,6 +76,22 @@ namespace ManagementApp.Controllers
         public IHttpActionResult AddEmployee([FromBody] AddEmployeeToDepartmentInputInfo inputInfo)
         {
             var result = _employeeService.AddEmployee(inputInfo);
+            return Json(result);
+        }
+
+        [Route("GetAllUnAllocatedEmployeesOnProject")]
+        [HttpGet]
+        public IHttpActionResult GetAllUnAllocatedEmployeesOnProject()
+        {
+            var result = _employeeService.GetAllUnAllocatedEmployeesOnProject();
+            return Json(result);
+        }
+
+        [Route("GetEmployeesThatAreNotFullyAllocated")]
+        [HttpGet]
+        public IHttpActionResult GetEmployeesThatAreNotFullyAllocated()
+        {
+            var result = _employeeService.GetEmployeesThatAreNotFullyAllocated();
             return Json(result);
         }
 

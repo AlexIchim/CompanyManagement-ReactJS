@@ -21,16 +21,16 @@ namespace DataAccess.Repositories
 
         public IEnumerable<Employee> GetEmployeesByProjectId(int projectid)
         {
-            List<Employee> array = new List<Employee>();
+            List<Employee> employees = new List<Employee>();
             var proj = _context.EmployeeProjects.Where(ep => ep.ProjectId == projectid);
 
             foreach (EmployeeProject ep in proj)
             {
                 Employee emp = new Employee();
                 emp = _context.Employees.SingleOrDefault(e => e.Id == ep.EmployeeId);
-                array.Add(emp);
+                employees.Add(emp);
             }
-            return array.ToArray();
+            return employees.ToArray();
 
         }
 
@@ -58,7 +58,7 @@ namespace DataAccess.Repositories
 
         public void Delete(Project project, IEnumerable<EmployeeProject> employeeProjects)
         {
-            if (employeeProjects.Count() != 0)
+            if (employeeProjects.Any())
             {
                 foreach (EmployeeProject employeeProject in employeeProjects)
                 {

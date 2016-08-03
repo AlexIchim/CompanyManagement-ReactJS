@@ -11,97 +11,135 @@ namespace Manager.Services
     public class ProjectService
     {
         private readonly IProjectRepository _projectRepository;
+        private readonly IDepartmentRepository _departmentRepository;
         private readonly IMapper _mapper;
+        private readonly IProjectValidator _projectValidator;
 
-        public ProjectService(IMapper mapper, IProjectRepository projectRepository)
+        public ProjectService(IMapper mapper, IProjectRepository projectRepository, IDepartmentRepository departmentRepository, IProjectValidator projectValidator)
         {
             _projectRepository = projectRepository;
+            _departmentRepository = departmentRepository;
             _mapper = mapper;
+            _projectValidator = projectValidator;
         }
 
         public IEnumerable<EmployeeAllocationInfo> GetEmployeesAllocation(int projectId)
         {
-            return _projectRepository.GetEmployeesAllocation(projectId)
-                .Select(proj => new EmployeeAllocationInfo
-                {
-                    Id = proj.EmployeeId,
-                    Name = proj.Employee.Name,
-                    Allocation = proj.Allocation,
-                    PositionType = proj.Employee.PositionType
-                }).ToList();
+            if (_projectValidator.ValidateId(projectId))
+            {
+                return _projectRepository.GetEmployeesAllocation(projectId)
+                    .Select(proj => new EmployeeAllocationInfo
+                    {
+                        Id = proj.EmployeeId,
+                        Name = proj.Employee.Name,
+                        Allocation = proj.Allocation,
+                        PositionType = proj.Employee.PositionType
+                    }).ToList();
+            }
+            return null;
         }
 
-        public IEnumerable<EmployeeInfo> GetByProjectId(int projectId)
+        public IEnumerable<EmployeeInfo> GetEmployeesByProjectId(int projectId)
         {
-            var employees = _projectRepository.GetEmployeeByProjectId(projectId);
-            var employeeInfos = _mapper.Map<IEnumerable<EmployeeInfo>>(employees);
-            return employeeInfos;
+            if (_projectValidator.ValidateId(projectId))
+            {
+                var project = _projectRepository.GetProjectById(projectId);
+                if (project != null)
+                {
+                    var employees = _projectRepository.GetEmployeesByProjectId(projectId);
+
+                    if (employees != null)
+                    {
+                        var employeeInfos = _mapper.Map<IEnumerable<EmployeeInfo>>(employees);
+                        return employeeInfos;
+                    }
+
+                }
+            }
+
+            return null;
+
         }
 
         public OperationResult Add(AddProjectInputInfo inputInfo)
         {
-            var newProject = _mapper.Map<Project>(inputInfo);
-            _projectRepository.Add(newProject);
-            return new OperationResult(true, Messages.SuccessfullyAddedProject);
-        }
-        public OperationResult AddEmployeeToProject(AddEmployeeToProjectInputInfo inputInfo)
-        {
+            if (_projectValidator.ValidateAddProjectInfo(inputInfo))
+            {
+                var newProject = _mapper.Map<Project>(inputInfo);
 
-            var newEp = _mapper.Map<EmployeeProject>(inputInfo);
-            _projectRepository.AddEmployeeToProject(newEp);
-            return new OperationResult(true, Messages.SuccessfullyAddedEmployeeToProject);
-            return new OperationResult(true, Messages.SuccessfullyAddedDepartment);
+                var department = _departmentRepository.GetDepartmentById((int)inputInfo.DepartmentId);
+
+                if (department != null)
+                {
+                    _projectRepository.Add(newProject);
+                    return new OperationResult(true, Messages.SuccessfullyAddedProject);
+                }
+            }
+            return new OperationResult(false, Messages.ErrorWhileAddingProject);
         }
+       
 
         public OperationResult Delete(int projectId)
         {
-            Project project = _projectRepository.GetProjectById(projectId);
-<<<<<<< HEAD
-            IEnumerable <EmployeeProject> employeeProject = _projectRepository.GetEmployeeProjectById(projectId);
-=======
-            IEnumerable<EmployeeProject> employeeProject = _projectRepository.GetEmployeeProjectByid(projectId);
->>>>>>> capac-Adi
-            _projectRepository.Delete(project, employeeProject);
-            return new OperationResult(true, Messages.SuccessfullyDeletedProject);
-        }
-
-        public OperationResult UpdatePartialAllocation(UpdateAllocationInputInfo inputInfo)
-        {
-            var employeeProjects = _projectRepository.GetEmployeeProjectById(inputInfo.ProjectId).ToList();
-            if (employeeProjects != null)
+            if (_projectValidator.ValidateId(projectId))
             {
-                EmployeeProject ep = employeeProjects.Where(e => e.EmployeeId == inputInfo.EmployeeId).SingleOrDefault();
-                if (ep != null)
-                {
-                    ep.Allocation = inputInfo.Allocation;
-                    _projectRepository.Save();
-                    return new OperationResult(true, Messages.SuccessfullyUpdatedPartialAllocation);
-                }
+                Project project = _projectRepository.GetProjectById(projectId);
+                IEnumerable<EmployeeProject> employeeProject = _projectRepository.GetEmployeeProjectById(projectId);
+                _projectRepository.Delete(project, employeeProject);
+                return new OperationResult(true, Messages.SuccessfullyDeletedProject);
             }
-            return new OperationResult(false, Messages.ErrorWhileUpdatingDepartment);
+            return new OperationResult(false, Messages.ErrorDeletingProject);
         }
 
         
-
         public OperationResult UpdateProject(UpdateProjectInputInfo inputInfo)
         {
-            var updatedProject = _projectRepository.GetProjectById(inputInfo.Id);
+            if (_projectValidator.ValidateUpdateProjectInfo(inputInfo))
+            {
+                var updatedProject = _projectRepository.GetProjectById(inputInfo.Id);
 
-            if (updatedProject == null)
-            {
-                return new OperationResult(false, Messages.ErrorWhileUpdatingProject);
+                if (updatedProject != null)
+                {
+                    //update
+                    updatedProject.Name = inputInfo.Name;
+                    updatedProject.Status = inputInfo.Status;
+                    if (inputInfo.Duration != null)
+                    {
+                        updatedProject.Duration = inputInfo.Duration;
+                    }
+                    //save
+                    _projectRepository.Save();
+                    //result
+                    return new OperationResult(true, Messages.SuccessfullyUpdatedProject);
+
+                }
             }
-            //update
-            updatedProject.Name = inputInfo.Name;
-            updatedProject.Status = inputInfo.Status;
-            if (inputInfo.Duration != null)
+            return new OperationResult(false, Messages.ErrorWhileUpdatingProject);
+        }
+
+        public IEnumerable<ProjectInfo> GetAllDepartmentProjects(int depId)
+        {
+<<<<<<< HEAD
+            if (_projectValidator.ValidateId(depId))
+=======
+            //var depId = _mapper.Map<int>(inputInfo);
+
+            var department = _departmentRepository.GetDepartmentById(depId);
+            if (department != null)
+>>>>>>> capac-andreimuresan
             {
-                updatedProject.Duration = inputInfo.Duration;
+                var department = _departmentRepository.GetDepartmentById(depId);
+                if (department != null)
+                {
+                    var projects = _projectRepository.GetAllDepartmentProjects(department);
+                    if (projects != null)
+                    {
+                        var projectInfos = _mapper.Map<IEnumerable<ProjectInfo>>(projects);
+                        return projectInfos;
+                    }
+                }
             }
-            //save
-            _projectRepository.Save();
-            //result
-            return new OperationResult(true, Messages.SuccessfullyUpdatedProject);
+            return null;
         }
 
     }

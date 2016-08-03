@@ -23,6 +23,26 @@ namespace ManagementApp.Controllers
             return Json(result);
         }
 
+<<<<<<< HEAD
+
+        [Route("GetAllUnAllocatedEmployeesOnProject")]
+        [HttpGet]
+        public IHttpActionResult GetAllUnAllocatedEmployeesOnProject()
+        {
+            var result = _departmentService.GetAllUnAllocatedEmployeesOnProject();
+            return Json(result);
+        }
+
+        [Route("GetEmployeesThatAreNotFullyAllocated")]
+        [HttpGet]
+        public IHttpActionResult GetEmployeesThatAreNotFullyAllocated()
+        {
+            var result = _departmentService.GetEmployeesThatAreNotFullyAllocated();
+            return Json(result);
+        }
+
+=======
+>>>>>>> capac-cristina
         [Route("addDepartment")]
         [HttpPost]
         public IHttpActionResult AddDepartment([FromBody] AddDepartmentInputInfo inputInfo)

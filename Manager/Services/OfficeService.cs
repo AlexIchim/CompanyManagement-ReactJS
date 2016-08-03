@@ -12,12 +12,13 @@ namespace Manager.Services
     {
         private readonly IOfficeRepository _officeRepository;
         private readonly IMapper _mapper;
-        private Employee dm;
+        private readonly IOfficeValidator _officeValidator;
 
-        public OfficeService(IMapper mapper, IOfficeRepository officeRepository)
+        public OfficeService(IMapper mapper, IOfficeRepository officeRepository, IOfficeValidator officeValidator)
         {
             _officeRepository = officeRepository;
             _mapper = mapper;
+            _officeValidator = officeValidator;
         }
 
         public IEnumerable<OfficeInfo> GetAll()
@@ -30,38 +31,44 @@ namespace Manager.Services
 
         public IEnumerable<DepartmentInfo> GetAllDepartmentsOfAnOffice(int officeId)
         {
-            var newDep = _mapper.Map<int>(officeId);
-            var departments = _officeRepository.GetAllDepartmentsOfAnOffice(newDep);
-            var departmentInfos = _mapper.Map<IEnumerable<DepartmentInfo>>(departments);
+            if (_officeValidator.ValidateId(officeId))
+            {
+                var departments = _officeRepository.GetAllDepartmentsOfAnOffice(officeId);
+                var departmentInfos = _mapper.Map<IEnumerable<DepartmentInfo>>(departments);
 
-            return departmentInfos;
-
+                return departmentInfos;
+            }
+            return null;
         }
 
         public OperationResult Add(AddOfficeInputInfo inputInfo)
         {
-
-            var newOffice = _mapper.Map<Office>(inputInfo);
-            _officeRepository.AddOffice(newOffice);
-            return new OperationResult(true, Messages.SuccessfullyAddedOffice);
+            if (_officeValidator.ValidateAddOfficeInfo(inputInfo))
+            {
+                var newOffice = _mapper.Map<Office>(inputInfo);
+                _officeRepository.AddOffice(newOffice);
+                return new OperationResult(true, Messages.SuccessfullyAddedOffice);
+            }
+            return new OperationResult(false, Messages.ErrorAddingOffice);
         }
 
         public OperationResult UpdateOffice(UpdateOfficeInputInfo inputInfo)
         {
-            var office = _officeRepository.GetOfficeById(inputInfo.Id);
-
-            if (office == null)
+            if (_officeValidator.ValidateUpdateOfficeInfo(inputInfo))
             {
-                return new OperationResult(false, Messages.ErrorWhileUpdatingOffice);
+                var office = _officeRepository.GetOfficeById(inputInfo.Id);
+
+                if (office != null)
+                {                    
+                    office.Name = inputInfo.Name;
+                    office.Address = inputInfo.Address;
+                    office.PhoneNumber = inputInfo.PhoneNumber;
+                    office.Image = inputInfo.Image;
+                    _officeRepository.Save();
+                    return new OperationResult(true, Messages.SuccessfullyUpdatedOffice);
+                }
             }
-
-            office.Name = inputInfo.Name;
-            office.Address = inputInfo.Address;
-            office.PhoneNumber = inputInfo.PhoneNumber;
-            office.Image = inputInfo.Image;
-            _officeRepository.Save();
-
-            return new OperationResult(true, Messages.SuccessfullyUpdatedOffice);
+            return new OperationResult(false, Messages.ErrorWhileUpdatingOffice);
         }
     }
 }

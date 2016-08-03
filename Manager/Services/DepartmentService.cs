@@ -1,9 +1,11 @@
 ﻿using AutoMapper;
 using Contracts;
+using Domain.Enums;
 using Domain.Models;
 using Manager.InfoModels;
 using Manager.InputInfoModels;
 using System.Collections.Generic;
+using Domain.Enums;
 
 namespace Manager.Services
 {
@@ -11,11 +13,13 @@ namespace Manager.Services
     {
         private readonly IDepartmentRepository _departmentRepository;
         private readonly IMapper _mapper;
+        private readonly IDepartmentValidator _departmentValidator;
 
-        public DepartmentService(IMapper mapper, IDepartmentRepository departmentRepository)
+        public DepartmentService(IMapper mapper, IDepartmentRepository departmentRepository, IDepartmentValidator departmentValidator)
         {
             _departmentRepository = departmentRepository;
             _mapper = mapper;
+            _departmentValidator = departmentValidator;
         }
 
         public IEnumerable<DepartmentInfo> GetAll()
@@ -26,25 +30,11 @@ namespace Manager.Services
             return departmentInfos;
         }
 
-        public IEnumerable<EmployeeInfo> GetAllUnAllocatedEmployeesOnProject()
+        /*public OperationResult Update(UpdateDepartmentInputInfo inputInfo)
         {
-            var employees = _departmentRepository.GetAllUnAllocatedEmployeesOnProject();
-            var employeeInfos = _mapper.Map<IEnumerable<EmployeeInfo>>(employees);
-            return employeeInfos;
-        }
-
-        public IEnumerable<EmployeeInfo> GetEmployeesThatAreNotFullyAllocated()
-        {
-            var employees = _departmentRepository.GetEmployeesThatAreNotFullyAllocated();
-            var employeeInfos = _mapper.Map<IEnumerable<EmployeeInfo>>(employees);
-            return employeeInfos;
-        }
-
-
-
-        public OperationResult Update(UpdateDepartmentInputInfo inputInfo)
-        {
-            var department = _departmentRepository.GetDepartmentById(inputInfo.Id);
+            if (_departmentValidator.ValidateUpdateDepartmentInfo(inputInfo))
+            {
+                var department = _departmentRepository.GetDepartmentById(inputInfo.Id);
 
             if (department == null)
             {
@@ -54,25 +44,30 @@ namespace Manager.Services
             department.Name = inputInfo.Name;
             _departmentRepository.Save();
 
-            return new OperationResult(true, Messages.SuccessfullyAddedDepartment);
-        }
+            return new OperationResult(true, Messages.SuccessfullyUpdatedDepartment);
+        }*/
 
-        
+
 
         public OperationResult AddDepartment(AddDepartmentInputInfo inputInfo)
         {
-            var newDepartment = _mapper.Map<Department>(inputInfo);
-
-            var depManagerId = inputInfo.DepartmentManagerId;
-
-            if (_departmentRepository.IsDepartmentManager(depManagerId))
+            if (_departmentValidator.ValidateAddDepartmentInfo(inputInfo))
             {
-                _departmentRepository.Add(newDepartment, inputInfo.DepartmentManagerId);
-                return new OperationResult(true, Messages.SuccessfullyAddedDepartment);
+                var newDepartment = _mapper.Map<Department>(inputInfo);
+
+                var depManagerId = inputInfo.DepartmentManagerId;
+
+                if (!_departmentRepository.DepartmentWithNameExists(inputInfo.Name))
+                {
+                    if (_departmentRepository.IsDepartmentManager((int) depManagerId))
+                    {
+                        _departmentRepository.AddDepartment(newDepartment, (int) inputInfo.DepartmentManagerId);
+                        return new OperationResult(true, Messages.SuccessfullyAddedDepartment);
+                    }
+                }
+                return new OperationResult(false, Messages.ErrorAddingDepartment);
             }
-
             return new OperationResult(false, Messages.ErrorAddingDepartment);
-
         }
 
         public IEnumerable<EmployeeInfo> GetAllDepartmentManagers()
@@ -85,28 +80,27 @@ namespace Manager.Services
 
         public OperationResult UpdateDepartment(UpdateDepartmentInputInfo inputInfo)
         {
-            var department = _departmentRepository.GetDepartmentById(inputInfo.Id);
-
-            if (department == null)
+            if (_departmentValidator.ValidateUpdateDepartmentInfo(inputInfo))
             {
-                return new OperationResult(false, Messages.ErrorWhileUpdatingDepartment);
-            }
+                    var department = _departmentRepository.GetDepartmentById(inputInfo.Id);
 
-            var dm = _departmentRepository.GetEmployeeById(inputInfo.DepartmentManagerId);
+                if (department == null)
+                {
+                    return new OperationResult(false, Messages.ErrorWhileUpdatingDepartment);
+                }
 
-            if (dm != null && _departmentRepository.IsDepartmentManager(dm.Id))
-            {
+                var dm = _departmentRepository.GetEmployeeById(inputInfo.DepartmentManagerId);
+
+                if (dm != null && dm.PositionType == PositionType.DepartmentManager)
+                 {
+                    department.DepartmentManager = dm;
+                   
+                }
                 department.Name = inputInfo.Name;
-                department.DepartmentManager = dm;
                 _departmentRepository.Save();
                 return new OperationResult(true, Messages.SuccessfullyUpdatedDepartment);
             }
-
             return new OperationResult(false, Messages.ErrorWhileUpdatingDepartment);
-                     
-            
-
-            
         }
     }
 }
