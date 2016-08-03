@@ -1,46 +1,55 @@
 import * as React from 'react';
 import Tile from './Tile';
+import * as $ from 'jquery';
+import config from '../../api/config';
 
 export default class Offices extends React.Component{
     constructor(){
         super();
     }
 
+    componentWillMount(){
+        $.ajax({
+            method: "GET",
+            url: config.baseUrl+"offices",
+            async: false,
+            success: function(data){
+                this.setState({
+                    offices: data
+                })
+            }.bind(this)
+
+        })
+    }
 
     render(){
-        return (
-            <div className="row">
 
-
-                <Tile
+        const offices = this.state.offices.map ((office, index) => {
+            return <Tile
                     parentClass="bg-aqua"
-                    phone="213123"
-                    address="Address: Ajax requests"
-                    link="/change-me"
-                    icon="envelope-o"
-                />
-                <Tile
-                    parentClass="bg-green"
-                    phone="213123"
-                    address="Address: Sample controls"
-                    link="/change-me"
-                    icon="user"
-                />
+                    name = {office.name}
+                    phone={office.phone}
+                    address={office.address}
+                    link={"/offices/" + office.id + "/departments"}
+                    editIcon="pencil-square-o fa-3x"
+                    icon={office.image}
+                    key={index}
+                    />
+        })
 
-                <Tile
-                    parentClass="bg-yellow"
-                    phone="213123"
-                    address="Address: Sample joi validation"
-                    link="/change-me"
-                    icon="users"
-                />
-                <Tile
-                    parentClass="bg-red"
-                    phone="213123"
-                    address="Address: State manipulation demo"
-                    link="/change-me"
-                    icon="trash"
-                />
+        return (
+            <div>
+                <div className="row">
+
+                    {offices}
+
+
+                </div>
+
+                <br/>
+
+                    <button className="btn btn-primary">Add new office</button>
+
             </div>
 
         )
