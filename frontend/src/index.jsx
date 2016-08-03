@@ -1,17 +1,17 @@
 import * as React from 'react';
-import  {Router, Route,hashHistory, IndexRoute} from 'react-router';
 import * as ReactDOM from 'react-dom';
+import  {Router, Route, IndexRoute, hashHistory} from 'react-router';
 
 import './assets/less/index.less';
 
 import App from './components/App';
-import Offices from './components/offices/Offices';
+import About from './components/about/About';
 import Departments from './components/departments/Departments';
 import DumbParent from './components/layout/DumbParent';
-import Projects from './components/projects/Projects';
-import ProjectMembers from './components/project-members/ProjectMembers';
 import Employees from './components/employees/Employees';
-import About from './components/about/About';
+import Offices from './components/offices/Offices';
+import ProjectMembers from './components/project-members/ProjectMembers';
+import Projects from './components/projects/Projects';
 
 
 const Routes = () => (
