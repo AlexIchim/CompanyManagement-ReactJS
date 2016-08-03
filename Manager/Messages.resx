@@ -183,4 +183,10 @@
   <data name="ErrorWhileAddingProject" xml:space="preserve">
     <value>'Error adding project.'</value>
   </data>
+  <data name="ErrorAddingOffice" xml:space="preserve">
+    <value>'Error adding office'</value>
+  </data>
+  <data name="ErrorDeletingProject" xml:space="preserve">
+    <value>'Error deleting project'</value>
+  </data>
 </root>

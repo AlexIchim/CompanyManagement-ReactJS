@@ -56,16 +56,7 @@ namespace DataAccess.Repositories
 
         public int ComputeTotalAllocation(int employeeId)
         {
-            var array = _context.EmployeeProjects.Where(ep => ep.EmployeeId == employeeId).ToList();
-
-            int totalAllocation = 0;
-
-            foreach (var ep in array)
-            {
-                totalAllocation += ep.Allocation;
-            }
-
-            return totalAllocation;
+            return _context.EmployeeProjects.Where(ep => ep.EmployeeId == employeeId).ToList().Sum(ep => ep.Allocation);         
         }
 
         public void UpdateTotalAllocation(int employeeId, int totalAllocation)
@@ -104,5 +95,18 @@ namespace DataAccess.Repositories
             _context.Employees.Add(employee);
             Save();
         }
+
+        public IEnumerable<Employee> GetAllUnAllocatedEmployeesOnProject()
+        {
+            var employees = _context.Employees.Where(e => e.TotalAllocation == 0);
+            return employees.ToArray();
+        }
+
+        public IEnumerable<Employee> GetEmployeesThatAreNotFullyAllocated()
+        {
+            var employees = _context.Employees.Where(e => e.TotalAllocation < 100);
+            return employees.ToArray();
+        }
+
     }
 }

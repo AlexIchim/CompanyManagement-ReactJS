@@ -53,37 +53,6 @@ namespace ManagementApp.Manager.Tests
         }
 
 
-        //nu merge inca
-        [Test]
-        public void GetAllUnAllocatedEmployeesOnProject()
-        {
-            //Arrange
-            var employees = new List<Employee>
-            {
-                CreateEmployee("Adi",0,1),
-                CreateEmployee("Cristina",0,2),
-              //  CreateEmployee("Patricia",60,3)
-            };
-            var employeesinfo = new List<EmployeeInfo>
-            {
-                CreateEmployeeInfo(1,"Adi",0),
-                CreateEmployeeInfo(2,"Cristina",0),
-               // CreateEmployeeInfo(3,"Patricia",60)
-            };
-
-            _departmentRepositoryMock.Setup(m => m.GetAllUnAllocatedEmployeesOnProject()).Returns(employees);
-            _mapperMock.Setup(m => m.Map<IEnumerable<EmployeeInfo>>(employees)).Returns(employeesinfo);
-
-
-
-            //Act
-            var result = _departmentService.GetAllUnAllocatedEmployeesOnProject();
-
-            //Assert
-            Assert.AreEqual(3,result.Count());
-
-        }
-
         [Test]
         public void GetAll_CallsGetAllFromRepository()
         {

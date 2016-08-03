@@ -16,62 +16,73 @@ namespace Manager.Services
         private readonly IEmployeeRepository _employeeRepository;
         private readonly IDepartmentRepository _departmentRepository;
         private readonly IMapper _mapper;
+        private readonly IEmployeeValidator _employeeValidator;
+        private readonly IEmployeeProjectValidator _employeeProjectValidator;
 
-        public EmployeeService(IMapper mapper, IEmployeeRepository employeeRepository, IDepartmentRepository departmentRepository)
+        public EmployeeService(IMapper mapper, IEmployeeRepository employeeRepository, IDepartmentRepository departmentRepository, IEmployeeValidator employeeValidator, IEmployeeProjectValidator employeeProjectValidator)
         {
             _employeeRepository = employeeRepository;
             _departmentRepository = departmentRepository;
             _mapper = mapper;
+            _employeeValidator = employeeValidator;
+            _employeeProjectValidator = employeeProjectValidator;
         }
 
         public IEnumerable<ProjectsOfAnEmployeeInfo> GetProjectByEmployeeId(int employeeId)
         {
-            return _employeeRepository.GetProjectByEmployeeId(employeeId).
-                Select(emp => new ProjectsOfAnEmployeeInfo
-                {
-                    Id = emp.ProjectId,
-                    Name = emp.Project.Name,
-                    Allocation = emp.Allocation
-                }).ToList();
+            if (_employeeValidator.ValidateId(employeeId))
+            {
+                return _employeeRepository.GetProjectByEmployeeId(employeeId).
+                    Select(emp => new ProjectsOfAnEmployeeInfo
+                    {
+                        Id = emp.ProjectId,
+                        Name = emp.Project.Name,
+                        Allocation = emp.Allocation
+                    }).ToList();
+            }
+            return null;                                                                                           //?
         }
 
         public OperationResult ReleaseEmployee(int employeeId)
         {
-            var employee = _employeeRepository.GetById(employeeId);
+            if (_employeeValidator.ValidateId(employeeId))
+            { 
+                var employee = _employeeRepository.GetById(employeeId);
 
-            if (employee != null)
-            {
-                _employeeRepository.ReleaseEmployee(employeeId);
-                _employeeRepository.UpdateTotalAllocation(employeeId, 0);
-                return new OperationResult(true, Messages.SuccessfullyDeletedEmployee);
+                if (employee != null)
+                {
+                    _employeeRepository.ReleaseEmployee(employeeId);
+                    _employeeRepository.UpdateTotalAllocation(employeeId, 0);
+                    return new OperationResult(true, Messages.SuccessfullyDeletedEmployee);
+                }
             }
-
             return new OperationResult(false, Messages.ErrorDeletingEmployee);
-
         }
 
         public OperationResult UpdateEmployee(UpdateEmployeeInputInfo inputInfo)
         {
-            
-            var department = _departmentRepository.GetDepartmentById(inputInfo.DepartmentId);
-
-            if (department != null)
+            if (_employeeValidator.ValidateUpdateEmployeeInfo(inputInfo))
             {
-                var employee = _employeeRepository.GetById(inputInfo.Id);
+                var department = _departmentRepository.GetDepartmentById(inputInfo.DepartmentId);
 
-                if (employee != null)
+                if (department != null)
                 {
-                    employee.Name = inputInfo.Name;
-                    employee.Address = inputInfo.Address;
-                    employee.EmploymentDate = inputInfo.EmploymentDate;
-                    employee.ReleaseDate = inputInfo.ReleaseDate;
-                    employee.JobType = inputInfo.JobType;
-                    employee.PositionType = inputInfo.PositionType;
+                    var employee = _employeeRepository.GetById(inputInfo.Id);
 
-                    _employeeRepository.Save();
+                    if (employee != null)
+                    {
+                        employee.Name = inputInfo.Name;
+                        employee.Address = inputInfo.Address;
+                        employee.EmploymentDate = inputInfo.EmploymentDate;
+                        employee.ReleaseDate = inputInfo.ReleaseDate;
+                        employee.JobType = inputInfo.JobType;
+                        employee.PositionType = inputInfo.PositionType;
 
-                    return new OperationResult(true, Messages.SuccessfullyUpdatedEmployee);
-                   
+                        _employeeRepository.Save();
+
+                        return new OperationResult(true, Messages.SuccessfullyUpdatedEmployee);
+
+                    }
                 }
             }
             return new OperationResult(false, Messages.ErrorWhileUpdatingEmployee);
@@ -79,82 +90,103 @@ namespace Manager.Services
 
         public OperationResult AddEmployeeToProject(AddEmployeeToProjectInputInfo inputInfo)
         {
-            var newEp = _mapper.Map<EmployeeProject>(inputInfo);
-
-            int totalAllocation = _employeeRepository.ComputeTotalAllocation(newEp.EmployeeId);
-
-            int newTotalAllocation = totalAllocation + newEp.Allocation;
-
-            if (newTotalAllocation >= 100)
+            if (_employeeValidator.ValidateAddEmployeeToProjectInfo(inputInfo))
             {
-                return new OperationResult(false, Messages.ErrorAddingEmployeeToProject);
-            }
+                var newEp = _mapper.Map<EmployeeProject>(inputInfo);
 
-            _employeeRepository.UpdateTotalAllocation(newEp.EmployeeId, newTotalAllocation);
-            _employeeRepository.AddEmployeeToProject(newEp);
-            return new OperationResult(true, Messages.SuccessfullyAddedEmployeeToProject);
+                int totalAllocation = _employeeRepository.ComputeTotalAllocation(newEp.EmployeeId);
+
+                int newTotalAllocation = totalAllocation + newEp.Allocation;
+
+                if (newTotalAllocation <= 100)
+                {                 
+                    _employeeRepository.UpdateTotalAllocation(newEp.EmployeeId, newTotalAllocation);
+                    _employeeRepository.AddEmployeeToProject(newEp);
+                    return new OperationResult(true, Messages.SuccessfullyAddedEmployeeToProject);
+                }              
+            }
+            return new OperationResult(false, Messages.ErrorAddingEmployeeToProject);
         }
 
         public OperationResult UpdatePartialAllocation(UpdateAllocationInputInfo inputInfo)
         {
-            var employeeProjects = _employeeRepository.GetEmployeeProjectById(inputInfo.ProjectId).ToList();
-
-            if (employeeProjects != null)
+            if (_employeeProjectValidator.ValidateUpdateAllocationInfo(inputInfo))
             {
-                EmployeeProject ep = employeeProjects.SingleOrDefault(e => e.EmployeeId == inputInfo.EmployeeId);
-                if (ep != null)
+                var employeeProjects = _employeeRepository.GetEmployeeProjectById(inputInfo.ProjectId).ToList();
+
+                if (employeeProjects != null)
                 {
-                    int totalAllocation = _employeeRepository.ComputeTotalAllocation(ep.EmployeeId);
-
-                    int newTotalAllocation = totalAllocation - ep.Allocation + inputInfo.Allocation;
-
-                    if (newTotalAllocation > 100)
+                    EmployeeProject ep = employeeProjects.SingleOrDefault(e => e.EmployeeId == inputInfo.EmployeeId);
+                    if (ep != null)
                     {
-                        return new OperationResult(false, Messages.ErrorWhileUpdatingPartialAllocation);
-                    }
+                        int totalAllocation = _employeeRepository.ComputeTotalAllocation(ep.EmployeeId);
 
-                    ep.Allocation = inputInfo.Allocation;
-                    
-                    _employeeRepository.UpdateTotalAllocation(ep.EmployeeId,newTotalAllocation);
-                    return new OperationResult(true, Messages.SuccessfullyUpdatedPartialAllocation);
+                        int newTotalAllocation = totalAllocation - ep.Allocation + inputInfo.Allocation;
+
+                        if (newTotalAllocation <= 100)
+                        {
+                            ep.Allocation = inputInfo.Allocation;
+
+                            _employeeRepository.UpdateTotalAllocation(ep.EmployeeId, newTotalAllocation);
+                            return new OperationResult(true, Messages.SuccessfullyUpdatedPartialAllocation);
+                        }                     
+                    }
                 }
             }
             return new OperationResult(false, Messages.ErrorWhileUpdatingPartialAllocation);
         }
 
-        public IEnumerable<MemberInfo> GetAllDepartmentEmployees(int inputInfo)
+        public IEnumerable<MemberInfo> GetAllDepartmentEmployees(int departmentId)
         {
-            var departmentId = _mapper.Map<int>(inputInfo);
-
-            var department = _departmentRepository.GetDepartmentById(departmentId);
-
-            if (department != null)
+            if (_employeeValidator.ValidateId(departmentId))
             {
-                var members = _employeeRepository.GetAllDepartmentEmployees(department);
 
-                if (members != null)
+                var department = _departmentRepository.GetDepartmentById(departmentId);
+
+                if (department != null)
                 {
-                    var memberInfos = _mapper.Map<IEnumerable<MemberInfo>>(members);
-                    return memberInfos;                  
+                    var members = _employeeRepository.GetAllDepartmentEmployees(department);
+
+                    if (members != null)
+                    {
+                        var memberInfos = _mapper.Map<IEnumerable<MemberInfo>>(members);
+                        return memberInfos;
+                    }
+
                 }
-               
             }
 
             return null;
         }
         public OperationResult AddEmployee(AddEmployeeToDepartmentInputInfo inputInfo)
         {
-            var newEp = _mapper.Map<Employee>(inputInfo);
-
-            var department = _departmentRepository.GetDepartmentById(inputInfo.DepartmentId);
-            if (department != null)
+            if (_employeeValidator.ValidateAddEmployeeToDepartmentInfo(inputInfo))
             {
-                newEp.TotalAllocation = 0;
-                _employeeRepository.AddEmployee(newEp);
-                return new OperationResult(true, Messages.SuccessfullyAddedEmployee);
-            }
+                var newEp = _mapper.Map<Employee>(inputInfo);
 
+                var department = _departmentRepository.GetDepartmentById(inputInfo.DepartmentId);
+                if (department != null)
+                {
+                    newEp.TotalAllocation = 0;
+                    _employeeRepository.AddEmployee(newEp);
+                    return new OperationResult(true, Messages.SuccessfullyAddedEmployee);
+                }
+            }
             return new OperationResult(false, Messages.ErrorAddingEmployee );
+        }
+
+        public IEnumerable<EmployeeInfo> GetAllUnAllocatedEmployeesOnProject()
+        {
+            var employees = _employeeRepository.GetAllUnAllocatedEmployeesOnProject();
+            var employeeInfos = _mapper.Map<IEnumerable<EmployeeInfo>>(employees);
+            return employeeInfos;
+        }
+
+        public IEnumerable<EmployeeInfo> GetEmployeesThatAreNotFullyAllocated()
+        {
+            var employees = _employeeRepository.GetEmployeesThatAreNotFullyAllocated();
+            var employeeInfos = _mapper.Map<IEnumerable<EmployeeInfo>>(employees);
+            return employeeInfos;
         }
     }
 }

@@ -58,6 +58,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="IDepartmentValidator.cs" />
+    <Compile Include="IEmployeeProjectValidator.cs" />
+    <Compile Include="IEmployeeValidator.cs" />
     <Compile Include="InfoModels\DepartmentInfo.cs" />
     <Compile Include="InfoModels\OfficeInfo.cs" />
     <Compile Include="InfoModels\EmployeeAllocationInfo.cs" />
@@ -75,6 +78,8 @@
     <Compile Include="InputInfoModels\UpdateEmployeeInputInfo.cs" />
     <Compile Include="InputInfoModels\UpdateProjectInputInfo.cs" />
     <Compile Include="InputInfoModels\UpdateOfficeInputInfo.cs" />
+    <Compile Include="IOfficeValidator.cs" />
+    <Compile Include="IProjectValidator.cs" />
     <Compile Include="Mapper\MappingConfig.cs" />
     <Compile Include="OperationResult.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -84,9 +89,14 @@
       <DependentUpon>Messages.resx</DependentUpon>
     </Compile>
     <Compile Include="Services\DepartmentService.cs" />
+    <Compile Include="Validators\DepartmentValidator.cs" />
     <Compile Include="Services\EmployeeService.cs" />
     <Compile Include="Services\OfficeService.cs" />
+    <Compile Include="Validators\EmployeeProjectValidator.cs" />
+    <Compile Include="Validators\EmployeeValidator.cs" />
+    <Compile Include="Validators\OfficeValidator.cs" />
     <Compile Include="Services\ProjectService.cs" />
+    <Compile Include="Validators\ProjectValidator.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

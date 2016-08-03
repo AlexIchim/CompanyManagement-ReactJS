@@ -23,7 +23,7 @@ namespace DataAccess.Migrations
               new Office { Id = 3, Name = "London", Address = "Arundel House, 4 Palace Green,", PhoneNumber = "44 20 7937 9666" }
             );
 
-            Employee e1 = new Employee()
+            Employee e1 = new Employee
             {
                 Id = 1,
                 Name = "Patricia",
@@ -36,7 +36,7 @@ namespace DataAccess.Migrations
                 DepartmentId = 1
             };
 
-            Employee e2 = new Employee()
+            Employee e2 = new Employee
             {
                 Id = 2,
                 Name = "Cristina",
@@ -49,7 +49,7 @@ namespace DataAccess.Migrations
                 DepartmentId = 1
             };
 
-            Employee e3 = new Employee()
+            Employee e3 = new Employee
             {
                 Id = 3,
                 Name = "Camelia",
@@ -62,7 +62,7 @@ namespace DataAccess.Migrations
                 DepartmentId = 3
             };
 
-            Employee e4 = new Employee()
+            Employee e4 = new Employee
             {
                 Id = 4,
                 Name = "Adi",
@@ -75,7 +75,7 @@ namespace DataAccess.Migrations
                 DepartmentId = 2
             };
 
-            Employee e5 = new Employee()
+            Employee e5 = new Employee
             {
                 Id = 5,
                 Name = "Andrei",
@@ -88,7 +88,7 @@ namespace DataAccess.Migrations
                 DepartmentId = 3
             };
 
-            Employee e6 = new Employee()
+            Employee e6 = new Employee
             {
                 Id = 6,
                 Name = "Aleona",
@@ -100,7 +100,7 @@ namespace DataAccess.Migrations
                 PositionType = PositionType.DepartmentManager,
                 DepartmentId = 2
             };
-            Employee e7 = new Employee()
+            Employee e7 = new Employee
             {
                 Id = 7,
                 Name = "Radu",
@@ -113,7 +113,7 @@ namespace DataAccess.Migrations
                 DepartmentId = 4
             };
 
-            Employee e8 = new Employee()
+            Employee e8 = new Employee
             {
                 Id = 8,
                 Name = "Razvan",
@@ -125,7 +125,7 @@ namespace DataAccess.Migrations
                 PositionType = PositionType.QA,
                 DepartmentId = 4
             };
-            Employee e9 = new Employee()
+            Employee e9 = new Employee
             {
                 Id = 9,
                 Name = "Anna",
@@ -137,7 +137,7 @@ namespace DataAccess.Migrations
                 PositionType = PositionType.TeamLead,
                 DepartmentId = 5
             };
-            Employee e10 = new Employee()
+            Employee e10 = new Employee
             {
                 Id = 10,
                 Name = "Sorinel",
@@ -149,7 +149,7 @@ namespace DataAccess.Migrations
                 PositionType = PositionType.BA,
                 DepartmentId = 5
             };
-            Employee e11 = new Employee()
+            Employee e11 = new Employee
             {
                 Id = 11,
                 Name = "Lucian",
@@ -161,7 +161,7 @@ namespace DataAccess.Migrations
                 PositionType = PositionType.DepartmentManager,
                 DepartmentId = 6
             };
-            Employee e12 = new Employee()
+            Employee e12 = new Employee
             {
                 Id = 12,
                 Name = "Gheorghe",

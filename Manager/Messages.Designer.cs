@@ -88,11 +88,29 @@ namespace Manager {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to &apos;Error adding office&apos;.
+        /// </summary>
+        public static string ErrorAddingOffice {
+            get {
+                return ResourceManager.GetString("ErrorAddingOffice", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to &apos;Error: Employee could not be deleted.&apos;.
         /// </summary>
         public static string ErrorDeletingEmployee {
             get {
                 return ResourceManager.GetString("ErrorDeletingEmployee", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to &apos;Error deleting project&apos;.
+        /// </summary>
+        public static string ErrorDeletingProject {
+            get {
+                return ResourceManager.GetString("ErrorDeletingProject", resourceCulture);
             }
         }
         
