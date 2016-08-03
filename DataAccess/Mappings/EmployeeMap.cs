@@ -13,9 +13,6 @@ namespace DataAccess.Mappings
                 .WithMany(t => t.Employees)
                 .HasForeignKey(d => d.DepartmentId);
 
-            this.HasOptional(t => t.ManagedDepartment)
-                .WithOptionalPrincipal(t => t.DepartmentManager);
-
             // Properties
             this.Property(t => t.Name)
                 .IsRequired()

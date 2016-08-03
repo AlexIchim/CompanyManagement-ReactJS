@@ -19,9 +19,8 @@ export default class Departments extends Component {
         componentWillMount() {
             $.ajax({
                 method: 'GET',
-                url: config.baseUrl + 'office/getDepartmentsByOfficeId?id=' + this.props.params['officeId'],
+                url: config.baseUrl + 'offices/' + this.props.params['officeId'] + '/departments',
                 success: function(data) {
-                    console.log(data, this);
                     this.setState({
                         departments: data,
                     })
@@ -30,11 +29,10 @@ export default class Departments extends Component {
 
             $.ajax({
                 method: 'GET',
-                url: config.baseUrl + 'office/getById?id=' + this.props.params['officeId'],
+                url: config.baseUrl + 'offices/' + this.props.params['officeId'],
                 success: function(data) {
-                    console.log(data);
                     this.setState({
-                        officeName: data.Name
+                        officeName: data.name
                     })
                 }.bind(this)
             })

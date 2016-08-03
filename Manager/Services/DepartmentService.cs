@@ -68,26 +68,20 @@ namespace Manager.Services
 
         public OperationResult Update(UpdateDepartmentInputInfo inputInfo)
         {
-            var Office = _officeRepository.GetById(inputInfo.OfficeId);
-            if (Office != null)
+            var department = _departmentRepository.GetById(inputInfo.Id);
+
+            if (department == null)
             {
-                var department = _departmentRepository.GetById(inputInfo.Id);
-
-                if (department == null)
-                {
-                    return new OperationResult(false, Messages.ErrorWhileUpdatingDepartment_InvalidId);
-                }
-
-                var result = Validators.DepartmentValidator.Validate(inputInfo);
-                if (result.Success == true)
-                {
-                    department.Name = inputInfo.Name;
-                    department.OfficeId = inputInfo.OfficeId;
-                    _departmentRepository.Update(department, inputInfo.DepartmentManagerId);
-                }
-                return result;
+                return new OperationResult(false, Messages.ErrorWhileUpdatingDepartment_InvalidId);
             }
-            else return new OperationResult(false, Messages.ErrorWhileUpdatingDepartment_OfficeIdInvalid);
+
+            var result = Validators.DepartmentValidator.Validate(inputInfo);
+            if (result.Success == true)
+            {
+                department.Name = inputInfo.Name;
+                _departmentRepository.Update(department, inputInfo.DepartmentManagerId);
+            }
+            return result;
         }
     }
 }

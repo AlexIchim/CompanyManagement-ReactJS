@@ -47,7 +47,7 @@ namespace ManagementApp.Manager.Tests
                 CreateEmployeeInfo(1, "Claudiu Cretu", "claudiu.cretu@evozon.com", "An address", DateTime.Now, 8),
                 CreateEmployeeInfo(2, "Ion Popescu", "popescu.ion@evozon.com", "Another address", DateTime.Now, 6)
             };
-          
+
             _employeeRepositoryMock.Setup(m => m.GetAll()).Returns(employees);
             _mapperMock.Setup(m => m.Map<IEnumerable<EmployeeInfo>>(employees)).Returns(employeesInfo);
 
@@ -66,10 +66,10 @@ namespace ManagementApp.Manager.Tests
             var employeeInputInfoTooLongName = new AddEmployeeInputInfo { Name = new string('*', 101), Address = "another address", Email = "another email", EmploymentDate = DateTime.Now, EmploymentHours = 8, DepartmentId = 1, PositionId = 1 };
             var employeeNameEmpty = new Employee() { Name = "", Address = "an address", Email = "an email", EmploymentDate = DateTime.Now, EmploymentHours = 6, DepartmentId = 1, PositionId = 1 };
             var employeeTooLongName = new Employee() { Name = new string('*', 101), Address = "another address", Email = "another email", EmploymentDate = DateTime.Now, EmploymentHours = 8, DepartmentId = 1, PositionId = 1 };
-            var department = new Department() {Name = ".NET", Id = 1};
-            var departmentInputInfo = new AddDepartmentInputInfo() {Name = ".NET"};
-            var position = new Position() {Name = "Developer", Id = 1};
-            var positionInputInfo = new AddPositionInputInfo() {Name = "Developer"};
+            var department = new Department() { Name = ".NET", Id = 1 };
+            var departmentInputInfo = new AddDepartmentInputInfo() { Name = ".NET" };
+            var position = new Position() { Name = "Developer", Id = 1 };
+            var positionInputInfo = new AddPositionInputInfo() { Name = "Developer" };
 
             _mapperMock.Setup(m => m.Map<Employee>(employeeInputInfoNameEmpty)).Returns(employeeNameEmpty);
             _mapperMock.Setup(m => m.Map<Employee>(employeeInputInfoTooLongName)).Returns(employeeTooLongName);
@@ -139,7 +139,7 @@ namespace ManagementApp.Manager.Tests
             //Act
 
             var resultTooLongEmail = _employeeService.Add(employeeInputInfoTooLongEmail);
-           
+
             //Assert
 
             Assert.IsFalse(resultTooLongEmail.Success);
@@ -298,7 +298,7 @@ namespace ManagementApp.Manager.Tests
         {
             //Arrange
             var employeeInputInfoCorrectEmploymentHours = new AddEmployeeInputInfo { Name = "Claudiu Cretu", Address = "an address", Email = "shdgbasldasd", EmploymentDate = DateTime.Now, EmploymentHours = 6, DepartmentId = 2, PositionId = 1 };
-            var employeeCorrectEmploymentHours = new Employee() { Name = "Claudiu Cretu", Address = "an address", Email = "shdgbasldasd", EmploymentDate =DateTime.Now, EmploymentHours = 6, DepartmentId = 2, PositionId = 1 };
+            var employeeCorrectEmploymentHours = new Employee() { Name = "Claudiu Cretu", Address = "an address", Email = "shdgbasldasd", EmploymentDate = DateTime.Now, EmploymentHours = 6, DepartmentId = 2, PositionId = 1 };
             var department = new Department() { Name = ".NET", Id = 1 };
             var departmentInputInfo = new AddDepartmentInputInfo() { Name = ".NET" };
             var position = new Position() { Name = "Developer", Id = 1 };
@@ -322,7 +322,7 @@ namespace ManagementApp.Manager.Tests
 
         }
 
-       
+
         [Test]
         public void Update_ReturnsErrorMessage_WhenEmployeeNameIsEmptyOrTooLong()
         {
@@ -362,10 +362,10 @@ namespace ManagementApp.Manager.Tests
         public void Update_ReturnsSuccessfulMessage_WhenEmployeeNameIsCorrect()
         {
             //Arrange
-            var employeeInputInfoCorrectName = new UpdateEmployeeInputInfo {Id = 1,  Name = "Claudiu Cretu", Address = "an address", Email = "an email", EmploymentDate = DateTime.Now, EmploymentHours = 6, DepartmentId = 2, PositionId = 1 };
+            var employeeInputInfoCorrectName = new UpdateEmployeeInputInfo { Id = 1, Name = "Claudiu Cretu", Address = "an address", Email = "an email", EmploymentDate = DateTime.Now, EmploymentHours = 6, DepartmentId = 2, PositionId = 1 };
             var employeeCorrectName = new Employee() { Id = 1, Name = "Claudiu Cretu", Address = "an address", Email = "an email", EmploymentDate = DateTime.Now, EmploymentHours = 6, DepartmentId = 2, PositionId = 1 };
             var department = new Department() { Name = ".NET" };
-            var departmentInputInfo = new UpdateDepartmentInputInfo() {Id = 1,  Name = ".NET" };
+            var departmentInputInfo = new UpdateDepartmentInputInfo() { Id = 1, Name = ".NET" };
             var position = new Position() { Name = "Developer" };
             var positionInputInfo = new UpdatePositionInputInfo() { Id = 1, Name = "Developer" };
 
@@ -392,7 +392,7 @@ namespace ManagementApp.Manager.Tests
             var employeeTooLongEmail = new Employee() { Name = "Claudiu Cretu", Address = "an address", Email = new string('*', 300), EmploymentDate = DateTime.Now, EmploymentHours = 6, DepartmentId = 2, PositionId = 1 };
             var department = new Department() { Name = ".NET" };
             var departmentInputInfo = new UpdateDepartmentInputInfo() { Id = 1, Name = ".NET" };
-            var position = new Position() { Name = "Developer"};
+            var position = new Position() { Name = "Developer" };
             var positionInputInfo = new UpdatePositionInputInfo() { Id = 1, Name = "Developer" };
 
             _mapperMock.Setup(m => m.Map<Employee>(employeeInputInfoTooLongEmail)).Returns(employeeTooLongEmail);
@@ -417,10 +417,10 @@ namespace ManagementApp.Manager.Tests
         public void Update_ReturnsSuccessfulMessage_WhenEmployeeEmailIsCorrect()
         {
             //Arrange
-            var employeeInputInfoCorrectEmail = new UpdateEmployeeInputInfo {Id = 1,  Name = "Claudiu Cretu", Address = "an address", Email = "shdgbasldasd", EmploymentDate = DateTime.Now, EmploymentHours = 6, DepartmentId = 2, PositionId = 1 };
+            var employeeInputInfoCorrectEmail = new UpdateEmployeeInputInfo { Id = 1, Name = "Claudiu Cretu", Address = "an address", Email = "shdgbasldasd", EmploymentDate = DateTime.Now, EmploymentHours = 6, DepartmentId = 2, PositionId = 1 };
             var employeeCorrectEmail = new Employee() { Name = "Claudiu Cretu", Address = "an address", Email = "shdgbasldasd", EmploymentDate = DateTime.Now, EmploymentHours = 6, DepartmentId = 2, PositionId = 1 };
             var department = new Department() { Name = ".NET", Id = 1 };
-            var departmentInputInfo = new UpdateDepartmentInputInfo() {Id = 1,  Name = ".NET" };
+            var departmentInputInfo = new UpdateDepartmentInputInfo() { Id = 1, Name = ".NET" };
             var position = new Position() { Name = "Developer", Id = 1 };
             var positionInputInfo = new UpdatePositionInputInfo() { Id = 1, Name = "Developer" };
 
@@ -449,7 +449,7 @@ namespace ManagementApp.Manager.Tests
             var employeeInputInfoTooLongAddress = new UpdateEmployeeInputInfo { Name = "Claudiu Cretu", Address = new string('1', 301), Email = "", EmploymentDate = DateTime.Now, EmploymentHours = 6, DepartmentId = 2, PositionId = 1, Id = 1 };
             var employeeTooLongAddress = new Employee() { Name = "Claudiu Cretu", Address = new string('1', 301), Email = "", EmploymentDate = DateTime.Now, EmploymentHours = 6, DepartmentId = 2, PositionId = 1 };
             var department = new Department() { Name = ".NET", Id = 1 };
-            var departmentInputInfo = new UpdateDepartmentInputInfo() {Id = 1,  Name = ".NET" };
+            var departmentInputInfo = new UpdateDepartmentInputInfo() { Id = 1, Name = ".NET" };
             var position = new Position() { Name = "Developer", Id = 1 };
             var positionInputInfo = new UpdatePositionInputInfo() { Id = 1, Name = "Developer" };
 
@@ -475,12 +475,12 @@ namespace ManagementApp.Manager.Tests
         public void Update_ReturnsSuccessfulMessage_WhenEmployeeAddressIsCorrect()
         {
             //Arrange
-            var employeeInputInfoCorrectAddress = new UpdateEmployeeInputInfo {Id = 1,  Name = "Claudiu Cretu", Address = "an address", Email = "shdgbasldasd", EmploymentDate = DateTime.Now, EmploymentHours = 6, DepartmentId = 2, PositionId = 1 };
+            var employeeInputInfoCorrectAddress = new UpdateEmployeeInputInfo { Id = 1, Name = "Claudiu Cretu", Address = "an address", Email = "shdgbasldasd", EmploymentDate = DateTime.Now, EmploymentHours = 6, DepartmentId = 2, PositionId = 1 };
             var employeeCorrectAddress = new Employee() { Name = "Claudiu Cretu", Address = "an address", Email = "shdgbasldasd", EmploymentDate = DateTime.Now, EmploymentHours = 6, DepartmentId = 2, PositionId = 1 };
             var department = new Department() { Name = ".NET", Id = 1 };
-            var departmentInputInfo = new UpdateDepartmentInputInfo() {Id = 1,  Name = ".NET" };
+            var departmentInputInfo = new UpdateDepartmentInputInfo() { Id = 1, Name = ".NET" };
             var position = new Position() { Name = "Developer", Id = 1 };
-            var positionInputInfo = new UpdatePositionInputInfo() {Id = 1, Name = "Developer" };
+            var positionInputInfo = new UpdatePositionInputInfo() { Id = 1, Name = "Developer" };
 
             _mapperMock.Setup(m => m.Map<Employee>(employeeInputInfoCorrectAddress)).Returns(employeeCorrectAddress);
             _mapperMock.Setup(m => m.Map<Department>(departmentInputInfo)).Returns(department);
@@ -504,10 +504,10 @@ namespace ManagementApp.Manager.Tests
         public void Update_ReturnsErrorMessage_WhenEmployeeHasTooFewEmploymentHours()
         {
             //Arrange
-            var employeeInputInfoTooFewEmploymentHours = new UpdateEmployeeInputInfo {Id = 1,  Name = "Claudiu Cretu", Address = "", Email = "", EmploymentDate = DateTime.Now, EmploymentHours = 0, DepartmentId = 2, PositionId = 1 };
+            var employeeInputInfoTooFewEmploymentHours = new UpdateEmployeeInputInfo { Id = 1, Name = "Claudiu Cretu", Address = "", Email = "", EmploymentDate = DateTime.Now, EmploymentHours = 0, DepartmentId = 2, PositionId = 1 };
             var employeeTooFewEmploymentHours = new Employee() { Name = "Claudiu Cretu", Address = "", Email = "", EmploymentDate = DateTime.Now, EmploymentHours = 0, DepartmentId = 2, PositionId = 1 };
             var department = new Department() { Name = ".NET", Id = 1 };
-            var departmentInputInfo = new UpdateDepartmentInputInfo() {Id = 1,  Name = ".NET" };
+            var departmentInputInfo = new UpdateDepartmentInputInfo() { Id = 1, Name = ".NET" };
             var position = new Position() { Name = "Developer", Id = 1 };
             var positionInputInfo = new UpdatePositionInputInfo() { Id = 1, Name = "Developer" };
 
@@ -536,7 +536,7 @@ namespace ManagementApp.Manager.Tests
             var employeeInputInfoTooManyEmploymentHours = new UpdateEmployeeInputInfo { Id = 1, Name = "Claudiu Cretu", Address = "", Email = "", EmploymentDate = DateTime.Now, EmploymentHours = 10, DepartmentId = 2, PositionId = 1 };
             var employeeTooManyEmploymentHours = new Employee() { Name = "Claudiu Cretu", Address = "", Email = "", EmploymentDate = DateTime.Now, EmploymentHours = 10, DepartmentId = 2, PositionId = 1 };
             var department = new Department() { Name = ".NET", Id = 1 };
-            var departmentInputInfo = new UpdateDepartmentInputInfo() {Id = 1,  Name = ".NET" };
+            var departmentInputInfo = new UpdateDepartmentInputInfo() { Id = 1, Name = ".NET" };
             var position = new Position() { Name = "Developer", Id = 1 };
             var positionInputInfo = new UpdatePositionInputInfo() { Id = 1, Name = "Developer" };
 
@@ -562,10 +562,10 @@ namespace ManagementApp.Manager.Tests
         public void Update_ReturnsSuccessfulMessage_WhenEmployeeEmploymentHoursIsCorrect()
         {
             //Arrange
-            var employeeInputInfoCorrectEmploymentHours = new UpdateEmployeeInputInfo {Id = 1, Name = "Claudiu Cretu", Address = "an address", Email = "shdgbasldasd", EmploymentDate = DateTime.Now, EmploymentHours = 6, DepartmentId = 2, PositionId = 1 };
+            var employeeInputInfoCorrectEmploymentHours = new UpdateEmployeeInputInfo { Id = 1, Name = "Claudiu Cretu", Address = "an address", Email = "shdgbasldasd", EmploymentDate = DateTime.Now, EmploymentHours = 6, DepartmentId = 2, PositionId = 1 };
             var employeeCorrectEmploymentHours = new Employee() { Name = "Claudiu Cretu", Address = "an address", Email = "shdgbasldasd", EmploymentDate = DateTime.Now, EmploymentHours = 6, DepartmentId = 2, PositionId = 1 };
             var department = new Department() { Name = ".NET", Id = 1 };
-            var departmentInputInfo = new UpdateDepartmentInputInfo() {Id = 1,  Name = ".NET" };
+            var departmentInputInfo = new UpdateDepartmentInputInfo() { Id = 1, Name = ".NET" };
             var position = new Position() { Name = "Developer", Id = 1 };
             var positionInputInfo = new UpdatePositionInputInfo() { Id = 1, Name = "Developer" };
 
@@ -611,7 +611,7 @@ namespace ManagementApp.Manager.Tests
                 EmploymentHours = employmentHours
             };
 
-            if(id != null)
+            if (id != null)
             {
                 employee.Id = (int)id;
             }

@@ -2,42 +2,49 @@
 using Manager.InputInfoModels;
 using Manager.Services;
 using System.Web.Http.Cors;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Serialization;
 
 namespace ManagementApp.Controllers
 {
-    [RoutePrefix("api/department")]
+    [RoutePrefix("api/departments")]
     [EnableCors("*", "*", "*")]
     public class DepartmentController : ApiController
     {
         private readonly DepartmentService _departmentService;
+        private readonly JsonSerializerSettings _camelCaseJsonSettings;
 
         public DepartmentController(DepartmentService departmentService)
         {
             _departmentService = departmentService;
+            _camelCaseJsonSettings = new JsonSerializerSettings()
+            {
+                ContractResolver = new CamelCasePropertyNamesContractResolver()
+            };
         }
 
-        [Route("getAll")]
+        [Route("")]
         [HttpGet]
         public IHttpActionResult GetAll()
         {
             var result = _departmentService.GetAll();
-            return Json(result);
+            return Json(result, _camelCaseJsonSettings);
         }
 
-        [Route("getProjectsByDepartmentId")]
+        [Route("{id}/projects")]
         [HttpGet]
-        public IHttpActionResult GetProjectsByDepartmentId(int ID, int? pageSize = null, int? pageNumber = null)
+        public IHttpActionResult GetProjectsByDepartmentId(int id, int? pageSize = null, int? pageNumber = null)
         {
-            var result = _departmentService.GetProjectsByDepartmentId(ID, pageSize, pageNumber);
-            return Json(result);
+            var result = _departmentService.GetProjectsByDepartmentId(id, pageSize, pageNumber);
+            return Json(result, _camelCaseJsonSettings);
         }
 
-        [Route("getEmployeesByDepartmentId")]
+        [Route("{id}/employees")]
         [HttpGet]
-        public IHttpActionResult GetEmployeesByDepartmentId(int ID, int? pageSize = null, int? pageNumber = null)
+        public IHttpActionResult GetEmployeesByDepartmentId(int id, int? pageSize = null, int? pageNumber = null)
         {
-            var result = _departmentService.GetEmployeesByDepartmentId(ID, pageSize, pageNumber);
-            return Json(result);
+            var result = _departmentService.GetEmployeesByDepartmentId(id, pageSize, pageNumber);
+            return Json(result, _camelCaseJsonSettings);
         }
 
         [Route("add")]
@@ -45,7 +52,7 @@ namespace ManagementApp.Controllers
         public IHttpActionResult Add([FromBody] AddDepartmentInputInfo inputInfo)
         {
             var result = _departmentService.Add(inputInfo);
-            return Json(result);
+            return Json(result, _camelCaseJsonSettings);
         }
 
         [Route("update")]
@@ -53,7 +60,7 @@ namespace ManagementApp.Controllers
         public IHttpActionResult Update([FromBody]UpdateDepartmentInputInfo inputInfo)
         {
             var result = _departmentService.Update(inputInfo);
-            return Json(result);
+            return Json(result, _camelCaseJsonSettings);
         }
     }
 }

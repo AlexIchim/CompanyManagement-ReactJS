@@ -25,6 +25,9 @@ namespace Manager.Mapper
             CreateMap<Employee, EmployeeInfo>().ForMember(
                 p => p.TotalAllocation,
                 opts => opts.MapFrom(src => src.ProjectAllocations.Select(s => s.AllocationPercentage).Sum())
+            ).ForMember(
+                p => p.PositionName,
+                opts => opts.MapFrom(src => src.Position.Name)
             );
 
 

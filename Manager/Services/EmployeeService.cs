@@ -58,10 +58,11 @@ namespace Manager.Services
         public IEnumerable<EmployeeAllocationInfo> GetAllocationsByEmployeeId(int id)
         {
             var employeeAllocations = _employeeRepository.GetAllocationsByEmployeeId(id);
+
             var employeeAllocationInfos = employeeAllocations.Select(a => new EmployeeAllocationInfo()
             {
-                ProjectName = a.Item1,
-                AllocationPercentage = a.Item2
+                ProjectName = a.Project.Name,
+                AllocationPercentage = a.AllocationPercentage
             });
 
             return employeeAllocationInfos;
@@ -87,17 +88,17 @@ namespace Manager.Services
             var department = _departmentRepository.GetById(inputInfo.DepartmentId);
             var position = _positionRepository.GetById(inputInfo.PositionId);
 
-            if (result.Success == true && 
+            if (result.Success == true &&
                 department != null &&
                 position != null)
             {
                 _employeeRepository.Add(_mapper.Map<Employee>(inputInfo));
             }
-            else if(department == null)
+            else if (department == null)
             {
                 return new Manager.OperationResult(false, Messages.ErrorWhileAddingEmployee_NoSuchDepartment);
             }
-            else if(position == null)
+            else if (position == null)
             {
                 return new Manager.OperationResult(false, Messages.ErrorWhileAddingEmployee_NoSuchPosition);
             }

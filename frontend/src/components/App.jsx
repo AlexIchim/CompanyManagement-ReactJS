@@ -5,11 +5,6 @@ import Context from '../context/Context';
 
 
 class App extends Component {
-
-    componentWillMount() {
-        console.log(Context.cursor.toJS());
-    }
-
     render() {
         const margin = {
             marginLeft: "250px"

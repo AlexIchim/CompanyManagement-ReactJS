@@ -19,8 +19,6 @@ namespace Domain.Models
         public int DepartmentId { get; set; }
         public virtual Department Department { get; set; }
 
-        public virtual Department ManagedDepartment { get; set; }
-
         public virtual ICollection<ProjectAllocation> ProjectAllocations { get; set; }
     }
 }

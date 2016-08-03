@@ -10,12 +10,8 @@ const Header = () => {
             <nav className="navbar navbar-static-top">
                 <div className="navbar-custom-menu">
                     <ul className="nav navbar-nav">
-                        <li className="dropdown user user-menu">
-                            <a href="#" className="dropdown-toggle" data-toggle="dropdown">
-                                    <span className="hidden-xs">
-                                        Team2
-                                    </span>
-                            </a>
+                        <li>
+                            <a href="/#/about" className="dropdown-toggle" data-toggle="dropdown">Team2</a>
                         </li>
                     </ul>
                 </div>

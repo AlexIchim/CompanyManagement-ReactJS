@@ -28,16 +28,10 @@ namespace DataAccess.Repositories
 
         public IEnumerable<Department> GetDepartmentsByOfficeId(int officeId, int? pageSize = null, int? pageNumber = null)
         {
-            var office = _context.Offices.SingleOrDefault(d => d.Id == officeId);
-
-            if (office == null)
-            {
-                return new Department[0];
-            }
-            else
-            {
-                return office.Departments.Paginate(pageSize, pageNumber).ToArray();
-            }
+            return _context.Departments
+                .Where(d => d.OfficeId == officeId)
+                .Paginate(pageSize, pageNumber)
+                .ToArray();
         }
 
         public void Add(Office office)
