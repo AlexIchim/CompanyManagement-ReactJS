@@ -61,28 +61,6 @@ namespace ManagementApp.Manager.Tests
             return officeInfo;
         }
 
-        //private Department CreateDepartment(string name, int officeId, int? id = null)
-        //{
-        //    var department = new Department
-        //    {
-        //        Name = name,
-        //        OfficeId=officeId
-        //    };
-        //    if (id != null)
-        //    {
-        //        department.Id = (int)id;
-        //    }
-        //    return department;
-        //}
-
-        //private DepartmentInfo CreateDepartmentInfo(int id, string name, int officeId)
-        //{
-        //    return new DepartmentInfo
-        //    {
-        //        Id = id,
-        //        Name = name
-        //    };
-        //}
 
         [Test]
         public void GetAll_ReturnsAListOfOffices()
@@ -133,7 +111,7 @@ namespace ManagementApp.Manager.Tests
                 new Department { Id = 2, Name = ".net", OfficeId = 2}
             };
             _officeRepositoryMock.Setup(m => m.GetAllDepartmentsOfAnOffice(1)).Returns(departments);
-            
+
 
         }
 
