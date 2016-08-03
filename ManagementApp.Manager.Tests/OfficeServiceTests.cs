@@ -13,18 +13,20 @@ using System.Linq;
 namespace ManagementApp.Manager.Tests
 {
     [TestFixture]
-    class OfficeServiceTests
+    public class OfficeServiceTests
     {
 
         private OfficeService _officeService;
         private Mock<IOfficeRepository> _officeRepositoryMock;
         private Mock<IMapper> _mapperMock;
         private Mock<IOfficeValidator> _officeValidatorMock;
+        
 
         [SetUp]
         public void PerTestSetup()
         {
             _officeRepositoryMock = new Mock<IOfficeRepository>();
+            _officeValidatorMock = new Mock<IOfficeValidator>();
             _mapperMock = new Mock<IMapper>();
             _officeService = new OfficeService(_mapperMock.Object, _officeRepositoryMock.Object, _officeValidatorMock.Object);
         }
@@ -131,6 +133,7 @@ namespace ManagementApp.Manager.Tests
             };
 
             _mapperMock.Setup(m => m.Map<Office>(officeInputInfo)).Returns(office);
+            _officeValidatorMock.Setup(m => m.ValidateAddOfficeInfo(officeInputInfo)).Returns(true);
             _officeRepositoryMock.Setup(m => m.AddOffice(office));
 
             //Act
@@ -158,6 +161,7 @@ namespace ManagementApp.Manager.Tests
                                 new byte[] { 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20 }, 1);
 
             _mapperMock.Setup(m => m.Map<Office>(officeInputInfo)).Returns(office);
+            _officeValidatorMock.Setup(m => m.ValidateAddOfficeInfo(officeInputInfo)).Returns(true);
             _officeRepositoryMock.Setup(m => m.AddOffice(office));
 
             //Act
@@ -191,7 +195,7 @@ namespace ManagementApp.Manager.Tests
             };
 
             _officeRepositoryMock.Setup(m => m.GetOfficeById(officeInputInfo.Id)).Returns(office);
-
+            _officeValidatorMock.Setup(m => m.ValidateUpdateOfficeInfo(officeInputInfo)).Returns(true);
             //Act
             var result = _officeService.UpdateOffice(officeInputInfo);
 
@@ -221,7 +225,7 @@ namespace ManagementApp.Manager.Tests
             };
 
             _officeRepositoryMock.Setup(m => m.GetOfficeById(officeInputInfo.Id)).Returns(office);
-
+            _officeValidatorMock.Setup(m => m.ValidateUpdateOfficeInfo(officeInputInfo)).Returns(true);
             //Act
             _officeService.UpdateOffice(officeInputInfo);
 
@@ -252,7 +256,7 @@ namespace ManagementApp.Manager.Tests
             };
 
             _officeRepositoryMock.Setup(m => m.GetOfficeById(officeInputInfo.Id)).Returns(office);
-
+            _officeValidatorMock.Setup(m => m.ValidateUpdateOfficeInfo(officeInputInfo)).Returns(true);
             //Act
             _officeService.UpdateOffice(officeInputInfo);
 

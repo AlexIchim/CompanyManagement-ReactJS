@@ -119,8 +119,7 @@ namespace Manager.Services
 
         public IEnumerable<ProjectInfo> GetAllDepartmentProjects(int depId)
         {
-            if (_projectValidator.ValidateId(depId))
-            {
+            if (_projectValidator.ValidateId(depId)) { 
                 var department = _departmentRepository.GetDepartmentById(depId);
                 if (department != null)
                 {

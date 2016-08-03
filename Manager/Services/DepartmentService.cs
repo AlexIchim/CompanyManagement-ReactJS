@@ -5,6 +5,7 @@ using Domain.Models;
 using Manager.InfoModels;
 using Manager.InputInfoModels;
 using System.Collections.Generic;
+using Domain.Enums;
 
 namespace Manager.Services
 {
@@ -29,23 +30,24 @@ namespace Manager.Services
             return departmentInfos;
         }
 
-        public OperationResult Update(UpdateDepartmentInputInfo inputInfo)
+        /*public OperationResult Update(UpdateDepartmentInputInfo inputInfo)
         {
             if (_departmentValidator.ValidateUpdateDepartmentInfo(inputInfo))
             {
                 var department = _departmentRepository.GetDepartmentById(inputInfo.Id);
 
-                if (department != null)
-                {
-                    department.Name = inputInfo.Name;
-                    _departmentRepository.Save();
-                    return new OperationResult(true, Messages.SuccessfullyAddedDepartment);
-                }              
+            if (department == null)
+            {
+                return new OperationResult(false, Messages.ErrorWhileUpdatingDepartment);
             }
-            return new OperationResult(false, Messages.ErrorWhileUpdatingDepartment);
-        }
 
-        
+            department.Name = inputInfo.Name;
+            _departmentRepository.Save();
+
+            return new OperationResult(true, Messages.SuccessfullyUpdatedDepartment);
+        }*/
+
+
 
         public OperationResult AddDepartment(AddDepartmentInputInfo inputInfo)
         {
@@ -55,11 +57,15 @@ namespace Manager.Services
 
                 var depManagerId = inputInfo.DepartmentManagerId;
 
-                if (_departmentRepository.IsDepartmentManager((int)depManagerId))
+                if (!_departmentRepository.DepartmentWithNameExists(inputInfo.Name))
                 {
-                    _departmentRepository.Add(newDepartment, (int)inputInfo.DepartmentManagerId);
-                    return new OperationResult(true, Messages.SuccessfullyAddedDepartment);
+                    if (_departmentRepository.IsDepartmentManager((int) depManagerId))
+                    {
+                        _departmentRepository.AddDepartment(newDepartment, (int) inputInfo.DepartmentManagerId);
+                        return new OperationResult(true, Messages.SuccessfullyAddedDepartment);
+                    }
                 }
+                return new OperationResult(false, Messages.ErrorAddingDepartment);
             }
             return new OperationResult(false, Messages.ErrorAddingDepartment);
         }
@@ -76,22 +82,25 @@ namespace Manager.Services
         {
             if (_departmentValidator.ValidateUpdateDepartmentInfo(inputInfo))
             {
-                var department = _departmentRepository.GetDepartmentById(inputInfo.Id);
+                    var department = _departmentRepository.GetDepartmentById(inputInfo.Id);
 
-                if (department != null)
+                if (department == null)
                 {
-                    var dm = _departmentRepository.GetEmployeeById(inputInfo.DepartmentManagerId);
+                    return new OperationResult(false, Messages.ErrorWhileUpdatingDepartment);
+                }
 
-                    if (dm != null && dm.PositionType == PositionType.DepartmentManager)
-                    {
-                        department.Name = inputInfo.Name;
-                        department.DepartmentManager = dm;
-                        _departmentRepository.Save();
-                        return new OperationResult(true, Messages.SuccessfullyUpdatedDepartment);
-                    }
-                }               
+                var dm = _departmentRepository.GetEmployeeById(inputInfo.DepartmentManagerId);
+
+                if (dm != null && dm.PositionType == PositionType.DepartmentManager)
+                 {
+                    department.DepartmentManager = dm;
+                   
+                }
+                department.Name = inputInfo.Name;
+                _departmentRepository.Save();
+                return new OperationResult(true, Messages.SuccessfullyUpdatedDepartment);
             }
-            return new OperationResult(false, Messages.ErrorWhileUpdatingDepartment);            
+            return new OperationResult(false, Messages.ErrorWhileUpdatingDepartment);
         }
     }
 }
