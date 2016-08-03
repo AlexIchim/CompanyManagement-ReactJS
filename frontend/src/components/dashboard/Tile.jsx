@@ -20,7 +20,7 @@ class Tile extends React.Component<any, any>{
                         {props['phone']}
                     </span>
                     <Link to={props['link']} className="small-box-footer">
-                        View Departments
+                        View Employees
                     <i className="fa fa-arrow-circle-right"></i></Link>
                 </div>
             </div>
