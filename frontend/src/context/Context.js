@@ -5,7 +5,7 @@ import * as Rx from 'rx';
 
 
 const initialState = {
-    user : mock
+    departments:[]
 };
 
 class Context{
