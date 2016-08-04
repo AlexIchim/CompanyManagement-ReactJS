@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
+using System.Security.Cryptography.X509Certificates;
 using Contracts;
 using Domain.Models;
 using DbContext = DataAccess.Context.DbContext;
@@ -26,58 +27,23 @@ namespace DataAccess.Repositories
             return _context.Departments.SingleOrDefault(d=>d.Id == departmentId);
         }
 
-        public IEnumerable<Employee> GetAllMembersOfADepartment(int departmentId)
+        public IEnumerable<Employee> GetMembersOfDepartment(int departmentId, string name = "", int? jobType = null, int? position = null, int? allocation = null)
         {
             var department = GetDepartmentById(departmentId);
-            return department.Employees;
+            return department.Employees
+                .Where(
+                    x =>
+                        (((!name.Equals("") && x.Name.Contains(name)) || name.Equals("")) &&
+                         ((jobType.HasValue && (int) x.JobType == jobType) || !jobType.HasValue) &&
+                         ((position.HasValue && (int) x.Position == position) || !position.HasValue) &&
+                         ((allocation.HasValue && x.GetAllocation() == allocation) || !allocation.HasValue)));
         }
 
-        public IEnumerable<Employee> GetMembersOfDepartmentByJobType(int departmentId, string jobType)
-        {
-            return _context.Employees.Where(d => d.Id == departmentId && d.JobType.ToString().Equals(jobType));
-        }
-
-        //public IEnumerable<Employee> FilterMembersOfDepartment(int departmentId, string jobType = "", string position = "")
-        //{
-            /*if (!jobType.Equals(""))
-            {
-                if (!position.Equals(""))
-                {
-                    return
-                        _context.Employees.Where(
-                            d =>
-                                d.Id == departmentId && d.JobType.ToString().Equals(jobType) &&
-                                d.Position.ToString().Equals(position));
-                }
-                else
-                {
-                    return _context.Employees.Where(
-                        d =>
-                            d.Id == departmentId && d.JobType.ToString().Equals(jobType));
-                }
-            }
-            else
-            {
-                
-            }*/
-
-            /*IQueryable groupedAssignments = _context.Assignments.GroupBy(id => id.EmployeeId)
-                .Select(group => group.Sum(item => item.Allocation));
-
-
-            var employees = _context.Employees.Join(
-                groupedAssignments, e => e.Id, a => a,
-                (e,a) => new
-                {
-                    AllocationSum = 
-                })
-
-            return _context.Employees.Where(d => d.Id == departmentId && d.JobType.ToString().Equals(jobType));*/
-        //}
-
-        public IEnumerable<Project> GetAllProjectsOfADepartment(int departmentId) {
+        public IEnumerable<Project> GetProjectsOfDepartment(int departmentId, int? status = null) {
             var department = GetDepartmentById(departmentId);
-            return department.Projects;
+            return department.Projects.Where(
+                x =>
+                    ((status.HasValue && (int)x.Status == status) || !status.HasValue));
         }
 
         public void AddDepartment(Department department)

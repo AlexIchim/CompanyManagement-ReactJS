@@ -43,19 +43,19 @@ namespace Manager.Services
             return departmentInfo;
         }
 
-        public IEnumerable<EmployeeInfo> GetAllMembersOfADepartment(int departmentId)
-        {
-            var employees = _departmentRepository.GetAllMembersOfADepartment(departmentId);
-            var employeesInfos = _mapper.Map<IEnumerable<EmployeeInfo>>(employees);
-
-            return employeesInfos;
-        }
-
-        public IEnumerable<ProjectInfo> GetAllProjectsOfADepartment(int departmentId) {
-            var projects = _departmentRepository.GetAllProjectsOfADepartment(departmentId);
+        public IEnumerable<ProjectInfo> GetProjectsOfDepartment(int departmentId, int? status = null) {
+            var projects = _departmentRepository.GetProjectsOfDepartment(departmentId, status);
             var projectsInfos = _mapper.Map<IEnumerable<ProjectInfo>>(projects);
 
             return projectsInfos;
+        }
+
+        public IEnumerable<EmployeeInfo> GetMembersOfDepartment(int departmentId, string name = "", int? jobType = null, int? position = null, int? allocation = null)
+        {
+            var employees = _departmentRepository.GetMembersOfDepartment(departmentId, name, jobType, position, allocation);
+            var employeesInfos = _mapper.Map<IEnumerable<EmployeeInfo>>(employees);
+
+            return employeesInfos;
         }
 
         public OperationResult AddDepartment(AddDepartmentInputInfo inputInfo)

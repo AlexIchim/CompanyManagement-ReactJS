@@ -10,7 +10,8 @@ namespace Domain.Models {
         Developer,
         ProjectManager,
         QA,
-        ProductOwner
+        ProductOwner,
+        DepartmentManager
     };
     public enum JobTypes 
     {
