@@ -1,7 +1,7 @@
 import * as React from 'react';
 import classNames from 'classnames';
 import {Link} from 'react-router';
-
+import '../../assets/less/index.less';
 class Tile extends React.Component<any, any>{
 
     submit(){
@@ -16,10 +16,13 @@ class Tile extends React.Component<any, any>{
 
         return (
             <div className="col-md-6 col-sm-6 col-xs-12">
-            <div className="info-box">
+            <div className=" info-box-custom info-box">
                 
                 <span className={parentClass}><img src={icon}/></span>
                 <div className="info-box-content">
+                    <button className=" custom-btn btn btn-info"
+                            onClick={this.submit.bind(this)}>Edit
+                    </button>
                     <span className="info-box-text">
                         {props['address']}
                     </span>
@@ -30,17 +33,10 @@ class Tile extends React.Component<any, any>{
                         View Departments
                     <i className="fa fa-arrow-circle-right"></i></Link>
                 </div>
-                <button className="btn btn-success"
-                        onClick={this.submit.bind(this)}>
-                    Edit
-                </button>
+
             </div>
             </div>
             
-            
-            
-
-
         )
     }
 }

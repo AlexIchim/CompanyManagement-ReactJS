@@ -4,6 +4,7 @@ import * as $ from 'jquery';
 import config from '../helper';
 import Context from '../../context/Context';
 import Accessors from '../../context/Accessors';
+import '../../assets/less/index.less';
 
 import Form from './Form';
 
@@ -11,7 +12,6 @@ export default class Dashboard extends React.Component{
     constructor(){
         super();
     }
-
     componentWillMount(){
         Context.subscribe(this.onContextChange.bind(this));
 
@@ -88,15 +88,22 @@ export default class Dashboard extends React.Component{
             );
         })
 
+
         return (
+            <div>
+                <p>
+                <button className="custom-add btn btn-success"
+                        onClick={this.onAddButtonClick.bind(this)}>
+                    Add Office
+                </button>
+                    </p>
             <div className="row">
                 {form}
                 {items}
-                <button className="btn btn-success"
-                        onClick={this.onAddButtonClick.bind(this)}>
-                    Add
-                </button>
+
+                
             </div>
+                </div>
             
         )
     }
