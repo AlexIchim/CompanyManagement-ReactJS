@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using Contracts;
 using Domain.Models;
 using DataAccess.Context;
+using DataAccess.Extensions;
 
 namespace DataAccess.Repositories
 {
@@ -19,7 +20,7 @@ namespace DataAccess.Repositories
         }
 
 
-        public IEnumerable<Employee> GetEmployeesByProjectId(int projectid)
+        public IEnumerable<Employee> GetEmployeesByProjectId(int projectid, int? pageSize, int? pageNr)
         {
             List<Employee> employees = new List<Employee>();
             var proj = _context.EmployeeProjects.Where(ep => ep.ProjectId == projectid);
@@ -30,7 +31,8 @@ namespace DataAccess.Repositories
                 emp = _context.Employees.SingleOrDefault(e => e.Id == ep.EmployeeId);
                 employees.Add(emp);
             }
-            return employees.ToArray();
+            var queryableEmployees= employees.AsQueryable();
+            return queryableEmployees.OrderBy(d => d.Name).Paginate(pageSize, pageNr).ToArray();
 
         }
 
@@ -82,9 +84,9 @@ namespace DataAccess.Repositories
             return _context.EmployeeProjects.Where(ep => ep.ProjectId == projectId).ToList();
         }
 
-        public IEnumerable<Project> GetAllDepartmentProjects(Department department)
-        { 
-            return department.Projects;
+        public IEnumerable<Project> GetAllDepartmentProjects(Department department, int? pageSize, int? pageNr)
+        {
+            return _context.Projects.Where(d => d.DepartmentId == department.Id).OrderBy(d => d.Name).Paginate(pageSize, pageNr).ToArray();
         }
     }
 }

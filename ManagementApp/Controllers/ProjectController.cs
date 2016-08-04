@@ -19,9 +19,9 @@ namespace ManagementApp.Controllers
        
         [Route("getEmployeesByProjectId")]
         [HttpGet]
-        public IHttpActionResult GetEmployeesByProjectId(int projectId)
+        public IHttpActionResult GetEmployeesByProjectId(int projectId, int? pageSize, int? pageNr)
         {
-            var result = _projectService.GetEmployeesByProjectId(projectId);
+            var result = _projectService.GetEmployeesByProjectId(projectId, pageSize, pageNr);
             return Json(result);
         }
 
@@ -60,9 +60,9 @@ namespace ManagementApp.Controllers
 
         [Route("getAllDepartmentProjects")]
         [HttpGet]
-        public IHttpActionResult GetAllDepartmentProjects(int depId)
+        public IHttpActionResult GetAllDepartmentProjects(int depId, int? pageSize, int? pageNr)
         {
-            var result = _projectService.GetAllDepartmentProjects(depId);
+            var result = _projectService.GetAllDepartmentProjects(depId,pageSize,pageNr);
             return Json(result);
         }
 
