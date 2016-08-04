@@ -5,6 +5,7 @@ import * as Rx from 'rx';
 
 
 const initialState = {
+    offices:[],
     departments:[]
 };
 

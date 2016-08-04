@@ -13,8 +13,7 @@ class Tile extends React.Component{
         }
     }
 
-    showEditForm(){
-        console.log(this.state);
+    showEditForm(){       
         this.setState({
             edit: !this.state.edit
         })
@@ -36,8 +35,7 @@ class Tile extends React.Component{
         const icon = classNames("fa", "fa-" + props['icon']);
 
         const modal = this.state.edit ? <Form show = {this.state.edit} element = {props['office']}  close={this.closeEditForm.bind(this)}/> : '';
-        console.log(modal);
-
+        
         return (
 
 
