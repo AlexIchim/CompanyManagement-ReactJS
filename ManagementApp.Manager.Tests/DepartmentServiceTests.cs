@@ -235,6 +235,7 @@ namespace ManagementApp.Manager.Tests
             var employee = new Employee { Id = 1, Name = "Adi", PositionType = PositionType.DepartmentManager };
             var departmentInputInfo = new UpdateDepartmentInputInfo { Id = 1, Name = "php" };
             var department = new Department { Id = 1, Name = "java",DepartmentManager = employee};
+            _departmentValidatorMock.Setup(m => m.ValidateUpdateDepartmentInfo(departmentInputInfo)).Returns(true);
             _departmentRepositoryMock.Setup(m => m.GetEmployeeById(departmentInputInfo.DepartmentManagerId)).Returns(employee);
             _departmentRepositoryMock.Setup(m => m.GetDepartmentById(departmentInputInfo.Id)).Returns(department);
 
@@ -253,6 +254,7 @@ namespace ManagementApp.Manager.Tests
             var departmentInputInfo = new UpdateDepartmentInputInfo { Id = 1, Name = "php" };
             var department = new Department { Id = 1, Name = "java" };
 
+            _departmentValidatorMock.Setup(m => m.ValidateUpdateDepartmentInfo(departmentInputInfo)).Returns(true);
             _departmentRepositoryMock.Setup(m => m.GetDepartmentById(departmentInputInfo.Id)).Returns(department);
 
             //Act
@@ -268,7 +270,7 @@ namespace ManagementApp.Manager.Tests
             //Arrange
             var departmentInputInfo = new UpdateDepartmentInputInfo { Id = 1, Name = "php" };
             var department = new Department { Id = 1, Name = "java" };
-
+            _departmentValidatorMock.Setup(m => m.ValidateUpdateDepartmentInfo(departmentInputInfo)).Returns(true);
             _departmentRepositoryMock.Setup(m => m.GetDepartmentById(departmentInputInfo.Id)).Returns(department);
 
             //Act
