@@ -111,8 +111,6 @@ class Employees extends React.Component{
                     <td>Position</td>
                     <td>Allocation</td>
                     <td>Actions</td>
-
-
                 </tr>
                 </thead>
                 <tbody>
