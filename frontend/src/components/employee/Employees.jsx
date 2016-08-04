@@ -1,6 +1,9 @@
 import * as React from 'react';
 import  config from '../helper';
 import * as $ from 'jquery';
+import ModalTemplate from './ModalTemplate';
+import {Link} from 'react-router';
+import Form from './Form';
 
 const Item = (props) => {
     return(
@@ -50,7 +53,21 @@ class Employees extends React.Component{
 
     }
 
+    showStoreForm(){
+        this.setState({
+            store: !this.state.store
+        })
+    }
+
+    closeStoreForm(){
+        this.setState({
+            store: !this.state.store
+        })
+    }
+
     render(){
+
+        const modal = this.state.store ? <Form show = {this.state.store}  close={this.closeStoreForm.bind(this)} /> : '';
         const items = this.state.employees.map( (element, i) => {
             return(
                 <Item
@@ -61,14 +78,16 @@ class Employees extends React.Component{
         });
 
         return (
+
             <div>
+                {modal}
                 <h1>Employees</h1>
 
                 <button id="addEmployee" className="btn btn-success margin-top">
                     Add Employee
                 </button>
                 <hr/>
-                <div className="input-group input-group-normal">
+                <div className="input-group input-group-lg">
                     <div className="input-group-btn">
                         <button type="button" className="btn btn-warning dropdown-toggle" data-toggle="dropdown" aria-expanded="false">Search
                             <span className="fa fa-caret-down"></span></button>
@@ -198,7 +217,7 @@ export default Employees;
 
  <div>
 
- {modal}
+ modal} {
 
  <button id="addEmployee" className="btn btn-success margin-top" onClick={this.showStoreForm.bind(this)}>
  Add new employee
