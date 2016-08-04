@@ -5,11 +5,11 @@ import {default as apiconfig} from '../../api/config';
 import ModalTemplate from '../layout/ModalTemplate';
 
 import Item from './Item';
-import ViewDetails from './ViewDetails';
-import EditDetails from './EditDetails';
-import AddDetails from './AddDetails';
+import ViewDetailsModal from './ViewDetailsModal';
+import EditModal from './EditModal';
+import AddModal from './AddModal';
 
-
+import * as Controller from '../../api/controller';
 
 export default class Employees extends Component {
     constructor() {
@@ -22,50 +22,46 @@ export default class Employees extends Component {
         };
     }
 
-
-    componentDidMount() {
-        const departmentId = this.props.params.departmentId;
-
-        $.ajax({
-            method: 'GET',
-            url: apiconfig.baseUrl + 'departments/' + this.props.params.departmentId,
-            async: true,
-            success: (data) => {
+    componentWillMount(){
+        Controller.getDepartmentName(
+            this.props.params.departmentId,
+            true,
+            (data) => {
                 this.setState({
-                    departmentName: data.name,
+                    departmentName: data.name
                 });
             } 
-        });
+        );
+        this.fetchData();
+    }
 
-        $.ajax({
-            method: 'GET',
-            url: apiconfig.baseUrl + 'departments/' + this.props.params.departmentId + '/employees',
-            async: true,
-            success: (data) => {
+    fetchData() {
+        Controller.getEmployeesByDepartmentId(
+            this.props.params.departmentId,
+            true,
+            (data) => {
                 this.setState({
                     employeeList: data
                 });
-            } 
-        });
+            }
+        );
     }
 
     viewDetails(employee) {
-        let allocations = [];
-
-        $.ajax({
-            method: 'GET',
-            url: apiconfig.baseUrl + 'employees/' + employee.id + '/allocations',
-            async: false,
-            success: (data) => {
-                allocations = data;
+        Controller.getEmployeeAllocations(
+            employee.id,
+            true,
+            (data) => {
+                this.setState({
+                    allocationList: data
+                });
             }
-        });
-
+        );
 
         this.setState({
             showModalTemplate: 'view',
             modalEmployee: employee,
-            allocationList: allocations
+            allocationList: []
         });
     }
 
@@ -90,12 +86,21 @@ export default class Employees extends Component {
         });
     }
 
+    deleteItem(id){
+        Controller.releaseEmployee(
+            id, 
+            true, 
+            this.fetchData.bind(this)
+        ); 
+    }
+
 
     render() {
         const items = this.state.employeeList.map( 
             (e) => <Item key={e.id} data={e}
                          onView={this.viewDetails.bind(this, e)}
                          onEdit={this.editDetails.bind(this, e)}
+                         onDelete={this.deleteItem.bind(this,e.id)}
                     />
         );
 
@@ -105,11 +110,14 @@ export default class Employees extends Component {
                     (hideFunc) => {
                         switch(this.state.showModalTemplate) {
                             case 'view':
-                                return <ViewDetails employee={this.state.modalEmployee} hideFunc={hideFunc} allocationList={this.state.allocationList} />;
+                                return <ViewDetailsModal employee={this.state.modalEmployee} hideFunc={hideFunc} allocationList={this.state.allocationList} />;
                             case 'edit':
-                                return <EditDetails employee={this.state.modalEmployee} hideFunc={hideFunc}/>;
+                                return <EditModal employee={this.state.modalEmployee} hideFunc={hideFunc}/>;
                             case 'add':
-                                return <AddDetails employee={this.state.modalEmployee} hideFunc={hideFunc}/>;
+                                return <AddModal 
+                                            departmentId={this.props.params.departmentId}
+                                            saveFunc={function(){ hideFunc(); this.fetchData(); }.bind(this)}
+                                            hideFunc={hideFunc} />;
                         }
                     }
                 }

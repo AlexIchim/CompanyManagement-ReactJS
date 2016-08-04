@@ -1,8 +1,12 @@
 import React from 'react';
 
 export default (props) => { 
-    const relDate = props.data.releaseDate ? new Data(props.data.releaseDate).toLocaleDateString() : " - ";
+    const relDate = props.data.releaseDate ? new Date(props.data.releaseDate).toLocaleDateString() : " - ";
     const address = props.data.address || ' - ';
+
+    const deleteButton = props.data.releaseDate===null ? 
+        (<button className="btn" onClick={props.onDelete}>Release</button>) :
+        (<button className="btn btn-disabled" disabled="true">Release</button>);
 
     return(
         <tr>
@@ -14,10 +18,10 @@ export default (props) => {
             <td>{props.data.employmentHours}</td>
             <td>{props.data.positionName}</td>
             <td>{props.data.totalAllocation}%</td>
-            <td>
-                <button onClick={props.onView}>View details</button>
-                <button>Release --nothing</button>
-                <button onClick={props.onEdit}>Edit</button>
+            <td className="btn-toolbar">
+                <button className="btn" onClick={props.onView}>View details</button>
+                {deleteButton}
+                <button className="btn" onClick={props.onEdit}>Edit</button>
             </td>
         </tr>
     )
