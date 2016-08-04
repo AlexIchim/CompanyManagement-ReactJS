@@ -52,7 +52,6 @@ namespace Manager.Services
                 if (employee != null)
                 {
                     _employeeRepository.ReleaseEmployee(employeeId);
-                    _employeeRepository.UpdateTotalAllocation(employeeId, 0);
                     return new OperationResult(true, Messages.SuccessfullyDeletedEmployee);
                 }
             }
@@ -100,7 +99,6 @@ namespace Manager.Services
 
                 if (newTotalAllocation <= 100)
                 {                 
-                    _employeeRepository.UpdateTotalAllocation(newEp.EmployeeId, newTotalAllocation);
                     _employeeRepository.AddEmployeeToProject(newEp);
                     return new OperationResult(true, Messages.SuccessfullyAddedEmployeeToProject);
                 }              
@@ -126,8 +124,6 @@ namespace Manager.Services
                         if (newTotalAllocation <= 100)
                         {
                             ep.Allocation = inputInfo.Allocation;
-
-                            _employeeRepository.UpdateTotalAllocation(ep.EmployeeId, newTotalAllocation);
                             return new OperationResult(true, Messages.SuccessfullyUpdatedPartialAllocation);
                         }                     
                     }
@@ -150,6 +146,10 @@ namespace Manager.Services
                 if (members.Any())
                     {
                         var memberInfos = _mapper.Map<IEnumerable<MemberInfo>>(members);
+                        foreach (MemberInfo mi in memberInfos)
+                        {
+                            mi.TotalAllocation = _employeeRepository.ComputeTotalAllocation(mi.Id);
+                        }
                         return memberInfos;
                     }
 
@@ -167,7 +167,6 @@ namespace Manager.Services
                 var department = _departmentRepository.GetDepartmentById(inputInfo.DepartmentId);
                 if (department != null)
                 {
-                    newEp.TotalAllocation = 0;
                     _employeeRepository.AddEmployee(newEp);
                     return new OperationResult(true, Messages.SuccessfullyAddedEmployee);
                 }
@@ -179,6 +178,10 @@ namespace Manager.Services
         {
             var employees = _employeeRepository.GetAllUnAllocatedEmployeesOnProject();
             var employeeInfos = _mapper.Map<IEnumerable<EmployeeInfo>>(employees);
+            foreach (EmployeeInfo ei in employeeInfos)
+            {
+                ei.TotalAllocation = _employeeRepository.ComputeTotalAllocation(ei.Id);
+            }
             return employeeInfos;
         }
 
@@ -186,6 +189,10 @@ namespace Manager.Services
         {
             var employees = _employeeRepository.GetEmployeesThatAreNotFullyAllocated();
             var employeeInfos = _mapper.Map<IEnumerable<EmployeeInfo>>(employees);
+            foreach (EmployeeInfo ei in employeeInfos)
+            {
+                ei.TotalAllocation = _employeeRepository.ComputeTotalAllocation(ei.Id);
+            }
             return employeeInfos;
         }
     }

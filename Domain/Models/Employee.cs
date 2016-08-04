@@ -16,8 +16,6 @@ namespace Domain.Models
 
         public DateTime? ReleaseDate { get; set; }
 
-        public int TotalAllocation { get; set; }
-
         public JobType JobType { get; set; }
 
         public PositionType PositionType { get; set; }

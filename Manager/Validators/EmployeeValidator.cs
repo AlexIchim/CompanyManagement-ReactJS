@@ -6,8 +6,6 @@ using System.Threading.Tasks;
 using Contracts;
 using Manager.InfoModels;
 using Manager.InputInfoModels;
-using Manager.InfoModels;
-using Manager.InputInfoModels;
 
 namespace Manager.Validators
 {
@@ -59,7 +57,7 @@ namespace Manager.Validators
 
         public bool ValidateAddEmployeeToDepartmentInfo(AddEmployeeToDepartmentInputInfo addInfo)
         {
-            bool validation = ValidateId(addInfo.DepartmentId) && ValidateString(addInfo.Name) && ValidateString(addInfo.Address) && ValidateDates(addInfo.EmploymentDate, addInfo.ReleaseDate) && ValidateInt(addInfo.TotalAllocation);
+            bool validation = ValidateId(addInfo.DepartmentId) && ValidateString(addInfo.Name) && ValidateString(addInfo.Address) && ValidateDates(addInfo.EmploymentDate, addInfo.ReleaseDate);
             return validation;
         }
 
@@ -71,7 +69,7 @@ namespace Manager.Validators
 
         public bool ValidateUpdateEmployeeInfo(UpdateEmployeeInputInfo updateInfo)
         {
-            bool validation = ValidateId(updateInfo.Id) && ValidateString(updateInfo.Name) && ValidateString(updateInfo.Address) && ValidateDates(updateInfo.EmploymentDate, updateInfo.ReleaseDate) && ValidateInt(updateInfo.TotalAllocation) && ValidateId(updateInfo.DepartmentId);
+            bool validation = ValidateId(updateInfo.Id) && ValidateString(updateInfo.Name) && ValidateString(updateInfo.Address) && ValidateDates(updateInfo.EmploymentDate, updateInfo.ReleaseDate) && ValidateId(updateInfo.DepartmentId);
             return validation;
         }
 
