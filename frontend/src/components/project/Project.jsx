@@ -5,7 +5,8 @@ import ProjectItem from './ProjectItem.jsx'
 import Form from './Form.jsx';
 import Accessors from '../../context/Accessors';
 import Context from '../../context/Context';
-import Controller from '../Command';
+import Command from '../Command';
+import MyController from './Controller/Controller'
 
 export default class Project extends React.Component{
     constructor(){
@@ -18,15 +19,7 @@ export default class Project extends React.Component{
         Context.subscribe(this.onContextChange.bind(this));
         //const projectId = this.props.routeParams['projectId'];
 
-        $.ajax({
-            method: 'GET',
-            url: config.base + 'department/projects/3',
-            async: false,
-            success: function(data){
-                Context.cursor.set('items', data);
-                Context.cursor.set('formToggle', false);
-            }.bind(this)
-        })
+        MyController.getAllProjects();
     }
 
     onContextChange(cursor){
@@ -59,7 +52,7 @@ export default class Project extends React.Component{
 
     onModalSaveClick(){
         console.log("STORING!");
-        Controller.hideModal();
+        Command.hideModal();
     }
 
     render(){
@@ -68,11 +61,11 @@ export default class Project extends React.Component{
         console.log('store?', Accessors.formToggle(Context.cursor));
         if(Accessors.formToggle(Context.cursor)){
             if(Accessors.model(Context.cursor)){
-                modal=<Form onCancelClick={Controller.hideModal.bind(this)}
+                modal=<Form onCancelClick={Command.hideModal.bind(this)}
                            onStoreClick={this.onModalSaveClick.bind(this)}
                            Title="Edit Project"/>;
             }else{
-                modal=<Form onCancelClick={Controller.hideModal.bind(this)}
+                modal=<Form onCancelClick={Command.hideModal.bind(this)}
                            onStoreClick={this.onModalSaveClick.bind(this)}
                            Title="Add Project"/>;
             }

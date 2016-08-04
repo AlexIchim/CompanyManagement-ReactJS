@@ -1,7 +1,8 @@
 import config from '../../helper';
 import Command from '../../Command';
-export default new class Controller{
+import Context from '../../../context/Context'
 
+export default new class Controller{
     onStoreClick(){
         $.ajax({
             method: 'POST',
@@ -18,5 +19,17 @@ export default new class Controller{
             }.bind(this)
         });
         Command.hideModal();
+    }
+
+    getAllProjects(){
+        $.ajax({
+            method: 'GET',
+            url: config.base + 'department/projects/3',
+            async: false,
+            success: function(data){
+                Context.cursor.set('items', data);
+                Context.cursor.set('formToggle', false);
+            }.bind(this)
+        })
     }
 }
