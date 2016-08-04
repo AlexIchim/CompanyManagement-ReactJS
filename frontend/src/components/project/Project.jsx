@@ -2,6 +2,10 @@ import React, { Component } from 'react';
 import {Link} from 'react-router';
 import * as $ from 'jquery';
 import configs from '../helpers/calls'
+import Form from './FormProject.jsx'
+import Context from '../../context/Context.js';
+import * as Immutable from 'immutable';
+
 
 const Tr = (props) => {
 
@@ -9,10 +13,10 @@ const Tr = (props) => {
 
     return(
         <tr>
-            <td>{props.node.Name} </td>
-            <td>{props.node.EmployeesNumber}</td>
-            <td>{props.node.Duration}</td>
-            <td>{props.node.Status}</td>
+            <td>{props.node.get('Name')} </td>
+            <td>{props.node.get('EmployeesNumber')}</td>
+            <td>{props.node.get('Duration')}</td>
+            <td>{props.node.get('Status')}</td>
             <td><Link to=""> Edit | </Link>
                 <Link to={linkMembers}> View Members | </Link>
                 <Link to="#"> Remove </Link></td>
@@ -22,46 +26,69 @@ const Tr = (props) => {
 
 }
 
-export default class Project extends React.Component{
+export default class Project extends React.Component {
 
-
-    constructor(){
+    constructor() {
         super();
-        this.state ={
-            proj: []
+        this.state = {
+            add: false,
+            projects: Context.cursor.get("projects")
         }
     }
 
     componentWillMount(){
+
+        Context.subscribe(this.onContextChange.bind(this));
+
         $.ajax({
             method: 'GET',
-            url: configs.baseUrl + 'api/project/getAllDepartmentProjects?depId=' + this.props.routeParams.departmentId,
-            success: function(data){
-                this.setState({
-                    proj: data
-                })
-
+            url: configs.baseUrl + 'api/project/getAllDepartmentProjects?departmentId=' + this.props.routeParams.departmentId+'&pageSize=10&pageNr=1',
+            success: function (data) {
+                //console.log(data);
+                Context.cursor.set("projects",Immutable.fromJS(data));
             }.bind(this)
         })
     }
 
-    render(){
+    onContextChange(cursor){
+        this.setState({
+            projects: Context.cursor.get("projects")
+        });
 
-        const items = this.state.proj.map( (element, index) => {
-            return(
+    }
+
+    showAddForm(){
+        this.setState({
+            add:true
+        });
+    }
+
+    closeAddForm(){
+        this.setState({
+            add: !this.state.add
+        })
+    }
+
+
+    render() {
+
+        const items = this.state.projects.map((el, x) => {
+            return (
                 <Tr
-                    node = {element}
-                    key = {index}
+                    node = {el}
+                    key= {x}
 
                 />
             )
-
         });
+        console.log("render",items);
+        const addModal = this.state.add ? <Form departmentId={this.props.routeParams.departmentId} show = {this.state.add} close={this.closeAddForm.bind(this)} /> : '';
 
-        return(
+        return (
             <div>
-                <h1>{this.props.routeParams.departmentName + ' Projects'}  </h1>
-                <button className="btn btn-xs btn-info" > <span className="glyphicon glyphicon-plus-sign"></span> Add new project </button>
+                {addModal}
+
+                <button className="btn btn-xs btn-info" onClick={this.showAddForm.bind(this)} > <span className="glyphicon glyphicon-plus-sign"></span> Add new project </button>
                 <table className="table table-condensed" id="table1">
                     <thead>
                     <tr>
@@ -74,12 +101,9 @@ export default class Project extends React.Component{
                     </thead>
                     <tbody>
                     {items}
-                    </tbody>
+                </tbody>
                 </table>
             </div>
         )
     }
-
-
-
 }

@@ -60,9 +60,9 @@ namespace ManagementApp.Controllers
 
         [Route("getAllDepartmentProjects")]
         [HttpGet]
-        public IHttpActionResult GetAllDepartmentProjects(int depId, int? pageSize, int? pageNr)
+        public IHttpActionResult GetAllDepartmentProjects(int departmentId, int? pageSize, int? pageNr)
         {
-            var result = _projectService.GetAllDepartmentProjects(depId,pageSize,pageNr);
+            var result = _projectService.GetAllDepartmentProjects(departmentId, pageSize,pageNr);
             return Json(result);
         }
 
