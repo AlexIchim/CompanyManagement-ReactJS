@@ -9,7 +9,7 @@ using System.Collections.Generic;
 using System.Linq;
 using FluentValidation.Results;
 using Manager.Validators;
-
+using Domain.Extensions;
 namespace Manager.Services
 {
     public class ProjectService
@@ -164,6 +164,17 @@ namespace Manager.Services
             return assignmentsInfo;
         }
 
+        public IEnumerable<String> GetStatusDescription()
+        {
+            List<String> myList = new List<string>();
+            var values = Enum.GetValues(typeof(Status));
+            foreach (Enum elem in values)
+            {
+                var descr = elem.GetDescriptionFromEnumValue();
+                myList.Add(descr);
+            }
+            return myList.AsEnumerable();
+        }
 
 
     }

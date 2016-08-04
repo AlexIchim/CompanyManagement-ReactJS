@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Text;
@@ -9,8 +10,11 @@ namespace Domain.Models
 {
     public enum Status
     {
+        [Description("Not Started Yet")]
         NotStartedYet,
+        [Description("In Progress")]
         InProgress,
+        [Description("On Hold")]
         OnHold,
         Finished,
     };

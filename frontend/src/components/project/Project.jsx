@@ -3,6 +3,9 @@ import * as React from 'react'
 import * as $ from 'jquery'
 import ProjectItem from './ProjectItem.jsx'
 import Form from './Form.jsx';
+import Accessors from '../../context/Accessors';
+import Context from '../../context/Context';
+import Controller from '../Controller';
 
 export default class Project extends React.Component{
     constructor(){
@@ -12,6 +15,7 @@ export default class Project extends React.Component{
         })
     }
     componentWillMount(){
+        Context.subscribe(this.onContextChange.bind(this));
         //const projectId = this.props.routeParams['projectId'];
 
         $.ajax({
@@ -19,11 +23,16 @@ export default class Project extends React.Component{
             url: config.base + 'department/projects/3',
             async: false,
             success: function(data){
-                this.setState({
-                    projects: data
-                })
+                Context.cursor.set('items', data);
+                Context.cursor.set('formToggle', false);
             }.bind(this)
         })
+    }
+
+    onContextChange(cursor){
+        this.setState({
+            projects: cursor.get('items')
+        });
     }
 
     closeForm(){
@@ -36,11 +45,37 @@ export default class Project extends React.Component{
             form: !this.state.form
         });
     }
+
+    onAddButtonClick(){
+        Context.cursor.set('formToggle',true);
+    }
+    onEditButtonClick(index){
+        const office=this.state.offices[index];
+
+        Context.cursor.set("model", office);
+        Context.cursor.set('formToggle',true);
+    }
+
+    onModalSaveClick(){
+        console.log("STORING!");
+        Controller.hideModal();
+    }
+
     render(){
-        console.log('store?', this.state.form);
-        const modal = this.state.form ? <Form show = {this.state.form} add={this.addElement.bind(this)} close = {this.closeForm.bind(this)}/> : '';
 
-
+        let modal = "";
+        console.log('store?', Accessors.formToggle(Context.cursor));
+        if(Accessors.formToggle(Context.cursor)){
+            if(Accessors.model(Context.cursor)){
+                modal=<Form onCancelClick={Controller.hideModal.bind(this)}
+                           onStoreClick={this.onModalSaveClick.bind(this)}
+                           Title="Edit Project"/>;
+            }else{
+                modal=<Form onCancelClick={Controller.hideModal.bind(this)}
+                           onStoreClick={this.onModalSaveClick.bind(this)}
+                           Title="Add Project"/>;
+            }
+        }
         const items = this.state.projects.map( (project, index) => {
             return (
                 <ProjectItem
@@ -58,7 +93,7 @@ export default class Project extends React.Component{
 
             <table className="table table-stripped">
                 <thead>
-                <h1> Projects <button id="store" className="btn btn-success margin-top" onClick={this.showForm.bind(this)}>
+                <h1> Projects <button id="store" className="btn btn-success margin-top" onClick={this.onAddButtonClick.bind(this)}>
                     Add New Project
                 </button></h1>
 
