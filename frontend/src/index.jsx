@@ -8,7 +8,6 @@ import Dashboard from './components/dashboard/Dashboard.jsx';
 import Project from './components/project/Project.jsx';
 import Departments from './components/department/Departments.jsx'
 import ProjectMembers from './components/project/ProjectMembers.jsx';
-
 const Routes = () => {
 
     return (

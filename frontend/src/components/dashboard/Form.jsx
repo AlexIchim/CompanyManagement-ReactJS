@@ -1,45 +1,25 @@
-import React from 'react';
+import * as React from 'react';
 import ModalTemplate from '../ModalTemplate';
 
 export default class Form extends React.Component{
-
     constructor(){
         super();
-        {/*this.state={
-            office: {
-
-            }
-        }*/}
     }
 
     componentWillMount(){
-        {/*this.setState({
-            office: this.props.element
-        })*/}
+
     }
-
-    changeName(){
-        {/*const value = this.refs.inputName.value;
-        const newOffice = this.state.office;
-        newOffice.Name = value;
-        this.setState({
-            office: newOffice
-        })*/}
-    }
-
-
-
 
     componentWillReceiveProps(props){
-        console.log('props', props);
     }
 
     render(){
         return(
 
-            <ModalTemplate onCloseClick={this.props.onCloseClick} 
-                           onStoreClick={function(){ console.log('haha') }} 
-                           Title="TEST TITLE">
+            <ModalTemplate onCancelClick={this.props.onCancelClick}
+                           onStoreClick={this.props.onStoreClick}
+                           Title={this.props.Title}
+                           Model={this.props.Model}>
 
                 <div className="form-group">
                     <label htmlFor="inputName" className="col-sm-2 control-label"> Name</label>
@@ -68,6 +48,4 @@ export default class Form extends React.Component{
             </ModalTemplate>
         )
     }
-
-
 }
