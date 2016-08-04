@@ -16,7 +16,8 @@ namespace ManagementApp
             // Web API routes
             config.MapHttpAttributeRoutes();
 
-            var cors = new EnableCorsAttribute("*", "*", "GET");
+            var cors= new EnableCorsAttribute("*","*", "GET, POST, PUT, DELETE");
+
             config.EnableCors(cors);
 
             config.Routes.MapHttpRoute(
