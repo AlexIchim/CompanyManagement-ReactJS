@@ -42,9 +42,6 @@ export default class Form extends React.Component{
             url: configs.baseUrl + 'api/department/addDepartment',
             data:inputInfo,
             success: function (data) {               
-                // Context.cursor.update('departments',(oldList) => {      
-                //     return oldList.push( Immutable.fromJS(inputInfo) );                  
-                // });
                  cb(); 
                  this.refresh(this.props.officeId);
             }.bind(this)
