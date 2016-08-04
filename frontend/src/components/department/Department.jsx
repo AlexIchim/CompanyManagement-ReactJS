@@ -44,7 +44,7 @@ export default class Department extends React.Component {
 
         $.ajax({
             method: 'GET',
-            url: configs.baseUrl + 'api/office/getAllDepOffice?officeId=' + this.props.routeParams.officeId,
+            url: configs.baseUrl + 'api/office/getAllDepOffice?officeId=' + this.props.routeParams.officeId+'&pageSize=10&pageNr=1',
             success: function (data) {
                 Context.cursor.set("departments",Immutable.fromJS(data));
             }.bind(this)

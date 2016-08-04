@@ -29,11 +29,11 @@ namespace Manager.Services
             return officeInfos;
         }
 
-        public IEnumerable<DepartmentInfo> GetAllDepartmentsOfAnOffice(int officeId)
+        public IEnumerable<DepartmentInfo> GetAllDepartmentsOfAnOffice(int officeId, int? pageSize, int? pageNr)
         {
             if (_officeValidator.ValidateId(officeId))
             {
-                var departments = _officeRepository.GetAllDepartmentsOfAnOffice(officeId);
+                var departments = _officeRepository.GetAllDepartmentsOfAnOffice(officeId, pageSize, pageNr);
                 var departmentInfos = _mapper.Map<IEnumerable<DepartmentInfo>>(departments);
 
                 return departmentInfos;
