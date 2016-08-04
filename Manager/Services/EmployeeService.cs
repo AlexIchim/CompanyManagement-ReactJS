@@ -132,7 +132,7 @@ namespace Manager.Services
             return new OperationResult(false, Messages.ErrorWhileUpdatingPartialAllocation);
         }
 
-        public IEnumerable<MemberInfo> GetAllDepartmentEmployees(int departmentId)
+        public IEnumerable<MemberInfo> GetAllDepartmentEmployees(int departmentId, int? pageSize, int? pageNr)
         {
             if (_employeeValidator.ValidateId(departmentId))
             {
@@ -141,7 +141,7 @@ namespace Manager.Services
 
                 if (department != null)
                 {
-                    var members = _employeeRepository.GetAllDepartmentEmployees(department);
+                    var members = _employeeRepository.GetAllDepartmentEmployees(department, pageSize, pageNr);
 
                 if (members.Any())
                     {

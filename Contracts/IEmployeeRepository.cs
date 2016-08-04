@@ -23,7 +23,7 @@ namespace Contracts
 
         IEnumerable<EmployeeProject> GetEmployeeProjectById(int projectId);
 
-        IEnumerable<Employee> GetAllDepartmentEmployees(Department department);
+        IEnumerable<Employee> GetAllDepartmentEmployees(Department department,int? pageSize,int? pageNr);
 
         void AddEmployee(Employee employee);
 
