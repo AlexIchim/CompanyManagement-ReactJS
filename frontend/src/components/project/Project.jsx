@@ -5,7 +5,7 @@ import ProjectItem from './ProjectItem.jsx'
 import Form from './Form.jsx';
 import Accessors from '../../context/Accessors';
 import Context from '../../context/Context';
-import Controller from '../Controller';
+import Controller from '../Command';
 
 export default class Project extends React.Component{
     constructor(){

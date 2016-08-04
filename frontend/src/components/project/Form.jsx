@@ -1,34 +1,18 @@
 import React from 'react';
 import ModalTemplate from '../ModalTemplate';
-import Controller from '../Controller';
+import Controller from '../Command';
 import config from '../helper';
+import MyController from './Controller/Controller.js';
+
 export default class Form extends React.Component {
     constructor(){
         super();
-    }
-
-    onStoreClick(){
-        $.ajax({
-            method: 'POST',
-            url: config.base + 'project/add',
-            data: {
-                Name:  this.refs.inputName.value,
-                DepartmentId: 3,
-                Duration: this.refs.inputDuration.value,
-                Status: "NotStartedYet"
-            },
-            async: false,
-            success: function(data){
-                console.log('success');
-            }.bind(this)
-        });
-        Controller.hideModal();
     }
     render(){
         return(
 
             <ModalTemplate onCancelClick={this.props.onCancelClick}
-                           onStoreClick={this.onStoreClick.bind(this)}
+                           onStoreClick={MyController.onStoreClick.bind(this)}
                            Title={this.props.Title}
                            Model={this.props.Model}>
 
