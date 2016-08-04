@@ -95,7 +95,7 @@ namespace Manager.Services
 
         public int GetAllocation(int employeeId)
         {
-            var employee = _employeeRepository.GetById(employeeId);
+            var employee = _employeeRepository.GetById(employeeId); 
             int totalAllocation = 0;
             foreach (var assignment in employee.Assignments)
             {

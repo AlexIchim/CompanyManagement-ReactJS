@@ -5,7 +5,9 @@ import App from './components/App';
 import ConcertsList from './components/concertslist/ConcertsList.jsx';
 import './assets/less/index.less';
 import Dashboard from './components/dashboard/Dashboard.jsx';
+import Employees from './components/employee/Employees.jsx'
 import Departments from './components/department/Departments.jsx'
+
 const Routes = () => {
 
     return (
@@ -15,14 +17,13 @@ const Routes = () => {
                 <Route path="ConcertsList" component={ConcertsList}>
                 </Route>
 
-                <Route path="office/departments/:officeId" component={Departments}>
+                <Route path="department/members/:employeeId" component={Employees}>
                 </Route>
-
-            </Route>
+                </Route>
         </Router>
+
     )
 
 };
-
 
 ReactDOM.render(<Routes/>, document.getElementById('root'));

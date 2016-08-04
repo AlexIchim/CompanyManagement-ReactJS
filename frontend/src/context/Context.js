@@ -3,7 +3,6 @@ import * as Immutable from 'immutable';
 import * as Cursor from 'immutable/contrib/cursor';
 import * as Rx from 'rx';
 
-
 const initialState = {
     user : mock
 };
@@ -21,11 +20,9 @@ class Context{
         this.subject.onNext(this.cursor);
     }
 
-
     subscribe(handleFunc){
         this.subject.subscribe(handleFunc);
     }
-
 }
 
 export default new Context;

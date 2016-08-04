@@ -1,4 +1,4 @@
 export default {
-    name: 'Super Intern',
+    name: 'George',
     age: 20
 }
