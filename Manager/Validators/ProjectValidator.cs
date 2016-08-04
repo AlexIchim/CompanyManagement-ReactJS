@@ -6,8 +6,6 @@ using System.Threading.Tasks;
 using Contracts;
 using Manager.InfoModels;
 using Manager.InputInfoModels;
-using Manager.InfoModels;
-using Manager.InputInfoModels;
 
 namespace Manager.Validators
 {

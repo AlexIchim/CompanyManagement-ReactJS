@@ -5,7 +5,6 @@ using Domain.Models;
 using Manager.InfoModels;
 using Manager.InputInfoModels;
 using System.Collections.Generic;
-using Domain.Enums;
 
 namespace Manager.Services
 {
