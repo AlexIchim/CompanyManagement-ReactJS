@@ -22,5 +22,6 @@ namespace Contracts
         IEnumerable<EmployeeProject> GetEmployeeProjectById(int projectId);
 
         IEnumerable<Project> GetAllDepartmentProjects(Department department, int? pageSize, int? pageNr);
+        IEnumerable<Project> FilterProjectByStatus(string status, int? pageSize, int? pageNr);
     }
 }

@@ -66,5 +66,12 @@ namespace ManagementApp.Controllers
             return Json(result);
         }
 
+        [Route("filterProjectsByStatus")]
+        [HttpGet]
+        public IHttpActionResult FilterProjectByStatus(string status, int? pageSize, int? pageNr)
+        {
+            var result = _projectService.FilterProjectByStatus(status, pageSize, pageNr);
+            return Json(result);
+        }
     }
 }

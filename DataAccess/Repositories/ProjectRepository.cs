@@ -88,5 +88,10 @@ namespace DataAccess.Repositories
         {
             return _context.Projects.Where(d => d.DepartmentId == department.Id).OrderBy(d => d.Name).Paginate(pageSize, pageNr).ToArray();
         }
+
+        public IEnumerable<Project> FilterProjectByStatus(string status, int? pageSize, int? pageNr)
+        {
+            return _context.Projects.Where(p => p.Status.ToString() == status);
+        }
     }
 }

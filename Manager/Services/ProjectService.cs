@@ -1,10 +1,12 @@
-﻿using AutoMapper;
+﻿using System;
+using AutoMapper;
 using Contracts;
 using Domain.Models;
 using Manager.InfoModels;
 using Manager.InputInfoModels;
 using System.Collections.Generic;
 using System.Linq;
+using Domain.Enums;
 
 namespace Manager.Services
 {
@@ -102,7 +104,7 @@ namespace Manager.Services
                 {
                     //update
                     updatedProject.Name = inputInfo.Name;
-                    updatedProject.Status = inputInfo.Status;
+                    updatedProject.Status = (ProjectStatus)Enum.Parse(typeof(ProjectStatus), inputInfo.Status);
                     if (inputInfo.Duration != null)
                     {
                         updatedProject.Duration = inputInfo.Duration;
@@ -130,6 +132,24 @@ namespace Manager.Services
                         return projectInfos;
                     }
                 }
+            }
+            return null;
+        }
+
+        public IEnumerable<ProjectInfo> FilterProjectByStatus(string status, int? pageSize, int? pageNr)
+        {
+            if (status!= "" && status != null)
+            {
+                //if ((ProjectStatus)Enum.Parse(typeof(ProjectStatus), status) is ProjectStatus)
+                //{
+                    var projects = _projectRepository.FilterProjectByStatus(status,pageSize,pageNr);
+                    if (projects != null)
+                    {
+                        var projectInfos = _mapper.Map<IEnumerable<ProjectInfo>>(projects);
+                       
+                        return projectInfos;
+                    }
+                //}
             }
             return null;
         }
