@@ -30,6 +30,7 @@ export default class Project extends React.Component{
     }
 
     onContextChange(cursor){
+        console.log('projects:', cursor.get('items'));
         this.setState({
             projects: cursor.get('items')
         });

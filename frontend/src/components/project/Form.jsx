@@ -8,8 +8,6 @@ export default class Form extends React.Component {
     }
 
     onStoreClick(){
-        console.log('name: ', this.refs.nameRef.value);
-        console.log('am apelat functia din form de add');
         $.ajax({
             method: 'POST',
             url: config.base + 'project/add',
@@ -17,7 +15,7 @@ export default class Form extends React.Component {
                 Name:  this.refs.inputName.value,
                 DepartmentId: 3,
                 Duration: this.refs.inputDuration.value,
-                Status: this.refs.inputStatus.value
+                Status: "NotStartedYet"
             },
             async: false,
             success: function(data){
@@ -50,15 +48,7 @@ export default class Form extends React.Component {
                     </div>
                 </div>
 
-                <div className="form-group">
-                    <label htmlFor="inputPhone" className="col-sm-2 control-label"> Status </label>
-                    <button type="button" data-toggle="dropdown"
-                            className="btn btn-default dropdown-toggle"> Choose:
-                    </button>
-                    <ul className="dropdown-menu" id="myDropdown">
-                        <li className="list-unstyled"> chooseee</li>
-                    </ul>
-                </div>
+
 
             </ModalTemplate>
         )
