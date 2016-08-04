@@ -5,8 +5,6 @@ import {Link} from 'react-router';
 class Tile extends React.Component<any, any>{
 
     submit(){
-        console.log("Hallo");
-
         var callback=this.props['onEditButtonClick'];
         callback(this.props['index']);
     }

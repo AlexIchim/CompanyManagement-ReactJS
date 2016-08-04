@@ -1,5 +1,5 @@
 import React from 'react';
-import ModalTemplate from './ModalTemplate';
+import ModalTemplate from '../ModalTemplate';
 
 export default class Form extends React.Component{
 
@@ -37,7 +37,9 @@ export default class Form extends React.Component{
     render(){
         return(
 
-            <ModalTemplate close={this.props.close} store={function(){ console.log('haha') }}>
+            <ModalTemplate onCloseClick={this.props.onCloseClick} 
+                           onStoreClick={function(){ console.log('haha') }} 
+                           Title="TEST TITLE">
 
                 <div className="form-group">
                     <label htmlFor="inputName" className="col-sm-2 control-label"> Name</label>
