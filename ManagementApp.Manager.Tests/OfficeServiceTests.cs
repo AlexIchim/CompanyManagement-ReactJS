@@ -20,7 +20,7 @@ namespace ManagementApp.Manager.Tests
         private Mock<IOfficeRepository> _officeRepositoryMock;
         private Mock<IMapper> _mapperMock;
         private Mock<IOfficeValidator> _officeValidatorMock;
-        
+
 
         [SetUp]
         public void PerTestSetup()
@@ -113,7 +113,7 @@ namespace ManagementApp.Manager.Tests
                 new Department { Id = 1, Name = "java", OfficeId = 1},
                 new Department { Id = 2, Name = ".net", OfficeId = 2}
             };
-            _officeRepositoryMock.Setup(m => m.GetAllDepartmentsOfAnOffice(1)).Returns(departments);
+            _officeRepositoryMock.Setup(m => m.GetAllDepartmentsOfAnOffice(1, 3, 1)).Returns(departments);
 
 
         }
