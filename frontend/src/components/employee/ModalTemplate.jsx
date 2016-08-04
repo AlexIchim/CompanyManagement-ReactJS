@@ -14,7 +14,7 @@ export default class ModalTemplate extends React.Component{
     }
 
     render(){
-        console.log('iiinside', this.props)
+        console.log('inside', this.props)
         return(
             <div ref="editEmployee" className="modal fade"  tabIndex="-1" data-backdrop="static" data-keyboard="false">
                 <div className="modal-dialog">

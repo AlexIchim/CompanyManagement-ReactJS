@@ -1,4 +1,4 @@
-import * as React from 'react';
+{/*import * as React from 'react';
 import config from '../helper';
 import * as $ from 'jquery';
 import {Link} from 'react-router';
@@ -110,4 +110,4 @@ class Departments extends React.Component{
     }
 }
 
-export default Departments;
+export default Departments;*/}
