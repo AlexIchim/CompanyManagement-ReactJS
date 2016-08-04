@@ -1,4 +1,5 @@
 var ExtractTextPlugin = require("extract-text-webpack-plugin");
+var webpack = require("webpack");
 
 module.exports = {
 
@@ -16,6 +17,13 @@ module.exports = {
 
     module: {
         loaders: [
+            // **IMPORTANT** This is needed so that each bootstrap js file required by
+            // bootstrap-webpack has access to the jQuery object
+            {
+                test: /bootstrap\/js\//,
+                loader: 'imports?jQuery=jquery'
+            },
+
             {
                 test: /\.[j|t]sx?$/,
                 exclude: /(node_modules|bower_components)/,
@@ -59,6 +67,11 @@ module.exports = {
     },
 
     plugins: [
+        new webpack.ProvidePlugin({
+            $: "jquery",
+            jQuery: "jquery"
+        }),
+
         new ExtractTextPlugin('styles.css'),
         // new StaticSiteGeneratorPlugin('main', data.routes, data),
     ],

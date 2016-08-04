@@ -14,7 +14,11 @@ export default (props) => {
             <td>{props.data.employmentHours}</td>
             <td>{props.data.positionName}</td>
             <td>{props.data.totalAllocation}%</td>
-            <td><button>Do Nothing</button></td>
+            <td>
+                <button onClick={props.onView}>View details</button>
+                <button>Release --nothing</button>
+                <button onClick={props.onEdit}>Edit</button>
+            </td>
         </tr>
     )
 };
