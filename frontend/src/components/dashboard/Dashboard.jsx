@@ -1,9 +1,9 @@
 import * as React from 'react';
 import Tile from './Tile';
-import * as $ from 'jquery';
 import config from '../helper';
 import Context from '../../context/Context';
 import Accessors from '../../context/Accessors';
+import Controller from './OfficeController';
 
 import Form from './Form';
 
@@ -15,18 +15,7 @@ export default class Dashboard extends React.Component{
     componentWillMount(){
         Context.subscribe(this.onContextChange.bind(this));
 
-        $.ajax({
-            method:'GET',
-            url: config.base+'office/getAll',
-            async:false,
-            success: function(data){
-                console.log("Data: ");
-                console.log(data);
-                
-                Context.cursor.set('items',data);
-                Context.cursor.set('formToggle',false);
-            }.bind(this)
-        });
+        Controller.GetList();
     }
 
     onContextChange(cursor){
@@ -65,7 +54,8 @@ export default class Dashboard extends React.Component{
             if(Accessors.model(Context.cursor)){
                 form=<Form onCancelClick={this.hideModal.bind(this)}
                            onStoreClick={this.onModalSaveClick.bind(this)}
-                           Title="Edit Office"/>;
+                           Title="Edit Office"
+                           Model={Accessors.model(Context.cursor)}/>;
             }else{
                 form=<Form onCancelClick={this.hideModal.bind(this)}
                            onStoreClick={this.onModalSaveClick.bind(this)}

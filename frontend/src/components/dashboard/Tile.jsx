@@ -13,7 +13,6 @@ class Tile extends React.Component<any, any>{
         const props = this.props;
         const parentClass = classNames("info-box-icon", props['parentClass']);
         const icon = "data:image/jpg;base64,"+props['icon'];
-
         return (
             <div className="col-md-6 col-sm-6 col-xs-12">
             <div className="info-box">
