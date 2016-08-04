@@ -11,13 +11,15 @@ export default class Form extends React.Component{
     }
 
     componentWillReceiveProps(props){
-        console.log(props);
     }
 
     render(){
         return(
 
-            <ModalTemplate onCancelClick={this.props.onCancelClick}>
+            <ModalTemplate onCancelClick={this.props.onCancelClick}
+                           onStoreClick={this.props.onStoreClick}
+                           Title={this.props.Title}
+                           Model={this.props.Model}>
 
                 <div className="form-group">
                     <label htmlFor="inputName" className="col-sm-2 control-label"> Name</label>

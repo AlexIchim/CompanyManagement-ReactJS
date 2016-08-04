@@ -2,6 +2,8 @@ import * as React from 'react';
 import Tile from './Tile';
 import * as $ from 'jquery';
 import config from '../helper';
+import Context from '../../context/Context';
+import Accessors from '../../context/Accessors';
 
 import Form from './Form';
 
@@ -11,6 +13,8 @@ export default class Dashboard extends React.Component{
     }
 
     componentWillMount(){
+        Context.subscribe(this.onContextChange.bind(this));
+
         $.ajax({
             method:'GET',
             url: config.base+'office/getAll',
@@ -18,31 +22,55 @@ export default class Dashboard extends React.Component{
             success: function(data){
                 console.log("Data: ");
                 console.log(data);
-                this.setState({
-                    offices:data,
-                    formToggle:false
-                })
+                
+                Context.cursor.set('items',data);
+                Context.cursor.set('formToggle',false);
             }.bind(this)
         });
     }
+
+    onContextChange(cursor){
+        this.setState({
+            offices: cursor.get('items')
+        });
+    }
+
     onAddButtonClick(){
+        Context.cursor.set('formToggle',true);
     }
     onEditButtonClick(index){
+        const office=this.state.offices[index];
+
+        Context.cursor.set("model", office);
+        Context.cursor.set('formToggle',true);
     }
 
     
 
-    toggleModal(){
-        this.setState({
-            offices:this.state.offices,
-            formToggle:!this.state.formToggle
-        })
+    hideModal(){
+        Context.cursor.set('formToggle',false);
+        Context.cursor.set('model',null);
+        console.log("Hidden");
+    }
+
+    onModalSaveClick(){
+        console.log("STORING!");
+        this.hideModal();
     }
 
     render(){
+
         let form="";
-        if(this.state.formToggle){
-            form=<Form onCancelClick={this.toggleModal.bind(this)}/>;
+        if(Accessors.formToggle(Context.cursor)){
+            if(Accessors.model(Context.cursor)){
+                form=<Form onCancelClick={this.hideModal.bind(this)}
+                           onStoreClick={this.onModalSaveClick.bind(this)}
+                           Title="Edit Office"/>;
+            }else{
+                form=<Form onCancelClick={this.hideModal.bind(this)}
+                           onStoreClick={this.onModalSaveClick.bind(this)}
+                           Title="Add Office"/>;
+            }
         }
 
         const items = this.state.offices.map ( (office, index) => {
@@ -65,7 +93,7 @@ export default class Dashboard extends React.Component{
                 {form}
                 {items}
                 <button className="btn btn-success"
-                        onClick={this.toggleModal.bind(this)}>
+                        onClick={this.onAddButtonClick.bind(this)}>
                     Add
                 </button>
             </div>

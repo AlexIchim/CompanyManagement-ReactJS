@@ -5,7 +5,10 @@ import * as Rx from 'rx';
 
 
 const initialState = {
-    user : mock
+    user : mock,
+    items: null,
+    model:null,
+    formToggle: false
 };
 
 class Context{
