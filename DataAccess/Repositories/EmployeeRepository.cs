@@ -7,6 +7,7 @@ using System.Data.Entity.Core.Objects;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using DataAccess.Extensions;
 
 namespace DataAccess.Repositories
 {
@@ -75,9 +76,13 @@ namespace DataAccess.Repositories
             return _context.EmployeeProjects.Where(ep => ep.ProjectId == projectId).ToList();
         }
 
-        public IEnumerable<Employee> GetAllDepartmentEmployees(Department department)
+        public IEnumerable<Employee> GetAllDepartmentEmployees(Department department, int? pageSize, int? pageNr)
         {
-                return department.Employees;         
+            return
+                _context.Employees.Where(e => e.DepartmentId == department.Id)
+                    .OrderBy(e => e.Name)
+                    .Paginate(pageSize, pageNr)
+                    .ToArray();    
         }
         public void AddEmployee(Employee employee)
         {
