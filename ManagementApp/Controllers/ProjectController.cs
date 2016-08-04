@@ -7,7 +7,7 @@ using Manager.Services;
 namespace ManagementApp.Controllers
 {
     [RoutePrefix("api/project")]
-    [EnableCors("*","*","GET, POST, PUT")]
+    [EnableCors("*","*", "GET, POST, PUT, DELETE")]
     public class ProjectController : ApiController
     {
         private readonly ProjectService _projectService;

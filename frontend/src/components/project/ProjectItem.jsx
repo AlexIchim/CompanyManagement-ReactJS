@@ -1,8 +1,10 @@
 import * as React from 'react'
 import * as $ from 'jquery'
 import {Link} from 'react-router';
+import Command from '../Command';
 
 const ProjectItem = (props) => {
+
 
     const id = props.node.Id;
     const name = props.node.Name;
@@ -10,6 +12,9 @@ const ProjectItem = (props) => {
     const duration = props.node.Duration;
     const status = props.node.Status;
     const link = props.Link;
+    const edit = props.onEdit;
+    const deleteF = props.onDelete;
+
     return (
         <tr>
 
@@ -33,12 +38,12 @@ const ProjectItem = (props) => {
                             View Members
                         </Link></td>
                     <td>
-                <button id="store" className="btn btn-success margin-top">
+                <button id="store" className="btn btn-success margin-top" onClick={edit}>
                     Edit
                 </button>
                 </td><td>
 
-                <button className="btn btn-danger margin-top"><i className="fa fa-trash" ></i>
+                <button className="btn btn-danger margin-top" onClick={deleteF}><i className="fa fa-trash" ></i>
                     Delete
                 </button></td>
                         </tr>

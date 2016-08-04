@@ -7,6 +7,7 @@ import Accessors from '../../context/Accessors';
 import Context from '../../context/Context';
 import Command from '../Command';
 import MyController from './Controller/Controller'
+import EditForm from './EditForm';
 
 export default class Project extends React.Component{
     constructor(){
@@ -43,11 +44,14 @@ export default class Project extends React.Component{
     onAddButtonClick(){
         Context.cursor.set('formToggle',true);
     }
-    onEditButtonClick(index){
-        const office=this.state.offices[index];
 
-        Context.cursor.set("model", office);
-        Context.cursor.set('formToggle',true);
+    onEditButtonClick(project){
+        Context.cursor.set('formToggle', true);
+        Context.cursor.set('model', project)
+    }
+
+    onDeleteButtonClick(element){
+        MyController.Delete(element);
     }
 
     onModalSaveClick(){
@@ -56,12 +60,12 @@ export default class Project extends React.Component{
     }
 
     render(){
-
+        console.log('model is:', Accessors.model(Context.cursor));
         let modal = "";
         console.log('store?', Accessors.formToggle(Context.cursor));
         if(Accessors.formToggle(Context.cursor)){
             if(Accessors.model(Context.cursor)){
-                modal=<Form onCancelClick={Command.hideModal.bind(this)}
+                modal=<EditForm onCancelClick={Command.hideModal.bind(this)}
                            onStoreClick={this.onModalSaveClick.bind(this)}
                            Title="Edit Project"/>;
             }else{
@@ -76,6 +80,8 @@ export default class Project extends React.Component{
                     node = {project}
                     key = {index}
                     Link = {"project/members/" + project.Id}
+                    onEdit = {this.onEditButtonClick.bind(this, project)}
+                    onDelete = {this.onDeleteButtonClick.bind(this, project)}
                     />
             )
         });

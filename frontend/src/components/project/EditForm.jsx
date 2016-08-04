@@ -4,7 +4,7 @@ import Controller from '../Command';
 import config from '../helper';
 import MyController from './Controller/Controller.js';
 
-export default class Form extends React.Component {
+export default class EditForm extends React.Component {
     constructor(){
         super();
     }
@@ -12,7 +12,7 @@ export default class Form extends React.Component {
         return(
 
             <ModalTemplate onCancelClick={this.props.onCancelClick}
-                           onStoreClick={MyController.Add.bind(this)}
+                           onStoreClick={MyController.Edit.bind(this)}
                            Title={this.props.Title}
                            Model={this.props.Model}>
 
@@ -30,6 +30,15 @@ export default class Form extends React.Component {
                         <input type="text" className="form-control" ref="inputDuration" placeholder="Duration" >
                         </input>
                     </div>
+                </div>
+                <div className="form-group">
+                    <label htmlFor="inputAddress" className="col-sm-2 control-label"> Status </label>
+                    <button type="button" data-toggle="dropdown"
+                            className="btn btn-default dropdown-toggle">  Choose:
+                    </button>
+                    <ul className="dropdown-menu" id="myDropdown">
+                        choose
+                    </ul>
                 </div>
 
 

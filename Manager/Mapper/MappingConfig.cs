@@ -2,6 +2,7 @@
 using Domain.Models;
 using Manager.InfoModels;
 using Manager.InputInfoModels;
+using Domain.Extensions;
 
 namespace Manager.Mapper
 {
@@ -41,7 +42,7 @@ namespace Manager.Mapper
             )
             .ForMember(
                 projectInfo => projectInfo.Status,
-                project => project.MapFrom(src => src.Status.ToString()));
+                project => project.MapFrom(src => src.Status.GetDescriptionFromEnumValue()));
             CreateMap<AddProjectInputInfo, Project>();
             CreateMap<Assignment, ProjectMemberInfo>()
                 .ForMember(

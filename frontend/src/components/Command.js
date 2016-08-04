@@ -7,4 +7,9 @@ export default new class Controller{
         Context.cursor.set('model',null);
         console.log("Hidden");
     }
+
+
+    showModalForEdit(){
+        Context.cursor.set('formToggle', true);
+    }
 }
