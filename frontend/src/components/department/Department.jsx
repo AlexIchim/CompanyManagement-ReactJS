@@ -72,8 +72,7 @@ export default class Department extends React.Component {
 
 
     render() {
-
-console.log(this.state);
+        
         const items = this.state.departments.map((el, x) => {
             return (
                 <Tr

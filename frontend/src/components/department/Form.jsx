@@ -28,11 +28,14 @@ export default class Form extends React.Component{
 
     store(cb){
    
+        const depManager=this.refs.managersDropdown.options[this.refs.managersDropdown.selectedIndex].value;
+
         var inputInfo={
             Name: this.refs.name.value,
             OfficeId: this.props.officeId,
-            DepartmentManagerId: 7
+            DepartmentManagerId: depManager
         }
+         
 
         $.ajax({
             method: 'POST',
@@ -41,18 +44,32 @@ export default class Form extends React.Component{
             success: function (data) {              
                 Context.cursor.update('departments',(oldList) => {      
                     return oldList.push( Immutable.fromJS(inputInfo) );
+                   
                 });
+                 cb(); 
+                 this.refresh(this.props.officeId);
             }.bind(this)
-        })    
+        })   
 
-        cb(); 
+        
+
+        
     }
 
+    refresh(officeId){
+         $.ajax({
+            method: 'GET',
+            url: configs.baseUrl + 'api/office/getAllDepOffice?officeId=' + officeId+'&pageSize=10&pageNr=1',
+            success: function (data) {
+                Context.cursor.set("departments",Immutable.fromJS(data));
+            }.bind(this)
+        })
+    }
     
     render(){
         const departmentManagers=this.state.departmentManagers.map((el, x) => {
             return (
-                <li key={x}><a href="#">{el.Name}</a></li>                         
+                <option value={el.Id} key={x} >{el.Name}</option>                         
             )
         });
 
@@ -66,16 +83,12 @@ export default class Form extends React.Component{
                 </div>
             </div>
            
-            <div className="dropdown">
-                <label className="col-sm-4 control-label"> Department manager </label>
-                <button className="btn btn-default dropdown-toggle col-sm-6" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-                    
-                    <span className="caret"></span>
-                </button>
-                <ul className="dropdown-menu col-sm-6" aria-labelledby="dropdownMenu1">
-                    {departmentManagers}                    
-                </ul>
-            </div>
+           <label className="col-sm-4 control-label"> Department manager </label>
+       
+            <select ref="managersDropdown" className="selectpicker">
+                {departmentManagers}                    
+            </select>
+     
        
         </AddDepartmentModalTemplate>
         )
