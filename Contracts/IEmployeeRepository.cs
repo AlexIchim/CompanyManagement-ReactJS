@@ -19,8 +19,6 @@ namespace Contracts
 
         int ComputeTotalAllocation(int employeeId);
 
-        void UpdateTotalAllocation(int employeeId, int totalAllocation);
-
         void AddEmployeeToProject(EmployeeProject ep);
 
         IEnumerable<EmployeeProject> GetEmployeeProjectById(int projectId);

@@ -63,12 +63,7 @@ namespace DataAccess.Repositories
                 foreach (EmployeeProject employeeProject in employeeProjects)
                 {
                     var employee = _context.Employees.SingleOrDefault(e => e.Id == employeeProject.EmployeeId);
-
-                    int totalAllocation = employee.TotalAllocation;
-
-                    int newTotalAllocation = totalAllocation - employeeProject.Allocation;
-
-                    employee.TotalAllocation = newTotalAllocation;
+                    //////////////////////////////////////////////////
 
                     _context.EmployeeProjects.Remove(employeeProject);
                     

@@ -92,6 +92,10 @@
     <Compile Include="Migrations\201608021338202_SetReleaseDateOptional.Designer.cs">
       <DependentUpon>201608021338202_SetReleaseDateOptional.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201608031350399_RemovedTotalAllocation.cs" />
+    <Compile Include="Migrations\201608031350399_RemovedTotalAllocation.Designer.cs">
+      <DependentUpon>201608031350399_RemovedTotalAllocation.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositories\DepartmentRepository.cs" />
@@ -131,6 +135,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201608021338202_SetReleaseDateOptional.resx">
       <DependentUpon>201608021338202_SetReleaseDateOptional.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201608031350399_RemovedTotalAllocation.resx">
+      <DependentUpon>201608031350399_RemovedTotalAllocation.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

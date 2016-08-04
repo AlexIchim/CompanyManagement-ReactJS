@@ -322,12 +322,11 @@ namespace ManagementApp.Manager.Tests
             return department;
         }
 
-        private Employee CreateEmployee(string name, int allocation, int? id = null)
+        private Employee CreateEmployee(string name, int? id = null)
         {
             var employee = new Employee
             {
                 Name = name,
-                TotalAllocation = allocation
             };
             if (id != null)
             {

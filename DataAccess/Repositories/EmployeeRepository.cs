@@ -59,17 +59,6 @@ namespace DataAccess.Repositories
             return _context.EmployeeProjects.Where(ep => ep.EmployeeId == employeeId).ToList().Sum(ep => ep.Allocation);         
         }
 
-        public void UpdateTotalAllocation(int employeeId, int totalAllocation)
-        {
-            var employee = _context.Employees.SingleOrDefault(e => e.Id == employeeId);
-
-            if (employee != null)
-            {
-                employee.TotalAllocation = totalAllocation;
-                Save();
-            }
-            
-        }
 
         public void AddEmployeeToProject(EmployeeProject ep)
         {
@@ -98,14 +87,30 @@ namespace DataAccess.Repositories
 
         public IEnumerable<Employee> GetAllUnAllocatedEmployeesOnProject()
         {
-            var employees = _context.Employees.Where(e => e.TotalAllocation == 0);
-            return employees.ToArray();
+            var employees = _context.Employees.ToList();
+            List<Employee> unallocatedEmployees = new List<Employee>();
+            foreach (Employee employee in employees)
+            {
+                if (ComputeTotalAllocation(employee.Id) == 0)
+                {
+                    unallocatedEmployees.Add(employee);
+                }
+            } 
+            return unallocatedEmployees;
         }
 
         public IEnumerable<Employee> GetEmployeesThatAreNotFullyAllocated()
         {
-            var employees = _context.Employees.Where(e => e.TotalAllocation < 100);
-            return employees.ToArray();
+            var employees = _context.Employees.ToList();
+            List<Employee> fullyAllocatedEmployees = new List<Employee>();
+            foreach (Employee employee in employees)
+            {
+                if (ComputeTotalAllocation(employee.Id) < 100)
+                {
+                    fullyAllocatedEmployees.Add(employee);
+                }
+            }
+            return fullyAllocatedEmployees;
         }
 
     }

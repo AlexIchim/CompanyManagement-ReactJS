@@ -30,7 +30,6 @@ namespace DataAccess.Migrations
                 Address = "Luna",
                 EmploymentDate = new DateTime(2011, 6, 10),
                 ReleaseDate = new DateTime(2011, 6, 12),
-                TotalAllocation = 20,
                 JobType = JobType.FullTime,
                 PositionType = PositionType.Developer,
                 DepartmentId = 1
@@ -43,7 +42,6 @@ namespace DataAccess.Migrations
                 Address = "Fagaras",
                 EmploymentDate = new DateTime(2010, 6, 21),
                 ReleaseDate = new DateTime(2011, 6, 10),
-                TotalAllocation = 40,
                 JobType = JobType.PartTime4,
                 PositionType = PositionType.Developer,
                 DepartmentId = 1
@@ -56,7 +54,6 @@ namespace DataAccess.Migrations
                 Address = "Gheorgheni",
                 EmploymentDate = new DateTime(2011, 6, 10),
                 ReleaseDate = new DateTime(2011, 6, 11),
-                TotalAllocation = 30,
                 JobType = JobType.FullTime,
                 PositionType = PositionType.Developer,
                 DepartmentId = 3
@@ -69,7 +66,6 @@ namespace DataAccess.Migrations
                 Address = "Manastur",
                 EmploymentDate = new DateTime(2009, 6, 10),
                 ReleaseDate = new DateTime(2012, 6, 10),
-                TotalAllocation = 50,
                 JobType = JobType.FullTime,
                 PositionType = PositionType.Developer,
                 DepartmentId = 2
@@ -82,7 +78,6 @@ namespace DataAccess.Migrations
                 Address = "Cluj-Napoca",
                 EmploymentDate = new DateTime(2007, 6, 10),
                 ReleaseDate = new DateTime(2015, 6, 10),
-                TotalAllocation = 20,
                 JobType = JobType.PartTime6,
                 PositionType = PositionType.Developer,
                 DepartmentId = 3
@@ -95,7 +90,6 @@ namespace DataAccess.Migrations
                 Address = "Orastie",
                 EmploymentDate = new DateTime(2012, 6, 10),
                 ReleaseDate = new DateTime(2014, 6, 10),
-                TotalAllocation = 100,
                 JobType = JobType.FullTime,
                 PositionType = PositionType.DepartmentManager,
                 DepartmentId = 2
@@ -107,7 +101,6 @@ namespace DataAccess.Migrations
                 Address = "str. Macelarului",
                 EmploymentDate = new DateTime(2011, 6, 10),
                 ReleaseDate = new DateTime(2011, 6, 10),
-                TotalAllocation = 69,
                 JobType = JobType.FullTime,
                 PositionType = PositionType.DepartmentManager,
                 DepartmentId = 4
@@ -120,7 +113,6 @@ namespace DataAccess.Migrations
                 Address = "Alba-Iulia",
                 EmploymentDate = new DateTime(2011, 6, 10),
                 ReleaseDate = new DateTime(2011, 6, 10),
-                TotalAllocation = 45,
                 JobType = JobType.PartTime4,
                 PositionType = PositionType.QA,
                 DepartmentId = 4
@@ -132,7 +124,6 @@ namespace DataAccess.Migrations
                 Address = "Lunacul",
                 EmploymentDate = new DateTime(2011, 6, 10),
                 ReleaseDate = new DateTime(2011, 6, 10),
-                TotalAllocation = 90,
                 JobType = JobType.FullTime,
                 PositionType = PositionType.TeamLead,
                 DepartmentId = 5
@@ -144,7 +135,6 @@ namespace DataAccess.Migrations
                 Address = "Breaza",
                 EmploymentDate = new DateTime(2011, 6, 10),
                 ReleaseDate = new DateTime(2011, 6, 10),
-                TotalAllocation = 80,
                 JobType = JobType.PartTime6,
                 PositionType = PositionType.BA,
                 DepartmentId = 5
@@ -156,7 +146,6 @@ namespace DataAccess.Migrations
                 Address = "str. Devei",
                 EmploymentDate = new DateTime(2011, 6, 10),
                 ReleaseDate = new DateTime(2011, 6, 10),
-                TotalAllocation = 60,
                 JobType = JobType.PartTime6,
                 PositionType = PositionType.DepartmentManager,
                 DepartmentId = 6
@@ -168,7 +157,6 @@ namespace DataAccess.Migrations
                 Address = "Luncani",
                 EmploymentDate = new DateTime(2011, 6, 10),
                 ReleaseDate = new DateTime(2011, 6, 10),
-                TotalAllocation = 40,
                 JobType = JobType.FullTime,
                 PositionType = PositionType.Developer,
                 DepartmentId = 6
