@@ -5,8 +5,7 @@ import configs from '../helpers/calls'
 import Form from './Form.jsx'
 import Context from '../../context/Context.js';
 import * as Immutable from 'immutable';
-
-
+import * as Controller from '../controller';
 
 
 const Tr = (props) => {
@@ -32,28 +31,28 @@ export default class Department extends React.Component {
         super();
         this.state = {
             add: false,
-            departments: Context.cursor.get("departments")
+            departments: Context.cursor.get("departments"),
+            pageNr:1
         }
     }
 
-
     
-    componentWillMount(){
-        
-        Context.subscribe(this.onContextChange.bind(this));
+    componentWillMount(){ 
+        this.subscription = Context.subscribe(this.onContextChange.bind(this));
+    }
 
-        $.ajax({
-            method: 'GET',
-            url: configs.baseUrl + 'api/office/getAllDepOffice?officeId=' + this.props.routeParams.officeId+'&pageSize=10&pageNr=1',
-            success: function (data) {
-                Context.cursor.set("departments",Immutable.fromJS(data));
-            }.bind(this)
-        })
+    componentDidMount(){
+         Controller.getAllDepOffice(this.props.routeParams.officeId,this.state.pageNr);
+    }
+
+    componentWillUnmount () {
+        this.subscription.dispose(); 
     }
 
      onContextChange(cursor){
+         window.inc++;
         this.setState({
-            departments: Context.cursor.get("departments")         
+            departments: cursor.get("departments")         
         });
 
     }
@@ -70,9 +69,50 @@ export default class Department extends React.Component {
         })
     }
 
+    back(){
+
+        if (this.state.pageNr!=1){
+            const whereTo=this.state.pageNr-1
+
+            console.log(whereTo);
+
+            $.ajax({
+            method: 'GET',
+            async: false,
+            url: configs.baseUrl + 'api/office/getAllDepOffice?officeId=' + this.props.routeParams.officeId+'&pageSize=3&pageNr='+whereTo,
+            success: function (data) {
+                Context.cursor.set("departments",Immutable.fromJS(data));
+            }.bind(this)
+        })
+            
+             this.setState({
+                pageNr:this.state.pageNr-1
+            })
+        }
+                
+    }
+
+    next(){
+
+        const whereTo=this.state.pageNr+1
+
+        console.log(whereTo);
+
+        $.ajax({
+            method: 'GET',
+            async: false,
+            url: configs.baseUrl + 'api/office/getAllDepOffice?officeId=' + this.props.routeParams.officeId+'&pageSize=3&pageNr='+whereTo ,
+            success: function (data) {
+                Context.cursor.set("departments",Immutable.fromJS(data));
+            }.bind(this)
+        })
+
+        this.setState({
+            pageNr:this.state.pageNr+1
+        })
+    }
 
     render() {
-        
         const items = this.state.departments.map((el, x) => {
             return (
                 <Tr
@@ -107,6 +147,16 @@ export default class Department extends React.Component {
 
                     </tbody>
                 </table>
+
+                <div>
+                    <button className="leftArrow" onClick={this.back.bind(this)}>
+                                <i className="fa fa-arrow-left fa-2x" aria-hidden="true"></i>
+                    </button>
+                    <button className="rightArrow" onClick={this.next.bind(this)}>
+                                <i className="fa fa-arrow-right fa-2x" aria-hidden="true"></i>
+                    </button>              
+                </div>
+
             </div>
         )
     }
