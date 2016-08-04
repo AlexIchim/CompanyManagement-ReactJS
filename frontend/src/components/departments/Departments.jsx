@@ -51,7 +51,7 @@ export default class Departments extends Component {
 
             return (
                 <div>
-                    <h1> {this.state.officeName}</h1>
+                    <h1>{this.state.officeName}</h1>
                     <button className="btn btn-md btn-info" > <span className="glyphicon glyphicon-plus-sign"></span> Add new department </button>
                     <table className="table" id="table1">
                         <thead>

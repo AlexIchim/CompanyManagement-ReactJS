@@ -14,6 +14,7 @@ namespace Manager.InfoModels
         public string Address { get; set; }
 
         public DateTime EmploymentDate { get; set; }
+        public DateTime? ReleaseDate { get; set; }
 
         public int EmploymentHours { get; set; }
 

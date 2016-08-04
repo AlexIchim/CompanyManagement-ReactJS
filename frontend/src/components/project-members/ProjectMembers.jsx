@@ -50,16 +50,18 @@ export default class ProjectMembers extends Component {
 
         const assignForm = this.state.showAssignForm ? (<AssignForm />) : null;
 
-
         return (
             <div>
-                <h1><strong>{this.state.projectName}</strong>  Members:</h1>
+                <h1>{this.state.projectName} Members:</h1>
                 <br/>
-                <button className="btn btn-success"
+                <button className="btn btn-md btn-info" 
                     onClick={
                         (e) => this.setState({ showAssignForm: true })
                     }
-                ><i className="glyphicon glyphicon-plus"/>&nbsp;&nbsp;Assign Employee</button>
+                > 
+                        <span className="glyphicon glyphicon-plus-sign"></span> 
+                        &nbsp;Assign Employee 
+                </button>
                 <br/>
                 <br/>
                 <table className="table table-hover table-bordered">
