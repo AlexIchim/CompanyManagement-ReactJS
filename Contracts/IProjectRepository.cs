@@ -9,7 +9,7 @@ namespace Contracts
 {
     public interface IProjectRepository
     {
-        IEnumerable<Employee> GetEmployeesByProjectId(int projectId);
+        IEnumerable<Employee> GetEmployeesByProjectId(int projectId, int? pageSize, int? pageNr);
         IQueryable<EmployeeProject> GetEmployeesAllocation(int projectId);
 
         void Save();
@@ -21,6 +21,6 @@ namespace Contracts
 
         IEnumerable<EmployeeProject> GetEmployeeProjectById(int projectId);
 
-        IEnumerable<Project> GetAllDepartmentProjects(Department department);
+        IEnumerable<Project> GetAllDepartmentProjects(Department department, int? pageSize, int? pageNr);
     }
 }
