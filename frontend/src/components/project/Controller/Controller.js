@@ -18,6 +18,7 @@ export default new class Controller{
                 console.log('success');
             }.bind(this)
         });
+        this.getAllProjects();
         Command.hideModal();
     }
 
