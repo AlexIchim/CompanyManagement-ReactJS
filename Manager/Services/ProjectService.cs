@@ -39,14 +39,14 @@ namespace Manager.Services
             return null;
         }
 
-        public IEnumerable<EmployeeInfo> GetEmployeesByProjectId(int projectId)
+        public IEnumerable<EmployeeInfo> GetEmployeesByProjectId(int projectId, int? pageSize, int? pageNr)
         {
             if (_projectValidator.ValidateId(projectId))
             {
                 var project = _projectRepository.GetProjectById(projectId);
                 if (project != null)
                 {
-                    var employees = _projectRepository.GetEmployeesByProjectId(projectId);
+                    var employees = _projectRepository.GetEmployeesByProjectId(projectId,pageSize,pageNr);
 
                     if (employees != null)
                     {
@@ -117,13 +117,13 @@ namespace Manager.Services
             return new OperationResult(false, Messages.ErrorWhileUpdatingProject);
         }
 
-        public IEnumerable<ProjectInfo> GetAllDepartmentProjects(int depId)
+        public IEnumerable<ProjectInfo> GetAllDepartmentProjects(int depId, int? pageSize, int? pageNr)
         {
             if (_projectValidator.ValidateId(depId)) { 
                 var department = _departmentRepository.GetDepartmentById(depId);
                 if (department != null)
                 {
-                    var projects = _projectRepository.GetAllDepartmentProjects(department);
+                    var projects = _projectRepository.GetAllDepartmentProjects(department,pageSize,pageNr);
                     if (projects != null)
                     {
                         var projectInfos = _mapper.Map<IEnumerable<ProjectInfo>>(projects);
