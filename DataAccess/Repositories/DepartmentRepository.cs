@@ -32,6 +32,49 @@ namespace DataAccess.Repositories
             return department.Employees;
         }
 
+        public IEnumerable<Employee> GetMembersOfDepartmentByJobType(int departmentId, string jobType)
+        {
+            return _context.Employees.Where(d => d.Id == departmentId && d.JobType.ToString().Equals(jobType));
+        }
+
+        //public IEnumerable<Employee> FilterMembersOfDepartment(int departmentId, string jobType = "", string position = "")
+        //{
+            /*if (!jobType.Equals(""))
+            {
+                if (!position.Equals(""))
+                {
+                    return
+                        _context.Employees.Where(
+                            d =>
+                                d.Id == departmentId && d.JobType.ToString().Equals(jobType) &&
+                                d.Position.ToString().Equals(position));
+                }
+                else
+                {
+                    return _context.Employees.Where(
+                        d =>
+                            d.Id == departmentId && d.JobType.ToString().Equals(jobType));
+                }
+            }
+            else
+            {
+                
+            }*/
+
+            /*IQueryable groupedAssignments = _context.Assignments.GroupBy(id => id.EmployeeId)
+                .Select(group => group.Sum(item => item.Allocation));
+
+
+            var employees = _context.Employees.Join(
+                groupedAssignments, e => e.Id, a => a,
+                (e,a) => new
+                {
+                    AllocationSum = 
+                })
+
+            return _context.Employees.Where(d => d.Id == departmentId && d.JobType.ToString().Equals(jobType));*/
+        //}
+
         public IEnumerable<Project> GetAllProjectsOfADepartment(int departmentId) {
             var department = GetDepartmentById(departmentId);
             return department.Projects;

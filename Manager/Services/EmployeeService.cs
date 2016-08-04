@@ -87,19 +87,6 @@ namespace Manager.Services
             return new OperationResult(true, Messages.SuccessfullyDeletedEmployee);
         }
 
-        public int GetRemainingAllocation(int employeeId)
-        {
-            var employee = _employeeRepository.GetById(employeeId);
-            int totalAllocation = 0;
-            foreach (var assignment in employee.Assignments)
-            {
-                totalAllocation += assignment.Allocation;
-            }
-            int remainingAllocation = 100 - totalAllocation;
-
-            return remainingAllocation;
-        }
-
         public IEnumerable<ProjectInfo> GetProjectsOfEmployee(int employeeId)
         {
             var employee = _employeeRepository.GetById(employeeId);
