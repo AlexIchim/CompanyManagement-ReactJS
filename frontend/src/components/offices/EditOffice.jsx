@@ -50,34 +50,34 @@ export default class EditOffice extends React.Component {
                     <div className="formBody">
                         <div className="form-group">
                             <div className="col-md-2 leftColoumn">
-                                <label htmlFor="name">Name:</label>
+                                <label className="rightAligned" htmlFor="name">Name:</label>
                             </div>
                             <div className="col-md-8 rightColoumn">
-                                <input type="text" className="form-control" name="name" value={name} onChange={this.onChangeHandler.bind(this)}/>
+                                <input type="text" className="leftAligned form-control" name="name" value={name} onChange={this.onChangeHandler.bind(this)}/>
                             </div>
                         </div>
 
                         <div className="form-group">
                             <div className="col-md-2" id="leftColoumn">
-                                <label htmlFor="address">Address:</label>
+                                <label className="rightAligned" htmlFor="address">Address:</label>
                             </div>
                             <div className="col-md-8" id="rightColoumn">
-                                <input type="text" className="form-control" name="address" value={address} onChange={this.onChangeHandler.bind(this)}/>
+                                <input type="text" className="leftAligned form-control" name="address" value={address} onChange={this.onChangeHandler.bind(this)}/>
                             </div>
                         </div>
 
                         <div className="form-group">
                             <div className="col-md-2" id="leftColoumn">
-                                <label htmlFor="phone">Phone:</label>
+                                <label className="rightAligned" htmlFor="phone">Phone:</label>
                             </div>
                             <div className="col-md-8" id="rightColoumn">
-                                <input type="text" className="form-control" name="phone" value={phone} onChange={this.onChangeHandler.bind(this)}  />
+                                <input type="text" className="leftAligned form-control" name="phone" value={phone} onChange={this.onChangeHandler.bind(this)}  />
                             </div>
                         </div>
 
                         <div className="form-group">
                             <div className="col-md-2" id="leftColoumn">
-                                <label htmlFor="image">Image:</label>
+                                <label className="rightAligned" htmlFor="image">Image:</label>
                             </div>
                             <div className="col-md-8" id="rightColoumn">
                                 <span className="info-box-icon bg-gray"><i className="glyphicon glyphicon-picture"></i><img src=""/></span>

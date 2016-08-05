@@ -5,12 +5,14 @@ export default class AddModal extends React.Component {
     constructor(){
         super();
         this.state = {
-            name: '',
-            email: '',
-            address: '',
-            employmentDate: '',
-            employmentHours: 8,
-            positionId: -1,
+            employee: {
+                name: '',
+                email: '',
+                address: '',
+                employmentDate: '',
+                employmentHours: 8,
+                positionId: -1,
+            },
             positionList: []
         };
     }
@@ -18,24 +20,31 @@ export default class AddModal extends React.Component {
     componentDidMount(){
         Controller.getPositions(
             true,
-            (data) => this.setState({
-                positionId: data[0].id,
-                positionList: data
-            })
+            (data) => {
+                let employee = this.state.employee;
+                employee.positionId = data[0].id;
+                this.setState({
+                    employee: employee,
+                    positionList: data
+                });
+            }
         );
     }
 
-    save(){
-        Controller.addEmployee({
-            name: this.state.name,
-            email: this.state.email,
-            address: this.state.address,
-            employmentDate: this.state.employmentDate,
-            employmentHours: this.state.employmentHours,
-            positionId: this.state.positionId,
-            departmentId: this.props.departmentId,
-        },true,this.props.saveFunc);
+    changeHandler(e){
+        let employee = this.state.employee;
+        employee[e.target.name] = e.target.value;
 
+        this.setState({
+            employee: employee
+        });
+    }
+
+    save(){
+        let employee = this.state.employee;
+        employee.departmentId = this.props.departmentId;
+
+        Controller.addEmployee(employee, true, this.props.saveFunc);
     }
 
 
@@ -55,33 +64,33 @@ export default class AddModal extends React.Component {
                     <form>
                         <div className="form-group">  
                             <label>Name:</label>
-                            <input className="form-control" type="text" 
-                                value={this.state.name} 
-                                onChange={this.onNameChange.bind(this)}/>
+                            <input name="name" className="form-control" type="text" 
+                                value={this.state.employee.name} 
+                                onChange={this.changeHandler.bind(this)}/>
                         </div>
                         <div className="form-group">  
                             <label>Email:</label>
-                            <input className="form-control" type="text" 
-                                value={this.state.email} 
-                                onChange={this.onEmailChange.bind(this)}/>
+                            <input name="email" className="form-control" type="text" 
+                                value={this.state.employee.email} 
+                                onChange={this.changeHandler.bind(this)}/>
                         </div>
                         <div className="form-group">  
                             <label>Address:</label>
-                            <input className="form-control" type="text" 
-                                value={this.state.address} 
-                                onChange={this.onAddressChange.bind(this)}/>
+                            <input name="address" className="form-control" type="text" 
+                                value={this.state.employee.address} 
+                                onChange={this.changeHandler.bind(this)}/>
                         </div>
                         <div className="form-group">  
                             <label>Employment Date:</label>
-                            <input className="form-control" type="date" 
-                                value={this.state.employmentDate} 
-                                onChange={this.onEmploymentDateChange.bind(this)}/>
+                            <input name="employmentDate" className="form-control" type="date" 
+                                value={this.state.employee.employmentDate} 
+                                onChange={this.changeHandler.bind(this)}/>
                         </div>
                         <div className="form-group">  
                             <label>Employment Hours:</label>
-                            <select className="form-control" 
-                                value={this.state.employmentHours}
-                                onChange={this.onEmploymentHoursChange.bind(this)}
+                            <select name="employmentHours" className="form-control" 
+                                value={this.state.employee.employmentHours}
+                                onChange={this.changeHandler.bind(this)}
                             >
                                 <option value="8">8</option>
                                 <option value="6">6</option>
@@ -90,9 +99,9 @@ export default class AddModal extends React.Component {
                         </div>
                         <div className="form-group">  
                             <label>Position:</label>
-                            <select className="form-control" 
-                                value={this.state.positionId}
-                                onChange={this.onPositionChange.bind(this)}
+                            <select name="positionId" className="form-control" 
+                                value={this.state.employee.positionId}
+                                onChange={this.changeHandler.bind(this)}
                             >
                                 {positionOptions}
                             </select>
@@ -110,39 +119,5 @@ export default class AddModal extends React.Component {
                 </div>
             </div>
         );
-    }
-
-
-
-
-    onNameChange(e){
-        this.setState({
-            name: e.target.value
-        });
-    }
-    onEmailChange(e){ 
-        this.setState({
-            email: e.target.value
-        });
-    }
-    onAddressChange(e){
-        this.setState({
-            address: e.target.value
-        });
-    }
-    onEmploymentDateChange(e){
-        this.setState({
-            employmentDate: e.target.value
-        });
-    }
-    onEmploymentHoursChange(e){
-        this.setState({
-            employmentHours: e.target.value
-        });
-    }
-    onPositionChange(e){
-        this.setState({
-            positionId: e.target.value
-        });
     }
 }

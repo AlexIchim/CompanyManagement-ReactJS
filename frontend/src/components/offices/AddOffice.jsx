@@ -32,34 +32,34 @@ export default class AddOffice extends React.Component{
                     <div className="formBody">
                         <div className="form-group">
                             <div className="col-md-2 leftColoumn">
-                                <label htmlFor="name">Name:</label>
+                                <label className="rightAligned" htmlFor="name">Name:</label>
                             </div>
                             <div className="col-md-8 rightColoumn">
-                                <input required="" type="text" className="form-control" ref="name"/>
+                                <input required="" type="text" className="leftAligned form-control" ref="name"/>
                             </div>
                         </div>
 
                         <div className="form-group">
                             <div className="col-md-2">
-                                <label htmlFor="address">Address:</label>
+                                <label htmlFor="address" className="rightAligned">Address:</label>
                             </div>
                             <div className="col-md-8">
-                                <input type="text" className="form-control" ref="address"/>
+                                <input type="text" className="leftAligned form-control" ref="address"/>
                             </div>
                         </div>
 
                         <div className="form-group">
                             <div className="col-md-2">
-                                <label htmlFor="phone">Phone:</label>
+                                <label className="rightAligned" htmlFor="phone">Phone:</label>
                             </div>
                             <div className="col-md-8">
-                                <input type="text" className="form-control" ref="phone"/>
+                                <input type="text" className="leftAligned form-control" ref="phone"/>
                             </div>
                         </div>
 
                         <div className="form-group">
                             <div className="col-md-2">
-                                <label htmlFor="image">Image:</label>
+                                <label className="rightAligned" htmlFor="image">Image:</label>
                             </div>
                             <div className="col-md-8">
                                 <span className="info-box-icon bg-gray"><i className="glyphicon glyphicon-picture"></i><img src=""/></span>
