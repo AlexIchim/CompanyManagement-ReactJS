@@ -3,6 +3,8 @@ import classNames from 'classnames';
 import {Link} from 'react-router';
 import "./../../assets/less/index.less";
 import EditMembersForm from './EditMembersForm.jsx'
+import * as Controller from '../controller';
+import configs from '../helpers/calls';
 
 export default class DepartmentItem extends React.Component{
     
@@ -25,6 +27,24 @@ export default class DepartmentItem extends React.Component{
         })
     }
 
+    deleteEmployeeFromProject(){
+        console.log(this.props.node.get('Id') + this.props.projectId)
+         $.ajax({
+            method: 'DELETE',
+            async: false,
+            url: configs.baseUrl + 'api/project/deleteEmployeeFromProject?employeeId='+this.props.node.get('Id') + '&projectId='+this.props.projectId,
+            success: function (data) { 
+                this.refresh(this.props.projectId);          
+            }.bind(this)
+        })   
+
+      
+    }
+      refresh(projectId){
+                Controller.getEmployeesByProjectId(projectId,1);
+            }
+
+
 
     render(){
 
@@ -36,7 +56,7 @@ export default class DepartmentItem extends React.Component{
             <td>{this.props.node.get('Role')}</td>
             <td>{this.props.node.get('Allocation')}</td>
             <td><button className="linkButton" onClick={this.showEditForm.bind(this)} >Edit Allocation | </button>
-                <Link to="#"> Remove </Link>
+                <button className="linkButton" onClick={this.deleteEmployeeFromProject.bind(this)} >Delete | </button>
                 {editForm}
             </td>
         </tr>

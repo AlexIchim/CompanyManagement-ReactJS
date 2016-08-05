@@ -1,12 +1,12 @@
-﻿using System;
-using AutoMapper;
+﻿using AutoMapper;
 using Contracts;
+using Domain.Enums;
 using Domain.Models;
 using Manager.InfoModels;
 using Manager.InputInfoModels;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using Domain.Enums;
 
 namespace Manager.Services
 {
@@ -23,6 +23,7 @@ namespace Manager.Services
             _departmentRepository = departmentRepository;
             _mapper = mapper;
             _projectValidator = projectValidator;
+
         }
 
         public IEnumerable<EmployeeAllocationInfo> GetEmployeesAllocation(int projectId)
@@ -146,20 +147,35 @@ namespace Manager.Services
 
         public IEnumerable<ProjectInfo> FilterProjectByStatus(string status, int? pageSize, int? pageNr)
         {
-            if (status!= "" && status != null)
+            if (status != "" && status != null)
             {
                 //if ((ProjectStatus)Enum.Parse(typeof(ProjectStatus), status) is ProjectStatus)
                 //{
-                    var projects = _projectRepository.FilterProjectByStatus(status,pageSize,pageNr);
-                    if (projects != null)
-                    {
-                        var projectInfos = _mapper.Map<IEnumerable<ProjectInfo>>(projects);
-                       
-                        return projectInfos;
-                    }
+                var projects = _projectRepository.FilterProjectByStatus(status, pageSize, pageNr);
+                if (projects != null)
+                {
+                    var projectInfos = _mapper.Map<IEnumerable<ProjectInfo>>(projects);
+
+                    return projectInfos;
+                }
                 //}
             }
             return null;
+        }
+
+        public OperationResult DeleteEmployeeFromProject(int employeeId, int projectId)
+        {
+
+            if (_projectValidator.ValidateId(employeeId) && _projectValidator.ValidateId(projectId))
+            {
+                var employeeProject = _projectRepository.GetEmployeeProjectById(employeeId, projectId);
+                if (employeeProject != null)
+                {
+                    _projectRepository.DeleteEmployeeProject(employeeProject);
+                    return new OperationResult(true, Messages.SuccessfullyDeletedEmployeeProject);
+                }
+            }
+            return new OperationResult(false, Messages.ErrorDeletingEmployeeProject);
         }
 
     }

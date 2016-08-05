@@ -102,5 +102,17 @@ namespace DataAccess.Repositories
         {
             return _context.Projects.Where(p => p.Status.ToString() == status);
         }
+
+        public EmployeeProject GetEmployeeProjectById(int employeeId, int projectId)
+        {
+            return
+                _context.EmployeeProjects.SingleOrDefault(ep => ep.ProjectId == projectId && ep.EmployeeId == employeeId);
+        }
+
+        public void DeleteEmployeeProject(EmployeeProject ep)
+        {
+            _context.EmployeeProjects.Remove(ep);
+            Save();
+        }
     }
 }

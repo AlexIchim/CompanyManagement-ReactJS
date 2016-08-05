@@ -22,5 +22,9 @@ namespace Contracts
         IEnumerable<Project> FilterProjectByStatus(string status, int? pageSize, int? pageNr);
         int GetEmployeeProjectAllocationById(int projectId, int employeeId);
         string GetEmployeeRoleById(int employeeId);
+
+        EmployeeProject GetEmployeeProjectById(int employeeId, int projectId);
+
+        void DeleteEmployeeProject(EmployeeProject ep);
     }
 }

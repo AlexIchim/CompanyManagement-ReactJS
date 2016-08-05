@@ -189,4 +189,10 @@
   <data name="ErrorDeletingProject" xml:space="preserve">
     <value>'Error deleting project'</value>
   </data>
+  <data name="ErrorDeletingEmployeeProject" xml:space="preserve">
+    <value>'Error deleting employee project'</value>
+  </data>
+  <data name="SuccessfullyDeletedEmployeeProject" xml:space="preserve">
+    <value>'Employee Project was succesfully deleted'</value>
+  </data>
 </root>
