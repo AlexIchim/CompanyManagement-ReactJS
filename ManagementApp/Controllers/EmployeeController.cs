@@ -5,7 +5,7 @@ using System.Web.Http.Cors;
 namespace ManagementApp.Controllers
 {
     [RoutePrefix("api/employee")]
-    [EnableCors("*", "*", "GET")]
+    [EnableCors("*", "*", "GET, POST, PUT, DELETE")]
     public class EmployeeController: ApiController
     {
         private readonly EmployeeService _employeeService;
