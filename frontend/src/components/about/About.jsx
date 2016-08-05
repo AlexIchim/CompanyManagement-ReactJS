@@ -5,15 +5,14 @@ export default class About extends Component {
         return (
             <div>
                 <h1>HR Project - Team2</h1>
-                <p>
-                    <h3>Created By</h3>
-                    <ul>
-                        <li>Camelia Trif</li>
-                        <li>Alexandru Ichim</li>
-                        <li>Robert Varadi</li>
-                        <li>Arnold Beiland</li>
-                    </ul>
-                </p>
+                <br/>
+                <h3>Created By</h3>
+                <ul>
+                    <li>Camelia Trif</li>
+                    <li>Alexandru Ichim</li>
+                    <li>Robert Varadi</li>
+                    <li>Arnold Beiland</li>
+                </ul>
             </div>
         );
     }
