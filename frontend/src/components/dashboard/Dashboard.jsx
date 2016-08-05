@@ -59,7 +59,7 @@ export default class Dashboard extends React.Component{
                            Title="Edit Office"/>;
             }else{
                 form=<Form onCancelClick={this.toggleModal.bind(this)}
-                           FormAction={Controller.Add}
+                           FormAction={() => { Controller.Add() }}
                            Title="Add Office"/>;
             }
         }

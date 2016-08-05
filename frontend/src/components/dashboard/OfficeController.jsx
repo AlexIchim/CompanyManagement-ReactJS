@@ -21,29 +21,48 @@ export default new class OfficeController {
 
     Add(){
         console.log("Add called");
+        let model= Context.cursor.get("model");
+        console.log("MODEL : ",model);
         $.ajax({
-            method:'GET',
-            url: config.base+'office/getAll',
+            method:'POST',
+            url: config.base+'office/add',
             async:false,
-            success: function(data){                
-                Context.cursor.set('items',data);
-                Context.cursor.set('formToggle',false);
+            data:{
+                Name:model.Name,
+                Address:model.Address,
+                Phone:model.Phone,
+                Image:model.Image
+            },
+            success: function(data){  
+                console.log("ADDED: ",data);
             }.bind(this)
-        });
+        });             
+        this.GetAll();
+        
     }
         
     Update(){
         console.log("Update called");
+        let model= Context.cursor.get("model");
+        console.log("MODEL : ",model);
+        
         $.ajax({
-            method:'GET',
-            url: config.base+'office/getAll',
+            method:'POST',
+            url: config.base+'office/update',
             async:false,
+            data:{
+                Id:model.Id,
+                Name:model.Name,
+                Address:model.Address,
+                Phone:model.Phone,
+                Image:null
+            },
             success: function(data){                
-                Context.cursor.set('items',data);
-                Context.cursor.set('formToggle',false);
+                console.log("ADDED: ",data);              
+                this.GetAll();
             }.bind(this)
         });
-
+        this.GetAll();
     }
 
 }

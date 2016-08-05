@@ -6,26 +6,31 @@ import Accessors from '../../context/Accessors';
 export default class Form extends React.Component{
     constructor(){
         super();
+        
+    }
+    
+    componentWillMount(){
+        this.setState({
+            Image:null
+        })
     }
 
     onImageLoad(){
-        var value=document.querySelector('input[type=file]').files[0];
+       var value=document.querySelector('input[type=file]').files[0];
 
         var reader=new FileReader();
         var image;
+        var that = this;
         reader.onload=function(event){
             image=this.result;
+            that.setState({ Image: image });
+            
+            console.log("Finished Loading Image");
         }
 
         reader.readAsDataURL(value);
 
-        let model= Context.cursor.get("model");
-        if(!model){
-            model={}
-        };
-
-        model.Image=image;
-        Context.cursor.set("model",model);
+        console.log("READ IMAGE",image);
     }
 
     onStoreClick(){
@@ -35,13 +40,17 @@ export default class Form extends React.Component{
             model={};
         }
 
-        let name=this.refs.inputName;
-        let addr=this.refs.inputAddress;
-        let phone=this.refs.inputPhone;
+        let name=this.refs.inputName.value;
+        let addr=this.refs.inputAddress.value;
+        let phone=this.refs.inputPhone.value;
+        let image=this.state.Image;
+
+        console.log("Image : ",image);
 
         model.Name=(name)?name:model.Name;
         model.Address=(addr)?addr:model.Address;
         model.Phone=(phone)?phone:model.Phone;
+        model.Image=(image)?image:model.Image;
 
         Context.cursor.set("model", model);
 
