@@ -83,7 +83,7 @@ export default class Department extends React.Component {
             )
         });
 
-        const addModal = this.state.add ? <Form officeId={this.props.routeParams.officeId} show = {this.state.add} close={this.closeAddForm.bind(this)} /> : '';
+        const addModal = this.state.add ? <Form officeId={this.props.routeParams.departmentId} show = {this.state.add} close={this.closeAddForm.bind(this)} /> : '';
 
         return (
             <div>

@@ -5,7 +5,8 @@ import * as Rx from 'rx';
 
 
 const initialState = {
-    departments:[]
+    departments:[],
+    employees:[]
 };
 
 class Context{

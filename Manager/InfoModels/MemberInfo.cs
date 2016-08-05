@@ -15,8 +15,8 @@ namespace Manager.InfoModels
 
         public int TotalAllocation { get; set; }
 
-        public JobType JobType { get; set; }
+        public string JobType { get; set; }
 
-        public PositionType PositionType { get; set; }
+        public string PositionType { get; set; }
     }
 }

@@ -142,6 +142,7 @@ namespace Manager.Services
                 if (department != null)
                 {
                     var members = _employeeRepository.GetAllDepartmentEmployees(department, pageSize, pageNr);
+                    
 
                 if (members.Any())
                     {

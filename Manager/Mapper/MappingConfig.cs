@@ -1,6 +1,8 @@
 ﻿using System.Linq;
+using System.Runtime.Remoting.Channels;
 using AutoMapper;
 using Domain.Models;
+using Manager.Descriptors;
 using Manager.InfoModels;
 using Manager.InputInfoModels;
 
@@ -19,7 +21,27 @@ namespace Manager.Mapper
                 pi => pi.EmployeesNumber,
                 proj => proj.MapFrom(src => src.EmployeeProjects.Count)
             );
-            CreateMap<Employee, MemberInfo>();
+            //CreateMap<Employee, MemberInfo>()
+            //    .ForMember(
+            //    dest=>dest.JobType, opt=>opt.MapFrom(src=>new JobTypeInfo
+            //    {
+            //        //Id = (int)src.JobType,
+            //        Description = src.JobType.GetDescription()
+            //    }));
+
+            CreateMap<Employee, MemberInfo>().ForMember(
+                dest => dest.JobType,
+                opt => opt.MapFrom(src=> src.JobType.GetDescription()))
+                .ForMember(
+                e => e.PositionType,
+                o => o.MapFrom(s => s.PositionType.GetDescription()));
+
+            //CreateMap<Employee, MemberInfo>().AfterMap((e, mi) =>
+            //    mi.JobType = new JobTypeInfo()
+            //    {
+            //        Id = 1,
+            //        Description = "mnhbk"
+            //    });
 
 
             CreateMap<Department, DepartmentInfo>().ForMember(

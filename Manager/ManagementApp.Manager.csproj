@@ -58,10 +58,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Descriptors\EnumDescriptor.cs" />
     <Compile Include="IDepartmentValidator.cs" />
     <Compile Include="IEmployeeProjectValidator.cs" />
     <Compile Include="IEmployeeValidator.cs" />
     <Compile Include="InfoModels\DepartmentInfo.cs" />
+    <Compile Include="InfoModels\JobTypeInfo.cs" />
     <Compile Include="InfoModels\OfficeInfo.cs" />
     <Compile Include="InfoModels\EmployeeAllocationInfo.cs" />
     <Compile Include="InfoModels\EmployeeInfo.cs" />
