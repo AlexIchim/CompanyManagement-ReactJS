@@ -1,9 +1,12 @@
 import React, { Component } from 'react';
-import {Link} from 'react-router';
 import * as $ from 'jquery';
-import config from '../../api/config';
+import apiconfig from '../../api/config';
 import DepartmentRow from './DepartmentRow';
-import * as Immutable from 'immutable';
+import ModalTemplate from '../layout/ModalTemplate';
+import EditDetails from './EditDetails';
+import * as Controller from '../api/controller';
+import AddDetails from './AddDetails';
+
 
 export default class Departments extends Component {
 
@@ -11,49 +14,128 @@ export default class Departments extends Component {
         constructor () {
             super();
             this.state = {
-                departments: [],
-                officeName: 'Office'
+                officeName: 'Office',
+                departmentList: [],
+                showModalTemplate: null,
+                modalDepartment: {},
+                managerList: []
             }
         }
 
         componentWillMount() {
-            $.ajax({
-                method: 'GET',
-                url: config.baseUrl + 'offices/' + this.props.params['officeId'] + '/departments',
-                success: function(data) {
-                    this.setState({
-                        departments: data,
-                    })
-                }.bind(this)
-            })
-
-            $.ajax({
-                method: 'GET',
-                url: config.baseUrl + 'offices/' + this.props.params['officeId'],
-                success: function(data) {
+            Controller.getOfficeName(
+                this.props.params.officeId,
+                true,
+                (data) => {
                     this.setState({
                         officeName: data.name
-                    })
-                }.bind(this)
-            })
+                    });
+                });
+            this.fetchData();
+        }
+
+        fetchData() {
+            Controller.getDepartmentsByOffice(
+                this.props.params.officeId,
+                true,
+                (data) => {
+                    this.setState({
+                        departmentList: data
+                    });
+                }
+            );
+        }
+
+        editDetails(department) {
+            let managers = [];
+
+            Controller.getDepartmentsManagers(null,
+                true,
+                (data) => {
+                    this.setState({
+                        managerList: data
+                    });
+                }
+            );
+
+           this.setState({
+               showModalTemplate: 'edit',
+               modalDepartment: department,
+               managerList: managers
+           });
+
+        }
+
+        addDetails(department) {
+            let managers = [];
+
+            Controller.getDepartmentsManagers(null,
+                true,
+                (data) => {
+                    this.setState({
+                        managerList: data
+                    });
+                }
+            );
+
+            this.setState({
+                showModalTemplate: 'add',
+                modalDepartment: department,
+                managerList: managers
+            });
+        }
+
+
+        hideModal() {
+                this.setState({
+                    showModalTemplate: null,
+                    modalDepartment: {}
+                });
         }
 
 
         render() {
-            const items = this.state.departments.map((element, index) => {
+            const items = this.state.departmentList.map((element, index) => {
                 return (
                     <DepartmentRow
+                        key = {element.id}
+                        data ={element}
                         node = {element}
-                        key= {index}
+                        onEdit={this.editDetails.bind(this, element)}
                     />
                 )
             });
 
+            const modalTemplate = this.state.showModalTemplate !== null ? (
+                <ModalTemplate
+                    getComponent={
+                        (hideFunc) => {
+                            switch (this.state.showModalTemplate) {
+                                case 'edit':
+                                    return <EditDetails department={this.state.modalDepartment} hideFunc={hideFunc} managers={this.state.managerList}/>
+                                case 'add':
+                                    return <AddDetails officeId={this.props.params.officeId} hideFunc={hideFunc} managers={this.state.managerList}
+                                                        saveFunc={function(){hideFunc(); this.fetchData();}.bind(this)}/>
+
+                            }
+                        }
+                    }
+                    onHide={this.hideModal.bind(this)}
+                />
+            ) : null;
+
             return (
                 <div>
                     <h1>{this.state.officeName}</h1>
-                    <button className="btn btn-md btn-info" > <span className="glyphicon glyphicon-plus-sign"></span> Add new department </button>
-                    <table className="table" id="table1">
+                    {modalTemplate}
+                    <br/>
+                    <button className="btn btn-md btn-info"  onClick={this.addDetails.bind(this)}>
+                        <span className="glyphicon glyphicon-plus-sign"></span>
+                        &nbsp;Add new department
+                    </button>
+                    <br/>
+                    <br/>
+                    <table className="table table-hover table-bordered" id="table1">
                         <thead>
                         <tr>
                             <th className="col-md-2">Department</th>
