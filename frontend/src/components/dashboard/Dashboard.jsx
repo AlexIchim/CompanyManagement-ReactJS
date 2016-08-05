@@ -17,22 +17,27 @@ export default class Dashboard extends React.Component{
     }
 
     componentWillMount(){
+        this.subscription = Context.subscribe(this.onContextChange.bind(this));
+    }
 
-        Context.subscribe(this.onContextChange.bind(this));
-
+    componentDidMount(){
         $.ajax({
             method: 'GET',
+            async: false,
             url: configs.baseUrl + 'api/office/getAll',
             success: function (data) {
                 if(this.state.offices.count() == 0){
-                    Context.cursor.set("offices",Immutable.fromJS(data));         
+                    Context.cursor.set("offices",Immutable.fromJS(data)); 
                 }
             }.bind(this)
         })
     }
 
+     componentWillUnmount () {
+        this.subscription.dispose(); 
+    }
+
      onContextChange(cursor){
-         console.log('aaa',Context.cursor.get("offices"))
         this.setState({
             offices: Context.cursor.get("offices")         
         });

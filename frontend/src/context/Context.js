@@ -24,7 +24,7 @@ class Context{
 
 
     subscribe(handleFunc){
-        this.subject.subscribe(handleFunc);
+        return this.subject.subscribe(handleFunc);
     }
 
 }

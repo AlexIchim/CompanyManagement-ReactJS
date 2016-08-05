@@ -4,6 +4,8 @@ module.exports = {
 
     entry: './src/index.jsx',
 
+    debug: 'source-map',
+ devtool: 'inline-source-map',
     resolve: {
         extensions: ['', '.js', '.jsx', '.ts', '.tsx', '.web.js', '.webpack.js']
     },

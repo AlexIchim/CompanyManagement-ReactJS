@@ -16,6 +16,7 @@ export default class Form extends React.Component{
     componentWillMount(){
         $.ajax({
             method: 'GET',
+            async: false,
             url: configs.baseUrl + 'api/department/getAllDepartmentManagers',
             success: function (data) {
                 console.log(data, this);
@@ -39,6 +40,7 @@ export default class Form extends React.Component{
 
         $.ajax({
             method: 'POST',
+            async: false,
             url: configs.baseUrl + 'api/department/addDepartment',
             data:inputInfo,
             success: function (data) {               
@@ -51,13 +53,7 @@ export default class Form extends React.Component{
     }
 
     refresh(officeId){
-         $.ajax({
-            method: 'GET',
-            url: configs.baseUrl + 'api/office/getAllDepOffice?officeId=' + officeId+'&pageSize=10&pageNr=1',
-            success: function (data) {
-                Context.cursor.set("departments",Immutable.fromJS(data));
-            }.bind(this)
-        })
+         Controller.getAllDepOffice(this.props.routeParams.officeId,1);
     }
     
     render(){
