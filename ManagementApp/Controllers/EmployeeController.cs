@@ -95,6 +95,22 @@ namespace ManagementApp.Controllers
             return Json(result);
         }
 
+        [Route("getJobTypes")]
+        [HttpGet]
+        public IHttpActionResult GetJobTypes()
+        {
+            var result = _employeeService.GetJobTypesDescriptions();
+            return Json(result);
+        }
+
+        [Route("getPoisitionTypes")]
+        [HttpGet]
+        public IHttpActionResult GetPositionTypes()
+        {
+            var result = _employeeService.GetPositionTypesDescriptions();
+            return Json(result);
+        }
+
 
     }
 }

@@ -1,4 +1,5 @@
 ﻿using Domain.Enums;
+using Manager.InfoModels;
 using System;
 
 namespace Manager.InputInfoModels
@@ -15,9 +16,9 @@ namespace Manager.InputInfoModels
 
         public DateTime? ReleaseDate { get; set; }
 
-        public JobType JobType { get; set; }
+        public string JobType { get; set; }
 
-        public PositionType PositionType { get; set; }
+        public string PositionType { get; set; }
 
     }
 }

@@ -5,7 +5,6 @@ import Context from '../../context/Context.js';
 import * as Immutable from 'immutable';
 
 export default (departmentId,pageNr)=>{
-    console.log(5)
     $.ajax({
             method: 'GET',
             async: false,

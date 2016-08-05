@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using System.Runtime.Remoting.Channels;
 using AutoMapper;
 using Domain.Models;
@@ -64,8 +65,12 @@ namespace Manager.Mapper
             CreateMap<AddEmployeeToProjectInputInfo, EmployeeProject>();
             CreateMap<UpdateProjectInputInfo, Project>();
 
-            CreateMap<AddEmployeeToDepartmentInputInfo, Employee>();
-
+            CreateMap<AddEmployeeToDepartmentInputInfo, Employee>()
+                .ForMember(
+                    dest => dest.JobType, opt => opt.MapFrom(src => EnumDescriptor.GetJobTypeEnum(src.JobType)))
+                .ForMember(
+                    dest2 => dest2.PositionType, opt2 => opt2.MapFrom(src2 => EnumDescriptor.GetPositionTypeEnum(src2.PositionType)));
+                   
             CreateMap<Department, EmployeeInfo>();
 
 

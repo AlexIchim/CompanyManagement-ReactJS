@@ -193,5 +193,15 @@ namespace Manager.Services
             }
             return employeeInfos;
         }
+
+        public IEnumerable<string> GetJobTypesDescriptions()
+        {
+            return _employeeRepository.GetJobTypesDescriptions();
+        }
+
+        public IEnumerable<string> GetPositionTypesDescriptions()
+        {
+            return _employeeRepository.GetPositionTypeDescriptions();
+        }
     }
 }
