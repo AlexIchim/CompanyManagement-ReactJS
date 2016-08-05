@@ -13,7 +13,7 @@ namespace Domain.Models {
         ProjectManager,
         QA,
         [Description("Product Owner")]
-        ProductOwner
+        DepartmentManager
     };
     public enum JobTypes
     {
@@ -38,5 +38,17 @@ namespace Domain.Models {
         public DateTime? ReleasedDate { get; set; }
         public JobTypes JobType { get; set; }
         public Position Position { get; set; }
+
+        public int GetRemainingAllocation() {
+            return 100 - GetAllocation();
+        }
+
+        public int GetAllocation() {
+            int totalAllocation = 0;
+            foreach (var assignment in Assignments) {
+                totalAllocation += assignment.Allocation;
+            }
+            return totalAllocation;
+        }
     }
 }

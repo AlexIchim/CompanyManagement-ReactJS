@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
+using System.Security.Cryptography.X509Certificates;
 using Contracts;
 using DataAccess.Extensions;
 using Domain.Models;
@@ -27,16 +28,23 @@ namespace DataAccess.Repositories
             return _context.Departments.SingleOrDefault(d=>d.Id == departmentId);
         }
 
-        public IEnumerable<Employee> GetAllMembersOfADepartment(int departmentId)
+        public IEnumerable<Employee> GetMembersOfDepartment(int departmentId, string name = "", int? jobType = null, int? position = null, int? allocation = null)
         {
             var department = GetDepartmentById(departmentId);
-            return department.Employees;
+            return department.Employees
+                .Where(
+                    x =>
+                        (((!name.Equals("") && x.Name.Contains(name)) || name.Equals("")) &&
+                         ((jobType.HasValue && (int) x.JobType == jobType) || !jobType.HasValue) &&
+                         ((position.HasValue && (int) x.Position == position) || !position.HasValue) &&
+                         ((allocation.HasValue && x.GetAllocation() == allocation) || !allocation.HasValue)));
         }
 
-        public IEnumerable<Project> GetAllProjectsOfADepartment(int departmentId) {
+        public IEnumerable<Project> GetProjectsOfDepartment(int departmentId, int? status = null) {
             //var department = GetDepartmentById(departmentId);
-            return _context.Projects.Where(p => p.Department.Id == departmentId).OrderBy(o => o.Id).Paginate(5, 1).ToArray();
-            //return department.Projects;
+            return department.Projects.Where(
+                x =>
+                    ((status.HasValue && (int)x.Status == status) || !status.HasValue));
         }
 
         public IEnumerable<Project> FilterProjectsOfADepartmentByStatus(int departmentId, string status)

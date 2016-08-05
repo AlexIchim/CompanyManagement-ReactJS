@@ -33,15 +33,15 @@ namespace ManagementApp.Controllers
 
         [Route("members/{departmentId}")]
         [HttpGet]
-        public IHttpActionResult GetAllMembersOfADepartment(int departmentId) {
-            var result = _departmentService.GetAllMembersOfADepartment(departmentId);
+        public IHttpActionResult GetMembersOfDepartment(int departmentId, string name = "", int? jobType = null, int? position = null, int? allocation = null) {
+            var result = _departmentService.GetMembersOfDepartment(departmentId, name, jobType, position, allocation);
             return Json(result);
-        }
+        }   
 
         [Route("projects/{departmentId}")]
         [HttpGet]
-        public IHttpActionResult GetAllProjectsOfADepartment(int departmentId) {
-            var result = _departmentService.GetAllProjectsOfADepartment(departmentId);
+        public IHttpActionResult GetProjectsOfDepartment(int departmentId, int? status = null) {
+            var result = _departmentService.GetProjectsOfDepartment(departmentId, status);
             return Json(result);
         }
 

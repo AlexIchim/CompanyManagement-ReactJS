@@ -257,23 +257,6 @@ namespace ManagementApp.Manager.Tests
         }
 
         [Test]
-        public void GetRemainingAllocation_ReturnsCorrectValueFromDB()
-        {
-            //Arrange
-            var employee = new Employee { Id = 2 };
-            var assignment1 = CreateAssignment(2, 0, 20);
-            var assignment2 = CreateAssignment(2, 1, 40);
-            employee.Assignments.Add(assignment1);
-            employee.Assignments.Add(assignment2);
-
-            _employeeRepositoryMock.Setup(m => m.GetById(employee.Id)).Returns(employee);
-            //Act 
-            var result = _employeeService.GetRemainingAllocation(employee.Id);
-            //Assert
-            Assert.AreEqual(40, result);
-        }
-
-        [Test]
         public void GetProjects_ReturnsTheCorrectListOfProjectsForAnEmployee()
         {
             //Arrange

@@ -32,7 +32,11 @@ namespace Manager.Mapper
                     employee => employee.MapFrom(src => src.JobType.ToString()))
                 .ForMember(
                     employeeInfo => employeeInfo.Position,
-                    employee => employee.MapFrom(src => src.Position.ToString())); ;
+                    employee => employee.MapFrom(src => src.Position.ToString()))
+                .ForMember(
+                    employeeInfo => employeeInfo.Allocation,
+                    employee => employee.MapFrom(src => src.GetAllocation())
+                );
             CreateMap<AddEmployeeInputInfo, Employee>();
 
             CreateMap<Project, ProjectInfo>()
