@@ -56,7 +56,7 @@ namespace Manager.Services
 
         public bool ValidateAddOfficeInfo(AddOfficeInputInfo addInfo)
         {
-            bool validation = ValidateId(addInfo.Id) && ValidateString(addInfo.Name) && ValidateString(addInfo.Address) && ValidateString(addInfo.PhoneNumber);
+            bool validation = ValidateString(addInfo.Name) && ValidateString(addInfo.Address) && ValidateString(addInfo.PhoneNumber);
             //de validat imaginea
             return validation;
         }
