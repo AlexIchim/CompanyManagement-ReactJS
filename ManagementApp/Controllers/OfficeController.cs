@@ -6,7 +6,7 @@ using System.Web.Http.Cors;
 namespace ManagementApp.Controllers
 {
     [RoutePrefix("api/office")]
-    [EnableCors("*", "*", "GET,POST")]
+    [EnableCors("*", "*", "GET,POST,PUT")]
     public class OfficeController : ApiController
     {
         private readonly OfficeService _officeService;

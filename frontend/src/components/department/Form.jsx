@@ -1,5 +1,5 @@
 import React from 'react';
-import AddDepartmentModalTemplate from './AddDepartmentModalTemplate.jsx';
+import Modal from '../modal/Modal.jsx';
 import configs from '../helpers/calls';
 import Context from '../../context/Context.js';
 import * as Immutable from 'immutable';
@@ -16,6 +16,7 @@ export default class Form extends React.Component{
     componentWillMount(){
         $.ajax({
             method: 'GET',
+            async: false,
             url: configs.baseUrl + 'api/department/getAllDepartmentManagers',
             success: function (data) {
                 console.log(data, this);
@@ -39,31 +40,20 @@ export default class Form extends React.Component{
 
         $.ajax({
             method: 'POST',
+            async: false,
             url: configs.baseUrl + 'api/department/addDepartment',
             data:inputInfo,
-            success: function (data) {              
-                Context.cursor.update('departments',(oldList) => {      
-                    return oldList.push( Immutable.fromJS(inputInfo) );
-                   
-                });
+            success: function (data) {               
                  cb(); 
                  this.refresh(this.props.officeId);
             }.bind(this)
         })   
 
-        
-
-        
+              
     }
 
     refresh(officeId){
-         $.ajax({
-            method: 'GET',
-            url: configs.baseUrl + 'api/office/getAllDepOffice?officeId=' + officeId+'&pageSize=10&pageNr=1',
-            success: function (data) {
-                Context.cursor.set("departments",Immutable.fromJS(data));
-            }.bind(this)
-        })
+         Controller.getAllDepOffice(this.props.routeParams.officeId,1);
     }
     
     render(){
@@ -75,7 +65,7 @@ export default class Form extends React.Component{
 
         return(
 
-        <AddDepartmentModalTemplate close={this.props.close} store={this.store.bind(this)}>
+        <Modal title={'Add new department'} button={'Add'} close={this.props.close} action={this.store.bind(this)}>
             <div className="form-group">
                 <label className="col-sm-4 control-label"> Name </label>
                 <div className="col-sm-6">
@@ -85,12 +75,12 @@ export default class Form extends React.Component{
            
            <label className="col-sm-4 control-label"> Department manager </label>
        
-            <select ref="managersDropdown" className="selectpicker">
+            <select className="selectpicker" ref="managersDropdown" >
                 {departmentManagers}                    
             </select>
      
        
-        </AddDepartmentModalTemplate>
+        </Modal>
         )
     }
 }

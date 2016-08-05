@@ -3,6 +3,8 @@ import Tile from './Tile';
 import * as $ from 'jquery';
 import configs from '../helpers/calls'
 import "./../../assets/less/index.less";
+import Context from '../../context/Context.js';
+import * as Immutable from 'immutable';
 
 
 
@@ -10,39 +12,52 @@ export default class Dashboard extends React.Component{
     constructor(){
         super();
         this.state = {
-            office: []
+            offices: Context.cursor.get('offices')
         }
     }
 
     componentWillMount(){
-        // /console.log(configs);
+        this.subscription = Context.subscribe(this.onContextChange.bind(this));
+    }
+
+    componentDidMount(){
         $.ajax({
             method: 'GET',
+            async: false,
             url: configs.baseUrl + 'api/office/getAll',
             success: function (data) {
-                console.log(data, this);
-                this.setState({
-                    office: data
-                })
+                if(this.state.offices.count() == 0){
+                    Context.cursor.set("offices",Immutable.fromJS(data)); 
+                }
             }.bind(this)
         })
     }
 
+     componentWillUnmount () {
+        this.subscription.dispose(); 
+    }
+
+     onContextChange(cursor){
+        this.setState({
+            offices: Context.cursor.get("offices")         
+        });
+
+    }
 
 
     render(){
 
         const icons= ["moon-o", "cube", "coffee"];
 
-        const items = this.state.office.map((element, index) => {
+        const items = this.state.offices.map((element, index) => {
             return (
                 <Tile
                     key = {index}
                     parentClass="bg-aqua"
-                    name={element.Name + ' Office'}
-                    phone={element.PhoneNumber}
-                    address={element.Address}
-                    link={"/office/" + element.Id + '/' + element.Name + '/' + 'departments' }
+                    name={element.get('Name') + ' Office'}
+                    phone={element.get('PhoneNumber')}
+                    address={element.get('Address')}
+                    link={"/office/" + element.get('Id') + '/' + element.get('Name') + '/' + 'departments' }
                     icon={icons[index]}
                     office = {element}
                     
