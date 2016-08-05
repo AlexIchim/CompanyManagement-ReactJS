@@ -8,6 +8,7 @@ export {default as getPositions} from './getPositions';
 export {default as addEmployee} from './addEmployee';
 export {default as addNewOffice} from './addNewOffice';
 
+export {default as updateEmployee} from './updateEmployee';
 export {default as updateOffice} from './updateOffice';
 
 export {default as releaseEmployee} from './releaseEmployee';

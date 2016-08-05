@@ -4,8 +4,6 @@ namespace Manager.InputInfoModels
 {
     public class UpdateEmployeeInputInfo
     {
-
-
         public int Id { get; set; }
         public string Name { get; set; }
         public string Email { get; set; }
@@ -15,10 +13,8 @@ namespace Manager.InputInfoModels
         public int DepartmentId { get; set; }
 
         public DateTime EmploymentDate { get; set; }
+        public DateTime? ReleaseDate { get; set; }
 
         public int EmploymentHours { get; set; }
-
-        // custom:
-        public int TotalAllocation { get; set; }
     }
 }

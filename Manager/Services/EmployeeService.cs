@@ -118,6 +118,8 @@ namespace Manager.Services
                 employee.Address = inputInfo.Address;
                 employee.EmploymentHours = inputInfo.EmploymentHours;
                 employee.EmploymentDate = inputInfo.EmploymentDate;
+                employee.ReleaseDate = inputInfo.ReleaseDate;
+                employee.PositionId = inputInfo.PositionId;
                 _employeeRepository.Save();
                 return new OperationResult(true, Messages.SuccessfullyUpdatedEmployee);
             }

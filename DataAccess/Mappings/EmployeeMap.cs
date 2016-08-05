@@ -28,9 +28,12 @@ namespace DataAccess.Mappings
                 .IsRequired();
 
             this.Property(t => t.EmploymentDate)
-                .IsRequired();
+                .IsRequired()
+                .HasColumnType("Date");
 
-
+            this.Property(t => t.ReleaseDate)
+                .IsOptional()
+                .HasColumnType("Date");
         }
     }
 }

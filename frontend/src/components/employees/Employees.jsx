@@ -110,9 +110,17 @@ export default class Employees extends Component {
                     (hideFunc) => {
                         switch(this.state.showModalTemplate) {
                             case 'view':
-                                return <ViewDetailsModal employee={this.state.modalEmployee} hideFunc={hideFunc} allocationList={this.state.allocationList} />;
+                                return <ViewDetailsModal 
+                                            employee={this.state.modalEmployee} 
+                                            hideFunc={hideFunc} 
+                                            allocationList={this.state.allocationList} />;
                             case 'edit':
-                                return <EditModal employee={this.state.modalEmployee} hideFunc={hideFunc}/>;
+                                return <EditModal 
+                                            employee={this.state.modalEmployee} 
+                                            departmentId={this.props.params.departmentId}
+                                            saveFunc={function(){ hideFunc(); this.fetchData(); }.bind(this)}
+                                            hideFunc={hideFunc}
+                                        />;
                             case 'add':
                                 return <AddModal 
                                             departmentId={this.props.params.departmentId}

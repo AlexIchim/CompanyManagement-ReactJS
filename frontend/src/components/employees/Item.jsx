@@ -4,7 +4,7 @@ export default (props) => {
     const relDate = props.data.releaseDate ? new Date(props.data.releaseDate).toLocaleDateString() : " - ";
     const address = props.data.address || ' - ';
 
-    const deleteButton = props.data.releaseDate===null ? 
+    const deleteButton = props.data.releaseDate===null || props.data.releaseDate === '' ? 
         (<button className="btn" onClick={props.onDelete}>Release</button>) :
         (<button className="btn btn-disabled" disabled="true">Release</button>);
 

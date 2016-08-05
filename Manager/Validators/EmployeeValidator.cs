@@ -19,7 +19,7 @@ namespace Manager.Validators
             {
                 return NameValidationResult.EmptyName;
             }
-            if(name.Length > 100)
+            if (name.Length > 100)
             {
                 return NameValidationResult.TooLongName;
             }
@@ -37,7 +37,7 @@ namespace Manager.Validators
 
         private static AddressValidationResult ValidateAddress(string address)
         {
-            if (address.Length > 300)
+            if (address == null || address.Length > 300)
             {
                 return AddressValidationResult.TooLongAddress;
             }
@@ -50,7 +50,7 @@ namespace Manager.Validators
             {
                 return EmploymentHoursValidationResult.TooFewEmploymentHours;
             }
-            if(employmentHours > 8)
+            if (employmentHours > 8)
             {
                 return EmploymentHoursValidationResult.TooManyEmploymentHours;
             }
@@ -151,7 +151,7 @@ namespace Manager.Validators
 
             if (resultOfNameValidation == NameValidationResult.EmptyName)
             {
-                messageToReturn = messageToReturn + ((messageToReturn == "") ? "" : " ")  + Messages.EmptyEmployeeName;
+                messageToReturn = messageToReturn + ((messageToReturn == "") ? "" : " ") + Messages.EmptyEmployeeName;
             }
             if (resultOfNameValidation == NameValidationResult.TooLongName)
             {

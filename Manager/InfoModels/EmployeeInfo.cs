@@ -18,6 +18,8 @@ namespace Manager.InfoModels
 
         public int EmploymentHours { get; set; }
 
+        public int PositionId { get; set; }
+
         // custom:
         public string PositionName { get; set; }
         public int TotalAllocation { get; set; }

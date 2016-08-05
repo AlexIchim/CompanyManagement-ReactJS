@@ -1,4 +1,5 @@
-﻿using System.Web.Http;
+﻿using System;
+using System.Web.Http;
 using Manager.InputInfoModels;
 using Manager.Services;
 using System.Web.Http.Cors;
@@ -19,7 +20,8 @@ namespace ManagementApp.Controllers
             _departmentService = departmentService;
             _camelCaseJsonSettings = new JsonSerializerSettings()
             {
-                ContractResolver = new CamelCasePropertyNamesContractResolver()
+                ContractResolver = new CamelCasePropertyNamesContractResolver(),
+                DateFormatString = "yyyy'-'MM'-'dd"
             };
         }
 
