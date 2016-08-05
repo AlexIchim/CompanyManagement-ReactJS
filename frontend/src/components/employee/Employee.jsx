@@ -5,25 +5,8 @@ import configs from '../helpers/calls'
 import Context from '../../context/Context.js';
 import * as Immutable from 'immutable';
 import Form from './Form.jsx'
-
-const Tr = (props) => {
-    return(
-        <tr>
-            <td>{props.node.get('Name')} </td>
-            <td>{props.node.get('Address')}</td>
-            <td>{props.node.get('EmploymentDate')}</td>
-            <td>{props.node.get('ReleaseDate')}</td>
-            <td>{props.node.get('JobType')}</td>
-            <td>{props.node.get('PositionType')}</td>
-            <td>{props.node.get('TotalAllocation')}</td>
-            <td><a href=""> View Details | </a>
-                <a href="#"> Release | </a>
-                <a href="#"> Edit </a></td>
-        </tr>
-        )
-
-
-}
+import * as Controller from '../controller';
+import EmployeeItem from './EmployeeItem.jsx'
 
 export default class Employee extends React.Component{
 
@@ -32,18 +15,21 @@ export default class Employee extends React.Component{
         super();
         this.state ={
             add: false,
-            employees: Context.cursor.get("employees")
+            employees: Context.cursor.get("employees"),
+            pageNr: 1
         }
     }
 
     componentWillMount(){
-        $.ajax({
-            method: 'GET',
-            url: configs.baseUrl + 'api/employee/getAllDepartmentEmployees?departmentId=' + this.props.routeParams.departmentId+'&pageSize=10&pageNr=1',
-            success: function(data){
-                    Context.cursor.set("employees", Immutable.fromJS(data))
-            }.bind(this)
-        })
+       this.subscription = Context.subscribe(this.onContextChange.bind(this));
+    }
+
+     componentDidMount(){
+         Controller.getAllEmployeesByDepartmentId(this.props.routeParams.departmentId,this.state.pageNr);
+    }
+
+    componentWillUnmount () {
+        this.subscription.dispose(); 
     }
 
     onContextChange(cursor){
@@ -64,23 +50,50 @@ export default class Employee extends React.Component{
         })
     }
 
+    back(){
+
+        if (this.state.pageNr!=1){
+            const whereTo=this.state.pageNr-1
+
+            Controller.getAllEmployeesByDepartmentId(this.routeParams.departmentId,whereTo)
+            
+             this.setState({
+                pageNr:this.state.pageNr-1
+            })
+        }
+                
+    }
+
+    next(){
+
+        const whereTo=this.state.pageNr+1
+
+        Controller.getAllEmployeesByDepartmentId(this.routeParams.departmentId.whereTo)
+
+        this.setState({
+            pageNr:this.state.pageNr+1
+        })
+    }
+
 render(){
+    
     const items = this.state.employees.map( (element, index) => {
         return(
-            <Tr
+            <EmployeeItem
                 node = {element}
                 key = {index}
+                departmentId = {this.props.routeParams.departmentId}
 
             />
         )
 
     });
-   const addModal = this.state.add ? <Form departmentId={this.props.routeParams} show={this.state.add} close ={this.closeAddForm.bind(this)} /> : ""
-   console.log(addModal)
+   const addModal = this.state.add ? <Form departmentId={this.props.routeParams.departmentId} show={this.state.add} close ={this.closeAddForm.bind(this)} /> : ""
+   
     return(
         <div>
             {addModal}
-            <h1>{this.props.routeParams.departmentName + ' Employees'}  </h1>
+            
             <button className="btn btn-xs btn-info" onClick={this.showAddForm.bind(this)}> <span className="glyphicon glyphicon-plus-sign"></span> Add new employee </button>
             <table className="table table-condensed" id="table1">
                 <thead>
