@@ -5,7 +5,6 @@ import config from '../helper';
 import Context from '../../context/Context';
 import Accessors from '../../context/Accessors';
 import Form from './Form';
-import Controller from '../Command.js';
 
 export default class Dashboard extends React.Component{
     constructor(){
@@ -47,7 +46,7 @@ export default class Dashboard extends React.Component{
 
     onModalSaveClick(){
         console.log("STORING!");
-        Controller.hideModal();
+      //Controller.hideModal();
     }
 
     render(){

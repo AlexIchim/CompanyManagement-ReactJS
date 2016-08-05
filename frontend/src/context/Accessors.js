@@ -10,4 +10,7 @@ export default new class Accessors{
     formToggle(cursor){
         return cursor.get('formToggle'); 
     }
+    itemsDescriptions(cursor){
+        return cursor.get('itemsDescriptions');
+    }
 }

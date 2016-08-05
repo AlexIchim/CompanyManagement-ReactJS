@@ -5,39 +5,35 @@ import ProjectItem from './ProjectItem.jsx'
 import Form from './Form.jsx';
 import Accessors from '../../context/Accessors';
 import Context from '../../context/Context';
-import Command from '../Command';
 import MyController from './controller/Controller'
 import EditForm from './EditForm';
+import Delete from './controller';
+import GetAllProjects from './controller/GetAllProjects'
+
 
 export default class Project extends React.Component{
     constructor(){
         super();
-        this.setState({
-            form: false
-        })
     }
     componentWillMount(){
-        Context.subscribe(this.onContextChange.bind(this));
+        this.setState({
+            formToggle:false,
+            form: false
+        });
+        this.subscription = Context.subscribe(this.onContextChange.bind(this));
         //const projectId = this.props.routeParams['projectId'];
 
-        MyController.getAllProjects();
+        MyController.GetAllProjects();
+    }
+
+    componentWillUnmount(){
+        this.subscription.dispose();
     }
 
     onContextChange(cursor){
         console.log('projects:', cursor.get('items'));
         this.setState({
-            projects: cursor.get('items')
-        });
-    }
-
-    closeForm(){
-        this.setState({
-            form: !this.state.form
-        });
-    }
-    showForm(){
-        this.setState({
-            form: !this.state.form
+            formToggle: false
         });
     }
 
@@ -50,13 +46,17 @@ export default class Project extends React.Component{
         Context.cursor.set('model', project)
     }
 
-    onDeleteButtonClick(element){
-        MyController.Delete(element);
-    }
 
-    onModalSaveClick(){
-        console.log("STORING!");
-        Command.hideModal();
+    hideModal(){
+        Context.cursor.set('formToggle',false);
+        Context.cursor.set('model',null);
+        console.log("Hidden");
+        this.setState({
+            formToggle: true
+        });
+    }
+    toggleModal(){
+        this.setState({formToggle: false})
     }
 
     render(){
@@ -65,26 +65,29 @@ export default class Project extends React.Component{
         console.log('store?', Accessors.formToggle(Context.cursor));
         if(Accessors.formToggle(Context.cursor)){
             if(Accessors.model(Context.cursor)){
-                modal=<EditForm onCancelClick={Command.hideModal.bind(this)}
-                           onStoreClick={this.onModalSaveClick.bind(this)}
+                modal=<EditForm onCancelClick={this.toggleModal.bind(this)}
+                                FormAction={MyController.Update}
                            Title="Edit Project"/>;
             }else{
-                modal=<Form onCancelClick={Command.hideModal.bind(this)}
-                           onStoreClick={this.onModalSaveClick.bind(this)}
+                modal=<Form onCancelClick={this.toggleModal.bind(this)}
+                            FormAction={MyController.Add}
                            Title="Add Project"/>;
             }
         }
-        const items = this.state.projects.map( (project, index) => {
+
+        const items = Accessors.items(Context.cursor).map( (project, index) => {
             return (
                 <ProjectItem
                     node = {project}
                     key = {index}
                     Link = {"project/members/" + project.Id}
                     onEdit = {this.onEditButtonClick.bind(this, project)}
-                    onDelete = {this.onDeleteButtonClick.bind(this, project)}
+                    onDelete = {MyController.Delete.bind(this, project)}
                     />
             )
         });
+
+        console.log('ITEMS:', items);
 
         return (
             <div>
@@ -106,8 +109,8 @@ export default class Project extends React.Component{
                 </tr>
                 </thead>
                 <tbody>
+                {items}
 
-                    {items}
                 </tbody>
             </table>
                 </div>

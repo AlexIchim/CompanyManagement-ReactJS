@@ -1,45 +1,61 @@
 import config from '../../helper';
-import Command from '../../Command';
 import Context from '../../../context/Context'
 import Accessors from '../../../context/Accessors';
+import GetAllProjects from './GetAllProjects';
+
 export default new class Controller{
 
 
-    getAllProjects(){
+    static ajaxCall(){
         $.ajax({
             method: 'GET',
-            url: config.base + 'department/projects/3/5/1',
+            url: config.base + 'department/projects/1/50/1',
             async: false,
             success: function(data){
                 Context.cursor.set('items', data);
-                Context.cursor.set('formToggle', false);
             }.bind(this)
         })
     }
 
-    Add(){
+    GetAllProjects() {
+        console.log('items before:', Context.cursor.get('items'));
+        Controller.ajaxCall();
+    }
+
+    Add() {
+        console.log('name:', Context.cursor.get('model').Name);
         $.ajax({
             method: 'POST',
             url: config.base + 'project/add',
             data: {
-                Name:  this.refs.inputName.value,
+                Name: Context.cursor.get('model').Name,
                 DepartmentId: 3,
-                Duration: this.refs.inputDuration.value,
+                Duration: Context.cursor.get('model').Duration,
                 Status: "NotStartedYet"
             },
             async: false,
-            success: function(data){
+            success: function (data) {
                 console.log('success');
             }.bind(this)
         });
-        this.getAllProjects();
-        Command.hideModal();
+        //Controller.ajaxCall();
     }
 
-    Edit(element){
-        const index = Accessors.items(Context.cursor).indexOf(element);
-        Context.cursor.set('model', element);
-        Context.cursor.set('formToggle', true);
+    Update() {
+        $.ajax({
+            method: 'PUT',
+            url: config.base + 'project/update',
+            data: {
+                Name: Context.cursor.get('model').Name,
+                DepartmentId: 3,
+                Duration: Context.cursor.get('model').Duration,
+                Status: Context.cursor.get('model').Status
+            },
+            async: false,
+            success: function (data) {
+                console.log('successfully updated')
+            }.bind(this)
+        });
     }
 
     Delete(element){
@@ -53,7 +69,19 @@ export default new class Controller{
                 console.log('success');
             }.bind(this)
         });
-        this.getAllProjects();
+        Controller.ajaxCall();
+    }
+    GetStatusDescriptions(){
+        console.log('status descriptions');
+        $.ajax({
+            method:'GET',
+            url: config.base + "/project/statusDescriptions",
+            async: false,
+            success: function(data){
+                Context.cursor.set('itemsDropdown', data);
+            }.bind(this)
+        });
+
     }
 
 }
