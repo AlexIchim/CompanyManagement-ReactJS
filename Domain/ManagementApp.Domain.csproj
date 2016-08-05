@@ -51,6 +51,7 @@
   <ItemGroup>
     <Compile Include="Enums\JobType.cs" />
     <Compile Include="Enums\PositionType.cs" />
+    <Compile Include="Enums\ProjectStatus.cs" />
     <Compile Include="Models\Department.cs" />
     <Compile Include="Models\Employee.cs" />
     <Compile Include="Models\EmployeeProject.cs" />
