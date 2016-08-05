@@ -1,13 +1,10 @@
 ﻿using AutoMapper;
 using Contracts;
+using Domain.Models;
 using Manager.InfoModels;
-using System;
+using Manager.InputInfoModels;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Manager.InputInfoModels;
-using Domain.Models;
 
 namespace Manager.Services
 {
@@ -46,7 +43,7 @@ namespace Manager.Services
         public OperationResult ReleaseEmployee(int employeeId)
         {
             if (_employeeValidator.ValidateId(employeeId))
-            { 
+            {
                 var employee = _employeeRepository.GetById(employeeId);
 
                 if (employee != null)
@@ -98,10 +95,10 @@ namespace Manager.Services
                 int newTotalAllocation = totalAllocation + newEp.Allocation;
 
                 if (newTotalAllocation <= 100)
-                {                 
+                {
                     _employeeRepository.AddEmployeeToProject(newEp);
                     return new OperationResult(true, Messages.SuccessfullyAddedEmployeeToProject);
-                }              
+                }
             }
             return new OperationResult(false, Messages.ErrorAddingEmployeeToProject);
         }
@@ -125,7 +122,7 @@ namespace Manager.Services
                         {
                             ep.Allocation = inputInfo.Allocation;
                             return new OperationResult(true, Messages.SuccessfullyUpdatedPartialAllocation);
-                        }                     
+                        }
                     }
                 }
             }
@@ -144,7 +141,7 @@ namespace Manager.Services
                     var members = _employeeRepository.GetAllDepartmentEmployees(department, pageSize, pageNr);
                     
 
-                if (members.Any())
+                    if (members.Any())
                     {
                         var memberInfos = _mapper.Map<IEnumerable<MemberInfo>>(members);
                         foreach (MemberInfo mi in memberInfos)
@@ -172,7 +169,7 @@ namespace Manager.Services
                     return new OperationResult(true, Messages.SuccessfullyAddedEmployee);
                 }
             }
-            return new OperationResult(false, Messages.ErrorAddingEmployee );
+            return new OperationResult(false, Messages.ErrorAddingEmployee);
         }
 
         public IEnumerable<EmployeeInfo> GetAllUnAllocatedEmployeesOnProject()

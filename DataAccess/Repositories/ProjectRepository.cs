@@ -1,13 +1,10 @@
-﻿using System;
+﻿using Contracts;
+using DataAccess.Context;
+using DataAccess.Extensions;
+using Domain.Models;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Contracts;
-using Domain.Models;
-using DataAccess.Context;
-using DataAccess.Extensions;
 
 namespace DataAccess.Repositories
 {
@@ -19,6 +16,18 @@ namespace DataAccess.Repositories
             _context = context;
         }
 
+        public int GetEmployeeProjectAllocationById(int projectId, int employeeID)
+        {
+            var employeeProject = _context.EmployeeProjects.SingleOrDefault(e => e.EmployeeId == employeeID && e.ProjectId == projectId);
+            return employeeProject.Allocation;
+        }
+
+        public string GetEmployeeRoleById(int employeeId)
+        {
+            var employee = _context.Employees.SingleOrDefault(e => e.Id == employeeId);
+            string role = employee.PositionType.ToString();
+            return role;
+        }
 
         public IEnumerable<Employee> GetEmployeesByProjectId(int projectid, int? pageSize, int? pageNr)
         {
@@ -31,14 +40,14 @@ namespace DataAccess.Repositories
                 emp = _context.Employees.SingleOrDefault(e => e.Id == ep.EmployeeId);
                 employees.Add(emp);
             }
-            var queryableEmployees= employees.AsQueryable();
+            var queryableEmployees = employees.AsQueryable();
             return queryableEmployees.OrderBy(d => d.Name).Paginate(pageSize, pageNr).ToArray();
 
         }
 
         public IQueryable<EmployeeProject> GetEmployeesAllocation(int projectId)
         {
-            return _context.EmployeeProjects.Where (p => p.ProjectId == projectId);
+            return _context.EmployeeProjects.Where(p => p.ProjectId == projectId);
         }
 
         public Project GetProjectById(int projectId)
@@ -46,7 +55,7 @@ namespace DataAccess.Repositories
             return _context.Projects.SingleOrDefault(p => p.Id == projectId);
         }
 
-       
+
         public void Add(Project project)
         {
             _context.Projects.Add(project);
@@ -68,7 +77,7 @@ namespace DataAccess.Repositories
                     //////////////////////////////////////////////////
 
                     _context.EmployeeProjects.Remove(employeeProject);
-                    
+
 
                 }
             }

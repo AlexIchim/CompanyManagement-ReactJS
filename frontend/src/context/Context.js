@@ -8,7 +8,8 @@ const initialState = {
     departments:[],
     offices:[],
     projects:[],
-    employees:[]
+    employees:[],
+    members:[]
 };
 
 class Context{

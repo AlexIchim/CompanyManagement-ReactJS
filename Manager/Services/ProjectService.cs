@@ -48,11 +48,18 @@ namespace Manager.Services
                 var project = _projectRepository.GetProjectById(projectId);
                 if (project != null)
                 {
-                    var employees = _projectRepository.GetEmployeesByProjectId(projectId,pageSize,pageNr);
+                    var employees = _projectRepository.GetEmployeesByProjectId(projectId, pageSize, pageNr);
 
                     if (employees != null)
                     {
                         var employeeInfos = _mapper.Map<IEnumerable<EmployeeInfo>>(employees);
+                        foreach (var e in employeeInfos)
+                        {
+                            int allocation = _projectRepository.GetEmployeeProjectAllocationById(projectId, e.Id);
+                            e.Allocation = allocation;
+                            string role = _projectRepository.GetEmployeeRoleById(e.Id);
+                            e.Role = role;
+                        }
                         return employeeInfos;
                     }
 
@@ -79,7 +86,7 @@ namespace Manager.Services
             }
             return new OperationResult(false, Messages.ErrorWhileAddingProject);
         }
-       
+
 
         public OperationResult Delete(int projectId)
         {
@@ -93,7 +100,7 @@ namespace Manager.Services
             return new OperationResult(false, Messages.ErrorDeletingProject);
         }
 
-        
+
         public OperationResult UpdateProject(UpdateProjectInputInfo inputInfo)
         {
             if (_projectValidator.ValidateUpdateProjectInfo(inputInfo))
@@ -121,11 +128,12 @@ namespace Manager.Services
 
         public IEnumerable<ProjectInfo> GetAllDepartmentProjects(int depId, int? pageSize, int? pageNr)
         {
-            if (_projectValidator.ValidateId(depId)) { 
+            if (_projectValidator.ValidateId(depId))
+            {
                 var department = _departmentRepository.GetDepartmentById(depId);
                 if (department != null)
                 {
-                    var projects = _projectRepository.GetAllDepartmentProjects(department,pageSize,pageNr);
+                    var projects = _projectRepository.GetAllDepartmentProjects(department, pageSize, pageNr);
                     if (projects != null)
                     {
                         var projectInfos = _mapper.Map<IEnumerable<ProjectInfo>>(projects);
