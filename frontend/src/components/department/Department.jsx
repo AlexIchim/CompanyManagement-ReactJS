@@ -113,12 +113,12 @@ export default class Department extends React.Component {
                     </tbody>
                 </table>
 
-                <div>
+                <div className="btn-wrapper">
                     <button className="leftArrow" onClick={this.back.bind(this)}>
-                                <i className="fa fa-arrow-left fa-2x" aria-hidden="true"></i>
+                                <i className="fa fa-arrow-left fa-1x" aria-hidden="true"></i>
                     </button>
                     <button className="rightArrow" onClick={this.next.bind(this)}>
-                                <i className="fa fa-arrow-right fa-2x" aria-hidden="true"></i>
+                                <i className="fa fa-arrow-right fa-1x" aria-hidden="true"></i>
                     </button>              
                 </div>
 
