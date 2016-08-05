@@ -2,6 +2,7 @@
 using System.Data.Entity;
 using System.Linq;
 using Contracts;
+using DataAccess.Extensions;
 using Domain.Models;
 using DbContext = DataAccess.Context.DbContext;
 
@@ -33,8 +34,9 @@ namespace DataAccess.Repositories
         }
 
         public IEnumerable<Project> GetAllProjectsOfADepartment(int departmentId) {
-            var department = GetDepartmentById(departmentId);
-            return department.Projects;
+            //var department = GetDepartmentById(departmentId);
+            return _context.Projects.Where(p => p.Department.Id == departmentId).OrderBy(o => o.Id).Paginate(5, 1).ToArray();
+            //return department.Projects;
         }
 
         public IEnumerable<Project> FilterProjectsOfADepartmentByStatus(int departmentId, string status)

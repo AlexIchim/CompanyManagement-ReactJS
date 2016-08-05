@@ -4,6 +4,7 @@ using Contracts;
 using DataAccess.Context;
 using Domain.Models;
 using System;
+using DataAccess.Extensions;
 
 namespace DataAccess.Repositories
 {
@@ -49,7 +50,7 @@ namespace DataAccess.Repositories
 
         public IEnumerable<Project> GetAll()
         {
-            return _context.Projects.ToArray();
+            return _context.Projects.Paginate(5, 1).ToArray();
         }
         public Project GetById(int id)
         {
