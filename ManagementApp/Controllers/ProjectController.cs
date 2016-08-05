@@ -80,7 +80,7 @@ namespace ManagementApp.Controllers
 
         [Route("members/{projectId}/{pageSize}/{pageNumber}")]
         [HttpGet]
-        public IHttpActionResult GetMembersFromProject(int projectId, int pageSize, int pageNumber, [Optional] string role)
+        public IHttpActionResult GetMembersFromProject(int projectId, int pageSize, int pageNumber, string role="")
         {
             var result = _projectService.GetMembersFromProject(projectId, pageSize, pageNumber, role);
             return Json(result);
@@ -101,13 +101,6 @@ namespace ManagementApp.Controllers
             return Json(result);
         }
 
-        [Route("filterMemberByRole")]
-        [HttpGet]
-        public IHttpActionResult FilterProjectMemberByRole(string role, int projectId)
-        {
-            var result = _projectService.FilterProjectMemberByRole(role, projectId);
-            return Json(result);
-        }
 
         [Route("statusDescriptions")]
         [HttpGet]

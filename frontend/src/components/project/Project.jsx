@@ -6,7 +6,7 @@ import Form from './Form.jsx';
 import Accessors from '../../context/Accessors';
 import Context from '../../context/Context';
 import Command from '../Command';
-import MyController from './Controller/Controller'
+import MyController from './controller/Controller'
 import EditForm from './EditForm';
 
 export default class Project extends React.Component{

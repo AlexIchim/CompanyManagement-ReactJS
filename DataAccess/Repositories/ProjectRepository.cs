@@ -58,10 +58,10 @@ namespace DataAccess.Repositories
             return _context.Projects.SingleOrDefault(p => p.Id == id);
         }
 
-        public IEnumerable<Assignment> GetMembersFromProject(int projectId, int pageSize, int pageNumber, [Optional] string role)
+        public IEnumerable<Assignment> GetMembersFromProject(int projectId, int pageSize, int pageNumber, string role="")
 
         {
-            return _context.Assignments.Where(ep => (ep.ProjectId == projectId) && (ep.Employee.Position.ToString() == role.ToString())).OrderBy(ep =>ep.Project.Id).Paginate(pageSize, pageNumber).ToArray();
+            return _context.Assignments.Where(ep => (ep.ProjectId == projectId) && (((!role.Equals("")) && ep.Employee.Position.ToString() == role) || role.Equals(""))).OrderBy(ep =>ep.Project.Id).Paginate(pageSize, pageNumber).ToArray();
         }
 
         public int GetAllocationOfEmployeeFromProject(int projectId, int employeeId)
@@ -78,11 +78,6 @@ namespace DataAccess.Repositories
 
         }
 
-        public IEnumerable<Assignment> FilterProjectMemberByRole(string role, int projectId)
-        {
-            var assignments = _context.Assignments.Where(ep => ep.ProjectId == projectId && ep.Employee.Position.ToString() == role);
-            return assignments.ToArray();
-        }
     }
 
 }

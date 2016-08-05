@@ -2,7 +2,7 @@ import React from 'react';
 import ModalTemplate from '../ModalTemplate';
 import Controller from '../Command';
 import config from '../helper';
-import MyController from './Controller/Controller.js';
+import MyController from './controller/Controller.js';
 import Accessors from '../../context/Accessors';
 import Context from '../../context/Context';
 

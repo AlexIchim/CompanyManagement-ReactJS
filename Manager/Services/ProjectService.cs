@@ -7,6 +7,7 @@ using Manager.InputInfoModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.InteropServices;
 using FluentValidation.Results;
 using Manager.Validators;
 using Domain.Extensions;
@@ -139,7 +140,7 @@ namespace Manager.Services
 
         }
 
-        public IEnumerable<ProjectMemberInfo> GetMembersFromProject(int projectId, int pageSize, int pageNumber)
+        public IEnumerable<ProjectMemberInfo> GetMembersFromProject(int projectId, int pageSize, int pageNumber, string role="")
         {
             var assignments = _projectRepository.GetMembersFromProject(projectId, pageSize, pageNumber, role);
             var assignmentsInfo = _mapper.Map<IEnumerable<ProjectMemberInfo>>(assignments);
@@ -157,12 +158,6 @@ namespace Manager.Services
             return _projectRepository.GetNrTeamMembers(projectId);
         }
 
-        public IEnumerable<ProjectMemberInfo> FilterProjectMemberByRole(string role, int projectId)
-        {
-            var assignments = _projectRepository.FilterProjectMemberByRole(role, projectId);
-            var assignmentsInfo = _mapper.Map<IEnumerable<ProjectMemberInfo>>(assignments);
-            return assignmentsInfo;
-        }
 
         public IEnumerable<String> GetStatusDescription()
         {

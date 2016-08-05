@@ -1,8 +1,7 @@
 import React from 'react';
 import ModalTemplate from '../ModalTemplate';
-import Controller from '../Command';
 import config from '../helper';
-import MyController from './Controller/Controller.js';
+import MyController from './controller/Controller.js';
 
 export default class Form extends React.Component {
     constructor(){
