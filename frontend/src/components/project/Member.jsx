@@ -5,21 +5,9 @@ import Context from '../../context/Context.js';
 import configs from '../helpers/calls'
 import * as Controller from '../controller';
 import * as Immutable from 'immutable';
-
-const Tr = (props) => {
-
-    return(
-        <tr>
-            <td>{props.node.get('Name')} </td>
-            <td>{props.node.get('Role')}</td>
-            <td>{props.node.get('Allocation')}</td>
-            <td><Link to="#"> Edit allocation | </Link>
-                <Link to="#"> Remove </Link></td>
-        </tr>
-    )
+import MemberItem from './MemberItem.jsx'
 
 
-}
 
 export default class Member extends React.Component{
 
@@ -38,6 +26,7 @@ export default class Member extends React.Component{
     }
 
      componentDidMount(){
+         console.log(this.props.routeParams.projectId);
          Controller.getEmployeesByProjectId(this.props.routeParams.projectId,this.state.pageNr);
     }
 
@@ -94,9 +83,10 @@ export default class Member extends React.Component{
 
         const items = this.state.members.map( (element, index) => {
             return(
-                <Tr
+                <MemberItem
                     node = {element}
                     key = {index}
+                    projectId = {this.props.routeParams.projectId}
                 />
             )
 

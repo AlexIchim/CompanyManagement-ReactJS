@@ -9,7 +9,7 @@ import * as Controller from '../controller';
 
 const Tr = (props) => {
 
-    const linkMembers = "department/project/" + props.node.Id  + '/' + props.node.Name + "/members";
+    const linkMembers = "department/project/" + props.node.get('Id')  + '/' + props.node.get('Name') + "/members";
 
     return(
         <tr>
