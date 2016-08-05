@@ -7,8 +7,7 @@ import * as Rx from 'rx';
 const initialState = {
     departments:[],
     offices:[],
-    departments:[],
-    projects:[]
+    projects:[],
     employees:[]
 };
 
