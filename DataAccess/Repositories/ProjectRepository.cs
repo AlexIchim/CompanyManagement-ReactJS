@@ -4,6 +4,7 @@ using Contracts;
 using DataAccess.Context;
 using Domain.Models;
 using System;
+using System.Runtime.InteropServices;
 using DataAccess.Extensions;
 
 namespace DataAccess.Repositories
@@ -57,11 +58,10 @@ namespace DataAccess.Repositories
             return _context.Projects.SingleOrDefault(p => p.Id == id);
         }
 
-        public IEnumerable<Assignment> GetMembersFromProject(int projectId)
+        public IEnumerable<Assignment> GetMembersFromProject(int projectId, int pageSize, int pageNumber, [Optional] string role)
 
         {
-            var assignments = _context.Assignments.Where(ep => ep.ProjectId == projectId);
-            return assignments.ToArray();
+            return _context.Assignments.Where(ep => (ep.ProjectId == projectId) && (ep.Employee.Position.ToString() == role.ToString())).OrderBy(ep =>ep.Project.Id).Paginate(pageSize, pageNumber).ToArray();
         }
 
         public int GetAllocationOfEmployeeFromProject(int projectId, int employeeId)

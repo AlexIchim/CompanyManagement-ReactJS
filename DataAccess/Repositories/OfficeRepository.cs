@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Contracts;
 using DataAccess.Context;
+using DataAccess.Extensions;
 using Domain.Models;
 
 namespace DataAccess.Repositories
@@ -29,10 +30,13 @@ namespace DataAccess.Repositories
             return _context.Offices.SingleOrDefault(o => o.Id == id);
         }
 
-        public IEnumerable<Department> GetAllDepartmentsOfAnOffice(int officeId)
-        {
-            var office = GetById(officeId);
-            return office.Departments;
+        public IEnumerable<Department> GetAllDepartmentsOfAnOffice(int officeId, int pageSize, int pageNumber)
+        { 
+            return
+                _context.Departments.Where(d => d.Office.Id == officeId)
+                    .OrderBy(d => d.Id)
+                    .Paginate(pageSize, pageNumber)
+                    .ToArray();
         }
 
         public void Add(Office office)

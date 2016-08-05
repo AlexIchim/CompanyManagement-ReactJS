@@ -139,9 +139,9 @@ namespace Manager.Services
 
         }
 
-        public IEnumerable<ProjectMemberInfo> GetMembersFromProject(int projectId)
+        public IEnumerable<ProjectMemberInfo> GetMembersFromProject(int projectId, int pageSize, int pageNumber)
         {
-            var assignments = _projectRepository.GetMembersFromProject(projectId);
+            var assignments = _projectRepository.GetMembersFromProject(projectId, pageSize, pageNumber, role);
             var assignmentsInfo = _mapper.Map<IEnumerable<ProjectMemberInfo>>(assignments);
 
             return assignmentsInfo;

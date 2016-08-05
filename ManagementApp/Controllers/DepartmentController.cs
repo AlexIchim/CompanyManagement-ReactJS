@@ -31,25 +31,17 @@ namespace ManagementApp.Controllers
             return Json(result);
         }
 
-        [Route("members/{departmentId}")]
+        [Route("members/{departmentId}/{pageSize}/{pageNumber}")]
         [HttpGet]
-        public IHttpActionResult GetMembersOfDepartment(int departmentId, string name = "", int? jobType = null, int? position = null, int? allocation = null) {
-            var result = _departmentService.GetMembersOfDepartment(departmentId, name, jobType, position, allocation);
+        public IHttpActionResult GetMembersOfDepartment(int departmentId, int pageSize, int pageNumber, string name = "", int? jobType = null, int? position = null, int? allocation = null) {
+            var result = _departmentService.GetMembersOfDepartment(departmentId, pageSize, pageNumber, name, jobType, position, allocation);
             return Json(result);
         }   
 
-        [Route("projects/{departmentId}")]
+        [Route("projects/{departmentId}/{pageSize}/{pageNumber}")]
         [HttpGet]
-        public IHttpActionResult GetProjectsOfDepartment(int departmentId, int? status = null) {
-            var result = _departmentService.GetProjectsOfDepartment(departmentId, status);
-            return Json(result);
-        }
-
-        [Route("projectsByStatus")]
-        [HttpGet]
-        public IHttpActionResult FilterProjectsOfADepartmentByStatus(int departmentId, string status)
-        {
-            var result = _departmentService.FilterProjectsOfADepartmentByStatus(departmentId, status);
+        public IHttpActionResult GetProjectsOfDepartment(int departmentId, int pageSize, int pageNumber, int? status = null) {
+            var result = _departmentService.GetProjectsOfDepartment(departmentId, pageSize, pageNumber, status);
             return Json(result);
         }
 

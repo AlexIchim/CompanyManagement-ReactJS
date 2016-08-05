@@ -27,7 +27,7 @@ class ProjectMembers extends React.Component {
         console.log(projectId);
         $.ajax({
             method: 'GET',
-            url: config.base + 'project/members/' +projectId,
+            url: config.base + 'project/members/' +projectId + '/5/1',
             async: false,
             success: function(data){
                 this.setState({

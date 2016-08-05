@@ -28,23 +28,44 @@ namespace DataAccess.Repositories
             return _context.Departments.SingleOrDefault(d=>d.Id == departmentId);
         }
 
-        public IEnumerable<Employee> GetMembersOfDepartment(int departmentId, string name = "", int? jobType = null, int? position = null, int? allocation = null)
-        {
-            var department = GetDepartmentById(departmentId);
-            return department.Employees
+        public IEnumerable<Employee> GetMembersOfDepartment(int departmentId, int pageSize, int pageNumber, string name = "", int? jobType = null, int? position = null, int? allocation = null)
+        {   
+            return _context.Employees.
+                Join(_context.Assignments,
+                    employee => employee.Id, assignment => assignment.EmployeeId,
+                    (employee, assignment) => new
+                    {
+                        employee,
+                        assignment
+                    }
+                )
+                .GroupBy(x => x.employee)
+                .Select(g => new
+                {
+                    Employee = g.Key,
+                    Allocation = g.Sum(x => x.assignment.Allocation)
+                })
                 .Where(
                     x =>
-                        (((!name.Equals("") && x.Name.Contains(name)) || name.Equals("")) &&
-                         ((jobType.HasValue && (int) x.JobType == jobType) || !jobType.HasValue) &&
-                         ((position.HasValue && (int) x.Position == position) || !position.HasValue) &&
-                         ((allocation.HasValue && x.GetAllocation() == allocation) || !allocation.HasValue)));
+                        ((x.Employee.Department.Id == departmentId) &&
+                         ((!name.Equals("") && x.Employee.Name.Contains(name)) || name.Equals("")) &&
+                         ((jobType.HasValue && (int) x.Employee.JobType == jobType) || !jobType.HasValue) &&
+                         ((position.HasValue && (int) x.Employee.Position == position) || !position.HasValue) &&
+                         ((allocation.HasValue && (int) x.Allocation == allocation) || !allocation.HasValue)))
+                .OrderBy(x => x.Employee.Id)
+                .Paginate(pageSize, pageNumber)
+                .ToArray().Select(x => x.Employee);
         }
 
-        public IEnumerable<Project> GetProjectsOfDepartment(int departmentId, int? status = null) {
-            //var department = GetDepartmentById(departmentId);
-            return department.Projects.Where(
-                x =>
-                    ((status.HasValue && (int)x.Status == status) || !status.HasValue));
+        public IEnumerable<Project> GetProjectsOfDepartment(int departmentId, int pageSize, int pageNumber, int? status = null) {
+            return
+                _context.Projects.Where(
+                    p =>
+                        (p.Department.Id == departmentId) &&
+                        ((status.HasValue && (int) p.Status == status) || !status.HasValue))
+                    .OrderBy(p => p.Id)
+                    .Paginate(pageSize, pageNumber)
+                    .ToArray();
         }
 
         public IEnumerable<Project> FilterProjectsOfADepartmentByStatus(int departmentId, string status)

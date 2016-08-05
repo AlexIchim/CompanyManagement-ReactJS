@@ -7,7 +7,7 @@ using Manager.Services;
 namespace ManagementApp.Controllers
 {
     [RoutePrefix("api/employee")]
-    [EnableCors("*", "*", "GET, POST, PUT")]
+    [EnableCors("*", "*", "*")]
     public class EmployeeController : ApiController
     {
         private readonly EmployeeService _employeeService;

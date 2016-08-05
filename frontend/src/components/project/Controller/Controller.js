@@ -8,7 +8,7 @@ export default new class Controller{
     getAllProjects(){
         $.ajax({
             method: 'GET',
-            url: config.base + 'department/projects/3',
+            url: config.base + 'department/projects/3/5/1',
             async: false,
             success: function(data){
                 Context.cursor.set('items', data);

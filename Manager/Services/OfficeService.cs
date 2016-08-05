@@ -36,8 +36,8 @@ namespace Manager.Services
             return officeInfos;
         }
 
-        public IEnumerable<DepartmentInfo> GetAllDepartmentsOfAnOffice(int officeId) {
-            var departments = _officeRepository.GetAllDepartmentsOfAnOffice(officeId);
+        public IEnumerable<DepartmentInfo> GetAllDepartmentsOfAnOffice(int officeId, int pageSize, int pageNumber) {
+            var departments = _officeRepository.GetAllDepartmentsOfAnOffice(officeId, pageSize, pageNumber);
             var departmentsInfos = _mapper.Map<IEnumerable<DepartmentInfo>>(departments);
 
             return departmentsInfos;

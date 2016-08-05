@@ -11,7 +11,7 @@ namespace Contracts
     {
         IEnumerable<Office> GetAll();
         Office GetById(int id);
-        IEnumerable<Department> GetAllDepartmentsOfAnOffice(int officeId);
+        IEnumerable<Department> GetAllDepartmentsOfAnOffice(int officeId, int pageSize, int pageNumber);
         void Add(Office office);
         void Save();
     }
