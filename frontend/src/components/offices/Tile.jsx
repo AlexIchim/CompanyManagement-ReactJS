@@ -7,13 +7,12 @@ class Tile extends React.Component<any, any>{
     render(){
         const props = this.props;
         const parentClass = classNames("info-box-icon", props['parentClass']);
-        const editIcon = classNames("fa", "fa-"+props['editIcon']);
         return (
 
             <div className="col-md-6 col-sm-6 col-xs-12">
             <div className="info-box">
                 <span className={parentClass}><img className="img-thumbnail" src={'data:image/jpg;base64,'+props['icon']}></img></span>
-                <button className="editIcon"><i className={editIcon}></i></button>
+                <button className="editIcon" onClick={props['onEdit']}><i className={props['editIcon']}></i></button>
                 <div className="info-box-content">
                     <span className="info-box-text">
                         {props['name']}
