@@ -1,21 +1,11 @@
 import * as React from 'react';
 import ModalTemplate from '../ModalTemplate';
+import Context from '../../context/Context';
+import Accessors from '../../context/Accessors';
 
 export default class Form extends React.Component{
     constructor(){
         super();
-    }
-
-    componentWillMount(){
-        if(this.props.Model){
-            this.setState({
-                model: this.props.Model
-            });
-        }else{
-            this.setState({
-                model:{}
-            });
-        }
     }
 
     onImageLoad(){
@@ -29,39 +19,38 @@ export default class Form extends React.Component{
 
         reader.readAsDataURL(value);
 
-        let newModel= this.state.model;
-        newModel.Image=image;
-        this.setState({
-            model: newModel
-        })
+        let model= Context.cursor.get("model");
+        if(!model){
+            model={}
+        };
+
+        model.Image=image;
+        Context.cursor.set("model",model);
     }
 
     onStoreClick(){
-        const name;
-        const addr;
-        const phone;
+        let model=Context.cursor.get("model");
 
-        var model=this.props.model;
-
-        if(model){
-            model.Name=name;
-            model.Address=addr;
-            model.
-        }else{
-            model={
-                Name: name,
-                Address: addr
-            }
+        if(!model){
+            model={};
         }
 
-        this.props.onStoreClick(model);
-    }
+        let name=this.refs.inputName;
+        let addr=this.refs.inputAddress;
+        let phone=this.refs.inputPhone;
 
+        model.Name=(name)?name:model.Name;
+        model.Address=(addr)?addr:model.Address;
+        model.Phone=(phone)?phone:model.Phone;
+
+        Context.cursor.set("model", model);
+
+        this.props.FormAction();
+    }
     render(){
 
-        const model=this.props.Model;
+        const model=Context.cursor.get('model');
 
-        console.log(model);
 
         const name=(model)? model.Name : "Name";
         const addr=(model)? model.Address : "Address";
@@ -70,9 +59,8 @@ export default class Form extends React.Component{
         return(
 
             <ModalTemplate onCancelClick={this.props.onCancelClick}
-                           onStoreClick={this.props.onStoreClick.bind(this)}
-                           Title={this.props.Title}
-                           Model={this.props.Model}>
+                           onStoreClick={this.onStoreClick.bind(this)}
+                           Title={this.props.Title}>
 
                 <div className="form-group">
                     <label htmlFor="inputName" className="col-sm-2 control-label"> Name</label>
@@ -80,8 +68,7 @@ export default class Form extends React.Component{
                         <input type="text" 
                                className="form-control" 
                                ref="inputName" 
-                               placeholder={name}
-                               value="">
+                               placeholder={name}>
                         </input>
                     </div>
                 </div>
@@ -92,8 +79,7 @@ export default class Form extends React.Component{
                         <input  type="text" 
                                 className="form-control" 
                                 ref="inputAddress" 
-                                placeholder={addr}
-                                value="">
+                                placeholder={addr}>
                         </input>
                     </div>
                 </div>
@@ -104,8 +90,7 @@ export default class Form extends React.Component{
                         <input type="text" 
                                className="form-control" 
                                ref="inputPhone" 
-                               placeholder={phone}
-                               value="">
+                               placeholder={phone}>
                         </input>
                     </div>
                 </div>

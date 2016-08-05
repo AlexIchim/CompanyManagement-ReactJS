@@ -1,6 +1,22 @@
 import React from 'react';
 
 export default class ModalTemplate extends React.Component{
+    
+    componentDidMount(){
+        const formModal=this.refs.formModal;
+        $(formModal).modal('show');
+    }
+    onStoreClick(){
+        const formModal=this.refs.formModal;
+        $(formModal).modal('hide');
+        this.props.onStoreClick();
+    }
+    onCancelClick(){
+        const formModal=this.refs.formModal;
+        $(formModal).modal('hide');
+        this.props.onCancelClick();
+    }
+    
     render(){
 
         const storeLabel="Save";
@@ -19,8 +35,8 @@ export default class ModalTemplate extends React.Component{
                                 </div>
 
                                 <div className="box-footer">
-                                    <button type="button" className="btn btn-default" onClick={this.props.onCancelClick} > Cancel</button>
-                                    <button type="submit" className="btn btn-default" onClick={this.props.onStoreClick} > {storeLabel}</button>
+                                    <button type="button" className="btn btn-default" onClick={this.onCancelClick.bind(this)} > Cancel</button>
+                                    <button type="submit" className="btn btn-default" onClick={this.onStoreClick.bind(this)} > {storeLabel}</button>
                                 </div>
                             </form>
                         </div>
