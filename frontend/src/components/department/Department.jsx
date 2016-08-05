@@ -3,27 +3,12 @@ import {Link} from 'react-router';
 import * as $ from 'jquery';
 import configs from '../helpers/calls'
 import Form from './Form.jsx'
+import EditForm from './EditForm.jsx'
+import DepartmentItem from './DepartmentItem.jsx'
 import Context from '../../context/Context.js';
 import * as Immutable from 'immutable';
 import * as Controller from '../controller';
 
-
-const Tr = (props) => {
-   const linkEmployees = "department/" + props.node.get('Id')  + '/' + props.node.get('Name') + "/employees";
-   const linkProjects = "department/" + props.node.get('Id')  + '/' + props.node.get('Name') + "/projects";
-    return(
-
-            <tr>
-            <td>{props.node.get('Name')}</td>
-            <td>{props.node.get('DepartmentManager')}</td>
-            <td>{props.node.get('NbrOfEmployees')}</td>
-            <td>{props.node.get('NbrOfProjects')}</td>
-            <td><Link to={linkEmployees}> View employees | </Link>
-                <Link to={linkProjects}> View projects | </Link>
-                <Link to="#"> Edit </Link></td>
-        </tr>
-    )
-}
 
 export default class Department extends React.Component {
 
@@ -96,16 +81,16 @@ export default class Department extends React.Component {
     render() {
         const items = this.state.departments.map((el, x) => {
             return (
-                <Tr
+                <DepartmentItem
                 node = {el}
                 key= {x}
-
+                officeId={this.props.routeParams.officeId}      
                 /> 
             )
         });
 
         const addModal = this.state.add ? <Form officeId={this.props.routeParams.officeId} show = {this.state.add} close={this.closeAddForm.bind(this)} /> : '';
-
+    
         return (
             <div>
                 {addModal}
@@ -125,7 +110,6 @@ export default class Department extends React.Component {
 
                     {items}
                   
-
                     </tbody>
                 </table>
 

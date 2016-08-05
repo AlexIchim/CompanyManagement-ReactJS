@@ -45,18 +45,19 @@ export default class Form extends React.Component{
             data:inputInfo,
             success: function (data) {               
                  cb(); 
-                 this.refresh(this.props.officeId);
+                 this.refresh();
             }.bind(this)
         })   
 
               
     }
 
-    refresh(officeId){
+    refresh(){
          Controller.getAllDepOffice(this.props.routeParams.officeId,1);
     }
     
     render(){
+        
         const departmentManagers=this.state.departmentManagers.map((el, x) => {
             return (
                 <option value={el.Id} key={x} >{el.Name}</option>                         

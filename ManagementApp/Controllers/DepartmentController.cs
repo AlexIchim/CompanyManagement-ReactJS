@@ -5,7 +5,7 @@ using System.Web.Http.Cors;
 namespace ManagementApp.Controllers
 {
     [RoutePrefix("api/department")]
-    [EnableCors("*", "*", "GET")]
+    [EnableCors("*", "*", "GET,POST,PUT")]
     public class DepartmentController : ApiController
     {
         private readonly DepartmentService _departmentService;
