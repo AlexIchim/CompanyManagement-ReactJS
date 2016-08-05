@@ -1,10 +1,10 @@
 import * as React from 'react';
 import Tile from './Tile';
-import * as $ from 'jquery';
 import config from '../helper';
 import Context from '../../context/Context';
 import Accessors from '../../context/Accessors';
 import '../../assets/less/index.less';
+import Controller from './OfficeController';
 
 import Form from './Form';
 
@@ -13,67 +13,58 @@ export default class Dashboard extends React.Component{
         super();
     }
     componentWillMount(){
+        this.setState({
+            formToggle:false
+        });
+        
         Context.subscribe(this.onContextChange.bind(this));
 
-        $.ajax({
-            method:'GET',
-            url: config.base+'office/getAll',
-            async:false,
-            success: function(data){
-                console.log("Data: ");
-                console.log(data);
-                
-                Context.cursor.set('items',data);
-                Context.cursor.set('formToggle',false);
-            }.bind(this)
-        });
+        Context.cursor.set("items",[]);
+        Controller.GetAll();
+        
     }
 
     onContextChange(cursor){
         this.setState({
-            offices: cursor.get('items')
+            formToggle: false
         });
     }
 
     onAddButtonClick(){
-        Context.cursor.set('formToggle',true);
+        Context.cursor.set('model',null);
+
+        this.setState({
+            formToggle: true
+        });
     }
     onEditButtonClick(index){
-        const office=this.state.offices[index];
-
+        const office=Context.cursor.get('items')[index];
         Context.cursor.set("model", office);
-        Context.cursor.set('formToggle',true);
+
+        this.setState({
+            formToggle: true
+        });
     }
 
-    
-
-    hideModal(){
-        Context.cursor.set('formToggle',false);
-        Context.cursor.set('model',null);
-        console.log("Hidden");
-    }
-
-    onModalSaveClick(){
-        console.log("STORING!");
-        this.hideModal();
+    toggleModal(){
+        this.setState({formToggle: false})
     }
 
     render(){
-
         let form="";
-        if(Accessors.formToggle(Context.cursor)){
+        if(this.state.formToggle){
             if(Accessors.model(Context.cursor)){
-                form=<Form onCancelClick={this.hideModal.bind(this)}
-                           onStoreClick={this.onModalSaveClick.bind(this)}
+                form=<Form onCancelClick={this.toggleModal.bind(this)}
+                           FormAction={Controller.Update}
                            Title="Edit Office"/>;
             }else{
-                form=<Form onCancelClick={this.hideModal.bind(this)}
-                           onStoreClick={this.onModalSaveClick.bind(this)}
+                form=<Form onCancelClick={this.toggleModal.bind(this)}
+                           FormAction={Controller.Add}
                            Title="Add Office"/>;
             }
         }
 
-        const items = this.state.offices.map ( (office, index) => {
+        const items = Accessors.items(Context.cursor).map ( (office, index) => {
             return (
                 <Tile
                     parentClass="bg-aqua"
