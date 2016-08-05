@@ -7,7 +7,11 @@ import './assets/less/index.less';
 import Dashboard from './components/dashboard/Dashboard.jsx';
 import Project from './components/project/Project.jsx';
 import Departments from './components/department/Departments.jsx'
+<<<<<<< HEAD
 import ProjectMembers from './components/project/ProjectMembers.jsx';
+
+=======
+>>>>>>> origin/FluffyWarriors
 const Routes = () => {
 
     return (

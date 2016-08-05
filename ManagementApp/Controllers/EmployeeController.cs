@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Web.Http;
+using System.Web.Http.Cors;
 using Manager.InputInfoModels;
 using Manager.Services;
 
 namespace ManagementApp.Controllers
 {
     [RoutePrefix("api/employee")]
+    [EnableCors("*", "*", "GET, POST, PUT")]
     public class EmployeeController : ApiController
     {
         private readonly EmployeeService _employeeService;

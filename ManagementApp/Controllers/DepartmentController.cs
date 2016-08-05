@@ -6,7 +6,7 @@ using Manager.Services;
 namespace ManagementApp.Controllers
 {
     [RoutePrefix("api/department")]
-    [EnableCors("*", "*", "GET")]
+    [EnableCors("*", "*", "GET, POST, PUT")]
     public class DepartmentController : ApiController
     {
         private readonly DepartmentService _departmentService;
@@ -42,6 +42,14 @@ namespace ManagementApp.Controllers
         [HttpGet]
         public IHttpActionResult GetProjectsOfDepartment(int departmentId, int? status = null) {
             var result = _departmentService.GetProjectsOfDepartment(departmentId, status);
+            return Json(result);
+        }
+
+        [Route("projectsByStatus")]
+        [HttpGet]
+        public IHttpActionResult FilterProjectsOfADepartmentByStatus(int departmentId, string status)
+        {
+            var result = _departmentService.FilterProjectsOfADepartmentByStatus(departmentId, status);
             return Json(result);
         }
 

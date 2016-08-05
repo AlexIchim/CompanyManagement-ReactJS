@@ -11,7 +11,11 @@ using Manager.Services;
 namespace ManagementApp.Controllers
 {
     [RoutePrefix("api/office")]
+<<<<<<< HEAD
     [EnableCors("*", "*", "GET, POST, PUT")]
+=======
+    [EnableCors("*","*","GET POST PUT")]
+>>>>>>> origin/FluffyWarriors
     public class OfficeController : ApiController
     {
         private readonly OfficeService _officeService;

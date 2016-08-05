@@ -46,6 +46,10 @@ namespace DataAccess.Repositories
                     ((status.HasValue && (int)x.Status == status) || !status.HasValue));
         }
 
+        public IEnumerable<Project> FilterProjectsOfADepartmentByStatus(int departmentId, string status)
+        {
+            return _context.Projects.Where(p => p.Department.Id == departmentId && p.Status.ToString() == status).ToArray();
+        }
         public void AddDepartment(Department department)
         {
             _context.Departments.Add(department);

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -8,15 +9,19 @@ namespace Domain.Models {
     public enum Position
     {
         Developer,
+        [Description("Project Manager")]
         ProjectManager,
         QA,
-        ProductOwner,
+        [Description("Product Owner")]
         DepartmentManager
     };
-    public enum JobTypes 
+    public enum JobTypes
     {
+        [Description("Part time (4 hours)")]
         partTime4,
+        [Description("Part time (6 hours)")]
         partTime6,
+        [Description("Full time")]
         fullTime
     };
     public class Employee {

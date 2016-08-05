@@ -1,10 +1,13 @@
-﻿using System.Web.Http;
+﻿using System;
+using System.Web.Http;
+using System.Web.Http.Cors;
 using Manager.InputInfoModels;
 using Manager.Services;
 
 namespace ManagementApp.Controllers
 {
     [RoutePrefix("api/project")]
+    [EnableCors("*","*", "GET, POST, PUT, DELETE")]
     public class ProjectController : ApiController
     {
         private readonly ProjectService _projectService;
@@ -96,6 +99,23 @@ namespace ManagementApp.Controllers
             var result = _projectService.GetNrTeamMembers(projectId);
             return Json(result);
         }
-       
+
+        [Route("filterMemberByRole")]
+        [HttpGet]
+        public IHttpActionResult FilterProjectMemberByRole(string role, int projectId)
+        {
+            var result = _projectService.FilterProjectMemberByRole(role, projectId);
+            return Json(result);
+        }
+
+        [Route("statusDescriptions")]
+        [HttpGet]
+        public IHttpActionResult GetStatusDescription()
+        {
+            var result = _projectService.GetStatusDescription();
+            return Json(result);
+        }
+
+
     }
 }

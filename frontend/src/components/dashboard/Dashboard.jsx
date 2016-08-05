@@ -4,8 +4,8 @@ import * as $ from 'jquery';
 import config from '../helper';
 import Context from '../../context/Context';
 import Accessors from '../../context/Accessors';
-
 import Form from './Form';
+import Controller from '../Command.js';
 
 export default class Dashboard extends React.Component{
     constructor(){
@@ -45,29 +45,20 @@ export default class Dashboard extends React.Component{
         Context.cursor.set('formToggle',true);
     }
 
-    
-
-    hideModal(){
-        Context.cursor.set('formToggle',false);
-        Context.cursor.set('model',null);
-        console.log("Hidden");
-    }
-
     onModalSaveClick(){
         console.log("STORING!");
-        this.hideModal();
+        Controller.hideModal();
     }
 
     render(){
-
         let form="";
         if(Accessors.formToggle(Context.cursor)){
             if(Accessors.model(Context.cursor)){
-                form=<Form onCancelClick={this.hideModal.bind(this)}
+                form=<Form onCancelClick={Controller.hideModal.bind(this)}
                            onStoreClick={this.onModalSaveClick.bind(this)}
                            Title="Edit Office"/>;
             }else{
-                form=<Form onCancelClick={this.hideModal.bind(this)}
+                form=<Form onCancelClick={Controller.hideModal.bind(this)}
                            onStoreClick={this.onModalSaveClick.bind(this)}
                            Title="Add Office"/>;
             }

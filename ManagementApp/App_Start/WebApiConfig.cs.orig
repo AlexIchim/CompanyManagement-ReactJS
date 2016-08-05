@@ -17,7 +17,11 @@ namespace ManagementApp
             // Web API routes
             config.MapHttpAttributeRoutes();
 
+<<<<<<< HEAD
+            var cors = new EnableCorsAttribute("*","*","GET, POST, PUT");
+=======
             var cors= new EnableCorsAttribute("*","*", "GET, POST, PUT, DELETE");
+>>>>>>> origin/FluffyWarriors
 
             config.EnableCors(cors);
 
