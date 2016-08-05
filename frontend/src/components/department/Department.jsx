@@ -50,7 +50,6 @@ export default class Department extends React.Component {
     }
 
      onContextChange(cursor){
-         window.inc++;
         this.setState({
             departments: cursor.get("departments")         
         });
@@ -74,16 +73,7 @@ export default class Department extends React.Component {
         if (this.state.pageNr!=1){
             const whereTo=this.state.pageNr-1
 
-            console.log(whereTo);
-
-            $.ajax({
-            method: 'GET',
-            async: false,
-            url: configs.baseUrl + 'api/office/getAllDepOffice?officeId=' + this.props.routeParams.officeId+'&pageSize=3&pageNr='+whereTo,
-            success: function (data) {
-                Context.cursor.set("departments",Immutable.fromJS(data));
-            }.bind(this)
-        })
+            Controller.getAllDepOffice(this.props.routeParams.officeId,whereTo);
             
              this.setState({
                 pageNr:this.state.pageNr-1
@@ -96,16 +86,7 @@ export default class Department extends React.Component {
 
         const whereTo=this.state.pageNr+1
 
-        console.log(whereTo);
-
-        $.ajax({
-            method: 'GET',
-            async: false,
-            url: configs.baseUrl + 'api/office/getAllDepOffice?officeId=' + this.props.routeParams.officeId+'&pageSize=3&pageNr='+whereTo ,
-            success: function (data) {
-                Context.cursor.set("departments",Immutable.fromJS(data));
-            }.bind(this)
-        })
+        Controller.getAllDepOffice(this.props.routeParams.officeId,whereTo);
 
         this.setState({
             pageNr:this.state.pageNr+1
