@@ -21,6 +21,8 @@ namespace Contracts
         IEnumerable<Assignment> GetMembersFromProject(int projectId);
         int GetAllocationOfEmployeeFromProject(int projectId, int employeeId);
         int GetNrTeamMembers(int projectId);
-      
+
+        IEnumerable<Assignment> FilterProjectMemberByRole(string role, int projectId);
+
     }
 }

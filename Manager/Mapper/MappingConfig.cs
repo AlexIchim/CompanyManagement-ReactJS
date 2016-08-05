@@ -2,6 +2,7 @@
 using Domain.Models;
 using Manager.InfoModels;
 using Manager.InputInfoModels;
+using Domain.Extensions;
 
 namespace Manager.Mapper
 {
@@ -31,22 +32,33 @@ namespace Manager.Mapper
                     employee => employee.MapFrom(src => src.JobType.ToString()))
                 .ForMember(
                     employeeInfo => employeeInfo.Position,
-                    employee => employee.MapFrom(src => src.Position.ToString())); ;
+                    employee => employee.MapFrom(src => src.Position.ToString()))
+                .ForMember(
+                    employeeInfo => employeeInfo.Allocation,
+                    employee => employee.MapFrom(src => src.GetAllocation())
+                );
             CreateMap<AddEmployeeInputInfo, Employee>();
 
             CreateMap<Project, ProjectInfo>()
             .ForMember(
                 projectInfo => projectInfo.NrMembers,
                 project => project.MapFrom(src => src.Assignments.Count)
-            );
+            )
+            .ForMember(
+                projectInfo => projectInfo.Status,
+                project => project.MapFrom(src => src.Status.GetDescriptionFromEnumValue()));
             CreateMap<AddProjectInputInfo, Project>();
             CreateMap<Assignment, ProjectMemberInfo>()
+                .ForMember(
+                    assignmentInfo => assignmentInfo.Id,
+                    assignment => assignment.MapFrom(src => src.EmployeeId)
+                 )
                 .ForMember(
                     assignmentInfo => assignmentInfo.Name,
                     assignment => assignment.MapFrom(src => src.Employee.Name))
                 .ForMember(
                     assignmentInfo => assignmentInfo.Position,
-                    assignment => assignment.MapFrom(src => src.Employee.Position));
+                    assignment => assignment.MapFrom(src => src.Employee.Position.ToString()));
             CreateMap<AddAssignmentInputInfo, Assignment>();
 
         }

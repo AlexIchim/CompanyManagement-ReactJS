@@ -155,12 +155,12 @@ namespace ManagementApp.Manager.Tests
             var projects = new List<Project>
             {
                 CreateProject("Project1", new Department(),"2 months", Status.Finished),
-                 CreateProject("Project2", new Department(),"3 months", Status.OnHold)
+                CreateProject("Project2", new Department(),"3 months", Status.OnHold)
             };
             var projectsInfo = new List<ProjectInfo>
             {
-                CreateProjectInfo("Project1", 1, "2 months", Status.Finished),
-                CreateProjectInfo("Project2", 1, "3 months", Status.OnHold)
+                CreateProjectInfo("Project1", 1, "2 months", "Finished"),
+                CreateProjectInfo("Project2", 1, "3 months", "OnHold")
             };
 
             _projectRepositoryMock.Setup(m => m.GetAll()).Returns(projects);
@@ -178,7 +178,7 @@ namespace ManagementApp.Manager.Tests
         {
             //Arrange
             var project = CreateProject("Project1", new Department(), "2 months", Status.Finished);
-            var projectInfo = CreateProjectInfo("Project1", 1, "2 months", Status.Finished);
+            var projectInfo = CreateProjectInfo("Project1", 1, "2 months", "Finished");
 
             _mapperMock.Setup(m => m.Map<ProjectInfo>(project)).Returns(projectInfo);
             _projectRepositoryMock.Setup(m => m.GetById(1)).Returns(project);
@@ -213,7 +213,7 @@ namespace ManagementApp.Manager.Tests
             };
             var assignmentInfo = new List<ProjectMemberInfo>
             {
-                CreateAssignmentInfo("Employee1", Position.Developer, 20)
+                CreateAssignmentInfo("Employee1", "Developer", 20)
             };
             project.Assignments.Add(assignment[0]);
             employee.Assignments.Add(assignment[0]);
@@ -466,7 +466,7 @@ namespace ManagementApp.Manager.Tests
             return project;
         }
 
-        private ProjectInfo CreateProjectInfo(string name, int nrMembers, string duration, Status status)
+        private ProjectInfo CreateProjectInfo(string name, int nrMembers, string duration, string status)
         {
             return new ProjectInfo
             {
@@ -477,7 +477,7 @@ namespace ManagementApp.Manager.Tests
             };
         }
 
-        private ProjectMemberInfo CreateAssignmentInfo(string name, Position position, int allocation)
+        private ProjectMemberInfo CreateAssignmentInfo(string name, string position, int allocation)
         {
             return new ProjectMemberInfo
             {

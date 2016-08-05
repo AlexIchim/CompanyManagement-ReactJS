@@ -1,5 +1,5 @@
 ﻿using System;
-using Domain.Models;
+
 
 namespace Manager.InputInfoModels
 {
