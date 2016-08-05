@@ -6,7 +6,6 @@ import Accessors from '../../context/Accessors';
 
 export default new class DepartmentController{
 
-
     static ajaxCall(officeId){
         $.ajax({
             method: 'GET',
@@ -18,7 +17,7 @@ export default new class DepartmentController{
         })
     }
 
-     getDepartments(officeId){
+    getDepartments(officeId){
          console.log("Getting departments");
          DepartmentController.ajaxCall(officeId);
     }

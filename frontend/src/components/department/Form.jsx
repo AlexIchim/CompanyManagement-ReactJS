@@ -1,10 +1,34 @@
 import * as React from 'react';
 import ModalTemplate from '../ModalTemplate';
 import Context from '../../context/Context';
+import $ from 'jquery';
+import config from '../helper';
+import Accessors from '../../context/Accessors';
+
+const DropdownItem = (props) => {
+    return (
+        <option>
+            {props.element}
+        </option>
+    )
+}
 
 export default class Form extends React.Component{
     constructor(){
         super();
+    }
+
+    componentWillMount(){
+
+        $.ajax({
+            method: 'GET',
+            url: config.base + 'employee/getAll',
+            async: false,
+            success: function (data) {
+                //Context.cursor.set('dropdownItems', data);
+            }.bind(this)
+        })
+
     }
 
     onStoreClick(){
@@ -29,8 +53,17 @@ export default class Form extends React.Component{
     render(){
 
         const model=Context.cursor.get('model');
-
         const name=(model)? model.Name : "Name";
+
+        /*const departmentManagers = Accessors.dropdownItems(Context.cursor).map( (item, index) => {
+                return (
+                    <DropdownItem
+                        element = {item.Name}
+                        key={index}
+                    />
+                )
+            }
+        );*/
 
         return(
 
@@ -49,17 +82,12 @@ export default class Form extends React.Component{
                         </input>
                     </div>
 
-                    <label htmlFor="inputDepartmentManager" className="col-sm-4 control-label"> DepartmentManager</label>
-                    <div className="dropdown col-sm-8">
-                        <button className="btn btn-secondary dropdown-toggle" type="button" ref="departmentManager" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            Dropdown button
-                        </button>
-                        <div className="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                            <a className="dropdown-item" href="#">Action</a>
-                            <a className="dropdown-item" href="#">Another action</a>
-                            <a className="dropdown-item" href="#">Something else here</a>
-                        </div>
-                    </div>
+                    {/*<label htmlFor="inputName" className="col-sm-4 control-label">Department Manager</label>
+                    <div className="col-sm-8">
+                        <select id='dropdown' className="selectpicker">
+                            {departmentManagers}
+                        </select>
+                    </div>*/}
 
                 </div>
 

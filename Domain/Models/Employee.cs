@@ -12,7 +12,7 @@ namespace Domain.Models {
         [Description("Project Manager")]
         ProjectManager,
         QA,
-        [Description("Product Owner")]
+        [Description("Department Manager")]
         DepartmentManager
     };
     public enum JobTypes

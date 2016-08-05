@@ -7,4 +7,7 @@ export default new class Accessors{
     model(cursor){
         return cursor.get('model');
     }
+    dropdownItems(cursor){
+        return cursor.get('dropdownItems');
+    }
 }
