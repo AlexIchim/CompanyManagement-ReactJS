@@ -20,9 +20,11 @@ class Tile extends React.Component<any, any>{
                 
                 <span className={parentClass}><img src={icon}/></span>
                 <div className="info-box-content">
-                    <button className=" custom-btn btn btn-info"
-                            onClick={this.submit.bind(this)}>Edit
-                    </button>
+                    
+                    <div className="glyphicon glyphicon-edit custom-edit-icon"
+                            onClick={this.submit.bind(this)}>
+                    </div>
+
                     <span className="info-box-text">
                         {props['address']}
                     </span>

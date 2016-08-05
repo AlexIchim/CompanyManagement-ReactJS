@@ -88,15 +88,14 @@ export default class Dashboard extends React.Component{
             );
         })
 
-
         return (
             <div>
-                <p>
-                <button className="custom-add btn btn-success"
+
+                <div className=" glyphicon glyphicon-plus-sign custom-add-icon "
                         onClick={this.onAddButtonClick.bind(this)}>
-                    Add Office
-                </button>
-                    </p>
+                    <p className="add-span"></p>
+                </div>
+
             <div className="row">
                 {form}
                 {items}
