@@ -13,6 +13,7 @@ import Offices from './components/offices/Offices';
 import ProjectMembers from './components/project-members/ProjectMembers';
 import Projects from './components/projects/Projects';
 
+import TestPag from './components/testpag/Testpag';
 
 const Routes = () => (
     <Router history={hashHistory}>
@@ -30,6 +31,7 @@ const Routes = () => (
                 </Route>
             </Route>
             <Route path="about" component={About} />
+            <Route path="testpag" component={TestPag} />
         </Route>
     </Router>
 );
