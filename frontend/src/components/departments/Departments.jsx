@@ -8,6 +8,7 @@ import * as Controller from '../api/controller';
 import AddDetails from './AddDetails';
 
 
+
 export default class Departments extends Component {
 
 
@@ -112,10 +113,17 @@ export default class Departments extends Component {
                         (hideFunc) => {
                             switch (this.state.showModalTemplate) {
                                 case 'edit':
-                                    return <EditDetails department={this.state.modalDepartment} hideFunc={hideFunc} managers={this.state.managerList}/>
+                                    return <EditDetails department={this.state.modalDepartment}
+                                                        officeId={this.props.params.officeId}
+                                                        hideFunc={hideFunc}
+                                                        managers={this.state.managerList}
+                                                        saveFunc={function(){hideFunc(); this.fetchData();}.bind(this)}
+                                    />
                                 case 'add':
-                                    return <AddDetails officeId={this.props.params.officeId} hideFunc={hideFunc} managers={this.state.managerList}
-                                                        saveFunc={function(){hideFunc(); this.fetchData();}.bind(this)}/>
+                                    return <AddDetails officeId={this.props.params.officeId}
+                                                       hideFunc={hideFunc}
+                                                       managers={this.state.managerList}
+                                                       saveFunc={function(){hideFunc(); this.fetchData();}.bind(this)}/>
 
                             }
                         }

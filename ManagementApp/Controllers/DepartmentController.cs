@@ -64,7 +64,7 @@ namespace ManagementApp.Controllers
         }
 
         [Route("update")]
-        [HttpPost]
+        [HttpPut]
         public IHttpActionResult Update([FromBody]UpdateDepartmentInputInfo inputInfo)
         {
             var result = _departmentService.Update(inputInfo);
