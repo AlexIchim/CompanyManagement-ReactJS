@@ -7,8 +7,7 @@ import * as Rx from 'rx';
 const initialState = {
     user : mock,
     items: null,
-    model:null,
-    formToggle: false
+    model:null
 };
 
 class Context{
@@ -26,7 +25,7 @@ class Context{
 
 
     subscribe(handleFunc){
-        this.subject.subscribe(handleFunc);
+        return this.subject.subscribe(handleFunc);
     }
 
 }

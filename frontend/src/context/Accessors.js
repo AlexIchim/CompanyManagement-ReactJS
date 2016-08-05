@@ -7,7 +7,4 @@ export default new class Accessors{
     model(cursor){
         return cursor.get('model');
     }
-    formToggle(cursor){
-        return cursor.get('formToggle'); 
-    }
 }

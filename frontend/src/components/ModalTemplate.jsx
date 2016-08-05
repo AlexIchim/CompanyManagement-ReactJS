@@ -2,24 +2,19 @@ import React from 'react';
 
 export default class ModalTemplate extends React.Component{
 
-    componentDidMount() {
-        const {formModal} = this.refs;
+    componentDidMount(){
+        const formModal=this.refs.formModal;
         $(formModal).modal('show');
     }
-    componentWillMount(){
-    }
-
-    onCancelClick(){
-        const {formModal} = this.refs;
-        $(formModal).modal('hide');
-
-        this.props['onCancelClick']();
-    }
     onStoreClick(){
-        const {formModal} = this.refs;
+        const formModal=this.refs.formModal;
         $(formModal).modal('hide');
-
-        this.props['onStoreClick']();
+        this.props.onStoreClick();
+    }
+    onCancelClick(){
+        const formModal=this.refs.formModal;
+        $(formModal).modal('hide');
+        this.props.onCancelClick();
     }
 
     render(){
