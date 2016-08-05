@@ -5,6 +5,7 @@ import * as Rx from 'rx';
 
 
 const initialState = {
+    offices:[],
     departments:[]
 };
 
@@ -23,7 +24,7 @@ class Context{
 
 
     subscribe(handleFunc){
-        this.subject.subscribe(handleFunc);
+        return this.subject.subscribe(handleFunc);
     }
 
 }

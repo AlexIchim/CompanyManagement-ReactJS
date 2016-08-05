@@ -10,7 +10,6 @@ import './assets/less/index.less';
 import Dashboard from './components/dashboard/Dashboard.jsx';
 
 const Routes = () => {
-
     return (
         <Router history={hashHistory}>
             <Route path="/" component={App}>
