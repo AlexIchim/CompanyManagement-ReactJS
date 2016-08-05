@@ -8,7 +8,7 @@ const initialState = {
     user : mock,
     items: null,
     model:null,
-    itemsDropdown: null
+    dropdownItems: null
 };
 
 class Context{

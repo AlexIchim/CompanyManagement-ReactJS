@@ -13,12 +13,12 @@ export default new class Controller{
             async: false,
             success: function(data){
                 Context.cursor.set('items', data);
+                Context.cursor.set('model', null);
             }.bind(this)
         })
     }
 
     GetAllProjects() {
-        console.log('items before:', Context.cursor.get('items'));
         Controller.ajaxCall();
     }
 
@@ -29,7 +29,7 @@ export default new class Controller{
             url: config.base + 'project/add',
             data: {
                 Name: Context.cursor.get('model').Name,
-                DepartmentId: 3,
+                DepartmentId: 1,
                 Duration: Context.cursor.get('model').Duration,
                 Status: "NotStartedYet"
             },
@@ -38,7 +38,7 @@ export default new class Controller{
                 console.log('success');
             }.bind(this)
         });
-        //Controller.ajaxCall();
+        Controller.ajaxCall();
     }
 
     Update() {
@@ -78,7 +78,7 @@ export default new class Controller{
             url: config.base + "/project/statusDescriptions",
             async: false,
             success: function(data){
-                Context.cursor.set('itemsDropdown', data);
+                Context.cursor.set('dropdownItems', data);
             }.bind(this)
         });
 

@@ -15,7 +15,6 @@ export default class EditForm extends React.Component {
     }
 
     onStoreClick(){
-        console.log('hello');
         let model = Context.cursor.get('model');
 
         if(!model){
@@ -26,7 +25,6 @@ export default class EditForm extends React.Component {
         let duration = this.refs.inputDuration.value;
         var select = document.getElementById('dropdown');
         var status = select.options[select.selectedIndex].index;
-        console.log('status: ', status);
 
         model.Name = (name) ? name : model.Name;
         model.Duration = (duration) ? duration : model.Duration;
@@ -38,10 +36,9 @@ export default class EditForm extends React.Component {
     }
     render(){
 
-        const items = Context.cursor.get('itemsDropdown').map( (status, index) => {
+        const items = Context.cursor.get('dropdownItems').map( (status, index) => {
             return ( <option>{status}</option>
             )});
-        console.log('items: ', items);
 
         const model = Accessors.model(Context.cursor);
         const name = model.Name;
@@ -81,5 +78,4 @@ export default class EditForm extends React.Component {
             </ModalTemplate>
         )
     }
-
 }

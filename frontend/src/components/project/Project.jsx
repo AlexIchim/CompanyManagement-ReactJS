@@ -31,10 +31,10 @@ export default class Project extends React.Component{
     }
 
     onContextChange(cursor){
-        console.log('projects:', cursor.get('items'));
         this.setState({
             formToggle: false
         });
+
     }
 
     onAddButtonClick(){
@@ -50,7 +50,6 @@ export default class Project extends React.Component{
     hideModal(){
         Context.cursor.set('formToggle',false);
         Context.cursor.set('model',null);
-        console.log("Hidden");
         this.setState({
             formToggle: true
         });
@@ -60,9 +59,7 @@ export default class Project extends React.Component{
     }
 
     render(){
-        console.log('model is:', Accessors.model(Context.cursor));
         let modal = "";
-        console.log('store?', Accessors.formToggle(Context.cursor));
         if(Accessors.formToggle(Context.cursor)){
             if(Accessors.model(Context.cursor)){
                 modal=<EditForm onCancelClick={this.toggleModal.bind(this)}
@@ -86,8 +83,6 @@ export default class Project extends React.Component{
                     />
             )
         });
-
-        console.log('ITEMS:', items);
 
         return (
             <div>
