@@ -1,15 +1,20 @@
-import * as React from './react';
-import ModalTemplate from '../../layout/ModalTemplate';
+import React, { Component } from 'react';
+import {Link} from 'react-router';
+import * as Projects from './Projects';
 
 export default class Item extends React.Component{
    
-    constructor(){
-        super();
+    deleteProject(project){
+        Projects.deleteProject(project);
+        Projects.fetchData();
     }
 
    render(){
-        const linkMembers = ('offices/' + props.officeId + '/departments/' + props.node.departmentId  
-                            + '/projects/' + props.node.id + '/members');
+       	const props = this.props;
+        const onDelete = props.onDelete;
+        const onEdit = props.onEdit;
+        const linkMembers = ('offices/' + this.props.officeId + '/departments/' + this.props.node.departmentId  
+                            + '/projects/' + this.props.node.id + '/members');
 
         return (
             <tr>
@@ -18,11 +23,11 @@ export default class Item extends React.Component{
                 <td>{props.node.duration || 'variable'}</td>
                 <td>{props.node.status}</td>
                 <td>
-                    <Link to = "#">
-                        <button className = "btn btn-md btn-default" onClick = >
+                    
+                        <button className = "btn btn-md btn-default" onClick = {onEdit}>
                             Edit      
                         </button>
-                    </Link>
+                    
                     
                     <Link to = {linkMembers}>
                         <button className = "btn btn-md btn-default">
@@ -30,11 +35,11 @@ export default class Item extends React.Component{
                         </button>
                     </Link>
                     
-                    <Link to = "#">
-                        <button className = "btn btn-md btn-default">
+                    
+                        <button className = "btn btn-md btn-default" onClick = {onDelete} >
                             Remove
                         </button>
-                    </Link>
+                    
                 </td>
             </tr>
         )

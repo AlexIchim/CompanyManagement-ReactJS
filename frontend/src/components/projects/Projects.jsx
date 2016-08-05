@@ -6,6 +6,9 @@ import ModalTemplate from '../layout/ModalTemplate';
 import EditDetails from './EditDetails';
 import AddProject from './AddProject';
 import Item from './Item';
+import addProject from '../api/controller/addProject';
+import getAllProjects from '../api/controller/getAllProjects';
+import deleteProject from '../api/controller/deleteProject';
 
 export default class Projects extends Component{
     constructor () {
@@ -14,6 +17,7 @@ export default class Projects extends Component{
             projects: [],
             officeId : null,
             departmentName : '',
+            departmentId : null,
             showModalTemplate : null,
             modalProject : {}
         }
@@ -21,34 +25,26 @@ export default class Projects extends Component{
 
     componentWillMount(){
         const departmentId = this.props.params.departmentId;
-
-        $.ajax({
-            method : 'GET',
-            url : config.baseUrl + 'departments/' + this.props.params['departmentId'],
-            async : true,
-            success : (data) => {
-                this.setState({
-                    departmentName : data.name,
-                });
-            }
-        });
-
-        $.ajax({
-            method : 'GET',
-            url : config.baseUrl + 'departments/' + this.props.params['departmentId'] + '/projects',
-            async : true,
-            success : (data) => {
-                this.setState({
-                    projects : data
-                });
-            }
-        });
+        callApi();
     }
 
-    addProject(project){
+    deleteProject(id){
+       deleteProject(
+           id,
+           true,
+           (data) => {
+               this.fetchData();
+           }
+       );
+    }
+
+    fetchData(){
+        this.callApi();
+    }
+
+    addProject(){
         this.setState({
-            showModalTemplate : 'add',
-            modalProject : project
+            showModalTemplate : 'add'
         })
     }
 
@@ -76,14 +72,13 @@ export default class Projects extends Component{
     }
 
     callApi(){
-        $.ajax({
-            method: 'GET',
-            url: config.baseUrl + 'departments/' + this.props.params['departmentId'] + '/projects',
-            success: function(data) {
+        getAllProjects(
+            this.props.params.departmentId,
+            true,
+            (data) => {
                 this.setState({
                     projects : data
-                })
-            }.bind(this)
+                });
         });
 
         $.ajax({
@@ -108,18 +103,18 @@ export default class Projects extends Component{
         });
     }
 
- 
+    
 
     render() {
-    
-        const items = this.state.projects.map((element, index) => 
-           
-                <Item
-                    node = {element}
-                    key = {index}
-                    officeId = {this.state.officeId}
-                />
-            
+        
+        const items = this.state.projects.map((element, index) =>  
+            <Item
+                node = {element}
+                key = {index}
+                officeId = {this.state.officeId}
+                onDelete = {this.deleteProject.bind(this, element.id)}
+                onEdit = {this.editProject.bind(this, element)}
+            /> 
         );
 
         const modalTemplate = this.state.showModalTemplate !== null ? (
@@ -128,15 +123,42 @@ export default class Projects extends Component{
                     (hideFunc) => {
                         switch(this.state.showModalTemplate) {
                             case 'edit' : 
-                                return <EditDetails project = {this.state.modalProject} hideFunc = {hideFunc}/>
+                                return <EditDetails 
+                                            project = {this.state.modalProject}  
+                                            hideFunc = {hideFunc} 
+                                            updateFunc = { function(){
+                                                hideFunc();
+                                                this.fetchData();
+                                            }.bind(this)}
+                                            departmentId = {this.props.params['departmentId']}
+                                            projectId = {this.props.params['projectId']}
+                                         />;
                             case 'add' :
-                                return <AddProject project = {this.state.modalProject} hideFunc = {hideFunc}/>;
+                                return <AddProject 
+                                            hideFunc = {hideFunc}
+                                            saveFunc = {function(){
+                                                hideFunc();
+                                                this.fetchData();
+                                            }.bind(this)}
+                                            departmentId = {this.props.params['departmentId']}
+                                        />;
                         }
                     }
                 }
                 onHide = {this.hideModal.bind(this)}
             />
         ) : null;
+
+        /*const modalTemplate = this.state.showModalTemplate !== null ? ( 
+            <ModalTemplate 
+                getComponent = {
+                    (hideFunc) => {
+                        return <button onClick={hideFunc}>Cancel</button>
+                    }
+                }
+                onHide = {this.hideModal.bind(this)}
+            />
+        ) : null;*/
 
         return (
             <div>
