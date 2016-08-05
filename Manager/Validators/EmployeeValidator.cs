@@ -1,17 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Contracts;
+﻿using Contracts;
 using Manager.InfoModels;
 using Manager.InputInfoModels;
+using System;
 
 namespace Manager.Validators
 {
-    public class EmployeeValidator: IEmployeeValidator
+    public class EmployeeValidator : IEmployeeValidator
     {
-   
+
         public bool ValidateId(int id)
         {
             if (id <= 0)

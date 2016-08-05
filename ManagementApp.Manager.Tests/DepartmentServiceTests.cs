@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Contracts;
+using Domain.Enums;
 using Domain.Models;
 using Manager;
 using Manager.InfoModels;
@@ -9,7 +10,6 @@ using Moq;
 using NUnit.Framework;
 using System.Collections.Generic;
 using System.Linq;
-using Domain.Enums;
 
 namespace ManagementApp.Manager.Tests
 {
@@ -153,13 +153,13 @@ namespace ManagementApp.Manager.Tests
             _departmentRepositoryMock.Setup(m => m.DepartmentWithNameExists(department.Name)).Returns(false);
             _departmentRepositoryMock.Setup(m => m.IsDepartmentManager(employee.Id)).Returns(true);
             _departmentRepositoryMock.Setup(m => m.AddDepartment(department, employee.Id));
-            
+
 
             //Act
             _departmentService.AddDepartment(departmentInputInfo);
 
             //Assert
-           
+
             _departmentRepositoryMock.Verify(x => x.AddDepartment(department, employee.Id), Times.Once);
         }
 
@@ -208,13 +208,13 @@ namespace ManagementApp.Manager.Tests
         [Test]
         public void Add_ReturnsErrorMessage_WhenDepartmentWithNameExists()
         {
-            var employee = new Employee {Id = 1,Name = "Adi",PositionType =PositionType.DepartmentManager};
+            var employee = new Employee { Id = 1, Name = "Adi", PositionType = PositionType.DepartmentManager };
             var departmentInputInfo = new AddDepartmentInputInfo
             {
                 Name = "javascript",
                 DepartmentManagerId = employee.Id
             };
-            var department = new Department {Id = 1,Name = "javascript",DepartmentManager = employee};
+            var department = new Department { Id = 1, Name = "javascript", DepartmentManager = employee };
             _mapperMock.Setup(m => m.Map<Department>(departmentInputInfo)).Returns(department);
             _departmentRepositoryMock.Setup(m => m.IsDepartmentManager(employee.Id)).Returns(true);
             _departmentRepositoryMock.Setup(m => m.DepartmentWithNameExists(department.Name)).Returns(false);
@@ -224,7 +224,7 @@ namespace ManagementApp.Manager.Tests
 
             //Assert
             Assert.IsFalse(result.Success);
-            Assert.AreEqual(Messages.ErrorAddingDepartment,result.Message);
+            Assert.AreEqual(Messages.ErrorAddingDepartment, result.Message);
         }
 
 
@@ -234,7 +234,7 @@ namespace ManagementApp.Manager.Tests
             //Arrange
             var employee = new Employee { Id = 1, Name = "Adi", PositionType = PositionType.DepartmentManager };
             var departmentInputInfo = new UpdateDepartmentInputInfo { Id = 1, Name = "php" };
-            var department = new Department { Id = 1, Name = "java",DepartmentManager = employee};
+            var department = new Department { Id = 1, Name = "java", DepartmentManager = employee };
             _departmentValidatorMock.Setup(m => m.ValidateUpdateDepartmentInfo(departmentInputInfo)).Returns(true);
             _departmentRepositoryMock.Setup(m => m.GetEmployeeById(departmentInputInfo.DepartmentManagerId)).Returns(employee);
             _departmentRepositoryMock.Setup(m => m.GetDepartmentById(departmentInputInfo.Id)).Returns(department);

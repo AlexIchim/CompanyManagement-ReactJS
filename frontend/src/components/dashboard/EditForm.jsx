@@ -3,6 +3,7 @@ import Modal from '../modal/Modal.jsx';
 import configs from '../helpers/calls';
 import * as Immutable from 'immutable';
 import Context from '../../context/Context.js';
+import * as $ from 'jquery';
 
 export default class Form extends React.Component{
     

@@ -1,15 +1,18 @@
 import React, { Component } from 'react';
 import {Link} from 'react-router';
 import * as $ from 'jquery';
+import Context from '../../context/Context.js';
 import configs from '../helpers/calls'
+import * as Controller from '../controller';
+import * as Immutable from 'immutable';
 
 const Tr = (props) => {
 
     return(
         <tr>
-            <td>{props.node.Name} </td>
-            <td>{props.node.Role}</td>
-            <td>{props.node.Allocation}</td>
+            <td>{props.node.get('Name')} </td>
+            <td>{props.node.get('Role')}</td>
+            <td>{props.node.get('Allocation')}</td>
             <td><Link to="#"> Edit allocation | </Link>
                 <Link to="#"> Remove </Link></td>
         </tr>
@@ -24,22 +27,68 @@ export default class Member extends React.Component{
     constructor(){
         super();
         this.state ={
-            members: []
+            members: Context.cursor.get("members"),
+            assign:false,
+            pageNr:1
         }
     }
 
     componentWillMount(){
-        $.ajax({
-            method: 'GET',
-            url: configs.baseUrl + 'api/project/getEmployeesByProjectId?projectId=' + this.props.routeParams.projectId,
-            success: function(data){
-                this.setState({
-                    members: data
-                })
+        this.subscription = Context.subscribe(this.onContextChange.bind(this));
+    }
 
-            }.bind(this)
+     componentDidMount(){
+         Controller.getEmployeesByProjectId(this.props.routeParams.projectId,this.state.pageNr);
+    }
+
+    componentWillUnmount () {
+        this.subscription.dispose(); 
+    }
+
+     onContextChange(cursor){
+        this.setState({
+            members: cursor.get("members")         
+        });
+
+    }
+
+    showAddForm(){
+        this.setState({
+            assign:true
+        });
+    }
+
+    closeAddForm(){
+        this.setState({
+            assign: !this.state.assign
         })
     }
+
+    back(){
+
+        if (this.state.pageNr!=1){
+            const whereTo=this.state.pageNr-1
+
+            Controller.getEmployeesByProjectId(this.props.routeParams.projectId,whereTo);
+            
+             this.setState({
+                pageNr:this.state.pageNr-1
+            })
+        }
+                
+    }
+
+    next(){
+
+        const whereTo=this.state.pageNr+1
+
+        Controller.getEmployeesByProjectId(this.props.routeParams.projectId,whereTo);
+
+        this.setState({
+            pageNr:this.state.pageNr+1
+        })
+    }
+
 
     render(){
 
@@ -67,9 +116,21 @@ export default class Member extends React.Component{
                     </tr>
                     </thead>
                     <tbody>
+
                     {items}
+
                     </tbody>
                 </table>
+
+                <div>
+                    <button className="leftArrow" onClick={this.back.bind(this)}>
+                                <i className="fa fa-arrow-left fa-2x" aria-hidden="true"></i>
+                    </button>
+                    <button className="rightArrow" onClick={this.next.bind(this)}>
+                                <i className="fa fa-arrow-right fa-2x" aria-hidden="true"></i>
+                    </button>              
+                </div>
+
             </div>
         )
     }

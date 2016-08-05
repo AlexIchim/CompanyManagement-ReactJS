@@ -1,7 +1,7 @@
 import * as React from 'react';
 import classNames from 'classnames';
 import {Link} from 'react-router';
-import Form from './Form';
+import Form from './EditForm';
 import "./../../assets/less/index.less";
 
 class Tile extends React.Component{

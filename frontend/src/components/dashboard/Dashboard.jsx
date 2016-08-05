@@ -5,6 +5,7 @@ import configs from '../helpers/calls'
 import "./../../assets/less/index.less";
 import Context from '../../context/Context.js';
 import * as Immutable from 'immutable';
+import EditForm from './AddForm';
 
 
 
@@ -12,7 +13,8 @@ export default class Dashboard extends React.Component{
     constructor(){
         super();
         this.state = {
-            offices: Context.cursor.get('offices')
+            offices: Context.cursor.get('offices'),
+            add: false
         }
     }
 
@@ -44,10 +46,24 @@ export default class Dashboard extends React.Component{
 
     }
 
+    showAddForm(){
+        this.setState({
+            add: true
+        });
+    }
+
+    closeAddForm(){
+        this.setState({
+            add: !this.state.add
+        })
+    }
+
 
     render(){
 
         const icons= ["moon-o", "cube", "coffee"];
+
+        const editModal = this.state.add ? <EditForm show={this.showAddForm.bind(this)} close={this.closeAddForm.bind(this)} /> : ''
 
         const items = this.state.offices.map((element, index) => {
             return (
@@ -62,11 +78,19 @@ export default class Dashboard extends React.Component{
                     office = {element}
                     
                 />
-            )
+            )}
 
-        });
+            );
+
+
         return (
             <div>
+
+                {editModal}
+
+                <button className="btn btn-md btn-info" onClick={this.showAddForm.bind(this)}> <span className="glyphicon glyphicon-plus-sign"></span> Add new office </button>
+
+
                 {items}
             </div>
 

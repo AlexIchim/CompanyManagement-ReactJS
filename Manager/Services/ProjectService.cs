@@ -1,10 +1,12 @@
-﻿using AutoMapper;
+﻿using System;
+using AutoMapper;
 using Contracts;
 using Domain.Models;
 using Manager.InfoModels;
 using Manager.InputInfoModels;
 using System.Collections.Generic;
 using System.Linq;
+using Domain.Enums;
 
 namespace Manager.Services
 {
@@ -46,11 +48,18 @@ namespace Manager.Services
                 var project = _projectRepository.GetProjectById(projectId);
                 if (project != null)
                 {
-                    var employees = _projectRepository.GetEmployeesByProjectId(projectId,pageSize,pageNr);
+                    var employees = _projectRepository.GetEmployeesByProjectId(projectId, pageSize, pageNr);
 
                     if (employees != null)
                     {
                         var employeeInfos = _mapper.Map<IEnumerable<EmployeeInfo>>(employees);
+                        foreach (var e in employeeInfos)
+                        {
+                            int allocation = _projectRepository.GetEmployeeProjectAllocationById(projectId, e.Id);
+                            e.Allocation = allocation;
+                            string role = _projectRepository.GetEmployeeRoleById(e.Id);
+                            e.Role = role;
+                        }
                         return employeeInfos;
                     }
 
@@ -77,7 +86,7 @@ namespace Manager.Services
             }
             return new OperationResult(false, Messages.ErrorWhileAddingProject);
         }
-       
+
 
         public OperationResult Delete(int projectId)
         {
@@ -91,7 +100,7 @@ namespace Manager.Services
             return new OperationResult(false, Messages.ErrorDeletingProject);
         }
 
-        
+
         public OperationResult UpdateProject(UpdateProjectInputInfo inputInfo)
         {
             if (_projectValidator.ValidateUpdateProjectInfo(inputInfo))
@@ -102,7 +111,7 @@ namespace Manager.Services
                 {
                     //update
                     updatedProject.Name = inputInfo.Name;
-                    updatedProject.Status = inputInfo.Status;
+                    updatedProject.Status = (ProjectStatus)Enum.Parse(typeof(ProjectStatus), inputInfo.Status);
                     if (inputInfo.Duration != null)
                     {
                         updatedProject.Duration = inputInfo.Duration;
@@ -119,17 +128,36 @@ namespace Manager.Services
 
         public IEnumerable<ProjectInfo> GetAllDepartmentProjects(int depId, int? pageSize, int? pageNr)
         {
-            if (_projectValidator.ValidateId(depId)) { 
+            if (_projectValidator.ValidateId(depId))
+            {
                 var department = _departmentRepository.GetDepartmentById(depId);
                 if (department != null)
                 {
-                    var projects = _projectRepository.GetAllDepartmentProjects(department,pageSize,pageNr);
+                    var projects = _projectRepository.GetAllDepartmentProjects(department, pageSize, pageNr);
                     if (projects != null)
                     {
                         var projectInfos = _mapper.Map<IEnumerable<ProjectInfo>>(projects);
                         return projectInfos;
                     }
                 }
+            }
+            return null;
+        }
+
+        public IEnumerable<ProjectInfo> FilterProjectByStatus(string status, int? pageSize, int? pageNr)
+        {
+            if (status!= "" && status != null)
+            {
+                //if ((ProjectStatus)Enum.Parse(typeof(ProjectStatus), status) is ProjectStatus)
+                //{
+                    var projects = _projectRepository.FilterProjectByStatus(status,pageSize,pageNr);
+                    if (projects != null)
+                    {
+                        var projectInfos = _mapper.Map<IEnumerable<ProjectInfo>>(projects);
+                       
+                        return projectInfos;
+                    }
+                //}
             }
             return null;
         }

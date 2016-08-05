@@ -190,10 +190,10 @@ namespace DataAccess.Migrations
 
             context.Projects.AddOrUpdate(
                 p => p.Id,
-                new Project { Id = 1, Name = "A", Status = "Done", DepartmentId = 1 },
-                new Project { Id = 2, Name = "B", Status = "Done", DepartmentId = 1 },
-                new Project { Id = 3, Name = "C", Status = "Done", DepartmentId = 2 },
-                new Project { Id = 4, Name = "D", Status = "Done", DepartmentId = 1 }
+                new Project { Id = 1, Name = "A", Status = ProjectStatus.Done, DepartmentId = 1 },
+                new Project { Id = 2, Name = "B", Status = ProjectStatus.Done, DepartmentId = 1 },
+                new Project { Id = 3, Name = "C", Status = ProjectStatus.Done, DepartmentId = 2 },
+                new Project { Id = 4, Name = "D", Status = ProjectStatus.Done, DepartmentId = 1 }
             );
 
             context.EmployeeProjects.AddOrUpdate(
