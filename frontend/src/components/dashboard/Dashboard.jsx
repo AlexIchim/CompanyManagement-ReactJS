@@ -78,13 +78,16 @@ export default class Dashboard extends React.Component{
                 />
             );
         })
+        
 
         return (
             <div>
-
-                <div className=" glyphicon glyphicon-plus-sign custom-add-icon "
+                <div className=" rectangle ">
+                     <div className="glyphicon glyphicon-plus-sign custom-add-icon"
                         onClick={this.onAddButtonClick.bind(this)}>
-                    <p className="add-span"></p>
+                     <span className="add-span" onClick={this.onAddButtonClick.bind(this)}>Add Office</span>
+                     </div>
+
                 </div>
 
             <div className="row">
