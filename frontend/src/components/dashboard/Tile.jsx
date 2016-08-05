@@ -33,10 +33,6 @@ class Tile extends React.Component<any, any>{
                             View Departments
                         <i className="fa fa-arrow-circle-right"></i></Link>
                     </div>
-                    <button className="btn btn-success"
-                            onClick={this.submit.bind(this)}>
-                        Edit
-                    </button>
                 </div>
             </div>
             
