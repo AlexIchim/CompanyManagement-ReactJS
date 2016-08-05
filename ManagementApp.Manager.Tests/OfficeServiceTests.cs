@@ -113,7 +113,7 @@ namespace ManagementApp.Manager.Tests
                 new Department { Id = 1, Name = "java", OfficeId = 1},
                 new Department { Id = 2, Name = ".net", OfficeId = 2}
             };
-            _officeRepositoryMock.Setup(m => m.GetAllDepartmentsOfAnOffice(1)).Returns(departments);
+            _officeRepositoryMock.Setup(m => m.GetAllDepartmentsOfAnOffice(1,1,1)).Returns(departments);
 
 
         }

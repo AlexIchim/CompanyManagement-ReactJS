@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using Domain.Enums;
 
 namespace Domain.Models
 {
@@ -8,7 +9,7 @@ namespace Domain.Models
 
         public string Name { get; set; }
 
-        public string Status { get; set; }
+        public ProjectStatus Status { get; set; }
 
         public int? Duration { get; set; }
 
