@@ -1,10 +1,12 @@
-﻿using Contracts;
+﻿using System;
+using Contracts;
 using DataAccess.Context;
 using DataAccess.Extensions;
 using Domain.Models;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
+using Domain.Enums;
 
 namespace DataAccess.Repositories
 {
@@ -98,9 +100,14 @@ namespace DataAccess.Repositories
             return _context.Projects.Where(d => d.DepartmentId == department.Id).OrderBy(d => d.Name).Paginate(pageSize, pageNr).ToArray();
         }
 
-        public IEnumerable<Project> FilterProjectByStatus(string status, int? pageSize, int? pageNr)
+        public IEnumerable<Project> GetProjectsFilteredByStatus(Department department,string status, int? pageSize, int? pageNr)
         {
-            return _context.Projects.Where(p => p.Status.ToString() == status);
+            return _context.Projects.Where(p => p.Status.ToString() == status && p.DepartmentId==department.Id).OrderBy(d => d.Name).Paginate(pageSize, pageNr).ToArray();
+        }
+
+        public IEnumerable<string> GetProjectStatusDescriptions()
+        {
+            return Enum.GetNames(typeof(ProjectStatus));
         }
     }
 }

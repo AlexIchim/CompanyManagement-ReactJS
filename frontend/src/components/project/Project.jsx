@@ -20,6 +20,17 @@ export default class Project extends React.Component {
     }
 
     componentWillMount(){
+         $.ajax({
+            method: 'GET',
+            async: false,
+            url: configs.baseUrl + 'api/project/getProjectStatusDescriptions',
+            success: function (data) {
+                console.log("status",data, this);
+                this.setState({
+                    statusDescriptions: data
+                })
+            }.bind(this)
+        })     
         this.subscription = Context.subscribe(this.onContextChange.bind(this));
     }
 
@@ -35,7 +46,12 @@ export default class Project extends React.Component {
         this.setState({
             projects: cursor.get("projects")         
         });
+    }
 
+    onDropDownChange(){
+        const status=this.refs.status.options[this.refs.status.selectedIndex].value;
+        const pageNr = 1;
+        Controller.getProjectsFilteredByStatus(this.props.routeParams.departmentId,status,pageNr);
     }
 
     showAddForm(){
@@ -78,6 +94,13 @@ export default class Project extends React.Component {
 
     render() {
 
+        const statusDescriptions=this.state.statusDescriptions.map((el, x) => {
+            return (
+                <option value={el} key={x} >{el}</option>                         
+            )
+        });
+
+
         const items = this.state.projects.map((el, x) => {
             return (
                 <ProjectItem
@@ -114,7 +137,12 @@ export default class Project extends React.Component {
                     </button>
                     <button className="rightArrow" onClick={this.next.bind(this)}>
                                 <i className="fa fa-arrow-right fa-2x" aria-hidden="true"></i>
-                    </button>              
+                    </button>
+
+                    
+                    <select className="selectpicker" ref="status" onClick={this.onDropDownChange.bind(this)}>
+                        {statusDescriptions}                    
+                    </select>              
                 </div>
             </div>
         )

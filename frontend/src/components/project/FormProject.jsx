@@ -9,12 +9,31 @@ export default class Form extends React.Component{
 
     constructor(){
         super();
+        this.state={
+            statusDescriptions:[]
+        }
     };
 
+    componentWillMount(){
+        $.ajax({
+            method: 'GET',
+            async: false,
+            url: configs.baseUrl + 'api/project/getProjectStatusDescriptions',
+            success: function (data) {
+                console.log("status",data, this);
+                this.setState({
+                    statusDescriptions: data
+                })
+            }.bind(this)
+        })     
+    }
+
     store(cb){
+        const status=this.refs.status.options[this.refs.status.selectedIndex].value;
+
         var inputInfo={
             Name: this.refs.name.value,
-            Status: this.refs.status.value,
+            Status: status,
             Duration: this.refs.duration.value,
             DepartmentId: this.props.departmentId,
         }
@@ -36,6 +55,11 @@ export default class Form extends React.Component{
     }
 
     render(){
+        const statusDescriptions=this.state.statusDescriptions.map((el, x) => {
+            return (
+                <option value={el} key={x} >{el}</option>                         
+            )
+        });
 
         return(
 
@@ -45,15 +69,16 @@ export default class Form extends React.Component{
                 <div className="col-sm-6">
                     <input  ref="name" className="form-control" placeholder="Name"/>
                 </div>
-                <label className="col-sm-4 control-label"> Status </label>
-                    <div className="col-sm-6">
-                        <input  ref="status" className="form-control" placeholder="Project Status"/>
-                    </div>
                     <label className="col-sm-4 control-label"> Duration </label>
                     <div className="col-sm-6">
-                        <input  ref="duration" className="form-control" placeholder="Project Status"/>
+                        <input  ref="duration" className="form-control" placeholder="Project Duration"/>
                     </div>
             </div>
+
+            <label className="col-sm-4 control-label">Status </label>     
+            <select className="selectpicker" ref="status" >
+                {statusDescriptions}                    
+            </select>
      
        
         </Modal>

@@ -144,13 +144,14 @@ namespace Manager.Services
             return null;
         }
 
-        public IEnumerable<ProjectInfo> FilterProjectByStatus(string status, int? pageSize, int? pageNr)
+        public IEnumerable<ProjectInfo> GetProjectsFilteredByStatus(int departmentId,string status, int? pageSize, int? pageNr)
         {
             if (status!= "" && status != null)
             {
                 //if ((ProjectStatus)Enum.Parse(typeof(ProjectStatus), status) is ProjectStatus)
                 //{
-                    var projects = _projectRepository.FilterProjectByStatus(status,pageSize,pageNr);
+                    var department = _departmentRepository.GetDepartmentById(departmentId);
+                    var projects = _projectRepository.GetProjectsFilteredByStatus(department,status,pageSize,pageNr);
                     if (projects != null)
                     {
                         var projectInfos = _mapper.Map<IEnumerable<ProjectInfo>>(projects);
@@ -160,6 +161,11 @@ namespace Manager.Services
                 //}
             }
             return null;
+        }
+
+        public IEnumerable<string> GetProjectStatusDescriptions()
+        {
+            return _projectRepository.GetProjectStatusDescriptions();
         }
 
     }
