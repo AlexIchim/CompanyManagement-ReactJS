@@ -20,7 +20,9 @@ namespace Manager.Mapper
             CreateMap<Project, ProjectInfo>().ForMember(
                 pi => pi.EmployeesNumber,
                 proj => proj.MapFrom(src => src.EmployeeProjects.Count)
-            );
+            ).ForMember(
+                dest => dest.Status,
+                opt => opt.MapFrom(src => src.Status.GetDescription()));
             //CreateMap<Employee, MemberInfo>()
             //    .ForMember(
             //    dest=>dest.JobType, opt=>opt.MapFrom(src=>new JobTypeInfo
