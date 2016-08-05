@@ -15,7 +15,7 @@ export default class DepartmentRow extends React.Component<any, any>{
                 <td>{props.node.projectCount}</td>
                 <td><Link to={linkEmployees}>View employees |</Link>
                     <Link to={linkProjects}> View projects |</Link>
-                    <Link to="#"> Edit </Link></td>
+                    <button onClick={props.onEdit}>Edit</button></td>
             </tr>
         )
     }
