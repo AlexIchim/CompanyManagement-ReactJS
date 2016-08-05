@@ -46,15 +46,15 @@ export default class Form extends React.Component{
             data:inputInfo,
             success: function (data) {               
                  cb(); 
-                 this.refresh();
+                 this.refresh(this.props.officeId);
             }.bind(this)
         })   
 
               
     }
 
-    refresh(){
-         Controller.getAllDepOffice(this.props.routeParams.officeId,1);
+    refresh(officeId){
+         Controller.getAllDepOffice(officeId,1);
     }
     
     render(){
