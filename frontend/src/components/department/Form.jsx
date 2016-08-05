@@ -71,15 +71,12 @@ export default class Form extends React.Component{
                 <div className="col-sm-6">
                     <input  ref="name" className="form-control" placeholder="Name"/>
                 </div>
+                <label className="col-sm-4 control-label"> Status </label>
+                <div className="col-sm-6">
+                    <input  ref="status" className="form-control" placeholder="Project Status"/>
+                </div>
             </div>
-           
-           <label className="col-sm-4 control-label"> Department manager </label>
-       
-            <select className="selectpicker" ref="managersDropdown" >
-                {departmentManagers}                    
-            </select>
-     
-       
+ 
         </Modal>
         )
     }

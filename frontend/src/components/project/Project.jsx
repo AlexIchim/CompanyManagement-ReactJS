@@ -5,7 +5,7 @@ import configs from '../helpers/calls'
 import Form from './FormProject.jsx'
 import Context from '../../context/Context.js';
 import * as Immutable from 'immutable';
-
+import * as Controller from '../controller';
 
 const Tr = (props) => {
 
@@ -32,27 +32,26 @@ export default class Project extends React.Component {
         super();
         this.state = {
             add: false,
-            projects: Context.cursor.get("projects")
+            projects: Context.cursor.get("projects"),
+            pageNr:1
         }
     }
 
     componentWillMount(){
-
-        Context.subscribe(this.onContextChange.bind(this));
-
-        $.ajax({
-            method: 'GET',
-            url: configs.baseUrl + 'api/project/getAllDepartmentProjects?departmentId=' + this.props.routeParams.departmentId+'&pageSize=10&pageNr=1',
-            success: function (data) {
-                //console.log(data);
-                Context.cursor.set("projects",Immutable.fromJS(data));
-            }.bind(this)
-        })
+        this.subscription = Context.subscribe(this.onContextChange.bind(this));
     }
 
-    onContextChange(cursor){
+    componentDidMount(){
+         Controller.getAllDepProjects(this.props.routeParams.departmentId,this.state.pageNr);
+    }
+
+    componentWillUnmount () {
+        this.subscription.dispose(); 
+    }
+
+     onContextChange(cursor){
         this.setState({
-            projects: Context.cursor.get("projects")
+            projects: cursor.get("projects")         
         });
 
     }
@@ -66,6 +65,31 @@ export default class Project extends React.Component {
     closeAddForm(){
         this.setState({
             add: !this.state.add
+        })
+    }
+
+    back(){
+
+        if (this.state.pageNr!=1){
+            const whereTo=this.state.pageNr-1
+
+            Controller.getAllDepProjects(this.props.routeParams.departmentId,whereTo);
+            
+             this.setState({
+                pageNr:this.state.pageNr-1
+            })
+        }
+                
+    }
+
+    next(){
+
+        const whereTo=this.state.pageNr+1
+
+        Controller.getAllDepProjects(this.props.routeParams.departmentId,whereTo);
+
+        this.setState({
+            pageNr:this.state.pageNr+1
         })
     }
 
@@ -103,6 +127,14 @@ export default class Project extends React.Component {
                     {items}
                 </tbody>
                 </table>
+                <div>
+                    <button className="leftArrow" onClick={this.back.bind(this)}>
+                                <i className="fa fa-arrow-left fa-2x" aria-hidden="true"></i>
+                    </button>
+                    <button className="rightArrow" onClick={this.next.bind(this)}>
+                                <i className="fa fa-arrow-right fa-2x" aria-hidden="true"></i>
+                    </button>              
+                </div>
             </div>
         )
     }
