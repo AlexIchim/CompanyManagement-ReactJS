@@ -55,7 +55,7 @@ export default class Employee extends React.Component{
         if (this.state.pageNr!=1){
             const whereTo=this.state.pageNr-1
 
-            Controller.getAllEmployeesByDepartmentId(this.routeParams.departmentId,whereTo)
+            Controller.getAllEmployeesByDepartmentId(this.props.routeParams.departmentId,whereTo)
             
              this.setState({
                 pageNr:this.state.pageNr-1
@@ -68,7 +68,7 @@ export default class Employee extends React.Component{
 
         const whereTo=this.state.pageNr+1
 
-        Controller.getAllEmployeesByDepartmentId(this.routeParams.departmentId.whereTo)
+        Controller.getAllEmployeesByDepartmentId(this.props.routeParams.departmentId,whereTo)
 
         this.setState({
             pageNr:this.state.pageNr+1
@@ -112,6 +112,14 @@ render(){
                     {items}
                 </tbody>
             </table>
+            <div className="btn-wrapper">
+                    <button className="leftArrow" onClick={this.back.bind(this)}>
+                                <i className="fa fa-arrow-left fa-1x" aria-hidden="true"></i>
+                    </button>
+                    <button className="rightArrow" onClick={this.next.bind(this)}>
+                                <i className="fa fa-arrow-right fa-1x" aria-hidden="true"></i>
+                    </button>              
+                </div>
         </div>
     )
 }
