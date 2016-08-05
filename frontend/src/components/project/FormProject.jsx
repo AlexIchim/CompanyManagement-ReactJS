@@ -25,13 +25,13 @@ export default class Form extends React.Component{
             data:inputInfo,
             success: function (data) {
                 cb();
-                this.refresh();
+                this.refresh(this.props.departmentId);
             }.bind(this)
         })
     }
 
-    refresh(){
-        Controller.getAllDepProjects(this.props.routeParams.departmentId,1);
+    refresh(departmentId){
+        Controller.getAllDepProjects(departmentId,1);
     }
 
     render(){
