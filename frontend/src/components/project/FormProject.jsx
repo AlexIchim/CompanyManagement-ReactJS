@@ -15,6 +15,7 @@ export default class Form extends React.Component{
         var inputInfo={
             Name: this.refs.name.value,
             Status: this.refs.status.value,
+            Duration: this.refs.duration.value,
             DepartmentId: this.props.departmentId,
         }
         
@@ -47,6 +48,10 @@ export default class Form extends React.Component{
                 <label className="col-sm-4 control-label"> Status </label>
                     <div className="col-sm-6">
                         <input  ref="status" className="form-control" placeholder="Project Status"/>
+                    </div>
+                    <label className="col-sm-4 control-label"> Duration </label>
+                    <div className="col-sm-6">
+                        <input  ref="duration" className="form-control" placeholder="Project Status"/>
                     </div>
             </div>
      

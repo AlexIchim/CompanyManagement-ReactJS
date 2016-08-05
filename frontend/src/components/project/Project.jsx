@@ -6,25 +6,7 @@ import Form from './FormProject.jsx'
 import Context from '../../context/Context.js';
 import * as Immutable from 'immutable';
 import * as Controller from '../controller';
-
-const Tr = (props) => {
-
-    const linkMembers = "department/project/" + props.node.Id  + '/' + props.node.Name + "/members";
-
-    return(
-        <tr>
-            <td>{props.node.get('Name')} </td>
-            <td>{props.node.get('EmployeesNumber')}</td>
-            <td>{props.node.get('Duration')}</td>
-            <td>{props.node.get('Status')}</td>
-            <td><Link to=""> Edit | </Link>
-                <Link to={linkMembers}> View Members | </Link>
-                <Link to="#"> Remove </Link></td>
-        </tr>
-    )
-
-
-}
+import ProjectItem from './ProjectItem.jsx'
 
 export default class Project extends React.Component {
 
@@ -98,14 +80,13 @@ export default class Project extends React.Component {
 
         const items = this.state.projects.map((el, x) => {
             return (
-                <Tr
+                <ProjectItem
                     node = {el}
                     key= {x}
-
+                    departmentId={this.props.routeParams.departmentId}   
                 />
             )
         });
-        console.log("render",items);
         const addModal = this.state.add ? <Form departmentId={this.props.routeParams.departmentId} show = {this.state.add} close={this.closeAddForm.bind(this)} /> : '';
 
         return (
@@ -118,8 +99,8 @@ export default class Project extends React.Component {
                     <tr>
                         <th className="col-md-2">Name</th>
                         <th className="col-md-2">Team members</th>
-                        <th className="col-md-2">Duration</th>
                         <th className="col-md-2">Status</th>
+                        <th className="col-md-2">Duration</th>
                         <th className="col-md-2">Actions</th>
                     </tr>
                     </thead>

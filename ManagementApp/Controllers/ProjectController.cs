@@ -6,7 +6,7 @@ using System.Web.Http.Cors;
 namespace ManagementApp.Controllers
 {
     [RoutePrefix("api/project")]
-    [EnableCors("*", "*", "GET")]
+    [EnableCors("*", "*", "GET,POST,PUT")]
     public class ProjectController : ApiController
     {
         
