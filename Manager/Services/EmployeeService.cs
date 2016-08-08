@@ -33,6 +33,13 @@ namespace Manager.Services
             return employeeInfos;
         }
 
+        public IEnumerable<EmployeeInfo> GetDepartmentManagers() {
+            var employees = _employeeRepository.GetDepartmentManagers();
+            var employeeInfos = _mapper.Map<IEnumerable<EmployeeInfo>>(employees);
+
+            return employeeInfos;
+        }
+
         public EmployeeInfo GetById(int id)
         {
             var employee = _employeeRepository.GetById(id);

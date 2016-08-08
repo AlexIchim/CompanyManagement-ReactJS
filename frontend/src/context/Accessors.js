@@ -7,8 +7,8 @@ export default new class Accessors{
     model(cursor){
         return cursor.get('model');
     }
-    formToggle(cursor){
-        return cursor.get('formToggle'); 
+    dropdownItems(cursor){
+        return cursor.get('dropdownItems');
     }
     itemsDescriptions(cursor){
         return cursor.get('itemsDescriptions');

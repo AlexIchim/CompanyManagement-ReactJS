@@ -25,6 +25,13 @@ namespace ManagementApp.Controllers
             return Json(result);
         }
 
+        [Route("departmentManagers")]
+        [HttpGet]
+        public IHttpActionResult GetDepartmentManagers() {
+            var result = _employeeService.GetDepartmentManagers();
+            return Json(result);
+        }
+
         [Route("getById/{id}")]
         [HttpGet]
         public IHttpActionResult GetById(int id)
