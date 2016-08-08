@@ -32,8 +32,26 @@ namespace DataAccess.Migrations
                 p => p.Id,
                 new Department { Id = 1, Name = ".Net", OfficeId = 1 },
                 new Department { Id = 2, Name = "Javascript", OfficeId = 1 },
-                new Department { Id = 3, Name = "Java", OfficeId = 2 },
-                new Department { Id = 4, Name = "Php", OfficeId = 2 }
+                new Department { Id = 3, Name = "Java", OfficeId = 1 },
+                new Department { Id = 4, Name = "Php", OfficeId = 1 },
+                new Department { Id = 5, Name = "SAP", OfficeId = 1 },
+                new Department { Id = 6, Name = "Perl", OfficeId = 1 },
+                new Department { Id = 7, Name = "Python", OfficeId = 1 },
+                new Department { Id = 8, Name = "C++", OfficeId = 1 },
+                new Department { Id = 9, Name = "React", OfficeId = 1 },
+                new Department { Id = 10, Name = "Design", OfficeId = 1 },
+                new Department { Id = 11, Name = "Games", OfficeId = 1 },
+                new Department { Id = 12, Name = ".Net 2", OfficeId = 1 },
+                new Department { Id = 13, Name = ".Net 3", OfficeId = 1 },
+                new Department { Id = 14, Name = ".Net 4", OfficeId = 1 },
+                new Department { Id = 15, Name = ".Net 5", OfficeId = 1 },
+                new Department { Id = 16, Name = ".Net 6", OfficeId = 1 },
+                new Department { Id = 17, Name = ".Net 7", OfficeId = 1 },
+                new Department { Id = 18, Name = ".Net 8", OfficeId = 1 },
+                new Department { Id = 19, Name = ".Net 9", OfficeId = 1 },
+
+                new Department { Id = 20, Name = "Java", OfficeId = 2 },
+                new Department { Id = 21, Name = "Php", OfficeId = 2 }
             );
 
             context.Projects.AddOrUpdate(

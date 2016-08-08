@@ -26,12 +26,22 @@ namespace DataAccess.Repositories
             return _context.Offices.SingleOrDefault(d => d.Id == id);
         }
 
+
+
         public IEnumerable<Department> GetDepartmentsByOfficeId(int officeId, int? pageSize = null, int? pageNumber = null)
         {
             return _context.Departments
                 .Where(d => d.OfficeId == officeId)
+                .OrderBy(d => d.Id)
                 .Paginate(pageSize, pageNumber)
                 .ToArray();
+        }
+
+        public int GetDepartmentCountByOfficeId(int officeId)
+        {
+            return _context.Departments
+                .Where(d => d.OfficeId == officeId)
+                .Count();
         }
 
         public void Add(Office office)

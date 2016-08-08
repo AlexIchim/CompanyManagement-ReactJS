@@ -42,6 +42,12 @@ namespace Manager.Services
             return departmentInfos;
         }
 
+        public int GetDepartmentCountByOfficeId(int OfficeId)
+        {
+            var count = _officeRepository.GetDepartmentCountByOfficeId(OfficeId);
+            return count;
+        }
+
         public OperationResult Add(AddOfficeInputInfo inputInfo)
         {
             var result = Validators.OfficeValidator.Validate(inputInfo);

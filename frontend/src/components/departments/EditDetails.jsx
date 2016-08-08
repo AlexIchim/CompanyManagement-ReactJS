@@ -1,5 +1,5 @@
 import React from 'react';
-import * as Controller from '../api/controller';
+import * as Controller from '../../api/controller';
 
 export default class EditDetails extends React.Component {
     constructor(){

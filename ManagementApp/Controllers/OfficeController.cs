@@ -47,6 +47,14 @@ namespace ManagementApp.Controllers
             return Json(result, _camelCaseJsonSettings);
         }
 
+        [Route("{id}/departments/count")]
+        [HttpGet]
+        public IHttpActionResult GetDepartmentCountByOfficeId(int id)
+        {
+            var result = _officeService.GetDepartmentCountByOfficeId(id);
+            return Json(result, _camelCaseJsonSettings);
+        }
+
         [Route("add")]
         [HttpPost]
         public IHttpActionResult Add([FromBody] AddOfficeInputInfo inputInfo)

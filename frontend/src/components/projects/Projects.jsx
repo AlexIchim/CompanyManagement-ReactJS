@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import {Link} from 'react-router';
 import * as $ from 'jquery';
-import config from '../api/config.js';
+import config from '../../api/config.js';
 
 const ProjectRow = (props) => {
    
