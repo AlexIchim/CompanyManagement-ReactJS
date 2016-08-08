@@ -8,7 +8,7 @@ namespace Domain.Models
         public string Name { get; set; }
         public string Address { get; set; }
         public string Phone { get; set; }
-        public byte[] Image { get; set; }
+        public string Image { get; set; }
 
         public virtual ICollection<Department> Departments { get; set; }
     }

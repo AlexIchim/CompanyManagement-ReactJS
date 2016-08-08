@@ -212,19 +212,3 @@ export default class Departments extends Component {
         );
     }
 }
-/* 
-<table className="table table-hover table-bordered" id="table1">
-                    <thead>
-                    <tr>
-                        <th className="col-md-2">Department</th>
-                        <th className="col-md-2">Department manager</th>
-                        <th className="col-md-2">Employees</th>
-                        <th className="col-md-2">Projects</th>
-                        <th className="col-md-2">Actions</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    {items}
-                    </tbody>
-                </table>
-*/

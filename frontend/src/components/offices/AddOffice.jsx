@@ -6,17 +6,71 @@ export default class AddOffice extends React.Component{
 
     addOffice()
     {
-        let officeObject = {
-            name: this.refs.name.value,
-            address: this.refs.address.value,
-            phone: this.refs.phone.value,
-            image: this.refs.image.value
+        if(this.imageFile !== null && this.imageFile !== undefined){
+            let canvas = document.createElement("canvas");
+            let ctx = canvas.getContext("2d");
+            
+            let img = new Image;    
+            img.onload = function() {
+                canvas.width = img.width;
+                canvas.height = img.height; 
+                ctx.drawImage(img, 0, 0);
+                URL.revokeObjectURL(img.src); 
+                   
+                let outputImage = canvas.toDataURL("image/jpeg").substr(23); 
+
+                console.log('---------------------');
+                console.log(canvas.toDataURL("image/jpeg"));
+                console.log('---------------------');
+
+                URL.revokeObjectURL(img.src);
+
+                let officeObject = {
+                    name: this.refs.name.value,
+                    address: this.refs.address.value,
+                    phone: this.refs.phone.value,
+                    image: outputImage
+                }
+                Controller.addNewOffice(
+                    officeObject,
+                    false,
+                    this.props.saveFunc
+                )
+            }.bind(this);
+            img.src = URL.createObjectURL(this.imageFile);
         }
-        Controller.addNewOffice(
-            officeObject,
-            false,
-            this.props.saveFunc
-        )
+        else{
+            let officeObject = {
+                name: this.refs.name.value,
+                address: this.refs.address.value,
+                phone: this.refs.phone.value,
+                image: null
+            }
+            Controller.addNewOffice(
+                officeObject,
+                false,
+                this.props.saveFunc
+            )
+        }
+    }
+
+    onImageChange(e){   
+        let canvas = document.getElementById('imageCanvas');
+        let ctx = canvas.getContext('2d');
+        
+        if(e.target.files[0] !== undefined){
+            let img = new Image;
+            img.onload = function() {
+                ctx.drawImage(img, 0, 0, 150, 150 * img.height / img.width);
+                URL.revokeObjectURL(img.src);
+            }
+            img.src = URL.createObjectURL(e.target.files[0]);
+            this.imageFile = e.target.files[0];
+        }
+        else{
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            this.imageFile = null;
+        }
     }
 
     render()
@@ -62,10 +116,11 @@ export default class AddOffice extends React.Component{
                                 <label className="rightAligned" htmlFor="image">Image:</label>
                             </div>
                             <div className="col-md-8">
-                                <span className="info-box-icon bg-gray"><i className="glyphicon glyphicon-picture"></i><img src=""/></span>
                                 <div className="col-md-6 col-sm-6 col-xs-12">
-                                    <input type="file" ref="image" defaultValue="Choose image"/>
-                                    {/*<button className="btn-default" onClick={this.chooseFile}>Choose image</button>*/}
+                                    <input type="file" ref="image" defaultValue="Choose image" onChange={this.onImageChange.bind(this)}/>
+                                </div>
+                                <div className="col-md-6 col-sm-6 col-xs-12">
+                                    <canvas id="imageCanvas"></canvas>
                                 </div>
                             </div>
                         </div>
