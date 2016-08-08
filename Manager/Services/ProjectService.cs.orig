@@ -1,8 +1,10 @@
 ﻿using AutoMapper;
 using Contracts;
+using Domain.Enums;
 using Domain.Models;
 using Manager.InfoModels;
 using Manager.InputInfoModels;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -21,6 +23,7 @@ namespace Manager.Services
             _departmentRepository = departmentRepository;
             _mapper = mapper;
             _projectValidator = projectValidator;
+
         }
 
         public IEnumerable<EmployeeAllocationInfo> GetEmployeesAllocation(int projectId)
@@ -39,18 +42,25 @@ namespace Manager.Services
             return null;
         }
 
-        public IEnumerable<EmployeeInfo> GetEmployeesByProjectId(int projectId)
+        public IEnumerable<EmployeeInfo> GetEmployeesByProjectId(int projectId, int? pageSize, int? pageNr)
         {
             if (_projectValidator.ValidateId(projectId))
             {
                 var project = _projectRepository.GetProjectById(projectId);
                 if (project != null)
                 {
-                    var employees = _projectRepository.GetEmployeesByProjectId(projectId);
+                    var employees = _projectRepository.GetEmployeesByProjectId(projectId, pageSize, pageNr);
 
                     if (employees != null)
                     {
                         var employeeInfos = _mapper.Map<IEnumerable<EmployeeInfo>>(employees);
+                        foreach (var e in employeeInfos)
+                        {
+                            int allocation = _projectRepository.GetEmployeeProjectAllocationById(projectId, e.Id);
+                            e.Allocation = allocation;
+                            string role = _projectRepository.GetEmployeeRoleById(e.Id);
+                            e.Role = role;
+                        }
                         return employeeInfos;
                     }
 
@@ -77,7 +87,7 @@ namespace Manager.Services
             }
             return new OperationResult(false, Messages.ErrorWhileAddingProject);
         }
-       
+
 
         public OperationResult Delete(int projectId)
         {
@@ -91,7 +101,7 @@ namespace Manager.Services
             return new OperationResult(false, Messages.ErrorDeletingProject);
         }
 
-        
+
         public OperationResult UpdateProject(UpdateProjectInputInfo inputInfo)
         {
             if (_projectValidator.ValidateUpdateProjectInfo(inputInfo))
@@ -102,7 +112,7 @@ namespace Manager.Services
                 {
                     //update
                     updatedProject.Name = inputInfo.Name;
-                    updatedProject.Status = inputInfo.Status;
+                    updatedProject.Status = (ProjectStatus)Enum.Parse(typeof(ProjectStatus), inputInfo.Status);
                     if (inputInfo.Duration != null)
                     {
                         updatedProject.Duration = inputInfo.Duration;
@@ -117,21 +127,14 @@ namespace Manager.Services
             return new OperationResult(false, Messages.ErrorWhileUpdatingProject);
         }
 
-        public IEnumerable<ProjectInfo> GetAllDepartmentProjects(int depId)
+        public IEnumerable<ProjectInfo> GetAllDepartmentProjects(int depId, int? pageSize, int? pageNr)
         {
-<<<<<<< HEAD
             if (_projectValidator.ValidateId(depId))
-=======
-            //var depId = _mapper.Map<int>(inputInfo);
-
-            var department = _departmentRepository.GetDepartmentById(depId);
-            if (department != null)
->>>>>>> capac-andreimuresan
             {
                 var department = _departmentRepository.GetDepartmentById(depId);
                 if (department != null)
                 {
-                    var projects = _projectRepository.GetAllDepartmentProjects(department);
+                    var projects = _projectRepository.GetAllDepartmentProjects(department, pageSize, pageNr);
                     if (projects != null)
                     {
                         var projectInfos = _mapper.Map<IEnumerable<ProjectInfo>>(projects);
@@ -140,6 +143,56 @@ namespace Manager.Services
                 }
             }
             return null;
+        }
+
+        public IEnumerable<ProjectInfo> GetProjectsFilteredByStatus(int departmentId,string status, int? pageSize, int? pageNr)
+        {
+            if (status != "" && status != null)
+            {
+                //if ((ProjectStatus)Enum.Parse(typeof(ProjectStatus), status) is ProjectStatus)
+                //{
+<<<<<<< HEAD
+                    var department = _departmentRepository.GetDepartmentById(departmentId);
+                    var projects = _projectRepository.GetProjectsFilteredByStatus(department,status,pageSize,pageNr);
+                    if (projects != null)
+                    {
+                        var projectInfos = _mapper.Map<IEnumerable<ProjectInfo>>(projects);
+                       
+                        return projectInfos;
+                    }
+=======
+                var projects = _projectRepository.FilterProjectByStatus(status, pageSize, pageNr);
+                if (projects != null)
+                {
+                    var projectInfos = _mapper.Map<IEnumerable<ProjectInfo>>(projects);
+
+                    return projectInfos;
+                }
+>>>>>>> capac-Adi
+                //}
+            }
+            return null;
+        }
+
+<<<<<<< HEAD
+        public IEnumerable<string> GetProjectStatusDescriptions()
+        {
+            return _projectRepository.GetProjectStatusDescriptions();
+=======
+        public OperationResult DeleteEmployeeFromProject(int employeeId, int projectId)
+        {
+
+            if (_projectValidator.ValidateId(employeeId) && _projectValidator.ValidateId(projectId))
+            {
+                var employeeProject = _projectRepository.GetEmployeeProjectById(employeeId, projectId);
+                if (employeeProject != null)
+                {
+                    _projectRepository.DeleteEmployeeProject(employeeProject);
+                    return new OperationResult(true, Messages.SuccessfullyDeletedEmployeeProject);
+                }
+            }
+            return new OperationResult(false, Messages.ErrorDeletingEmployeeProject);
+>>>>>>> capac-Adi
         }
 
     }

@@ -106,6 +106,15 @@ namespace Manager {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to &apos;Error deleting employee project&apos;.
+        /// </summary>
+        public static string ErrorDeletingEmployeeProject {
+            get {
+                return ResourceManager.GetString("ErrorDeletingEmployeeProject", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to &apos;Error deleting project&apos;.
         /// </summary>
         public static string ErrorDeletingProject {
@@ -219,6 +228,15 @@ namespace Manager {
         public static string SuccessfullyDeletedEmployee {
             get {
                 return ResourceManager.GetString("SuccessfullyDeletedEmployee", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to &apos;Employee Project was succesfully deleted&apos;.
+        /// </summary>
+        public static string SuccessfullyDeletedEmployeeProject {
+            get {
+                return ResourceManager.GetString("SuccessfullyDeletedEmployeeProject", resourceCulture);
             }
         }
         

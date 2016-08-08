@@ -17,7 +17,7 @@ const Routes = () => {
                 <Route path="office/:officeId/:officeName/departments" component={Department}/>
                 <Route path="department/:departmentId/:departmentName/employees" component={Employee}/>
                 <Route path="department/:departmentId/:departmentName/projects" component={Project}/>
-                <Route path="department/project/:projectId/:projectName/members" component={Member}/>
+                <Route path="project/:projectId/:projectName/members" component={Member}/>
             </Route>
         </Router>
     )

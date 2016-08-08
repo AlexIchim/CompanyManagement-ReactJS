@@ -109,7 +109,7 @@ namespace Manager.Services
             {
                 var employeeProjects = _employeeRepository.GetEmployeeProjectById(inputInfo.ProjectId).ToList();
 
-                if (employeeProjects != null)
+                if (employeeProjects.Any())
                 {
                     EmployeeProject ep = employeeProjects.SingleOrDefault(e => e.EmployeeId == inputInfo.EmployeeId);
                     if (ep != null)
@@ -121,6 +121,7 @@ namespace Manager.Services
                         if (newTotalAllocation <= 100)
                         {
                             ep.Allocation = inputInfo.Allocation;
+                            _employeeRepository.Save();
                             return new OperationResult(true, Messages.SuccessfullyUpdatedPartialAllocation);
                         }
                     }
@@ -139,7 +140,7 @@ namespace Manager.Services
                 if (department != null)
                 {
                     var members = _employeeRepository.GetAllDepartmentEmployees(department, pageSize, pageNr);
-                    
+
 
                     if (members.Any())
                     {
@@ -192,6 +193,21 @@ namespace Manager.Services
                 ei.TotalAllocation = _employeeRepository.ComputeTotalAllocation(ei.Id);
             }
             return employeeInfos;
+        }
+
+        public int GetTotalAllocation(int employeeId)
+        {
+            return _employeeRepository.ComputeTotalAllocation(employeeId);
+        }
+
+        public IEnumerable<string> GetJobTypesDescriptions()
+        {
+            return _employeeRepository.GetJobTypesDescriptions();
+        }
+
+        public IEnumerable<string> GetPositionTypesDescriptions()
+        {
+            return _employeeRepository.GetPositionTypeDescriptions();
         }
     }
 }

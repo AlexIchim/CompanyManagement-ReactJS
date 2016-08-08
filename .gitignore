@@ -34,3 +34,4 @@ node_modules/
 *.dll
 .idea
 
+frontend/.idea/workspace.xml

@@ -85,13 +85,15 @@ export default class Dashboard extends React.Component{
 
         return (
             <div>
-
                 {editModal}
 
-                <button className="btn btn-md btn-info" onClick={this.showAddForm.bind(this)}> <span className="glyphicon glyphicon-plus-sign"></span> Add new office </button>
+                <button className="btn btn-md btn-info btn-addOffice" onClick={this.showAddForm.bind(this)}> <span className="glyphicon glyphicon-plus-sign"></span> Add new office </button>
+
+                <div className="row">
+                    {items}
+                </div>
 
 
-                {items}
             </div>
 
         )

@@ -15,7 +15,6 @@ namespace ManagementApp.Controllers
             _employeeService = employeeService;
         }
 
-
         [Route("getAllProjectsOfAnEmployee")]
         [HttpGet]
         public IHttpActionResult GetProjectByEmployeeId(int employeeId)
@@ -96,6 +95,7 @@ namespace ManagementApp.Controllers
             return Json(result);
         }
 
+<<<<<<< HEAD
         [Route("getTotalAllocation")]
         [HttpGet]
         public IHttpActionResult GetTotalAllocation(int employeeId)
@@ -105,7 +105,7 @@ namespace ManagementApp.Controllers
         }
 
 
-
+=======
         [Route("getJobTypes")]
         [HttpGet]
         public IHttpActionResult GetJobTypes()
@@ -121,6 +121,7 @@ namespace ManagementApp.Controllers
             var result = _employeeService.GetPositionTypesDescriptions();
             return Json(result);
         }
+>>>>>>> capac-cristina
 
 
     }

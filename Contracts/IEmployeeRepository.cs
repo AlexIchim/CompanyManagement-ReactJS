@@ -31,5 +31,9 @@ namespace Contracts
 
         IEnumerable<Employee> GetEmployeesThatAreNotFullyAllocated();
 
+        IEnumerable<string> GetJobTypesDescriptions();
+
+        IEnumerable <string> GetPositionTypeDescriptions();
+
     }
 }

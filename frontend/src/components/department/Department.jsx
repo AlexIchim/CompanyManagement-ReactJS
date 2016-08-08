@@ -57,7 +57,7 @@ export default class Department extends React.Component {
 
         if (this.state.pageNr!=1){
             const whereTo=this.state.pageNr-1
-
+            console.log(2)
             Controller.getAllDepOffice(this.props.routeParams.officeId,whereTo);
             
              this.setState({
@@ -70,6 +70,7 @@ export default class Department extends React.Component {
     next(){
 
         const whereTo=this.state.pageNr+1
+        cosole.log(3)
 
         Controller.getAllDepOffice(this.props.routeParams.officeId,whereTo);
 
@@ -96,7 +97,7 @@ export default class Department extends React.Component {
                 {addModal}
 
                 <button className="btn btn-xs btn-info" onClick={this.showAddForm.bind(this)} > <span className="glyphicon glyphicon-plus-sign"></span> Add new department </button>
-                <table className="table table-condensed" id="table1">
+                <table className="table table-striped" id="table1">
                     <thead>
                     <tr>
                         <th className="col-md-2">Department</th>

@@ -6,25 +6,7 @@ import Form from './FormProject.jsx'
 import Context from '../../context/Context.js';
 import * as Immutable from 'immutable';
 import * as Controller from '../controller';
-
-const Tr = (props) => {
-
-    const linkMembers = "department/project/" + props.node.Id  + '/' + props.node.Name + "/members";
-
-    return(
-        <tr>
-            <td>{props.node.get('Name')} </td>
-            <td>{props.node.get('EmployeesNumber')}</td>
-            <td>{props.node.get('Duration')}</td>
-            <td>{props.node.get('Status')}</td>
-            <td><Link to=""> Edit | </Link>
-                <Link to={linkMembers}> View Members | </Link>
-                <Link to="#"> Remove </Link></td>
-        </tr>
-    )
-
-
-}
+import ProjectItem from './ProjectItem.jsx'
 
 export default class Project extends React.Component {
 
@@ -38,6 +20,17 @@ export default class Project extends React.Component {
     }
 
     componentWillMount(){
+         $.ajax({
+            method: 'GET',
+            async: false,
+            url: configs.baseUrl + 'api/project/getProjectStatusDescriptions',
+            success: function (data) {
+                console.log("status",data, this);
+                this.setState({
+                    statusDescriptions: data
+                })
+            }.bind(this)
+        })     
         this.subscription = Context.subscribe(this.onContextChange.bind(this));
     }
 
@@ -53,7 +46,12 @@ export default class Project extends React.Component {
         this.setState({
             projects: cursor.get("projects")         
         });
+    }
 
+    onDropDownChange(){
+        const status=this.refs.status.options[this.refs.status.selectedIndex].value;
+        const pageNr = 1;
+        Controller.getProjectsFilteredByStatus(this.props.routeParams.departmentId,status,pageNr);
     }
 
     showAddForm(){
@@ -96,16 +94,22 @@ export default class Project extends React.Component {
 
     render() {
 
+        const statusDescriptions=this.state.statusDescriptions.map((el, x) => {
+            return (
+                <option value={el} key={x} >{el}</option>                         
+            )
+        });
+
+
         const items = this.state.projects.map((el, x) => {
             return (
-                <Tr
+                <ProjectItem
                     node = {el}
                     key= {x}
-
+                    departmentId={this.props.routeParams.departmentId}   
                 />
             )
         });
-        console.log("render",items);
         const addModal = this.state.add ? <Form departmentId={this.props.routeParams.departmentId} show = {this.state.add} close={this.closeAddForm.bind(this)} /> : '';
 
         return (
@@ -118,8 +122,8 @@ export default class Project extends React.Component {
                     <tr>
                         <th className="col-md-2">Name</th>
                         <th className="col-md-2">Team members</th>
-                        <th className="col-md-2">Duration</th>
                         <th className="col-md-2">Status</th>
+                        <th className="col-md-2">Duration</th>
                         <th className="col-md-2">Actions</th>
                     </tr>
                     </thead>
@@ -127,13 +131,18 @@ export default class Project extends React.Component {
                     {items}
                 </tbody>
                 </table>
-                <div>
+                <div className="btn-wrapper">
                     <button className="leftArrow" onClick={this.back.bind(this)}>
-                                <i className="fa fa-arrow-left fa-2x" aria-hidden="true"></i>
+                                <i className="fa fa-arrow-left fa-1x" aria-hidden="true"></i>
                     </button>
                     <button className="rightArrow" onClick={this.next.bind(this)}>
-                                <i className="fa fa-arrow-right fa-2x" aria-hidden="true"></i>
-                    </button>              
+                                <i className="fa fa-arrow-right fa-1x" aria-hidden="true"></i>
+                    </button>
+
+                    
+                    <select className="selectpicker" ref="status" onClick={this.onDropDownChange.bind(this)}>
+                        {statusDescriptions}                    
+                    </select>              
                 </div>
             </div>
         )

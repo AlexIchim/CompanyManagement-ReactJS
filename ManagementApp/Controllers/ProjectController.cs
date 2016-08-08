@@ -1,22 +1,22 @@
-﻿using System.Web.Http;
-using Manager.InputInfoModels;
+﻿using Manager.InputInfoModels;
 using Manager.Services;
+using System.Web.Http;
 using System.Web.Http.Cors;
 
 namespace ManagementApp.Controllers
 {
     [RoutePrefix("api/project")]
-    [EnableCors("*", "*", "GET")]
+    [EnableCors("*", "*", "GET,POST,PUT,DELETE")]
     public class ProjectController : ApiController
     {
-        
+
         private readonly ProjectService _projectService;
 
         public ProjectController(ProjectService projectService)
         {
             _projectService = projectService;
         }
-       
+
         [Route("getEmployeesByProjectId")]
         [HttpGet]
         public IHttpActionResult GetEmployeesByProjectId(int projectId, int? pageSize, int? pageNr)
@@ -25,7 +25,7 @@ namespace ManagementApp.Controllers
             return Json(result);
         }
 
-        [Route ("getEmployeesAllocation")]
+        [Route("getEmployeesAllocation")]
         [HttpGet]
         public IHttpActionResult GetEmployeesAllocation(int projectId)
         {
@@ -33,7 +33,7 @@ namespace ManagementApp.Controllers
             return Json(result);
         }
 
-        [Route("add")]        
+        [Route("add")]
         [HttpPost]
         public IHttpActionResult Add([FromBody] AddProjectInputInfo inputInfo)
         {
@@ -50,7 +50,7 @@ namespace ManagementApp.Controllers
             return Json(result);
         }
 
-        [Route("updateProject")]    
+        [Route("updateProject")]
         [HttpPut]
         public IHttpActionResult UpdateProject([FromBody] UpdateProjectInputInfo inputInfo)
         {
@@ -62,16 +62,33 @@ namespace ManagementApp.Controllers
         [HttpGet]
         public IHttpActionResult GetAllDepartmentProjects(int departmentId, int? pageSize, int? pageNr)
         {
-            var result = _projectService.GetAllDepartmentProjects(departmentId, pageSize,pageNr);
+            var result = _projectService.GetAllDepartmentProjects(departmentId, pageSize, pageNr);
             return Json(result);
         }
 
-        [Route("filterProjectsByStatus")]
+        [Route("getProjectsFilteredByStatus")]
         [HttpGet]
-        public IHttpActionResult FilterProjectByStatus(string status, int? pageSize, int? pageNr)
+        public IHttpActionResult GetProjectsFilteredByStatus(int depId,string status, int? pageSize, int? pageNr)
         {
-            var result = _projectService.FilterProjectByStatus(status, pageSize, pageNr);
+            var result = _projectService.GetProjectsFilteredByStatus(depId,status, pageSize, pageNr);
             return Json(result);
         }
+
+        [Route("deleteEmployeeFromProject")]
+        [HttpDelete]
+        public IHttpActionResult DeleteEmployeeFromProject(int employeeId, int projectId)
+        {
+            var result = _projectService.DeleteEmployeeFromProject(employeeId, projectId);
+            return Json(result);
+        }
+
+        [Route("getProjectStatusDescriptions")]
+        [HttpGet]
+        public IHttpActionResult GetProjectStatusDescriptions()
+        {
+            var result = _projectService.GetProjectStatusDescriptions();
+            return Json(result);
+        }
+
     }
 }

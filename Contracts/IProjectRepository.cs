@@ -19,8 +19,12 @@ namespace Contracts
         IEnumerable<EmployeeProject> GetEmployeeProjectById(int projectId);
 
         IEnumerable<Project> GetAllDepartmentProjects(Department department, int? pageSize, int? pageNr);
-        IEnumerable<Project> FilterProjectByStatus(string status, int? pageSize, int? pageNr);
+        IEnumerable<Project> GetProjectsFilteredByStatus(Department department,string status, int? pageSize, int? pageNr);
         int GetEmployeeProjectAllocationById(int projectId, int employeeId);
         string GetEmployeeRoleById(int employeeId);
+        IEnumerable<string> GetProjectStatusDescriptions();
+        EmployeeProject GetEmployeeProjectById(int employeeId, int projectId);
+
+        void DeleteEmployeeProject(EmployeeProject ep);
     }
 }
