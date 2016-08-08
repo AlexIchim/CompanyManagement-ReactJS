@@ -7,4 +7,4 @@ export default (departmentId, isAsync, callback) =>
         url: apiconfig.baseUrl + 'departments/' + departmentId + '/projects',
         async : isAsync,
         success : callback 
-    })
+    });

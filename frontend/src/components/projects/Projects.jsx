@@ -109,74 +109,63 @@ export default class Projects extends Component{
         
         const items = this.state.projects.map((element, index) =>  
             <Item
-                node = {element}
-                key = {index}
-                officeId = {this.state.officeId}
-                onDelete = {this.deleteProject.bind(this, element.id)}
-                onEdit = {this.editProject.bind(this, element)}
+                node={element}
+                key={index}
+                officeId={this.state.officeId}
+                onDelete={this.deleteProject.bind(this, element.id)}
+                onEdit={this.editProject.bind(this, element)}
             /> 
         );
 
         const modalTemplate = this.state.showModalTemplate !== null ? (
             <ModalTemplate
-                getComponent = {
+                getComponent={
                     (hideFunc) => {
                         switch(this.state.showModalTemplate) {
                             case 'edit' : 
                                 return <EditDetails 
-                                            project = {this.state.modalProject}  
-                                            hideFunc = {hideFunc} 
-                                            updateFunc = { function(){
+                                            project={this.state.modalProject}  
+                                            hideFunc={hideFunc} 
+                                            updateFunc={function(){
                                                 hideFunc();
                                                 this.fetchData();
                                             }.bind(this)}
-                                            departmentId = {this.props.params['departmentId']}
-                                            projectId = {this.props.params['projectId']}
+                                            departmentId={this.props.params['departmentId']}
+                                            projectId={this.props.params['projectId']}
                                          />;
                             case 'add' :
                                 return <AddProject 
-                                            hideFunc = {hideFunc}
-                                            saveFunc = {function(){
+                                            hideFunc={hideFunc}
+                                            saveFunc={function(){
                                                 hideFunc();
                                                 this.fetchData();
                                             }.bind(this)}
-                                            departmentId = {this.props.params['departmentId']}
+                                            departmentId={this.props.params['departmentId']}
                                         />;
                         }
                     }
                 }
-                onHide = {this.hideModal.bind(this)}
+                onHide={this.hideModal.bind(this)}
             />
         ) : null;
-
-        /*const modalTemplate = this.state.showModalTemplate !== null ? ( 
-            <ModalTemplate 
-                getComponent = {
-                    (hideFunc) => {
-                        return <button onClick={hideFunc}>Cancel</button>
-                    }
-                }
-                onHide = {this.hideModal.bind(this)}
-            />
-        ) : null;*/
 
         return (
             <div>
                 <h1><b>{this.state.departmentName}</b> Department Projects</h1>
                 {modalTemplate}
-                <button className = "btn btn-md btn-info" onClick = {this.addProject.bind(this)}>
+                <button className="btn btn-md btn-info" onClick={this.addProject.bind(this)}>
                     <span className="glyphicon glyphicon-plus-sign"></span>
-                     Add new project
+                     &nbsp;Add new project
                 </button>
 
-                <table className = "table table-condensed" id = "table">
+                <table className="table table-condensed" id="table">
                     <thead>
                         <tr>
-                            <th className = "col-md-2">Project Name</th>
-                            <th className = "col-md-2">Team Members</th>
-                            <th className = "col-md-2">Duration</th>
-                            <th className = "col-md-2">Status</th>
-                            <th className = "col-md-2">Actions</th>
+                            <th className="col-md-2">Project Name</th>
+                            <th className="col-md-2">Team Members</th>
+                            <th className="col-md-2">Duration</th>
+                            <th className="col-md-2">Status</th>
+                            <th className="col-md-2">Actions</th>
                         </tr>
                     </thead>
 

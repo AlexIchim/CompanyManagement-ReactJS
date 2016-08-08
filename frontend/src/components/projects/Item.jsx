@@ -24,19 +24,19 @@ export default class Item extends React.Component{
                 <td>{props.node.status}</td>
                 <td>
                     
-                        <button className = "btn btn-md btn-default" onClick = {onEdit}>
+                        <button className="btn btn-md btn-default" onClick={onEdit}>
                             Edit      
                         </button>
                     
                     
-                    <Link to = {linkMembers}>
-                        <button className = "btn btn-md btn-default">
+                    <Link to={linkMembers}>
+                        <button className="btn btn-md btn-default">
                             View members
                         </button>
                     </Link>
                     
                     
-                        <button className = "btn btn-md btn-default" onClick = {onDelete} >
+                        <button className="btn btn-md btn-default" onClick={onDelete} >
                             Remove
                         </button>
                     

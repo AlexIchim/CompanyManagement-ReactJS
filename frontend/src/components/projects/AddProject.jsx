@@ -4,47 +4,95 @@ import Project from './Project';
 import Projects from './Projects';
 import config from '../../api/config';
 import addProject from '../api/controller/addProject';
+import * as $ from 'jquery';
 
 export default class AddProject extends React.Component{
 
-    addProject(){
-
-        let projectObject = {
-            name : this.refs.name.value,
-            status : this.refs.status.value,
-            duration : this.refs.duration.value,
-            departmentId : this.props.departmentId
+    constructor(){
+        super();
+        this.state = {
+            status : "Not started",
+            message : ""
         }
-
-        addProject(
-            projectObject,
-            false,
-            this.props.saveFunc
-        )
     }
 
-   
+    addProject(){
+        
+        if(this.state.message === "")
+        {
+            let projectObject = {
+                name : this.refs.name.value,
+                status : this.state.status,
+                duration : this.refs.duration.value,
+                departmentId : this.props.departmentId
+            }
+
+            addProject(
+                projectObject,
+                false,
+                this.props.saveFunc
+            )
+        }
+    }
+
+    changeOption(e){
+        
+        this.setState({
+            status: e.target.value
+        });
+
+    }
+
+    onChangeFunction(e){
+        const val = parseInt(e.target.value);
+        
+        if(isNaN(val))
+        {
+            e.target.value = "";
+        } else {
+            if(val > 120)
+            {
+                this.setState({
+                    message : "Error!!! A project cannot last more than 120 months."
+                });
+            } else {
+                this.setState({
+                    message : ""
+                })
+                e.target.value = val.toString();
+            }
+        }
+        
+    }
 
     render(){
-     
+
         return (
-            <div className = "box info-box">
-                <div className = "box-header with-border">
-                    <h3 className = "box-title">Add new project</h3>
+            <div className="box info-box">
+                <div className="box-header with-border">
+                    <h3 className="box-title">Add new project</h3>
                 </div>
-            <form className = "form-horizontal">
-                <div className = "box-body">
+            <form className="form-horizontal">
+                <div className="box-body">
                     <label>Name</label>
-                    <input type = "text" className = "form-control" ref = "name" placeholder = "Project name"></input>
+                    <input type="text" className="form-control" ref="name" placeholder="Project name"></input>
                     <label>Status</label>
-                    <input type = "text" className = "form-control" ref = "status" placeholder = "Project status"></input>
+                    <div>
+                        <select className="form-control" id="choice" onChange={this.changeOption.bind(this)}>
+                            <option value="Not started">Not started</option>
+                            <option value="In progress">In progress</option>
+                            <option value="On hold">On hold</option>
+                            <option value="Done">Done</option>
+                        </select>
+                    </div>
                     <label>Duration</label>
-                    <input type = "text" className = "form-control" ref = "duration" placeholder = "Project duration"></input>
+                    <input type="text" className="form-control" ref="duration" placeholder="Duration" onChange={this.onChangeFunction.bind(this)}></input>
+                    <div>{this.state.message}</div>
                 </div>
 
-                <div className = "box-footer">
-                    <button className = "btn btn-default" onClick = {this.addProject.bind(this)}>Add</button>
-                    <button className = "btn btn-default" onClick = {this.props.hideFunc}>Cancel</button>
+                <div className="box-footer">
+                    <button className="btn btn-default" onClick={this.addProject.bind(this)}>Add</button>
+                    <button className="btn btn-default" onClick={this.props.hideFunc}>Cancel</button>
                 </div>
             </form>
             </div>
