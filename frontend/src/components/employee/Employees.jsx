@@ -8,6 +8,7 @@ import Context from '../../context/Context';
 import Command from '../Command';
 import MyController from './Controller/Controller'
 import EditForm from './EditForm';
+import ViewDetailsForm from './ViewDetailsForm'
 
 export default class Employees extends React.Component{
     constructor(){
@@ -45,9 +46,23 @@ export default class Employees extends React.Component{
         Context.cursor.set('formToggle',true);
     }
 
-    onEditButtonClick(employee){
+    onViewDetailsButtonClick(employee){
+        console.log("View details clicked!");
         Context.cursor.set('formToggle', true);
         Context.cursor.set('model', employee)
+
+        this.setState({
+            buttonClicked: "viewDetails"
+        })
+    }
+
+    onEditButtonClick(employee){
+        console.log("Edit clicked!");
+        Context.cursor.set('formToggle', true);
+        Context.cursor.set('model', employee)
+        this.setState({
+            buttonClicked: "edit"
+        })
     }
 
     onDeleteButtonClick(element){
@@ -62,12 +77,24 @@ export default class Employees extends React.Component{
     render(){
         console.log('model is:', Accessors.model(Context.cursor));
         let modal = "";
+        let modal1 = "";
         console.log('store?', Accessors.formToggle(Context.cursor));
         if(Accessors.formToggle(Context.cursor)){
             if(Accessors.model(Context.cursor)){
-                modal=<EditForm onCancelClick={Command.hideModal.bind(this)}
-                           onStoreClick={this.onModalSaveClick.bind(this)}
-                           Title="Edit Employee"/>;
+                if (this.state.buttonClicked === "viewDetails") {
+                    modal = <ViewDetailsForm onCancelClick={Command.hideModal.bind(this)}
+                                             onStoreClick={this.onModalSaveClick.bind(this)}
+                                             Title="Edit Employee"/>;
+                } else {
+                    if (this.state.buttonClicked === "edit") {
+                        modal = <Form onCancelClick={Command.hideModal.bind(this)}
+                                      onStoreClick={this.onModalSaveClick.bind(this)}
+                                      Title="Edit Employee"/>;
+                    }
+                }
+                /*modal1=<ViewDetailsForm onCancelClick={Command.hideModal.bind(this)}
+                            onStoreClick={this.onModalSaveClick.bind(this)}
+                            Title="Edit Employee"/>;*/
             }else{
                 modal=<Form onCancelClick={Command.hideModal.bind(this)}
                            onStoreClick={this.onModalSaveClick.bind(this)}
@@ -80,6 +107,7 @@ export default class Employees extends React.Component{
                     node = {employee}
                     key = {index}
                     Link = {"department/members/" + employee.Id}
+                    onViewDetails = {this.onViewDetailsButtonClick.bind(this, employee)}
                     onEdit = {this.onEditButtonClick.bind(this, employee)}
                     onDelete = {this.onDeleteButtonClick.bind(this, employee)}
                     />

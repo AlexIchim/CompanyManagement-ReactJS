@@ -16,6 +16,7 @@ const EmployeeItem = (props) => {
     const allocation = props.node.Allocation;
     const link = props.Link;
     const edit = props.onEdit;
+    const viewDetails = props.onViewDetails;
     const deleteF = props.onDelete;
 
     return (
@@ -42,23 +43,24 @@ const EmployeeItem = (props) => {
                 {allocation}
             </td>
             <td>
-
                 <tr>
                     <td>
-
-                        <Link to={link} className="btn btn-success margin-top" onClick={edit}>
+                        {/*<Link to={link} className="btn btn-success margin-top" onClick={edit}>
                             View Details
-                        </Link>
+                        </Link>*/}
+                        <button className="btn btn-success margin-top" onClick={viewDetails}>
+                            View Details
+                        </button>
                         &nbsp;
-                <button id="store" className="btn btn-success margin-top" onClick={edit}>
-                    Edit
-                </button>
-                        &nbsp;
-                <button className="btn btn-danger margin-top" onClick={deleteF}><i className="fa fa-trash" ></i>
-                    Delete
-                </button></td>
-                        </tr>
-
+                        <button id="store" className="btn btn-success margin-top" onClick={edit}>
+                            Edit
+                        </button>
+                                &nbsp;
+                        <button className="btn btn-danger margin-top" onClick={deleteF}><i className="fa fa-trash" ></i>
+                            Delete
+                        </button>
+                    </td>
+                </tr>
             </td>
 
         </tr>
