@@ -8,7 +8,7 @@ export default (projectId,pageNr)=>{
     $.ajax({
             method: 'GET',
             async: false,
-            url: configs.baseUrl + 'api/project/getEmployeesByProjectId?projectId=' + projectId+'&pageSize=3&pageNr='+pageNr,
+            url: configs.baseUrl + 'api/project/getEmployeesByProjectId?projectId=' +projectId+'&pageSize=3&pageNr='+pageNr,
             success: function (data) {
                 Context.cursor.set("members",Immutable.fromJS(data));
             }.bind(this)

@@ -3,6 +3,7 @@ import Modal from '../modal/Modal.jsx';
 import configs from '../helpers/calls';
 import Context from '../../context/Context.js';
 import * as Immutable from 'immutable';
+import * as Controller from '../controller';
 
 
 export default class Form extends React.Component{
@@ -18,33 +19,13 @@ export default class Form extends React.Component{
         this.subscription = Context.subscribe(this.onContextChange.bind(this));
     }
 
-    store(cb){
+    assign(cb){
    
-        const depManager=this.refs.managersDropdown.options[this.refs.managersDropdown.selectedIndex].value;
-
-        var inputInfo={
-            EmployeeId: this.refs.employeeId.value,
-            ProjectId: this.props.projectId,
-            Allocation: 
-        }
-         
-
-        $.ajax({
-            method: 'POST',
-            async: false,
-            url: configs.baseUrl + 'api/employee/addEmployeeToProject',
-            data:inputInfo,
-            success: function (data) {               
-                 cb(); 
-                 this.refresh(this.props.officeId);
-            }.bind(this)
-        })   
-
               
     }
 
-    refresh(officeId){
-         Controller.getAllDepOffice(this.props.routeParams.officeId,1);
+    refresh(projectId){
+         Controller.getEmployeesByProjectId(projectId,1);
     }
     
     render(){

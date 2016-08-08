@@ -23,5 +23,8 @@ namespace Contracts
         int GetEmployeeProjectAllocationById(int projectId, int employeeId);
         string GetEmployeeRoleById(int employeeId);
         IEnumerable<string> GetProjectStatusDescriptions();
+        EmployeeProject GetEmployeeProjectById(int employeeId, int projectId);
+
+        void DeleteEmployeeProject(EmployeeProject ep);
     }
 }

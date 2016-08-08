@@ -1,29 +1,35 @@
-﻿using System.Web.Http;
-using Manager.InputInfoModels;
+﻿using Manager.InputInfoModels;
 using Manager.Services;
+using System.Web.Http;
+using System.Web.Http.Cors;
 
 namespace ManagementApp.Controllers
 {
     [RoutePrefix("api/project")]
+<<<<<<< HEAD
+    [EnableCors("*", "*", "GET,POST,PUT")]
+=======
+    [EnableCors("*", "*", "GET, DELETE")]
+>>>>>>> capac-Adi
     public class ProjectController : ApiController
     {
-        
+
         private readonly ProjectService _projectService;
 
         public ProjectController(ProjectService projectService)
         {
             _projectService = projectService;
         }
-       
-        [Route("getEmployeeByProjectId")]
+
+        [Route("getEmployeesByProjectId")]
         [HttpGet]
-        public IHttpActionResult GetEmployeeByProjectId(int projectId)
+        public IHttpActionResult GetEmployeesByProjectId(int projectId, int? pageSize, int? pageNr)
         {
-            var result = _projectService.GetByProjectId(projectId);
+            var result = _projectService.GetEmployeesByProjectId(projectId, pageSize, pageNr);
             return Json(result);
         }
 
-        [Route ("getEmployeesAllocation")]
+        [Route("getEmployeesAllocation")]
         [HttpGet]
         public IHttpActionResult GetEmployeesAllocation(int projectId)
         {
@@ -31,7 +37,7 @@ namespace ManagementApp.Controllers
             return Json(result);
         }
 
-        [Route("add")]        
+        [Route("add")]
         [HttpPost]
         public IHttpActionResult Add([FromBody] AddProjectInputInfo inputInfo)
         {
@@ -39,14 +45,6 @@ namespace ManagementApp.Controllers
             return Json(result);
         }
 
-        [Route("addEmployeeToProject")]
-        [HttpPost]
-        public IHttpActionResult AddEmployeeToProject([FromBody] AddEmployeeToProjectInputInfo inputInfo)
-        {
-           
-            var result = _projectService.AddEmployeeToProject(inputInfo);
-            return Json(result);
-        }
 
         [Route("delete")]
         [HttpDelete]
@@ -56,20 +54,47 @@ namespace ManagementApp.Controllers
             return Json(result);
         }
 
-<<<<<<< HEAD
         [Route("updateProject")]
         [HttpPut]
         public IHttpActionResult UpdateProject([FromBody] UpdateProjectInputInfo inputInfo)
         {
             var result = _projectService.UpdateProject(inputInfo);
-=======
-        [Route("update")]
-        [HttpPut]
-        public IHttpActionResult Update ([FromBody] UpdateAllocationInputInfo inputInfo)
-        {
-            var result = _projectService.UpdatePartialAllocation(inputInfo);
->>>>>>> capac-cristina
             return Json(result);
         }
+
+        [Route("getAllDepartmentProjects")]
+        [HttpGet]
+        public IHttpActionResult GetAllDepartmentProjects(int departmentId, int? pageSize, int? pageNr)
+        {
+            var result = _projectService.GetAllDepartmentProjects(departmentId, pageSize, pageNr);
+            return Json(result);
+        }
+
+        [Route("getProjectsFilteredByStatus")]
+        [HttpGet]
+        public IHttpActionResult GetProjectsFilteredByStatus(int depId,string status, int? pageSize, int? pageNr)
+        {
+            var result = _projectService.GetProjectsFilteredByStatus(depId,status, pageSize, pageNr);
+            return Json(result);
+        }
+
+<<<<<<< HEAD
+        [Route("getProjectStatusDescriptions")]
+        [HttpGet]
+        public IHttpActionResult GetProjectStatusDescriptions()
+        {
+            var result = _projectService.GetProjectStatusDescriptions();
+            return Json(result);
+        }
+
+=======
+        [Route("deleteEmployeeFromProject")]
+        [HttpDelete]
+        public IHttpActionResult DeleteEmployeeFromProject(int employeeId, int projectId)
+        {
+            var result = _projectService.DeleteEmployeeFromProject(employeeId, projectId);
+            return Json(result);
+        }
+>>>>>>> capac-Adi
     }
 }

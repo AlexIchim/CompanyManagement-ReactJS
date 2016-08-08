@@ -6,7 +6,7 @@ namespace ManagementApp.Controllers
 {
     [RoutePrefix("api/employee")]
     [EnableCors("*", "*", "GET, POST, PUT, DELETE")]
-    public class EmployeeController: ApiController
+    public class EmployeeController : ApiController
     {
         private readonly EmployeeService _employeeService;
 
@@ -94,6 +94,16 @@ namespace ManagementApp.Controllers
             var result = _employeeService.GetEmployeesThatAreNotFullyAllocated();
             return Json(result);
         }
+
+        [Route("getTotalAllocation")]
+        [HttpGet]
+        public IHttpActionResult GetTotalAllocation(int employeeId)
+        {
+            var result = _employeeService.GetTotalAllocation(employeeId);
+            return Json(result);
+        }
+
+
 
 
     }
