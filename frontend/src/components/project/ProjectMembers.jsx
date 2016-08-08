@@ -6,7 +6,7 @@ import Context from '../../context/Context';
 import Accessors from '../../context/Accessors'
 import Form from './form/Form';
 import EditAllocationForm from './form/EditAllocationForm'
-
+import AssignEmployeeForm from './form/AssignEmployeeForm'
 const Item = (props) => {
 
     return (
@@ -98,10 +98,10 @@ class ProjectMembers extends React.Component {
                                       FormAction={Controller.EditAllocation.bind(this, this.state.projectId)}
                                   Title="Edit Project Allocation"/>;
             } else {
-                // modal = <Form onCancelClick={this.toggleModal.bind(this)}
-                //               FormAction={Controller.Add}
-                //               Title="Add Project"/>;
-                console.log('wtf');
+                modal = <AssignEmployeeForm onCancelClick={this.toggleModal.bind(this)}
+                              FormAction={Controller.Add}
+                              Title="Add Project"/>;
+
             }
         }
         return (

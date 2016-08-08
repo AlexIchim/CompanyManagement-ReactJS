@@ -24,6 +24,9 @@ export default class EditForm extends React.Component {
         this.subscription=Context.subscribe(this.onContextChange.bind(this));
     }
 
+    componentWillUnmount(){
+        this.subscription.dispose();
+    }
     onStoreClick(){
         let model = Context.cursor.get('model');
 
@@ -44,14 +47,7 @@ export default class EditForm extends React.Component {
         this.props.FormAction();
     }
 
-    onInputChange(){
 
-        console.log('input was changed');
-    }
-
-    componentWillUnmount(){
-        this.subscription.dispose();
-    }
     onContextChange(newGlobalCursor){
         this.setState({
             model: newGlobalCursor.get('model'),
