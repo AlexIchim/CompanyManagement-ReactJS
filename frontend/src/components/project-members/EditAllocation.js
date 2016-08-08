@@ -18,7 +18,6 @@ export default class EditOffice extends React.Component {
     }
 
     onChangeHandler(e){
-        console.log("!!!!!", e.target.value);
         let newAllocation = this.state.allocation;
         newAllocation[e.target.name] = e.target.value;
         this.setState({

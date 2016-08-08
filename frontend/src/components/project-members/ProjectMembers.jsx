@@ -124,6 +124,7 @@ export default class ProjectMembers extends Component {
                     <thead>
                         <tr>
                             <th>Name</th>
+                            <th>Department</th>
                             <th>Role</th>
                             <th>Allocation</th>
                             <th>Actions</th>

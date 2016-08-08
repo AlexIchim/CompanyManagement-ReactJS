@@ -11,6 +11,7 @@ export default (props) => {
     return(
         <tr>
             <td>{employee.name}</td>
+            <td>{employee.departmentName}</td>
             <td>{employee.positionName}</td>
             <td>{allocation} %</td>
             <td className="btn-toolbar">

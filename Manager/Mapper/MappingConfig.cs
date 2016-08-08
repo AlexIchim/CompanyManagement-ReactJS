@@ -28,8 +28,10 @@ namespace Manager.Mapper
             ).ForMember(
                 p => p.PositionName,
                 opts => opts.MapFrom(src => src.Position.Name)
+            ).ForMember( 
+                p => p.DepartmentName,
+                opts => opts.MapFrom(src => src.Department.Name)
             );
-
 
             CreateMap<AddDepartmentInputInfo, Department>();
 

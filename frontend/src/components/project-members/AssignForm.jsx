@@ -14,7 +14,8 @@ export default class AssignForm extends React.Component {
             positions: [],
             allocation: {},
             departmentIdFilter: null,
-            positionIdFilter: null
+            positionIdFilter: null,
+            readyToSave: false
         }
     }
 
@@ -53,29 +54,7 @@ export default class AssignForm extends React.Component {
     }
 
     fetchData(){
-        /*Controller.getDepartmentName(
-            this.props.departmentId,
-            true,
-            (data) => {
-                this.setState({
-                    departmentName: data.name
-                })
-            }
-        )*/
-
-        /*Controller.getAvailableEmployees(
-            this.state.departmentIdFilter,
-            this.state.positionIdFilter,
-            true,
-            (data) => {
-                this.setState({
-                    availableEmployees: data
-                })
-            }
-        )*/
-
         this.availableEmployees();
-
         Controller.getDepartments(
             true,
             (data) => {
@@ -97,41 +76,53 @@ export default class AssignForm extends React.Component {
 
     onChangeDepartment(e){
         let id = e.target.value;
+        let deptId =  id == -1 ? null : id;
         this.setState({
-            departmentIdFilter: id == -1 ? null : id
+            departmentIdFilter: deptId
         });
-        this.availableEmployees(id, this.state.positionIdFilter);
+        this.availableEmployees(deptId, this.state.positionIdFilter);
 
     }
 
     onChangePosition(e){
         let id = e.target.value;
+        let posId =  id == -1 ? null : id;
         this.setState({
-            positionIdFilter: id == -1 ? null : id
+            positionIdFilter: posId
         });
-        this.availableEmployees(this.state.departmentIdFilter,id);
+        this.availableEmployees(this.state.departmentIdFilter,posId);
 
     }
 
-    onChangeAllocation(data){
+    onChangeAllocation(data, readyToSave){
         let newAllocation = {
             projectId : this.props.projectId,
             employeeId: data.employeeId,
             allocationPercentage: data.allocation
         }
         this.setState({
-            allocation: newAllocation
+            allocation: newAllocation,
+            readyToSave: readyToSave
         })
-
     }
 
     onSave(){
-        Controller.addAllocation(
-            this.state.allocation,
-            true,
-            this.props.updateFunc
-        )
+        console.log("@@@@", this.refs.message);
+        if (this.state.readyToSave){
+            Controller.addAllocation(
+                this.state.allocation,
+                true,
+                this.props.updateFunc
+            )
+        }
+        else
+        {
+            this.refs.message.innerHTML = 'Please select an employee.';
+        }
+    }
 
+    hideError(){
+        this.refs.message.innerHTML = ''
     }
 
     render(){
@@ -141,6 +132,7 @@ export default class AssignForm extends React.Component {
                 data={e}
                 departmentName={this.state.departmentName}
                 onChangeAllocation={this.onChangeAllocation.bind(this)}
+                hideError={this.hideError.bind(this)}
             />
         );
 
@@ -160,14 +152,14 @@ export default class AssignForm extends React.Component {
                             <h3 className="box-title"><strong>Assign employee</strong></h3>
                             <br/><br/>
                             <div className="form-group">
-                                 <select className="form-control " onChange={this.onChangeDepartment.bind(this)}>
-                                     <option value="-1" selected>Department</option>
+                                 <select className="form-control " defaultValue="Department" onChange={this.onChangeDepartment.bind(this)}>
+                                     <option value="-1" >Department</option>
                                     {departments}
                                  </select>
                             </div>
                             <div className="form-group">
-                                 <select className="form-control " onChange={this.onChangePosition.bind(this)}>
-                                     <option value="-1" selected>Position</option>
+                                 <select className="form-control " defaultValue="Position" onChange={this.onChangePosition.bind(this)}>
+                                     <option value="-1">Position</option>
                                      {positionOptions}
                                  </select>
                             </div>
@@ -201,6 +193,8 @@ export default class AssignForm extends React.Component {
                         </div>
 
                         <div className="box-footer">
+                            <span type="text" ref="message"/>
+                            <br/>
                             <button type="button" className="btn btn-md btn-info" onClick={this.onSave.bind(this)}> Save</button>
                             <button type="button" className="btn btn-md btn-info" onClick={this.props.hideFunc}> Cancel</button>
                         </div>

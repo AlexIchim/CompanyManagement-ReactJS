@@ -9,16 +9,16 @@ export default class AvailableEmployee extends React.Component {
         }
     }
 
-    onChangeInput(id){
+    onChangeInput(id, event){
         let data = {
             employeeId : id,
-            allocation: this.refs.allocationInput.value
+            allocation: event.target.value
         }
-
-        this.props.onChangeAllocation(data);
+        this.props.onChangeAllocation(data, true);
     }
 
-    onChangeRadio(){
+    onChangeRadio(id){
+        this.props.hideError();
         const {employee_id} = this.refs;
         $(employee_id).closest('tbody').find('.allocationInput').attr('disabled','disabled' );
         $(employee_id).closest('tr').find('.allocationInput').removeAttr('disabled');
@@ -27,23 +27,30 @@ export default class AvailableEmployee extends React.Component {
             isTrue: $(employee_id).val() == 'on'
         })
 
+        let data = {
+            employeeId : id,
+            allocation: this.refs.allocationInput.value
+        }
+        this.props.onChangeAllocation(data, true);
+
+
+
     }
 
     render(){
         const employee = this.props.data;
-        const departmentName = this.props.departmentName;
         const remainingAllocation = 100 - employee.totalAllocation;
 
         return(
             <tr data-id={employee.id}>
                 <td>{employee.name}</td>
-                <td> {departmentName} </td>
+                <td> {employee.departmentName} </td>
                 <td>{employee.positionName}</td>
                 <td>
-                    <input type="text" className="allocationInput" ref="allocationInput" disabled={this.state.isTrue} onChange={this.onChangeInput.bind(this, employee.id)}/> / {remainingAllocation} %
+                    <input type="text" className="allocationInput" ref="allocationInput" defaultValue={remainingAllocation} disabled={this.state.isTrue} onChange={this.onChangeInput.bind(this,  employee.id)}/> / {remainingAllocation} %
                 </td>
                 <td className="btn-toolbar">
-                    <input type="radio" ref="employee_id" name="checked" onChange={this.onChangeRadio.bind(this)}></input>
+                    <input type="radio" ref="employee_id" name="checked" onChange={this.onChangeRadio.bind(this, employee.id)}></input>
                 </td>
             </tr>
         )

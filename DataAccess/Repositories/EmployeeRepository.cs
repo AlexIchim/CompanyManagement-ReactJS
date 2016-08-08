@@ -31,7 +31,8 @@ namespace DataAccess.Repositories
                     ) &&
                     (departmentId == null || e.DepartmentId == departmentId) &&
                     (positionId == null || e.PositionId == positionId) &&
-                    (e.ProjectAllocations.Count(a => a.ProjectId != projectId) == 0)
+                    (e.ProjectAllocations.Count(a => a.ProjectId != projectId) == 0)&&
+                    (!e.Position.Name.Equals("Department Manager"))
 
                 )
             )
