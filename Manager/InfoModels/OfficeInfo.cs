@@ -16,7 +16,7 @@ namespace Manager.InfoModels
 
         public string PhoneNumber { get; set; }
 
-        public byte[] Image { get; set; }
+        public string Image { get; set; }
 
     }
 }

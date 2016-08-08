@@ -16,6 +16,6 @@ namespace Manager.InputInfoModels
 
         public string PhoneNumber { get; set; }
 
-        public byte[] Image { get; set; }
+        public string Image { get; set; }
     }
 }
