@@ -124,10 +124,10 @@ namespace Manager.Services
         {
             var values = Enum.GetValues(typeof(JobTypes));
 
-            foreach (Position position in values)
+            foreach (JobTypes jobType in values)
             {
                 yield return
-                    new JobTypeInfo() { Index = (int)position, Description = position.GetDescriptionFromEnumValue() };
+                    new JobTypeInfo() { Index = (int)jobType, Description = jobType.GetDescriptionFromEnumValue() };
             }
         }
 

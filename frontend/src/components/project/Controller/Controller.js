@@ -108,18 +108,21 @@ export default new class Controller{
     }
 
     EditAllocation(projectId){
-        // $.ajax({
-        //     method: 'GET',
-        //     url: config.base + "project/editAllocation",
-        //     data: {
-        //         projectId: projectId,
-        //         employeeId: Context.cursor.get('model').Id,
-        //     },
-        //     async: false,
-        //     success: function(data){
-        //         console.log('successfully changed allocation');
-        //     }.bind(this)
-        // });
+        console.log('controller edit allocation');
+        console.log('allocation ',Context.cursor.get('model').Allocation )
+        $.ajax({
+            method: 'PUT',
+            url: config.base + "project/editAllocation",
+            data: {
+                projectId: projectId,
+                employeeId: Context.cursor.get('model').Id,
+                Allocation: Context.cursor.get('model').Allocation
+            },
+            async: false,
+            success: function(data){
+                console.log('successfully changed allocation');
+            }.bind(this)
+        });
         Controller.GetAllProjectMembers(projectId);
     }
 

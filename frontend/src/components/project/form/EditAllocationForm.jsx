@@ -23,6 +23,20 @@ export default class EditAllocationForm extends React.Component{
             projectAllocation: this.refs.inputAllocation.value
         })
     }
+
+    onStoreClick(){
+        let model = Context.cursor.get('model');
+
+        if(!model){
+            model = {}
+        }
+        let allocation = this.refs.inputAllocation.value;
+
+        model.Allocation = (allocation) ? allocation : model.Allocation;
+
+        Context.cursor.set("model", model);
+        this.props.FormAction();
+    }
     render(){
         let projectAllocation = this.state.projectAllocation;
         return(
