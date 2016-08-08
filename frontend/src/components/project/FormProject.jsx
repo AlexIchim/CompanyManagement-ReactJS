@@ -29,7 +29,7 @@ export default class Form extends React.Component{
     }
 
     store(cb){
-        const status=this.refs.status.options[this.refs.status.selectedIndex].value;
+        const status=this.refs.status.options[this.refs.status.selectedIndex].id;
 
         var inputInfo={
             Name: this.refs.name.value,
@@ -51,13 +51,13 @@ export default class Form extends React.Component{
     }
 
     refresh(departmentId){
-        Controller.getAllDepProjects(departmentId,"",1);
+        Controller.getAllDepProjects(departmentId,{},1);
     }
 
     render(){
         const statusDescriptions=this.state.statusDescriptions.map((el, x) => {
             return (
-                <option value={el} key={x} >{el}</option>                         
+                <option value={el} key={x} id={el.Id} >{el.Description}</option>                         
             )
         });
 

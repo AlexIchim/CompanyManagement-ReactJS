@@ -70,6 +70,7 @@
     <Compile Include="InfoModels\MemberInfo.cs" />
     <Compile Include="InfoModels\PositionTypeInfo.cs" />
     <Compile Include="InfoModels\ProjectInfo.cs" />
+    <Compile Include="InfoModels\ProjectStatusInfo.cs" />
     <Compile Include="InputInfoModels\AddOfficeInputInfo.cs" />
     <Compile Include="InfoModels\ProjectsOfAnEmployeeInfo.cs" />
     <Compile Include="InputInfoModels\AddEmployeeToDepartmentInputInfo.cs" />

@@ -35,7 +35,7 @@ export default class Project extends React.Component {
     }
 
     componentDidMount(){
-         Controller.getAllDepProjects(this.props.routeParams.departmentId,"",this.state.pageNr);
+         Controller.getAllDepProjects(this.props.routeParams.departmentId,{},this.state.pageNr);
     }
 
     componentWillUnmount () {
@@ -49,8 +49,9 @@ export default class Project extends React.Component {
     }
 
     onDropDownChange(){
-        const status=this.refs.status.options[this.refs.status.selectedIndex].value;
+        const status=this.refs.status.options[this.refs.status.selectedIndex].id;
         const pageNr = 1;
+        console.log("ODDC",status);
         Controller.getAllDepProjects(this.props.routeParams.departmentId,status,pageNr);
     }
 
@@ -73,7 +74,7 @@ export default class Project extends React.Component {
         if (this.state.pageNr!=1){
             const whereTo=this.state.pageNr-1
 
-            Controller.getAllDepProjects(this.props.routeParams.departmentId,"",whereTo);
+            Controller.getAllDepProjects(this.props.routeParams.departmentId,{},whereTo);
             
              this.setState({
                 pageNr:this.state.pageNr-1
@@ -86,7 +87,7 @@ export default class Project extends React.Component {
 
         const whereTo=this.state.pageNr+1
 
-        Controller.getAllDepProjects(this.props.routeParams.departmentId,"",whereTo);
+        Controller.getAllDepProjects(this.props.routeParams.departmentId,{},whereTo);
 
         this.setState({
             pageNr:this.state.pageNr+1
@@ -98,7 +99,7 @@ export default class Project extends React.Component {
 
         const statusDescriptions=this.state.statusDescriptions.map((el, x) => {
             return (
-                <option value={el} key={x} >{el}</option>                         
+                <option value={el} key={x} id={el.Id} >{el.Description}</option>                         
             )
         });
 
@@ -142,7 +143,7 @@ export default class Project extends React.Component {
                     </button>
 
                     
-                    <select className="selectpicker" ref="status" onClick={this.onDropDownChange.bind(this)}>
+                    <select className="selectpicker" ref="status" onChange={this.onDropDownChange.bind(this)}>
                         {statusDescriptions}                    
                     </select>              
                 </div>

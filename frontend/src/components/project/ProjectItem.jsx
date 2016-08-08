@@ -48,7 +48,7 @@ export default class ProjectItem extends React.Component{
     }
 
      refresh(departmentId){
-         Controller.getAllDepProjects(departmentId,"",1);
+         Controller.getAllDepProjects(departmentId,{},1);
      }
 
 

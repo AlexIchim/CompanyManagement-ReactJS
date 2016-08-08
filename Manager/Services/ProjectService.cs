@@ -2,6 +2,7 @@
 using Contracts;
 using Domain.Enums;
 using Domain.Models;
+using Manager.Descriptors;
 using Manager.InfoModels;
 using Manager.InputInfoModels;
 using System;
@@ -130,14 +131,15 @@ namespace Manager.Services
             return new OperationResult(false, Messages.ErrorWhileUpdatingProject);
         }
 
-        public IEnumerable<ProjectInfo> GetAllDepartmentProjects(int departmentId, string status, int? pageSize, int? pageNr)
+        public IEnumerable<ProjectInfo> GetAllDepartmentProjects(int departmentId, ProjectStatus? statusInfo, int? pageSize, int? pageNr)
         {
+            //var status = _mapper.Map<ProjectStatus>(statusInfo);
             if (_projectValidator.ValidateId(departmentId))
             {
                 var department = _departmentRepository.GetDepartmentById(departmentId);
                 if (department != null)
                 {
-                    var projects = _projectRepository.GetAllDepartmentProjects(department, status, pageSize, pageNr);
+                    var projects = _projectRepository.GetAllDepartmentProjects(department, statusInfo, pageSize, pageNr);
                     if (projects != null)
                     {
                         var projectInfos = _mapper.Map<IEnumerable<ProjectInfo>>(projects);
@@ -150,10 +152,10 @@ namespace Manager.Services
             return null;
         }
 
-        public IEnumerable<string> GetProjectStatusDescriptions()
+        /*public IEnumerable<string> GetProjectStatusDescriptions()
         {
             return _projectRepository.GetProjectStatusDescriptions();
-        }
+        }*/
         public OperationResult DeleteEmployeeFromProject(int employeeId, int projectId)
         {
             if (_projectValidator.ValidateId(employeeId) && _projectValidator.ValidateId(projectId))
@@ -166,6 +168,17 @@ namespace Manager.Services
                 }
             }
             return new OperationResult(false, Messages.ErrorDeletingEmployeeProject);
+        }
+
+        public IEnumerable<ProjectStatusInfo> GetProjectStatusDescriptions()
+        {
+            Array values = Enum.GetValues(typeof(ProjectStatus));
+            return (from ProjectStatus jobType in values
+                    select new ProjectStatusInfo
+                    {
+                        Id = (int)jobType,
+                        Description = jobType.GetDescription()
+                    }).ToList();
         }
 
     }

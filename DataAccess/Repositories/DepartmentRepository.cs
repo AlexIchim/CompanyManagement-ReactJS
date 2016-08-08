@@ -67,24 +67,10 @@ namespace DataAccess.Repositories
 
         public IEnumerable<Employee> GetAllDepartmentManagers()
         {
-            var departments = _context.Departments;
-            var departmentManagers= _context.Employees.Where(e => e.PositionType == PositionType.DepartmentManager);
-            
-            List<Employee> array=new List<Employee>();
-            foreach (var dm in departmentManagers)
-            {
-                bool empty = true;
-                foreach (var dep in departments)
-                {
-                    if (dep.DepartmentManager == dm)
-                    {
-                        empty = false;
-                    }
-                } 
-                if (empty==true)
-                    array.Add(dm);
-            }
-            return array;
+
+            var assignedDM = _context.Departments.Select(d => d.DepartmentManager);
+            var departmentManagers = _context.Employees.Where(e => e.PositionType == PositionType.DepartmentManager && !assignedDM.Contains(e));
+            return departmentManagers;
         }
 
         public Employee GetEmployeeById(int? id)

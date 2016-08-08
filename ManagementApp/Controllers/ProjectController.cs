@@ -2,6 +2,8 @@
 using Manager.Services;
 using System.Web.Http;
 using System.Web.Http.Cors;
+using Domain.Enums;
+using Manager.InfoModels;
 
 namespace ManagementApp.Controllers
 {
@@ -60,7 +62,7 @@ namespace ManagementApp.Controllers
 
         [Route("getAllDepartmentProjects")]
         [HttpGet]
-        public IHttpActionResult GetAllDepartmentProjects(int depId,string status, int? pageSize, int? pageNr)
+        public IHttpActionResult GetAllDepartmentProjects(int depId,int? pageSize, int? pageNr, ProjectStatus? status = null)
         {
             var result = _projectService.GetAllDepartmentProjects(depId,status, pageSize, pageNr);
             return Json(result);
