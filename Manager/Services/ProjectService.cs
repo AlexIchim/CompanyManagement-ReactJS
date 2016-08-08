@@ -44,6 +44,7 @@ namespace Manager.Services
 
             var res = allocations.Select(a => new ProjectEmployeeInfo()
             {
+                AllocationId = a.Id, 
                 Employee = _mapper.Map<EmployeeInfo>(a.Employee),
                 Allocation = a.AllocationPercentage
             });

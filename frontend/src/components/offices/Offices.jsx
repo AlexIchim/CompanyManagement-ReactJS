@@ -92,8 +92,6 @@ export default class Offices extends React.Component{
         ) : null;
 
 
-
-
         return (
             <div>
                 <button className="btn btn-md btn-info" onClick={this.addOffice.bind(this)}><span className="glyphicon glyphicon-plus-sign"></span> Add new office</button>
@@ -102,7 +100,6 @@ export default class Offices extends React.Component{
                 <div className="row">
 
                     {offices}
-
 
                 </div>
 

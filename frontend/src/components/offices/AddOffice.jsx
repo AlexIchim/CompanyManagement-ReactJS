@@ -64,8 +64,7 @@ export default class AddOffice extends React.Component{
                             <div className="col-md-8">
                                 <span className="info-box-icon bg-gray"><i className="glyphicon glyphicon-picture"></i><img src=""/></span>
                                 <div className="col-md-6 col-sm-6 col-xs-12">
-                                    <input type="file" ref="image" defaultValue="Choose image"/>
-                                    {/*<button className="btn-default" onClick={this.chooseFile}>Choose image</button>*/}
+                                    <input type="file" ref="image"/>
                                 </div>
                             </div>
                         </div>

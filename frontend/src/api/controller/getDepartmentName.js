@@ -6,5 +6,5 @@ export default (id, isAsync, callback) =>
             method: 'GET',
             url: apiconfig.baseUrl + 'departments/' + id,
             async: true,
-            success: callback  
+            success: callback
     });

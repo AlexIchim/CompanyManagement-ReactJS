@@ -41,9 +41,9 @@ namespace ManagementApp.Controllers
 
         [Route("available")]
         [HttpGet]
-        public IHttpActionResult GetAvailableEmployees(int? departmentId = null, int? positionId = null, int? pageSize = null, int? pageNumber = null)
+        public IHttpActionResult GetAvailableEmployees(int? departmentId = null, int? positionId = null, int? projectId = null, int? pageSize = null, int? pageNumber = null)
         {
-            var result = _employeeService.GetAvailableEmployees(departmentId, positionId, pageSize, pageNumber);
+            var result = _employeeService.GetAvailableEmployees(departmentId, positionId, projectId, pageSize, pageNumber);
             return Json(result, _camelCaseJsonSettings);
         }
 

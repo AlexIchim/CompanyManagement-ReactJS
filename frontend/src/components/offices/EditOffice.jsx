@@ -20,7 +20,6 @@ export default class EditOffice extends React.Component {
             false,
             this.props.updateFunc
         )
-
     }
 
     onChangeHandler(e){
@@ -30,7 +29,6 @@ export default class EditOffice extends React.Component {
         this.setState({
             office: officeObject
         })
-        console.log(this.state.office);
     }
 
     render() {
@@ -80,9 +78,9 @@ export default class EditOffice extends React.Component {
                                 <label className="rightAligned" htmlFor="image">Image:</label>
                             </div>
                             <div className="col-md-8" id="rightColoumn">
-                                <span className="info-box-icon bg-gray"><i className="glyphicon glyphicon-picture"></i><img src=""/></span>
+                                <span className="info-box-icon bg-gray"><img className="uploadImage img-thumbnail" src={'data:image/jpg;base64,'+ image}/></span>
                                 <div className="col-md-6 col-sm-6 col-xs-12">
-                                    <button className="btn-default" onClick={this.chooseFile}>Choose image</button>
+                                   <input type="file" name="image" value={image} onChange={this.onChangeHandler.bind(this)}/>
                                 </div>
                             </div>
                         </div>
