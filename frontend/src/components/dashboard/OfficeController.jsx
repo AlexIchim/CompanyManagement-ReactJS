@@ -6,7 +6,6 @@ import Context from '../../context/Context';
 export default new class OfficeController {
     
     GetAll(){
-        console.log("GetAll called",config.base);
         $.ajax({
             method:'GET',
             url: config.base+'office/getAll',
@@ -16,13 +15,21 @@ export default new class OfficeController {
                 Context.cursor.set('formToggle',false);
             }.bind(this)
         });
-        console.log("Ajax Finished");
     }
 
     Add(){
-        console.log("Add called");
+
+        
+
+
+        /*console.log("Add called");
         let model= Context.cursor.get("model");
-        console.log("MODEL : ",model);
+        //console.log("MODEL : ",model);
+        var arr=[];
+        for(var i=0;i<model.Image.length;i++){
+            arr.push(model.Image[i]);
+        }
+
         $.ajax({
             method:'POST',
             url: config.base+'office/add',
@@ -31,13 +38,15 @@ export default new class OfficeController {
                 Name:model.Name,
                 Address:model.Address,
                 Phone:model.Phone,
-                Image:model.Image
+                Image:arr
+
             },
             success: function(data){  
-                console.log("ADDED: ",data);
+                console.log("ADD RETURNED : ",data);
             }.bind(this)
         });             
         this.GetAll();
+        */
         
     }
         
@@ -46,6 +55,8 @@ export default new class OfficeController {
         let model= Context.cursor.get("model");
         console.log("MODEL : ",model);
         
+        
+
         $.ajax({
             method:'POST',
             url: config.base+'office/update',
@@ -55,10 +66,10 @@ export default new class OfficeController {
                 Name:model.Name,
                 Address:model.Address,
                 Phone:model.Phone,
-                Image:null
+                Image:model.Image
             },
             success: function(data){                
-                console.log("ADDED: ",data);              
+                console.log("UPDATE RETURNED : ",data);              
                 this.GetAll();
             }.bind(this)
         });

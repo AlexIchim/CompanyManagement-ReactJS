@@ -2,6 +2,7 @@ import * as React from 'react';
 import ModalTemplate from '../ModalTemplate';
 import Context from '../../context/Context';
 import Accessors from '../../context/Accessors';
+import config from '../helper';
 
 export default class Form extends React.Component{
     constructor(){
@@ -16,6 +17,7 @@ export default class Form extends React.Component{
     }
 
     onImageLoad(){
+        /*
        var value=document.querySelector('input[type=file]').files[0];
 
         var reader=new FileReader();
@@ -31,10 +33,11 @@ export default class Form extends React.Component{
         reader.readAsDataURL(value);
 
         console.log("READ IMAGE",image);
+        */
     }
 
     onStoreClick(){
-        let model=Context.cursor.get("model");
+        /*let model=Context.cursor.get("model");
 
         if(!model){
             model={};
@@ -55,6 +58,25 @@ export default class Form extends React.Component{
         Context.cursor.set("model", model);
 
         this.props.FormAction();
+        */
+        var form = $("officeForm");
+        var formData=new FormData(form);
+
+
+        formData.append("ASD","asd");
+
+        console.log("formData:  ",formData);
+        $.ajax({
+            method:'POST',
+            url: config.base+'office/add',
+            async:false,
+            processData:false,
+            contentType: 'multipart/form-data',
+            data: formData,
+            success: function(data){  
+                console.log("ADD RETURNED : ",data);
+            }.bind(this)
+        });       
     }
     render(){
 
@@ -70,49 +92,52 @@ export default class Form extends React.Component{
             <ModalTemplate onCancelClick={this.props.onCancelClick}
                            onStoreClick={this.onStoreClick.bind(this)}
                            Title={this.props.Title}>
-
-                <div className="form-group">
-                    <label htmlFor="inputName" className="col-sm-2 control-label"> Name</label>
-                    <div className="col-sm-10">
-                        <input type="text" 
-                               className="form-control" 
-                               ref="inputName" 
-                               placeholder={name}>
-                        </input>
-                    </div>
-                </div>
-
-                <div className="form-group">
-                    <label htmlFor="inputAddress" className="col-sm-2 control-label"> Address</label>
-                    <div className="col-sm-10">
-                        <input  type="text" 
+                <form id="officeForm" 
+                      encType="multipart/form-data" 
+                      noValidate="noValidate">
+                    <div className="form-group">
+                        <label htmlFor="inputName" className="col-sm-2 control-label"> Name</label>
+                        <div className="col-sm-10">
+                            <input type="text" 
                                 className="form-control" 
-                                ref="inputAddress" 
-                                placeholder={addr}>
-                        </input>
+                                ref="inputName" 
+                                placeholder={name}>
+                            </input>
+                        </div>
                     </div>
-                </div>
 
-                <div className="form-group">
-                    <label htmlFor="inputPhone" className="col-sm-2 control-label"> Phone </label>
-                    <div className="col-sm-10">
-                        <input type="text" 
-                               className="form-control" 
-                               ref="inputPhone" 
-                               placeholder={phone}>
-                        </input>
+                    <div className="form-group">
+                        <label htmlFor="inputAddress" className="col-sm-2 control-label"> Address</label>
+                        <div className="col-sm-10">
+                            <input  type="text" 
+                                    className="form-control" 
+                                    ref="inputAddress" 
+                                    placeholder={addr}>
+                            </input>
+                        </div>
                     </div>
-                </div>
 
-                <div className="form-group">
-                    <label htmlFor="inputImage" className="col-sm-2 control-label"> Image </label>
-                    <div className="col-sm-10">
-                        <input type="file" 
-                               ref="inputImage" 
-                               onChange={this.onImageLoad.bind(this)}/>
+                    <div className="form-group">
+                        <label htmlFor="inputPhone" className="col-sm-2 control-label"> Phone </label>
+                        <div className="col-sm-10">
+                            <input type="text" 
+                                className="form-control" 
+                                ref="inputPhone" 
+                                placeholder={phone}>
+                            </input>
+                        </div>
                     </div>
-                </div>
 
+                    <div className="form-group">
+                        <label htmlFor="inputImage" className="col-sm-2 control-label"> Image </label>
+                        <div className="col-sm-10">
+                            <input
+                                type="file" 
+                                ref="inputImage" 
+                                onChange={this.onImageLoad.bind(this)}/>
+                        </div>
+                    </div>
+                </form>
             </ModalTemplate>
         )
     }

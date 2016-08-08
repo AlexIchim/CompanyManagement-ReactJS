@@ -45,6 +45,10 @@ namespace Manager.Services
 
         public OperationResult Add(AddOfficeInputInfo inputInfo)
         {
+            if (inputInfo == null)
+            {
+                return new OperationResult(false, Messages.ErrorWhileAddingProject);
+            }
             var validationResult =_addOfficeValidator.Validate(inputInfo);
             if (!validationResult.IsValid)
             {
@@ -59,6 +63,10 @@ namespace Manager.Services
 
         public OperationResult Update(UpdateOfficeInputInfo inputInfo)
         {
+            if (inputInfo == null)
+            {
+                return new OperationResult(false, Messages.ErrorWhileUpdatingOffice);
+            }
             var validationResult = _updateOfficeValidator.Validate(inputInfo);
             if (!validationResult.IsValid)
             {
