@@ -1,5 +1,5 @@
 import $ from 'jquery';
-import {default as apiconfig} from '../../api/config';
+import {default as apiconfig} from '../config';
 
 export default (id, pageSize, pageNumber, isAsync, callback) =>
     $.ajax({

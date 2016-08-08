@@ -1,16 +1,40 @@
 import React, { Component } from 'react';
 import {Link} from 'react-router';
 import * as $ from 'jquery';
+<<<<<<< HEAD
 import config from '../../api/config.js';
 
 import * as Command from '../../context/commands';
+
+const ProjectRow = (props) => {
+   
+    const linkMembers = ('offices/' + props.officeId + '/departments/' + props.node.departmentId  
+                        + '/projects/' + props.node.id + '/members');
+
+    return (
+        <tr>
+            <td>{props.node.name}</td>
+            <td>{props.node.memberCount}</td>
+            <td>{props.node.duration || 'variable'}</td>
+            <td>{props.node.status}</td>
+            <td>
+                <Link to = "#">edit     </Link>
+                <Link to = {linkMembers}>view members     </Link>
+                <Link to = "#">remove</Link>
+            </td>
+        </tr>
+    )
+}
+=======
+import config from '../api/config.js';
 import ModalTemplate from '../layout/ModalTemplate';
 import EditDetails from './EditDetails';
 import AddProject from './AddProject';
 import Item from './Item';
-import addProject from '../../api/controller/addProject';
-import getAllProjects from '../../api/controller/getAllProjects';
-import deleteProject from '../../api/controller/deleteProject';
+import addProject from '../api/controller/addProject';
+import getAllProjects from '../api/controller/getAllProjects';
+import deleteProject from '../api/controller/deleteProject';
+>>>>>>> origin/Team2-RobertVaradi
 
 export default class Projects extends Component{
     constructor () {
@@ -67,21 +91,31 @@ export default class Projects extends Component{
     componentWillMount(){
         this.callApi();
     }
+<<<<<<< HEAD
 
+=======
     
+>>>>>>> origin/Team2-RobertVaradi
     componentWillReceiveProps(newProps){
         this.props = newProps;
         this.callApi();
     }
 
     callApi(){
+<<<<<<< HEAD
         Command.setCurrentOffice(this.props.params.officeId);
         Command.setCurrentDepartment(this.props.params.departmentId);
 
+        $.ajax({
+            method: 'GET',
+            url: config.baseUrl + 'departments/' + this.props.params['departmentId'] + '/projects',
+            success: function(data) {
+=======
         getAllProjects(
             this.props.params.departmentId,
             true,
             (data) => {
+>>>>>>> origin/Team2-RobertVaradi
                 this.setState({
                     projects : data
                 });

@@ -142,6 +142,7 @@ export default class Employees extends Component {
     }
 
     render() {
+
         const items = this.state.employeeList.map( 
             (e) => <Item key={e.id} data={e}
                          onView={this.viewDetails.bind(this, e)}

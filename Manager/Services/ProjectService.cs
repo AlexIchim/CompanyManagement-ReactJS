@@ -99,7 +99,7 @@ namespace Manager.Services
 
         public OperationResult Update(UpdateProjectInputInfo inputInfo)
         {
-            var Department = _departmentRepository.GetById(inputInfo.Id);
+            var Department = _departmentRepository.GetById((int)inputInfo.DepartmentId);
             if (Department != null)
             {
                 var project = _projectRepository.GetById(inputInfo.Id);
