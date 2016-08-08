@@ -1,8 +1,0 @@
-export {default as getAllDepOffice} from './getAllDepOffice.js';
-export {default as getAllDepProjects} from './getAllDepProjects.js';
-export {default as getEmployeesByProjectId} from './getEmployeesByProjectId.js';
-<<<<<<< HEAD
-export {default as getProjectsFilteredByStatus} from './getProjectsFilteredByStatus.js';
-=======
-export {default as getAllOffices} from './getAllOffices.js';
->>>>>>> capac-cami-fronted

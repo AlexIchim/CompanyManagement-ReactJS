@@ -120,6 +120,10 @@
       <Project>{7d7056db-2f75-41fa-b2a5-1cf2ec1b3230}</Project>
       <Name>ManagementApp.Domain</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Manager\ManagementApp.Manager.csproj">
+      <Project>{A8EC782B-E337-4C57-AA91-4F908337F5B5}</Project>
+      <Name>ManagementApp.Manager</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Mappings\" />

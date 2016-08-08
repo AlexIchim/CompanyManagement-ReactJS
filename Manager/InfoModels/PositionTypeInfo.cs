@@ -6,10 +6,10 @@ using System.Threading.Tasks;
 
 namespace Manager.InfoModels
 {
-    public class JobTypeInfo
+    public class PositionTypeInfo
     {
         public int Id { get; set; }
-
+        
         public string Description { get; set; }
     }
 }

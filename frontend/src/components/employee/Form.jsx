@@ -3,19 +3,42 @@ import AddEmployeeModalTemplate from './AddEmployeeModalTemplate.jsx';
 import configs from '../helpers/calls';
 import Context from '../../context/Context.js';
 import * as Immutable from 'immutable';
+import * as Controller from '../controller';
 
 export default class Form extends React.Component{
 
     constructor(){
         super();
         this.state={
-            jobTypes:["Part time 4 hours", "Part Time 6 hours", "FullTime"],
-            positionTypes:["Developer", "ProjectManager","TeamLead", "QA", "BA", "DepartmentManager"]
+            jobTypes:[],
+            positionTypes:[]
         }
     }
 
     componentWillMount(){
-           
+         $.ajax({
+            method: 'GET',
+            async: false,
+            url: configs.baseUrl + 'api/employee/getJobTypes',
+            success: function (data) {
+                console.log(data, this);
+                this.setState({
+                    jobTypes: data
+                })
+            }.bind(this)
+        })   
+        
+        $.ajax({
+            method: 'GET',
+            async: false,
+            url: configs.baseUrl + 'api/employee/getPoisitionTypes',
+            success: function (data) {
+                console.log(data, this);
+                this.setState({
+                    positionTypes: data
+                })
+            }.bind(this)
+        })          
     }
 
     componentDidMount(){
@@ -24,6 +47,9 @@ export default class Form extends React.Component{
     }
 
     store(cb){
+
+        const jobTypes = this.refs.jobType.options[this.refs.jobType.selectedIndex].value
+        const positionypes = this.refs.positionType.options[this.refs.positionType.selectedIndex].value
         var inputInfo = {
             DepartmentId: this.props.departmentId,
             Name: this.refs.name.value,
@@ -50,24 +76,18 @@ export default class Form extends React.Component{
     }
 
     refresh(departmentId){
-         $.ajax({
-            method: 'GET',
-            url: configs.baseUrl + 'api/employee/getAllDepartmentEmployees?departmentIdId=' + departmentId+'&pageSize=10&pageNr=1',
-            success: function (data) {
-                Context.cursor.set("employees",Immutable.fromJS(data));
-            }.bind(this)
-        })
+         Controller.getAllEmployeesByDepartmentId(departmentId,1)
     }
 
     render(){
         const jobTypes = this.state.jobTypes.map((el,x)=>{
             return (
-                <option value={el.Id} key={x} >{el}</option>                         
+                <option value={el} key={x} > {el} </option>                         
             )
         });
         const positionTypes = this.state.positionTypes.map((el,x)=>{
             return (
-                <option value={el.Id} key={x} >{el}</option>                         
+                <option value={el} key={x} >{el}</option>                         
             )
         });
         return (
@@ -86,9 +106,9 @@ export default class Form extends React.Component{
                 </div>
             </div>
             <div className="form-group">
-                <label>employmentDate:</label>
+                <label className="col-sm-4">Employment Date:</label>
 
-                <div className="input-group date">
+                <div className="input-group date col-sm-6">
                   <div className="input-group-addon">
                     <i className="fa fa-calendar"></i>
                   </div>
@@ -97,9 +117,9 @@ export default class Form extends React.Component{
                 
               </div>
             <div className="form-group">
-                <label>releaseDate:</label>
+                <label className="col-sm-4">Release Date:</label>
 
-                <div className="input-group date">
+                <div className="input-group date col-sm-6">
                   <div className="input-group-addon">
                     <i className="fa fa-calendar"></i>
                   </div>
@@ -107,17 +127,25 @@ export default class Form extends React.Component{
                 </div>
                 
               </div>
-
-            <label className="col-sm-4 control-label"> Job Type </label>
-            <select ref="jobType" className="selectpicker">
-                {jobTypes}                    
+            
+            <div className="form-group">
+             <label className="col-sm-4 control-label"> Job Type </label>
+                 <div className="col-sm-6">
+            <select ref="jobType" className="selectpicker form-group">
+                {jobTypes}        
+                              
             </select>
-             <label className="col-sm-4 control-label"> Position Type </label>
-       
-            <select ref="positionType" className="selectpicker">
-                {positionTypes}                    
-            </select>
+            </div>
+            </div>
 
+            <div className="form-group">
+                <label className="col-sm-4 control-label"> Position Type </label>
+                 <div className="col-sm-6">
+                <select ref="positionType" className="selectpicker form-group">
+                          {positionTypes}           
+                </select>
+                </div>
+            </div>
         </AddEmployeeModalTemplate>
         )
     }

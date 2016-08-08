@@ -199,5 +199,15 @@ namespace Manager.Services
         {
             return _employeeRepository.ComputeTotalAllocation(employeeId);
         }
+
+        public IEnumerable<string> GetJobTypesDescriptions()
+        {
+            return _employeeRepository.GetJobTypesDescriptions();
+        }
+
+        public IEnumerable<string> GetPositionTypesDescriptions()
+        {
+            return _employeeRepository.GetPositionTypeDescriptions();
+        }
     }
 }

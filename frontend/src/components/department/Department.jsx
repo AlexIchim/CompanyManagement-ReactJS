@@ -57,7 +57,7 @@ export default class Department extends React.Component {
 
         if (this.state.pageNr!=1){
             const whereTo=this.state.pageNr-1
-
+            console.log(2)
             Controller.getAllDepOffice(this.props.routeParams.officeId,whereTo);
             
              this.setState({
@@ -70,6 +70,7 @@ export default class Department extends React.Component {
     next(){
 
         const whereTo=this.state.pageNr+1
+        cosole.log(3)
 
         Controller.getAllDepOffice(this.props.routeParams.officeId,whereTo);
 
