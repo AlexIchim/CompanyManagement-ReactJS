@@ -19,8 +19,24 @@ export default new class Controller{
         })
     }
 
+    static GetAllProjectMembers(projectId){
+        $.ajax({
+            method: 'GET',
+            url: config.base + 'project/members/' +projectId + '/5/1',
+            async: false,
+            success: function(data){
+                console.log('data:', data);
+                Context.cursor.set('items', data);
+                Context.cursor.set('model', null);
+            }.bind(this)
+        });
+    }
+
     GetAllProjects() {
         Controller.ajaxCall();
+    }
+    GetProjectMembers(projectId){
+        Controller.GetAllProjectMembers(projectId);
     }
 
     Add() {
@@ -48,6 +64,7 @@ export default new class Controller{
             method: 'PUT',
             url: config.base + 'project/update',
             data: {
+                Id: Context.cursor.get('model').Id,
                 Name: Context.cursor.get('model').Name,
                 DepartmentId: 3,
                 Duration: Context.cursor.get('model').Duration,
@@ -56,6 +73,7 @@ export default new class Controller{
             async: false,
             success: function (data) {
                 console.log('successfully updated')
+                console.log('data updated:', data);
 
             }.bind(this)
         });
@@ -87,7 +105,18 @@ export default new class Controller{
                 Context.cursor.set('dropdownItems', data);
             }.bind(this)
         });
+    }
 
+    EditAllocation(projectMember, projectId){
+        $.ajax({
+            method: 'GET',
+            url: config.base + "project/editAllocation",
+            async: false,
+            success: function(data){
+                console.log('successfully changed allocation');
+            }.bind(this)
+        });
+        Controller.GetAllProjectMembers(projectId);
     }
 
 }

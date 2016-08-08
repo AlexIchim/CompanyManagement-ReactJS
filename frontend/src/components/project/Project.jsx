@@ -2,11 +2,11 @@ import config from '../helper';
 import * as React from 'react'
 import * as $ from 'jquery'
 import ProjectItem from './ProjectItem.jsx'
-import Form from './Form.jsx';
+import Form from './form/Form.jsx';
 import Accessors from '../../context/Accessors';
 import Context from '../../context/Context';
 import MyController from './controller/Controller'
-import EditForm from './EditForm';
+import EditForm from './form/EditForm';
 import Delete from './controller';
 import GetAllProjects from './controller/GetAllProjects'
 
@@ -32,7 +32,8 @@ export default class Project extends React.Component{
 
     onContextChange(cursor){
         this.setState({
-            items: Accessors.items(Context.cursor)
+            items: Accessors.items(Context.cursor),
+            formToggle: false
         });
     }
 
@@ -44,14 +45,18 @@ export default class Project extends React.Component{
     }
 
     onEditButtonClick(project){
+        Context.cursor.set('model', project)
         this.setState({
             formToggle: true
         });
-        Context.cursor.set('model', project)
+
     }
 
     toggleModal(){
-        this.setState({formToggle: false})
+        this.setState({
+            formToggle: false
+        });
+        console.log('toggle modal?', this.state.formToggle);
     }
 
     render(){
@@ -61,7 +66,8 @@ export default class Project extends React.Component{
                 modal = <EditForm onCancelClick={this.toggleModal.bind(this)}
                                   FormAction={MyController.Update}
                                   Title="Edit Project"/>;
-            } else {
+            }
+            else {
                 modal = <Form onCancelClick={this.toggleModal.bind(this)}
                               FormAction={MyController.Add}
                               Title="Add Project"/>;

@@ -1,26 +1,34 @@
 import React from 'react';
-import ModalTemplate from '../ModalTemplate';
-import config from '../helper';
-import MyController from './controller/Controller.js';
-import Accessors from '../../context/Accessors';
-import Context from '../../context/Context';
+import ModalTemplate from '../../ModalTemplate';
+import config from '../../helper';
+import MyController from '../controller/Controller.js';
+import Accessors from '../../../context/Accessors';
+import Context from '../../../context/Context';
 
 export default class EditForm extends React.Component {
     constructor(){
         super();
     }
-
     componentWillMount(){
-        MyController.GetStatusDescriptions();
+        //MyController.GetStatusDescriptions();
+        $.ajax({
+            method:'GET',
+            url: config.base + "/project/statusDescriptions",
+            async: false,
+            success: function(data){
+                this.setState({
+                 dropdownItems: data
+                })
+            }.bind(this)
+        });
+        this.subscription=Context.subscribe(this.onContextChange.bind(this));
     }
 
     onStoreClick(){
         let model = Context.cursor.get('model');
-
         if(!model){
             model = {}
         }
-
         let name = this.refs.inputName.value;
         let duration = this.refs.inputDuration.value;
         var select = document.getElementById('dropdown');
@@ -31,7 +39,6 @@ export default class EditForm extends React.Component {
         model.Status = (status) ? status : model.Status;
 
         Context.cursor.set("model", model);
-
         this.props.FormAction();
     }
 
@@ -39,14 +46,41 @@ export default class EditForm extends React.Component {
 
         console.log('input was changed');
     }
-    render(){
 
-        const items = Context.cursor.get('dropdownItems').map( (status, index) => {
+    componentWillUnmount(){
+        this.subscription.dispose();
+    }
+    onContextChange(newGlobalCursor){
+        this.setState({
+            model: newGlobalCursor.get('model'),
+            projectName: newGlobalCursor.get('model') && newGlobalCursor.get('model').Name || "",
+            projectDuration: newGlobalCursor.get('model') && newGlobalCursor.get('model')['Duration'] || ""
+        });
+    }
+
+    onNameChange(){
+        this.setState({
+            model: this.state.model,
+            projectName: this.refs.inputName.value,
+        })
+    }
+    onDurationChange(){
+        this.setState({
+            model: this.state.model,
+            projectDuration: this.refs.inputDuration.value
+        })
+
+    }
+    render(){
+        const projectName = this.state.projectName;
+        const projectDuration = this.state.projectDuration;
+        const items = this.state.dropdownItems.map( (status, index) => {
             return ( <option key={index} >{status}</option>
             )});
 
         const model = Accessors.model(Context.cursor);
         const name = model.Name;
+        console.log('duratiooon', model.Duration);
         const duration = model.Duration;
         const status = model.Status;
 
@@ -60,7 +94,11 @@ export default class EditForm extends React.Component {
                 <div className="form-group">
                     <label htmlFor="inputName" className="col-sm-2 control-label"> Name</label>
                     <div className="col-sm-10">
-                        <input type="text"  ref="inputName" className="form-control"  onChange={this.OnInputChange} placeholder= {name}>
+                        <input type="text"
+                               ref="inputName"
+                               className="form-control"
+                               onChange={this.onNameChange.bind(this)}
+                               value={projectName}>
                         </input>
                     </div>
                 </div>
@@ -68,7 +106,12 @@ export default class EditForm extends React.Component {
                 <div className="form-group">
                     <label htmlFor="inputDuration" className="col-sm-2 control-label"> Duration</label>
                     <div className="col-sm-10">
-                        <input type="text" className="form-control" ref="inputDuration" placeholder="Duration" value={duration}>
+                        <input type="text"
+                               className="form-control"
+                               ref="inputDuration"
+                               onChange={this.onDurationChange.bind(this)}
+                               value={projectDuration}
+                        >
                         </input>
                     </div>
                 </div>

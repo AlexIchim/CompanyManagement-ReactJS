@@ -1,14 +1,20 @@
 import * as React from 'react'
 import config from '../helper';
 import * as $ from 'jquery'
+import Controller from './controller/Controller';
+import Context from '../../context/Context';
+import Accessors from '../../context/Accessors'
+import Form from './form/Form';
+
 
 const Item = (props) => {
+
     return (
         <tr>
             <td>{props.element['Name']}</td>
             <td>{props.element['Position']}</td>
             <td>{props.element['Allocation']} %</td>
-            <td><button id="store" className="btn btn-success margin-top">
+            <td><button id="store" className="btn btn-success margin-top" onClick={props.onEdit}>
                 Edit Allocation
             </button>
             </td>
@@ -21,44 +27,82 @@ const Item = (props) => {
     )
 }
 class ProjectMembers extends React.Component {
-    componentWillMount(){
 
-        const projectId = this.props.routeParams['projectId'];
-        console.log(projectId);
-        $.ajax({
-            method: 'GET',
-            url: config.base + 'project/members/' +projectId + '/5/1',
-            async: false,
-            success: function(data){
-                this.setState({
-                    projectMembers: data
-                })
-            }.bind(this)
+    constructor(){
+        super();
+    }
+    componentWillMount(){
+        this.setState({
+            formToggle: false
         });
+        const projectId = this.props.routeParams['projectId'];
+        Controller.GetProjectMembers(projectId);
         $.ajax({
             method: 'GET',
             url: config.base + 'project/getById/' +projectId,
             async: false,
             success: function(data){
                 this.setState({
+                    projectId: data.Id,
                     projectName: data.Name
                 })
             }.bind(this)
         });
+        this.subscription = Context.subscribe(this.onContextChange.bind(this));
+
+    }
+    componentWillUnmount(){
+        this.subscription.dispose();
+    }
+    onContextChange(cursor){
+        this.setState({
+            projectMembers: Accessors.items(Context.cursor),
+            formToggle: false
+        });
     }
 
+    onAddButtonClick(){
+        console.log('clicked add');
+        Context.cursor.set('model',null);
+        this.setState({
+            formToggle: true
+        });
+    }
+    onEditAllocationClick(){
+        this.setState({
+            formToggle: true
+        });
+    }
+    toggleModal(){
+        this.setState({formToggle: false})
+    }
     render(){
+        let modal = "";
         const items = this.state.projectMembers.map ( (projectMember, index) => {
             return (
                 <Item
                     element = {projectMember}
+                    onEdit = {this.onEditAllocationClick.bind(this)}
                     key = {index}
+                    FormAction={Controller.EditAllocation.bind(this, projectMember, this.state.projectId)}
                     />
             )
         });
+        if(this.state.formToggle) {
+            if (Accessors.model(Context.cursor)) {
+                modal = <EditForm onCancelClick={this.toggleModal.bind(this)}
+                                  FormAction={Controller.Update}
+                                  Title="Edit Project"/>;
+            } else {
+                modal = <Form onCancelClick={this.toggleModal.bind(this)}
+                              FormAction={Controller.Add}
+                              Title="Add Project"/>;
+            }
+        }
         return (
             <div>
-                <h1> {this.state.projectName} Members  <button id="store" className="btn btn-success margin-top" >
+                {modal}
+                <h1> {this.state.projectName} Members  <button id="store" className="btn btn-success margin-top" onClick={this.onAddButtonClick.bind(this)} >
                     Assign Employee
                 </button></h1>
             <table className="table table-stripped">
