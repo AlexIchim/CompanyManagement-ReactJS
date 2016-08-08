@@ -1,71 +1,107 @@
 import * as React from 'react';
 import {Link} from 'react-router';
 
-const Multilevel = () => {
-    return (
-        <li className="treeview active">
-            <a href="#">
-                <i className="fa fa-share"></i> <span>Multilevel</span>
-            <span className="pull-right-container">
-              <i className="fa fa-angle-left pull-right"></i>
-            </span>
-            </a>
-            <ul className="treeview-menu">
-                <li><a href="#"><i className="fa fa-circle-o"></i> Level One</a></li>
-                <li>
-                    <a href="#"><i className="fa fa-circle-o"></i> Level One
-                <span className="pull-right-container">
-                  <i className="fa fa-angle-left pull-right"></i>
-                </span>
-                    </a>
-                    <ul className="treeview-menu">
-                        <li><a href="#"><i className="fa fa-circle-o"></i> Level Two</a></li>
-                        <li>
-                            <a href="#"><i className="fa fa-circle-o"></i> Level Two
-                    <span className="pull-right-container">
-                      <i className="fa fa-angle-left pull-right"></i>
-                    </span>
-                            </a>
-                            <ul className="treeview-menu">
-                                <li><a href="#"><i className="fa fa-circle-o"></i> Level Three</a></li>
-                                <li><a href="#"><i className="fa fa-circle-o"></i> Level Three</a></li>
-                            </ul>
-                        </li>
-                    </ul>
-                </li>
-                <li><a href="#"><i className="fa fa-circle-o"></i> Level One</a></li>
-            </ul>
-        </li>
-    )
-}
+import * as Access from '../../context/accessors';
+import * as Commands from '../../context/commands';
+import * as Controller from '../../api/controller';
+import Context from '../../context/Context'
 
-
-class Sidebar extends React.Component{
-    constructor(){
+class Multilevel extends React.Component {
+    constructor() {
         super();
+
+        this.state = {
+            offices: [],
+            currentOfficeId: null,
+            currentDepartments: [],
+            currentDepartmentId: null
+        };
+
     }
 
-    render(){
-        return (
+    componentWillMount(){
+        Commands.fetchOffices();
 
-            <aside className="main-sidebar">
-                <section className="sidebar">
-                    <ul className="sidebar-menu">
-                        <li className="header">MAIN NAVIGATION</li>
-                        <li className="treeview">
-                            <Link to="#">
-                                <i className="fa fa-dashboard"></i> <span>Dashboard</span>
-                            </Link>
-                        </li>
-                        <Multilevel/>
-                    </ul>
-                </section>
-            </aside>
-        )
+        Context.subscribe((newCursor) => {
+            this.setState({
+                offices: 
+                    Access.offices(Context.cursor).map(
+                        (el) => { 
+                            return {
+                                id: el.get('id'), 
+                                name: el.get('name')
+                            };
+                        }
+                    ).toJS(),
+                currentOfficeId: Access.currentOfficeId(Context.cursor),
+                currentDepartments: 
+                    Access.currentDepartments(Context.cursor).map(
+                        (el) => {
+                            return {
+                                id: el.get('id'),
+                                name: el.get('name')
+                            }
+                        } 
+                    ).toJS(),
+                currendDepartmentId: Access.currentDepartmentId(Context.cursor)
+            });
+        });
+    }
+
+    render() {
+        const offices = this.state.offices.map((o) => (
+            <li key={o.id}>
+                <Link to={'/offices/' + o.id + '/departments'}>
+                    <i className="fa fa-circle-o"/> {o.name}
+                </Link>
+                { this.state.currentOfficeId == o.id ? 
+                    <ul>{
+                        this.state.currentDepartments.map(d => 
+                            <li key={d.id}><Link to={
+                                '/offices/' + o.id + '/departments/' + d.id + '/projects'
+                            }>{d.name}</Link>
+                            { this.state.currendDepartmentId == d.id ? 
+                                <ul>
+                                    <li><Link to={
+                                        '/offices/' + o.id + '/departments/' + d.id + '/projects'
+                                    }>Projects</Link></li>
+                                    <li><Link to={
+                                        '/offices/' + o.id + '/departments/' + d.id + '/employees'
+                                    }>Employees</Link></li>
+                                </ul>
+                            : null }
+                            </li>
+                        )
+                    }</ul>
+                : null }
+            </li>
+        ));
+
+
+        return (
+            <li className="treeview active">
+                <Link to="/">
+                    <i className="fa fa-share"></i> <span>Firm Offices</span>
+                </Link>
+
+                <ul className="treeview-menu">
+                    {offices}
+                </ul>
+            </li>
+        );
     }
 }
 
 
-
+const Sidebar = () => (
+    <aside className="main-sidebar">
+        <section className="sidebar">
+            <ul className="sidebar-menu">
+                <li className="header">MAIN NAVIGATION</li>
+                <Multilevel/>
+            </ul>
+        </section>
+    </aside>
+);
 
 export default Sidebar;

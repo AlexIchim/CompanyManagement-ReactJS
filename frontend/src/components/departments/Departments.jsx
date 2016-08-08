@@ -8,6 +8,7 @@ import EditDetails from './EditDetails';
 import * as Controller from '../../api/controller';
 import AddDetails from './AddDetails';
 
+import * as Command from '../../context/commands';
 
 
 export default class Departments extends Component {
@@ -25,21 +26,34 @@ export default class Departments extends Component {
         }
     }
 
+    componentWillReceiveProps(newProps){
+        this.reinit(newProps);
+    }
+
     componentWillMount() {
+        this.reinit(this.props)
+    }
+
+    reinit(props){
+        Command.setCurrentOffice(props.params.officeId);
+        Command.setCurrentDepartment(null);
+
         Controller.getOfficeName(
-            this.props.params.officeId,
+            props.params.officeId,
             true,
             (data) => {
                 this.setState({
                     officeName: data.name
                 });
             });
-        this.fetchData();
+        this.fetchData(props);
     }
 
-    fetchData() {
+    fetchData(props) {
+        if(!props) props = this.props;
+
         Controller.getDepartmentCountByOffice(
-            this.props.params.officeId,
+            props.params.officeId,
             true,
             (data) => {
                 this.setState({
@@ -49,7 +63,7 @@ export default class Departments extends Component {
         );
 
         Controller.getDepartmentsByOffice(
-            this.props.params.officeId,
+            props.params.officeId,
             this.state.pageSize,
             this.state.pageNumber,
             true,

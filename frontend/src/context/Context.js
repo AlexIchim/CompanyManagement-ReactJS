@@ -2,15 +2,18 @@ import * as Immutable from 'immutable';
 import * as Cursor from 'immutable/contrib/cursor';
 import * as Rx from 'rx';
 
+const initialState = {
+    offices: [ {id: 0, name: "sample office"} ],
+    currentOfficeId: null,
+    currentDepartments: [],
+    currentDepartmentId: null
+};
 
-const initialState = {};
 
-class Context{
-
+export default new class Context{
     constructor(){
-        this.cursor         = Cursor.from( Immutable.fromJS( initialState ), this.onContextChange.bind(this) );
-        this.subject        = new Rx.BehaviorSubject(this.cursor);
-
+        this.cursor = Cursor.from( Immutable.fromJS( initialState ), this.onContextChange.bind(this) );
+        this.subject = new Rx.BehaviorSubject(this.cursor);
     }
 
     onContextChange(newImmutable){
@@ -18,11 +21,7 @@ class Context{
         this.subject.onNext(this.cursor);
     }
 
-
     subscribe(handleFunc){
         this.subject.subscribe(handleFunc);
     }
-
 }
-
-export default new Context;

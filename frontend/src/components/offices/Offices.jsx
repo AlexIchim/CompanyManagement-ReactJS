@@ -8,6 +8,8 @@ import AddOffice from './AddOffice';
 import EditOffice from './EditOffice';
 import * as Controller from '../../api/controller';
 
+import * as Command from '../../context/commands';
+
 export default class Offices extends React.Component{
     constructor(){
         super();
@@ -20,6 +22,7 @@ export default class Offices extends React.Component{
     }
 
     componentWillMount(){
+        Command.setCurrentOffice(null);
         this.fetchData();
     }
 

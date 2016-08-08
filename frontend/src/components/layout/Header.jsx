@@ -1,4 +1,5 @@
-import React, { Component } from 'react';
+import React from 'react';
+import {Link} from 'react-router';
 import Context from '../../context/Context';
 
 const Header = () => {
@@ -11,7 +12,7 @@ const Header = () => {
                 <div className="navbar-custom-menu">
                     <ul className="nav navbar-nav">
                         <li>
-                            <a href="/#/about" className="dropdown-toggle" data-toggle="dropdown">Team2</a>
+                            <Link to="/about" className="dropdown-toggle">Team2</Link>
                         </li>
                     </ul>
                 </div>
@@ -21,3 +22,4 @@ const Header = () => {
 };
 
 export default Header;
+

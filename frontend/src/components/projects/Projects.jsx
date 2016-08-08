@@ -3,6 +3,8 @@ import {Link} from 'react-router';
 import * as $ from 'jquery';
 import config from '../../api/config.js';
 
+import * as Command from '../../context/commands';
+
 const ProjectRow = (props) => {
    
     const linkMembers = ('offices/' + props.officeId + '/departments/' + props.node.departmentId  
@@ -36,12 +38,16 @@ export default class Projects extends Component{
     componentWillMount(){
         this.callApi();
     }
+
     componentWillReceiveProps(newProps){
         this.props = newProps;
         this.callApi();
     }
 
     callApi(){
+        Command.setCurrentOffice(this.props.params.officeId);
+        Command.setCurrentDepartment(this.props.params.departmentId);
+
         $.ajax({
             method: 'GET',
             url: config.baseUrl + 'departments/' + this.props.params['departmentId'] + '/projects',

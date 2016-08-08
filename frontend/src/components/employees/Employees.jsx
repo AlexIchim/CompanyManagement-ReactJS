@@ -12,6 +12,9 @@ import AddModal from './AddModal';
 
 import * as Controller from '../../api/controller';
 
+import * as Command from '../../context/commands';
+
+
 export default class Employees extends Component {
     constructor() {
         super();
@@ -27,6 +30,17 @@ export default class Employees extends Component {
     }
 
     componentWillMount(){
+        this.init();
+    }
+    componentWillReceiveProps(newProps){
+        this.props = newProps;
+        this.init();
+    }
+
+
+    init(){
+        Command.setCurrentOffice(this.props.params.officeId);
+        Command.setCurrentDepartment(this.props.params.departmentId);
         Controller.getDepartmentName(
             this.props.params.departmentId,
             true,
