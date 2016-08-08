@@ -53,6 +53,13 @@ namespace Manager.Services
             return employeeInfos;
         }
 
+        public int GetEmployeeCountByDepartmentId(int id)
+        {
+            int count = _departmentRepository.GetEmployeeCountByDepartmentId(id);
+
+            return count;
+        }
+
         public OperationResult Add(AddDepartmentInputInfo inputInfo)
         {
             var Office = _officeRepository.GetById(inputInfo.OfficeId);

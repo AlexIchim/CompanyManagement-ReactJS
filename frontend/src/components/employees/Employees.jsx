@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 import $ from 'jquery';
 import {default as apiconfig} from '../../api/config';
 import ModalTemplate from '../layout/ModalTemplate';
+import PaginatedTable from '../layout/PaginatedTable'
 
 import Item from './Item';
 import ViewDetailsModal from './ViewDetailsModal';
@@ -17,6 +18,9 @@ export default class Employees extends Component {
         this.state = { 
             departmentName: 'Department', 
             employeeList: [],
+            pageSize: 5,
+            pageNumber: 1,
+            totalEmployeeCount: 0,
             showModalTemplate: null,
             modalEmployee: {}
         };
@@ -36,8 +40,21 @@ export default class Employees extends Component {
     }
 
     fetchData() {
+        Controller.getEmployeeCountByDepartmentId(
+            this.props.params.departmentId,
+            true,
+            (data) => {
+                this.setState({
+                    totalEmployeeCount: data
+                });
+            }
+        );
+
+
         Controller.getEmployeesByDepartmentId(
             this.props.params.departmentId,
+            this.state.pageSize,
+            this.state.pageNumber,
             true,
             (data) => {
                 this.setState({
@@ -94,6 +111,21 @@ export default class Employees extends Component {
         ); 
     }
 
+    paginationChangeHandler(pageSize, pageNumber){
+        Controller.getEmployeesByDepartmentId(
+            this.props.params.departmentId,
+            pageSize,
+            pageNumber,
+            true,
+            (data) => {
+                this.setState({
+                    employeeList: data,
+                    pageSize: pageSize,
+                    pageNumber: pageNumber
+                });
+            }
+        );
+    }
 
     render() {
         const items = this.state.employeeList.map( 
@@ -103,6 +135,22 @@ export default class Employees extends Component {
                          onDelete={this.deleteItem.bind(this,e.id)}
                     />
         );
+
+
+        const header = (
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Address</th>
+                    <th>Employment Date</th>
+                    <th>Termination Date</th>
+                    <th>Employment Hours</th>
+                    <th>Position</th>
+                    <th>Total Allocation</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>);
 
         const modalTemplate = this.state.showModalTemplate !== null ? (
             <ModalTemplate
@@ -144,24 +192,14 @@ export default class Employees extends Component {
                 </button>
                 <br/>
                 <br/>
-                <table className="table table-hover table-bordered">
-                    <thead>
-                        <tr>
-                            <th>Name</th>
-                            <th>Email</th>
-                            <th>Address</th>
-                            <th>Employment Date</th>
-                            <th>Termination Date</th>
-                            <th>Employment Hours</th>
-                            <th>Position</th>
-                            <th>Total Allocation</th>
-                            <th>Actions</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {items}
-                    </tbody>
-                </table>
+                <PaginatedTable 
+                    header={header} 
+                    listOfItems={items}
+                    totalCount={this.state.totalEmployeeCount}
+                    pageSize={this.state.pageSize}
+                    selectedPage={this.state.pageNumber}
+                    changeHandler={this.paginationChangeHandler.bind(this)}
+                />
             </div>
         );
     }

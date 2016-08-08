@@ -57,6 +57,19 @@ namespace DataAccess.Repositories
             }
         }
 
+        public int GetEmployeeCountByDepartmentId(int id)
+        {
+            var dept = _context.Departments.SingleOrDefault(d => d.Id == id);
+            if (dept == null)
+            {
+                return 0;
+            }
+            else
+            {
+                return dept.Employees.Count;
+            }
+        }
+
         public void Add(Department department, int? departmentManagerId)
         {
             if (departmentManagerId != null)

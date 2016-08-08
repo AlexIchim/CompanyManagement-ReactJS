@@ -10,6 +10,7 @@ namespace Contracts
         Department GetByName(string name, int officeId);
         IEnumerable<Project> GetProjectsByDepartmentId(int id, int? pageSize = null, int? pageNumber = null);
         IEnumerable<Employee> GetEmployeesByDepartmentId(int id, int? pageSize = null, int? pageNumber = null);
+        int GetEmployeeCountByDepartmentId(int id);
         void Add(Department department, int? departmentManagerId);
         void Update(Department department, int? departmentManagerId);
         void Save();

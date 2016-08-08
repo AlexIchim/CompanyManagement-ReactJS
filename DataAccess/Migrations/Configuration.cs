@@ -61,7 +61,30 @@ namespace DataAccess.Migrations
                 new Employee() { Id = 3, Name = "Ion Popescu2", Address = null, Email = "ipop2@ipop.ro", EmploymentDate = DateTime.Now, ReleaseDate = null, EmploymentHours = 4, PositionId = 3, DepartmentId = 2 },
                 new Employee() { Id = 4, Name = "Claudiu Cretu2", Address = null, Email = "cretu2@iasd.ro", EmploymentDate = DateTime.Now, ReleaseDate = null, EmploymentHours = 8, PositionId = 1, DepartmentId = 2 },
                 new Employee() { Id = 5, Name = "Ion Popescu3", Address = null, EmploymentDate = DateTime.Now, ReleaseDate = null, EmploymentHours = 6, PositionId = 3, DepartmentId = 3 },
-                new Employee() { Id = 6, Name = "Claudiu Cretu3", Address = null, EmploymentDate = DateTime.Now, ReleaseDate = null, EmploymentHours = 8, PositionId = 1, DepartmentId = 3 }
+                new Employee() { Id = 6, Name = "Claudiu Cretu3", Address = null, EmploymentDate = DateTime.Now, ReleaseDate = null, EmploymentHours = 8, PositionId = 1, DepartmentId = 3 },
+
+                new Employee() { Id = 10, Name = "Ion Mitica 1", Address = null, Email = "ipop@ipop.ro", EmploymentDate = DateTime.Now, ReleaseDate = null, EmploymentHours = 8, PositionId = 3, DepartmentId = 1 },
+                new Employee() { Id = 11, Name = "Ion Mitica 2", Address = null, Email = "ipop@ipop.ro", EmploymentDate = DateTime.Now, ReleaseDate = null, EmploymentHours = 8, PositionId = 3, DepartmentId = 1 },
+                new Employee() { Id = 12, Name = "Ion Mitica 3", Address = null, Email = "ipop@ipop.ro", EmploymentDate = DateTime.Now, ReleaseDate = null, EmploymentHours = 8, PositionId = 3, DepartmentId = 1 },
+                new Employee() { Id = 13, Name = "Ion Mitica 4", Address = null, Email = "ipop@ipop.ro", EmploymentDate = DateTime.Now, ReleaseDate = null, EmploymentHours = 8, PositionId = 3, DepartmentId = 1 },
+                new Employee() { Id = 14, Name = "Ion Mitica 5", Address = null, Email = "ipop@ipop.ro", EmploymentDate = DateTime.Now, ReleaseDate = null, EmploymentHours = 8, PositionId = 3, DepartmentId = 1 },
+                new Employee() { Id = 15, Name = "Ion Mitica 6", Address = null, Email = "ipop@ipop.ro", EmploymentDate = DateTime.Now, ReleaseDate = null, EmploymentHours = 8, PositionId = 3, DepartmentId = 1 },
+                new Employee() { Id = 16, Name = "Ion Mitica 7", Address = null, Email = "ipop@ipop.ro", EmploymentDate = DateTime.Now, ReleaseDate = null, EmploymentHours = 8, PositionId = 3, DepartmentId = 1 },
+                new Employee() { Id = 17, Name = "Ion Mitica 8", Address = null, Email = "ipop@ipop.ro", EmploymentDate = DateTime.Now, ReleaseDate = null, EmploymentHours = 8, PositionId = 3, DepartmentId = 1 },
+                new Employee() { Id = 18, Name = "Ion Mitica 9", Address = null, Email = "ipop@ipop.ro", EmploymentDate = DateTime.Now, ReleaseDate = null, EmploymentHours = 8, PositionId = 3, DepartmentId = 1 },
+                new Employee() { Id = 19, Name = "Ion Mitica 10", Address = null, Email = "ipop@ipop.ro", EmploymentDate = DateTime.Now, ReleaseDate = null, EmploymentHours = 8, PositionId = 3, DepartmentId = 1 },
+                new Employee() { Id = 20, Name = "Ion Mitica 11", Address = null, Email = "ipop@ipop.ro", EmploymentDate = DateTime.Now, ReleaseDate = null, EmploymentHours = 8, PositionId = 3, DepartmentId = 1 },
+                new Employee() { Id = 21, Name = "Ion Mitica 12", Address = null, Email = "ipop@ipop.ro", EmploymentDate = DateTime.Now, ReleaseDate = null, EmploymentHours = 8, PositionId = 3, DepartmentId = 1 },
+                new Employee() { Id = 22, Name = "Ion Mitica 13", Address = null, Email = "ipop@ipop.ro", EmploymentDate = DateTime.Now, ReleaseDate = null, EmploymentHours = 8, PositionId = 3, DepartmentId = 1 },
+                new Employee() { Id = 23, Name = "Ion Mitica 14", Address = null, Email = "ipop@ipop.ro", EmploymentDate = DateTime.Now, ReleaseDate = null, EmploymentHours = 8, PositionId = 3, DepartmentId = 1 },
+                new Employee() { Id = 24, Name = "Ion Mitica 15", Address = null, Email = "ipop@ipop.ro", EmploymentDate = DateTime.Now, ReleaseDate = null, EmploymentHours = 8, PositionId = 3, DepartmentId = 1 },
+                new Employee() { Id = 25, Name = "Ion Mitica 16", Address = null, Email = "ipop@ipop.ro", EmploymentDate = DateTime.Now, ReleaseDate = null, EmploymentHours = 8, PositionId = 3, DepartmentId = 1 },
+                new Employee() { Id = 26, Name = "Ion Mitica 17", Address = null, Email = "ipop@ipop.ro", EmploymentDate = DateTime.Now, ReleaseDate = null, EmploymentHours = 8, PositionId = 3, DepartmentId = 1 },
+                new Employee() { Id = 27, Name = "Ion Mitica 18", Address = null, Email = "ipop@ipop.ro", EmploymentDate = DateTime.Now, ReleaseDate = null, EmploymentHours = 8, PositionId = 3, DepartmentId = 1 },
+                new Employee() { Id = 28, Name = "Ion Mitica 19", Address = null, Email = "ipop@ipop.ro", EmploymentDate = DateTime.Now, ReleaseDate = null, EmploymentHours = 8, PositionId = 3, DepartmentId = 1 },
+                new Employee() { Id = 29, Name = "Ion Mitica 20", Address = null, Email = "ipop@ipop.ro", EmploymentDate = DateTime.Now, ReleaseDate = null, EmploymentHours = 8, PositionId = 3, DepartmentId = 1 },
+                new Employee() { Id = 30, Name = "Ion Mitica 21", Address = null, Email = "ipop@ipop.ro", EmploymentDate = DateTime.Now, ReleaseDate = null, EmploymentHours = 8, PositionId = 3, DepartmentId = 1 },
+                new Employee() { Id = 31, Name = "Ion Mitica 22", Address = null, Email = "ipop@ipop.ro", EmploymentDate = DateTime.Now, ReleaseDate = null, EmploymentHours = 8, PositionId = 3, DepartmentId = 1 }
             );
 
             context.ProjectAllocations.AddOrUpdate(

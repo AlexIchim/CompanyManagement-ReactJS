@@ -76,7 +76,7 @@ export default class PaginatedTable extends React.Component {
 
         return (
             <div>
-                <table className="table table-hover table-bordered">
+                <table className="pagtable table table-hover table-bordered table-responsive">
                     {header}
                     <tbody>
                     {listOfItems}
