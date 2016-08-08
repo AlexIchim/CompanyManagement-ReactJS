@@ -126,4 +126,17 @@ export default new class Controller{
         Controller.GetAllProjectMembers(projectId);
     }
 
+    DeleteAssignment(employeeId, projectId){
+        console.log('employee id, projectId', employeeId, projectId);
+        $.ajax({
+            method: 'DELETE',
+            url: config.base + "project/deleteEmployee/" + employeeId + "/" + projectId,
+            async: false,
+            success: function(data){
+                console.log('successfully deleted assignment')
+            }
+        })
+        Controller.GetAllProjectMembers(projectId);
+    }
+
 }

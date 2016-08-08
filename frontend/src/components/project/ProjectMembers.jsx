@@ -19,7 +19,7 @@ const Item = (props) => {
             </button>
             </td>
             <td>
-                <button className="btn btn-danger margin-top"><i className="fa fa-trash" ></i>
+                <button className="btn btn-danger margin-top" onClick={props.onDelete}><i className="fa fa-trash" ></i>
                     Delete
                 </button>
             </td>
@@ -74,6 +74,7 @@ class ProjectMembers extends React.Component {
             formToggle: true
         });
     }
+
     toggleModal(){
         this.setState({formToggle: false})
     }
@@ -84,6 +85,7 @@ class ProjectMembers extends React.Component {
                 <Item
                     element = {projectMember}
                     onEdit = {this.onEditAllocationClick.bind(this, projectMember)}
+                    onDelete = {Controller.DeleteAssignment.bind(this, projectMember.Id, this.state.projectId)}
                     key = {index}
                     FormAction={Controller.EditAllocation.bind(this, projectMember, this.state.projectId)}
                     />

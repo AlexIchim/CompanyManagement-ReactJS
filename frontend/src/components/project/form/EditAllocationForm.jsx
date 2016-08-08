@@ -31,11 +31,15 @@ export default class EditAllocationForm extends React.Component{
             model = {}
         }
         let allocation = this.refs.inputAllocation.value;
+        if(allocation < 100){
+            model.Allocation = (allocation) ? allocation : model.Allocation;
 
-        model.Allocation = (allocation) ? allocation : model.Allocation;
-
-        Context.cursor.set("model", model);
-        this.props.FormAction();
+            Context.cursor.set("model", model);
+            this.props.FormAction();
+        }
+        else{
+            console.log('invalid input');
+        }
     }
     render(){
         let projectAllocation = this.state.projectAllocation;
