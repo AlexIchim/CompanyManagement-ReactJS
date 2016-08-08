@@ -1,71 +1,41 @@
 import React from 'react';
-import ModalTemplate from './ModalTemplate';
+import ModalTemplate from '../ModalTemplate';
+import Controller from '../Command';
+import config from '../helper';
+import MyController from './Controller/Controller.js';
 
-export default class Form extends React.Component{
-
+export default class Form extends React.Component {
     constructor(){
         super();
-        {/*this.state={
-            department: {
-
-            }
-        }*/}
     }
-
-    componentWillMount(){
-        {/*this.setState({
-            department: this.props.element
-        })*/}
-    }
-
-    changeName(){
-        {/*const value = this.refs.inputName.value;
-        const newDepartment = this.state.department;
-        newDepartment.Name = value;
-        this.setState({
-            department: newDepartment
-        })*/}
-    }
-
-
-
-
-    componentWillReceiveProps(props){
-        console.log('props', props);
-    }
-
     render(){
         return(
 
-            <ModalTemplate close={this.props.close} store={function(){ console.log('haha') }}>
+            <ModalTemplate onCancelClick={this.props.onCancelClick}
+                           onStoreClick={MyController.Add.bind(this)}
+                           Title={this.props.Title}
+                           Model={this.props.Model}>
 
                 <div className="form-group">
                     <label htmlFor="inputName" className="col-sm-2 control-label"> Name</label>
                     <div className="col-sm-10">
-                        <input type="text" className="form-control" ref="inputName" placeholder="Name" value="">
+                        <input type="text"  ref="inputName" className="form-control"  placeholder="Name" >
                         </input>
                     </div>
                 </div>
 
                 <div className="form-group">
-                    <label htmlFor="inputAddress" className="col-sm-2 control-label"> Address</label>
+                    <label htmlFor="inputAddress" className="col-sm-2 control-label"> Duration</label>
                     <div className="col-sm-10">
-                        <input type="text" className="form-control" ref="inputAddress" placeholder="Address" value="">
+                        <input type="text" className="form-control" ref="inputDuration" placeholder="Duration" >
                         </input>
                     </div>
                 </div>
 
-                <div className="form-group">
-                    <label htmlFor="inputPhone" className="col-sm-2 control-label"> Phone </label>
-                    <div className="col-sm-10">
-                        <input type="text" className="form-control" ref="inputPhone" placeholder="Phone" value="">
-                        </input>
-                    </div>
-                </div>
+
 
             </ModalTemplate>
         )
     }
-
 
 }

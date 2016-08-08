@@ -1,4 +1,4 @@
-import * as React from 'react';
+import * as React from 'react'
 import  {Router, Route,hashHistory, IndexRoute, browserHistory} from 'react-router';
 import * as ReactDOM from 'react-dom';
 import App from './components/App';
@@ -6,6 +6,7 @@ import ConcertsList from './components/concertslist/ConcertsList.jsx';
 import './assets/less/index.less';
 import Dashboard from './components/dashboard/Dashboard.jsx';
 import Project from './components/project/Project.jsx';
+import Employees from './components/employee/Employees';
 
 import ProjectMembers from './components/project/ProjectMembers.jsx';
 const Routes = () => {

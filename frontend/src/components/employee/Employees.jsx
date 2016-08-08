@@ -1,243 +1,164 @@
-import * as React from 'react';
-import  config from '../helper';
-import * as $ from 'jquery';
-import ModalTemplate from './ModalTemplate';
-import {Link} from 'react-router';
-import Form from './Form';
+import config from '../helper';
+import * as React from 'react'
+import * as $ from 'jquery'
+import EmployeeItem from './EmployeeItem.jsx'
+import Form from './Form.jsx';
+import Accessors from '../../context/Accessors';
+import Context from '../../context/Context';
+import Command from '../Command';
+import MyController from './Controller/Controller'
+import EditForm from './EditForm';
 
-const Item = (props) => {
-    return(
-        <tr>
-            <td>{props.element['Name']}</td>
-            <td>{props.element['Address']}</td>
-            <td>{props.element['EmploymentDate']}</td>
-            <td>{props.element['ReleasedDate']}</td>
-            <td>{props.element['JobType']}</td>
-            <td>{props.element['Position']}</td>
-            <td>{props.element['Allocation']}</td>
-            <button id="viewEmployeeDetails" className="btn btn-info margin-top">
-                View details
-            </button>
-            &nbsp;
-            <button id="releaseEmployee" className="btn btn-danger margin-top">
-                Release
-            </button>
-                &nbsp;
-            <button id="editEmployee" className="btn btn-success margin-top">
-                Edit
-            </button>
-        </tr>
-    )
-}
-
-class Employees extends React.Component{
-
+export default class Employees extends React.Component{
     constructor(){
         super();
+        this.setState({
+            form: false
+        })
     }
-
     componentWillMount(){
+        Context.subscribe(this.onContextChange.bind(this));
+        //const employeeId = this.props.routeParams['employeeId'];
 
-        const departmentId = this.props.routeParams['departmentId'];
-
-        $.ajax({
-            method: 'GET',
-            url: config.base + 'department/members/' + departmentId,
-            async: false,
-            success: function(data) {
-                this.setState({
-                    employees: data
-                })
-            }.bind(this)
-        })
-
+        MyController.getAllEmployees();
     }
 
-    showStoreForm(){
+    onContextChange(cursor){
+        console.log('employees:', cursor.get('items'));
         this.setState({
-            store: !this.state.store
-        })
+            employees: cursor.get('items')
+        });
     }
 
-    closeStoreForm(){
+    closeForm(){
         this.setState({
-            store: !this.state.store
-        })
+            form: !this.state.form
+        });
+    }
+    showForm(){
+        this.setState({
+            form: !this.state.form
+        });
+    }
+
+    onAddButtonClick(){
+        Context.cursor.set('formToggle',true);
+    }
+
+    onEditButtonClick(employee){
+        Context.cursor.set('formToggle', true);
+        Context.cursor.set('model', employee)
+    }
+
+    onDeleteButtonClick(element){
+        MyController.Delete(element);
+    }
+
+    onModalSaveClick(){
+        console.log("STORING!");
+        Command.hideModal();
     }
 
     render(){
-
-        const modal = this.state.store ? <Form show = {this.state.store}  close={this.closeStoreForm.bind(this)} /> : '';
-        const items = this.state.employees.map( (element, i) => {
-            return(
-                <Item
-                    element={element}
-                    key={i}
-                />
+        console.log('model is:', Accessors.model(Context.cursor));
+        let modal = "";
+        console.log('store?', Accessors.formToggle(Context.cursor));
+        if(Accessors.formToggle(Context.cursor)){
+            if(Accessors.model(Context.cursor)){
+                modal=<EditForm onCancelClick={Command.hideModal.bind(this)}
+                           onStoreClick={this.onModalSaveClick.bind(this)}
+                           Title="Edit Employee"/>;
+            }else{
+                modal=<Form onCancelClick={Command.hideModal.bind(this)}
+                           onStoreClick={this.onModalSaveClick.bind(this)}
+                           Title="Add Employee"/>;
+            }
+        }
+        const items = this.state.employees.map( (employee, index) => {
+            return (
+                <EmployeeItem
+                    node = {employee}
+                    key = {index}
+                    Link = {"department/members/" + employee.Id}
+                    onEdit = {this.onEditButtonClick.bind(this, employee)}
+                    onDelete = {this.onDeleteButtonClick.bind(this, employee)}
+                    />
             )
         });
 
         return (
-
             <div>
+
                 {modal}
-                <h1>Employees</h1>
 
-                <button id="addEmployee" className="btn btn-success margin-top">
-                    Add Employee
-                </button>
-                <hr/>
-                <div className="input-group input-group-lg">
-                    <div className="input-group-btn">
-                        <button type="button" className="btn btn-warning dropdown-toggle" data-toggle="dropdown" aria-expanded="false">Search
-                            <span className="fa fa-caret-down"></span></button>
-                    </div>
-                    <input type="text" className="form-control"></input>
-                </div>
-                <hr/>                <div className="btn-group">
-
-
-                    <button type="button" className="btn btn-info">Allocation</button>
-                    <button type="button" className="btn btn-info dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-                        <span className="caret"></span>
-                        <span className="sr-only">Toggle Dropdown</span>
-                    </button>
-                </div>
-                &nbsp;
-                <div className="btn-group">
-                    <button type="button" className="btn btn-info">Position</button>
-                    <button type="button" className="btn btn-info dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-                        <span className="caret"></span>
-                        <span className="sr-only">Toggle Dropdown</span>
-                    </button>
-                </div>
-                &nbsp;
-                <div className="btn-group">
-                    <button type="button" className="btn btn-info">Job Type</button>
-                    <button type="button" className="btn btn-info dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-                        <span className="caret"></span>
-                        <span className="sr-only">Toggle Dropdown</span>
-                    </button>
-                </div>
             <table className="table table-hover">
                 <thead>
+                <h1> Employees </h1>
+                <button id="store" className="btn btn-success margin-top" onClick={this.onAddButtonClick.bind(this)}>
+                    Add New Employee
+                </button>
+                <p></p>
+                <div className="btn-group">
+                    <button type="button" className="btn btn-info">Job Type</button>
+                    <button type="button" className="btn btn-info dropdown-toggle" data-toggle="dropdown">
+                        <span className="caret"></span>
+                        <span className="sr-only">Toggle Dropdown</span>
+                    </button>
+                    {/*<ul className="dropdown-menu" role="menu">
+                        <li><a href="#">Action</a></li>
+                        <li><a href="#">Another action</a></li>
+                        <li><a href="#">Something else here</a></li>
+                        <li className="divider"></li>
+                        <li><a href="#">Separated link</a></li>
+                    </ul>*/}
+                    &nbsp;
+                </div>
+                    <div className="btn-group">
+                        <button type="button" className="btn btn-info">Position</button>
+                        <button type="button" className="btn btn-info dropdown-toggle" data-toggle="dropdown">
+                            <span className="caret"></span>
+                            <span className="sr-only">Toggle Dropdown</span>
+                        </button>
+                        {/*<ul className="dropdown-menu" role="menu">
+                         <li><a href="#">Action</a></li>
+                         <li><a href="#">Another action</a></li>
+                         <li><a href="#">Something else here</a></li>
+                         <li className="divider"></li>
+                         <li><a href="#">Separated link</a></li>
+                         </ul>*/}
+                    </div>
+                    &nbsp;
+                        <div className="btn-group">
+                            <button type="button" className="btn btn-info">Allocation</button>
+                            <button type="button" className="btn btn-info dropdown-toggle" data-toggle="dropdown">
+                                <span className="caret"></span>
+                                <span className="sr-only">Toggle Dropdown</span>
+                            </button>
+                            {/*<ul className="dropdown-menu" role="menu">
+                             <li><a href="#">Action</a></li>
+                             <li><a href="#">Another action</a></li>
+                             <li><a href="#">Something else here</a></li>
+                             <li className="divider"></li>
+                             <li><a href="#">Separated link</a></li>
+                             </ul>*/}
+                        </div>
+
                 <tr>
-                    <td>Name</td>
-                    <td>Address</td>
-                    <td>Employment Date</td>
-                    <td>Termination Date</td>
-                    <td>Job Type</td>
-                    <td>Position</td>
-                    <td>Allocation</td>
-                    <td>Actions</td>
+                    <td><h3> Name </h3></td>
+                    <td><h3> Address </h3></td>
+                    <td><h3> Employment Date </h3></td>
+                    <td><h3> Termination Date </h3></td>
+                    <td><h3> Job Type </h3></td>
+                    <td><h3> Position </h3></td>
+                    <td><h3> Allocation </h3></td>
+                    <td><h3> Actions </h3></td>
                 </tr>
                 </thead>
                 <tbody>
-
-                {items}
-
+                    {items}
                 </tbody>
             </table>
-            </div>
-        )}
+                </div>
+        )
+    }
 }
-
-export default Employees;
-
-{/*import * as React from 'react';
- import config from '../helper';
- import * as $ from 'jquery';
- import {Link} from 'react-router';
- import Form from './Form';
-
- const Employee = (props) => {
- return (
- <tr>
- <td>{props.element['Id']}</td>
- <td>{props.element['Name']}</td>
- <td>
- <button id="editEmployee" className="btn btn-danger margin-top">
- Edit
- </button>
- </td>
- </tr>
- )
- }
-
- class Employees extends React.Component{
-
- constructor(){
- super();
- this.state = {
- store: false
- }
- }
-
- showStoreForm(){
- this.setState({
- store: !this.state.store
- })
- }
-
- closeStoreForm(){
- this.setState({
- store: !this.state.store
- })
- }
-
- componentWillMount(){
-
- const employeeId = this.props.routeParams['employeeId'];
-
- $.ajax({
- method: 'GET',
- url: config.base + 'department/members/' + employeeId,
- async: false,
- success: function (data) {
- this.setState({
- employees: data
- })
- }.bind(this)
- })
- }
- render(){
-
- const modal = this.state.store ? <Form show = {this.state.store}  close={this.closeStoreForm.bind(this)} /> : '';
-
- const items = this.state.employees.map( (employee, index) => {
- return (
- <Employee
- element={employee}
- linkToEmployees={"department/members/" + employeeId}
- key={index}
- />
- )
- })
- return (
-
- <div>
-
- modal} {
-
- <button id="addEmployee" className="btn btn-success margin-top" onClick={this.showStoreForm.bind(this)}>
- Add new employee
- </button>
-
- <table className="table table-hover">
- <thead>
- <tr>
- <td>Id</td>
- <td>Name</td>
- </tr>
- </thead>
- <tbody>
- {items}
- </tbody>
- </table>
-
- </div>
- )
- }
- }
-
- export default Employees;*/}
