@@ -4,6 +4,8 @@ import {Link} from 'react-router';
 import FormProject from './FormProject';
 import EditFormProject from './EditFormProject';
 import "./../../assets/less/index.less";
+import * as Controller from '../controller';
+import configs from '../helpers/calls';
 
 export default class ProjectItem extends React.Component{
     
@@ -26,6 +28,29 @@ export default class ProjectItem extends React.Component{
         })
     }
 
+    deleteProject(){
+        console.log("projId",this.props.node.get('Id'));
+         $.ajax({
+            method: 'DELETE',
+            async: false,
+            url: configs.baseUrl + 'api/project/delete?projectId='+this.props.node.get('Id'),
+            success: function (data) { 
+                if (data.Success==false){
+                    alert("Nu puteti sterge un proiect ce are asignati angajati!");
+                }
+                this.refresh(this.props.departmentId);       
+            }.bind(this),
+            error: function (data) {
+                console.log("asd");
+                
+            }
+        })  
+    }
+
+     refresh(departmentId){
+         Controller.getAllDepProjects(departmentId,"",1);
+     }
+
 
     render(){
         const linkMembers = "project/" + this.props.node.get('Id')  + '/' + this.props.node.get('Name') + "/members";
@@ -39,7 +64,8 @@ export default class ProjectItem extends React.Component{
                 <td>{this.props.node.get('Status')}</td>
                 <td>{this.props.node.get('Duration')}</td>
                 <td><Link to={linkMembers}> View members | </Link>
-                    <button className="linkButton" onClick={this.showEditForm.bind(this)}> Edit</button>
+                    <button className="linkButton" onClick={this.showEditForm.bind(this)}> Edit |</button>
+                    <button className="linkButton" onClick={this.deleteProject.bind(this)}> Delete Project</button>
                     {editModal}
                 </td>
                

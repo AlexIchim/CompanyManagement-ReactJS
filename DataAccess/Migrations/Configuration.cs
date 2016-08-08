@@ -161,6 +161,17 @@ namespace DataAccess.Migrations
                 PositionType = PositionType.Developer,
                 DepartmentId = 6
             };
+            Employee e13 = new Employee
+            {
+                Id = 13,
+                Name = "Armin",
+                Address = "Hochland",
+                EmploymentDate = new DateTime(2011, 6, 10),
+                ReleaseDate = new DateTime(2011, 6, 10),
+                JobType = JobType.FullTime,
+                PositionType = PositionType.DepartmentManager,
+                DepartmentId = 6
+            };
 
             context.Departments.AddOrUpdate(
                 d => d.Id,
@@ -185,7 +196,8 @@ namespace DataAccess.Migrations
                 e9,
                 e10,
                 e11,
-                e12
+                e12,
+                e13
             );
 
             context.Projects.AddOrUpdate(

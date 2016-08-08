@@ -71,6 +71,7 @@ namespace Manager.Services
 
         public IEnumerable<EmployeeInfo> GetAllDepartmentManagers()
         {
+         
             var departmentManagers= _departmentRepository.GetAllDepartmentManagers();
             var departmentManagersInfo= _mapper.Map<IEnumerable<EmployeeInfo>>(departmentManagers);
 

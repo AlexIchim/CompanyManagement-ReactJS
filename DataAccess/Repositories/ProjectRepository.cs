@@ -69,20 +69,8 @@ namespace DataAccess.Repositories
             _context.SaveChanges();
         }
 
-        public void Delete(Project project, IEnumerable<EmployeeProject> employeeProjects)
+        public void Delete(Project project)
         {
-            if (employeeProjects.Any())
-            {
-                foreach (EmployeeProject employeeProject in employeeProjects)
-                {
-                    var employee = _context.Employees.SingleOrDefault(e => e.Id == employeeProject.EmployeeId);
-                    //////////////////////////////////////////////////
-
-                    _context.EmployeeProjects.Remove(employeeProject);
-
-
-                }
-            }
             if (project != null)
             {
                 _context.Projects.Remove(project);

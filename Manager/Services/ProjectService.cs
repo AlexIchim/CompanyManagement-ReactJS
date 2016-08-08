@@ -94,9 +94,12 @@ namespace Manager.Services
             if (_projectValidator.ValidateId(projectId))
             {
                 Project project = _projectRepository.GetProjectById(projectId);
-                IEnumerable<EmployeeProject> employeeProject = _projectRepository.GetEmployeeProjectById(projectId);
-                _projectRepository.Delete(project, employeeProject);
-                return new OperationResult(true, Messages.SuccessfullyDeletedProject);
+                if (project.EmployeeProjects.Count==0)
+                    { 
+                    _projectRepository.Delete(project);
+                    return new OperationResult(true, Messages.SuccessfullyDeletedProject);
+                    }
+                return new OperationResult(false, Messages.ErrorDeletingProject);
             }
             return new OperationResult(false, Messages.ErrorDeletingProject);
         }

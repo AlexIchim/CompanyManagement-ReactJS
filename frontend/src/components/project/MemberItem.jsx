@@ -38,11 +38,11 @@ export default class DepartmentItem extends React.Component{
             }.bind(this)
         })   
 
-      
+  
     }
-      refresh(projectId){
-                Controller.getEmployeesByProjectId(projectId,1);
-            }
+    refresh(projectId){
+        Controller.getEmployeesByProjectId(projectId,1);
+    }
 
 
 

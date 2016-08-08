@@ -66,6 +66,8 @@ export default class Project extends React.Component {
         })
     }
 
+    
+
     back(){
 
         if (this.state.pageNr!=1){

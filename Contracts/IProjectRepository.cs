@@ -14,7 +14,7 @@ namespace Contracts
 
         void Add(Project project);
 
-        void Delete(Project project, IEnumerable<EmployeeProject> employeeProject);
+        void Delete(Project project);
 
         IEnumerable<EmployeeProject> GetEmployeeProjectById(int projectId);
 
