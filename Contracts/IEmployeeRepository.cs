@@ -10,7 +10,7 @@ namespace Contracts
     public interface IEmployeeRepository
     {
         IEnumerable<Employee> GetAll();
-        IEnumerable<Employee> GetAvailable(int? departmentId, int? positionId, int? pageSize = null, int? pageNumber = null);
+        IEnumerable<Employee> GetAvailable(int? departmentId, int? positionId, int? projectId, int? pageSize = null, int? pageNumber = null);
         IEnumerable<Employee> GetAllDepartmentManagers();
         IEnumerable<ProjectAllocation> GetAllocationsByEmployeeId(int id);
         Employee GetById(int id);

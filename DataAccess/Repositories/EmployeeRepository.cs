@@ -21,7 +21,7 @@ namespace DataAccess.Repositories
             return _context.Employees.ToArray();
         }
 
-        public IEnumerable<Employee> GetAvailable(int? departmentId, int? positionId, int? pageSize = null, int? pageNumber = null)
+        public IEnumerable<Employee> GetAvailable(int? departmentId, int? positionId, int? projectId, int? pageSize = null, int? pageNumber = null)
         {
             return _context.Employees.Where(
                 e => (
@@ -30,7 +30,10 @@ namespace DataAccess.Repositories
                         e.ProjectAllocations.Select(a => a.AllocationPercentage).Sum() < 100
                     ) &&
                     (departmentId == null || e.DepartmentId == departmentId) &&
-                    (positionId == null || e.PositionId == positionId)
+                    (positionId == null || e.PositionId == positionId) &&
+                    (e.ProjectAllocations.Count(a => a.ProjectId != projectId) == 0)&&
+                    (!e.Position.Name.Equals("Department Manager"))
+
                 )
             )
             .OrderBy(e => e.Name)

@@ -19,10 +19,6 @@ export default class AddOffice extends React.Component{
                    
                 let outputImage = canvas.toDataURL("image/jpeg").substr(23); 
 
-                console.log('---------------------');
-                console.log(canvas.toDataURL("image/jpeg"));
-                console.log('---------------------');
-
                 URL.revokeObjectURL(img.src);
 
                 let officeObject = {

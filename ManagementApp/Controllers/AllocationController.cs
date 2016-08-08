@@ -41,7 +41,7 @@ namespace ManagementApp.Controllers
 
         [Route("delete/{allocationId}")]
         [HttpDelete]
-        public IHttpActionResult Update(int allocationId)
+        public IHttpActionResult Delete(int allocationId)
         {
             var result = _allocationService.Delete(allocationId);
             return Json(result, _camelCaseJsonSettings);

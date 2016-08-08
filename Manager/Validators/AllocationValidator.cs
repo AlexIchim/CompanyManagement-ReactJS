@@ -28,7 +28,7 @@ namespace Manager.Validators
                 return new OperationResult(false, Messages.ErrorWhileAddingAllocation + " " + Messages.EmployeeAlreadyOnProject);
             }
 
-            if (employee.ProjectAllocations.Select(pa => pa.AllocationPercentage).Sum() >=
+            if (employee.ProjectAllocations.Select(pa => pa.AllocationPercentage).Sum() >
                 100 - info.AllocationPercentage)
             {
                 return new OperationResult(false, Messages.ErrorWhileAddingAllocation + " " + Messages.EmployeeFreeTimeNotEnough);

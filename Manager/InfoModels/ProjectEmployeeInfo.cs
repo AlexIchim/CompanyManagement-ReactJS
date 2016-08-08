@@ -8,7 +8,7 @@ namespace Manager.InfoModels
 {
     public class ProjectEmployeeInfo
     {
-        public int AllocationId { get; set; }
+        public int AllocationId  { get; set; }
         public EmployeeInfo Employee { get; set; }
         public int Allocation { get; set; }
     }

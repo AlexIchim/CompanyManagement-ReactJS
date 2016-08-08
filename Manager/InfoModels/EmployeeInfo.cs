@@ -21,6 +21,7 @@ namespace Manager.InfoModels
         public int PositionId { get; set; }
 
         // custom:
+        public string DepartmentName { get; set; }
         public string PositionName { get; set; }
         public int TotalAllocation { get; set; }
     }
