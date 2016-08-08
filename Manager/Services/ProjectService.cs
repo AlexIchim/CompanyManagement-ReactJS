@@ -1,5 +1,4 @@
-﻿using System;
-using AutoMapper;
+﻿using AutoMapper;
 using Contracts;
 using Domain.Enums;
 using Domain.Models;
@@ -8,7 +7,6 @@ using Manager.InputInfoModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Domain.Enums;
 
 namespace Manager.Services
 {
@@ -147,14 +145,14 @@ namespace Manager.Services
             return null;
         }
 
-        public IEnumerable<ProjectInfo> GetProjectsFilteredByStatus(int departmentId,string status, int? pageSize, int? pageNr)
+        public IEnumerable<ProjectInfo> GetProjectsFilteredByStatus(int departmentId, string status, int? pageSize, int? pageNr)
         {
             if (status != "" && status != null)
             {
                 //if ((ProjectStatus)Enum.Parse(typeof(ProjectStatus), status) is ProjectStatus)
                 //{
-                    var department = _departmentRepository.GetDepartmentById(departmentId);
-                    var projects = _projectRepository.GetProjectsFilteredByStatus(department,status,pageSize,pageNr);
+                var department = _departmentRepository.GetDepartmentById(departmentId);
+                var projects = _projectRepository.GetProjectsFilteredByStatus(department, status, pageSize, pageNr);
                 if (projects != null)
                 {
                     var projectInfos = _mapper.Map<IEnumerable<ProjectInfo>>(projects);
@@ -167,9 +165,12 @@ namespace Manager.Services
         }
 
         public IEnumerable<string> GetProjectStatusDescriptions()
-        public OperationResult DeleteEmployeeFromProject(int employeeId, int projectId)
         {
             return _projectRepository.GetProjectStatusDescriptions();
+        }
+        public OperationResult DeleteEmployeeFromProject(int employeeId, int projectId)
+        {
+
 
             if (_projectValidator.ValidateId(employeeId) && _projectValidator.ValidateId(projectId))
             {
