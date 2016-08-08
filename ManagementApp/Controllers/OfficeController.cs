@@ -40,15 +40,10 @@ namespace ManagementApp.Controllers
 
         [Route("add")]
         [HttpPost]
-        public IHttpActionResult Add()
+        public IHttpActionResult Add([FromBody] AddOfficeInputInfo inputInfo)
         {
-            IEnumerable<HttpContent> parts = Request.Content.ReadAsMultipartAsync().Result.Contents;
-
-
-            var media = parts.ToArray()[1].ReadAsByteArrayAsync().Result;
-
-            //var result = _officeService.Add(inputInfo);
-            return Json(Json(new Object()));
+            var result = _officeService.Add(inputInfo);
+            return Json(result);
         }
 
         [Route("update")]

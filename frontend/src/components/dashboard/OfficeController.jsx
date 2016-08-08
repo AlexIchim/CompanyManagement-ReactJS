@@ -18,17 +18,9 @@ export default new class OfficeController {
     }
 
     Add(){
-
-        
-
-
-        /*console.log("Add called");
+        console.log("Add called");
         let model= Context.cursor.get("model");
         //console.log("MODEL : ",model);
-        var arr=[];
-        for(var i=0;i<model.Image.length;i++){
-            arr.push(model.Image[i]);
-        }
 
         $.ajax({
             method:'POST',
@@ -38,22 +30,19 @@ export default new class OfficeController {
                 Name:model.Name,
                 Address:model.Address,
                 Phone:model.Phone,
-                Image:arr
-
+                Image:model.Image
             },
             success: function(data){  
-                console.log("ADD RETURNED : ",data);
+                console.log("ADD RETURNED");
             }.bind(this)
         });             
         this.GetAll();
-        */
         
     }
         
     Update(){
         console.log("Update called");
         let model= Context.cursor.get("model");
-        console.log("MODEL : ",model);
         
         
 
@@ -69,8 +58,7 @@ export default new class OfficeController {
                 Image:model.Image
             },
             success: function(data){                
-                console.log("UPDATE RETURNED : ",data);              
-                this.GetAll();
+                console.log("UPDATE RETURNED");
             }.bind(this)
         });
         this.GetAll();

@@ -80,10 +80,14 @@ namespace Manager.Services
                 return new OperationResult(false, Messages.ErrorWhileUpdatingOffice);
             }
 
-            office.Name = inputInfo.Name;
-            office.Address = inputInfo.Address;
-            office.Phone = inputInfo.Phone;
-            office.Image = inputInfo.Image;
+            var updatedOffice = _mapper.Map<Office>(inputInfo);
+
+            office.Name = updatedOffice.Name;
+            office.Address = updatedOffice.Address;
+            office.Image = updatedOffice.Image;
+            office.Phone = updatedOffice.Phone;
+
+            updatedOffice.Id = office.Id;
 
             _officeRepository.Save();
 

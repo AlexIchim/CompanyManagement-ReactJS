@@ -78,13 +78,15 @@ namespace ManagementApp.Manager.Tests
             var addOfficeInputInfo = CreateOfficeAddInputInfo(
                 "TestName1",
                 "TestAddress1",
-                "0700000000",
-                new byte[] { 0, 0, 0 });
+                "0700000000", 
+                new byte[] {0,0,0}
+                );
             var office = CreateOffice(null,
                 "TestName1",
                 "TestAddress1",
                 "0700000000",
-                new byte[] { 0, 0, 0 });
+                new byte[] { 0, 0, 0 }
+                );
 
             _mapperMock.Setup(m => m.Map<Office>(addOfficeInputInfo)).Returns(office);
             _officeRepositoryMock.Setup(m => m.Add(office));
@@ -138,9 +140,15 @@ namespace ManagementApp.Manager.Tests
                 "TestAddress1",
                 "0700000000",
                 new byte[] { 0, 0, 0 });
-
+            var newOffice = CreateOffice(
+                1,
+                "TestName1",
+                "TestAddress1",
+                "0700000000",
+                new byte[] { 0, 0, 0 });
 
             _officeRepositoryMock.Setup(m => m.GetById(updateOfficeInputInfo.Id)).Returns(office);
+            _mapperMock.Setup(m => m.Map<Office>(updateOfficeInputInfo)).Returns(newOffice);
             //Act
             var result = _officeService.Update(updateOfficeInputInfo);
 
@@ -166,9 +174,16 @@ namespace ManagementApp.Manager.Tests
                 "TestAddress1",
                 "0700000000",
                 new byte[] { 0, 0, 0 });
-
+            var newOffice = CreateOffice(
+                null,
+                "TestName1",
+                "TestAddress1",
+                "0700000000",
+                new byte[] { 0, 0, 0 });
 
             _officeRepositoryMock.Setup(m => m.GetById(updateOfficeInputInfo.Id)).Returns(office);
+
+            _mapperMock.Setup(m => m.Map<Office>(updateOfficeInputInfo)).Returns(newOffice);
             //Act
             var result = _officeService.Update(updateOfficeInputInfo);
 
@@ -192,9 +207,16 @@ namespace ManagementApp.Manager.Tests
                 "TestAddress1",
                 "0700000000",
                 new byte[] { 0, 0, 0 });
+            var newOffice = CreateOffice(
+                1,
+                "TestName1",
+                "TestAddress1",
+                "0700000000",
+                new byte[] { 0, 0, 0 });
 
 
             _officeRepositoryMock.Setup(m => m.GetById(updateOfficeInputInfo.Id)).Returns(office);
+            _mapperMock.Setup(m => m.Map<Office>(updateOfficeInputInfo)).Returns(newOffice);
             //Act
             var result = _officeService.Update(updateOfficeInputInfo);
 
@@ -267,7 +289,7 @@ namespace ManagementApp.Manager.Tests
                 Name = name,
                 Address = address,
                 Phone = phone,
-                Image = image
+                Image = GetString(image)
             };
             return officeInfo;
         }
@@ -279,7 +301,7 @@ namespace ManagementApp.Manager.Tests
                 Name = name,
                 Address = address,
                 Phone = phone,
-                Image = image
+                Image = GetString(image)
             };
             return addOfficeInputInfo;
         }
@@ -292,10 +314,23 @@ namespace ManagementApp.Manager.Tests
                 Name = name,
                 Phone = phone,
                 Address = address,
-                Image = image
+                Image = GetString(image)
             };
             return updateOfficeInputInfo;
         }
+
+        static byte[] GetBytes(string str)
+        {
+            byte[] buffer = System.Text.Encoding.UTF8.GetBytes(str);
+            return buffer;
+        }
+
+        static string GetString(byte[] bytes)
+        {
+            string s = System.Text.Encoding.UTF8.GetString(bytes, 0, bytes.Length);
+            return s;
+        }
+
         #endregion 
     }
 }

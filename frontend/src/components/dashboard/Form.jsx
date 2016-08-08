@@ -17,7 +17,6 @@ export default class Form extends React.Component{
     }
 
     onImageLoad(){
-        /*
        var value=document.querySelector('input[type=file]').files[0];
 
         var reader=new FileReader();
@@ -31,13 +30,10 @@ export default class Form extends React.Component{
         }
 
         reader.readAsDataURL(value);
-
-        console.log("READ IMAGE",image);
-        */
     }
 
     onStoreClick(){
-        /*let model=Context.cursor.get("model");
+        let model=Context.cursor.get("model");
 
         if(!model){
             model={};
@@ -48,8 +44,6 @@ export default class Form extends React.Component{
         let phone=this.refs.inputPhone.value;
         let image=this.state.Image;
 
-        console.log("Image : ",image);
-
         model.Name=(name)?name:model.Name;
         model.Address=(addr)?addr:model.Address;
         model.Phone=(phone)?phone:model.Phone;
@@ -58,25 +52,7 @@ export default class Form extends React.Component{
         Context.cursor.set("model", model);
 
         this.props.FormAction();
-        */
-        var form = $("officeForm");
-        var formData=new FormData(form);
-
-
-        formData.append("ASD","asd");
-
-        console.log("formData:  ",formData);
-        $.ajax({
-            method:'POST',
-            url: config.base+'office/add',
-            async:false,
-            processData:false,
-            contentType: 'multipart/form-data',
-            data: formData,
-            success: function(data){  
-                console.log("ADD RETURNED : ",data);
-            }.bind(this)
-        });       
+        
     }
     render(){
 
