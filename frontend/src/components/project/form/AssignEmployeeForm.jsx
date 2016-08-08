@@ -33,7 +33,7 @@ export default class AssignEmployeeForm extends React.Component{
     }
 
     onStoreClick(){
-
+        //to be done
     }
     render(){
         console.log('positions: ',this.state.dropdownItemsPosition )

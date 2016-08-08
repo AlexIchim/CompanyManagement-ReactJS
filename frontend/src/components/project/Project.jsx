@@ -1,14 +1,10 @@
-import config from '../helper';
 import * as React from 'react'
-import * as $ from 'jquery'
 import ProjectItem from './ProjectItem.jsx'
 import Form from './form/Form.jsx';
 import Accessors from '../../context/Accessors';
 import Context from '../../context/Context';
 import MyController from './controller/Controller'
 import EditForm from './form/EditForm';
-import Delete from './controller';
-import GetAllProjects from './controller/GetAllProjects'
 
 
 export default class Project extends React.Component{
@@ -49,7 +45,6 @@ export default class Project extends React.Component{
         this.setState({
             formToggle: true
         });
-
     }
 
     toggleModal(){
@@ -87,7 +82,6 @@ export default class Project extends React.Component{
 
         return (
             <div>
-
                 {modal}
 
             <table className="table table-stripped">

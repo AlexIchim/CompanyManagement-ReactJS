@@ -7,8 +7,8 @@ import Accessors from '../../context/Accessors'
 import Form from './form/Form';
 import EditAllocationForm from './form/EditAllocationForm'
 import AssignEmployeeForm from './form/AssignEmployeeForm'
-const Item = (props) => {
 
+const Item = (props) => {
     return (
         <tr>
             <td>{props.element['Name']}</td>
@@ -115,15 +115,9 @@ class ProjectMembers extends React.Component {
                 <thead>
 
                 <tr>
-                    <td>
-                       <h3> Employee Name </h3>
-                    </td>
-                    <td>
-                        <h3>Role</h3>
-                    </td>
-                    <td>
-                        <h3>Allocation</h3>
-                    </td>
+                    <td><h3> Employee Name </h3></td>
+                    <td><h3>Role</h3></td>
+                    <td><h3>Allocation</h3></td>
                 </tr>
                 </thead>
                 <tbody>
@@ -133,7 +127,6 @@ class ProjectMembers extends React.Component {
                 </div>
         )
     }
-
 }
 
 export default ProjectMembers;

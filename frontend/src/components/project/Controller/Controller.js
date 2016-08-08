@@ -1,7 +1,5 @@
 import config from '../../helper';
 import Context from '../../../context/Context'
-import Accessors from '../../../context/Accessors';
-import GetAllProjects from './GetAllProjects';
 
 export default new class Controller{
 
