@@ -35,7 +35,7 @@ export default class Project extends React.Component {
     }
 
     componentDidMount(){
-         Controller.getAllDepProjects(this.props.routeParams.departmentId,this.state.pageNr);
+         Controller.getAllDepProjects(this.props.routeParams.departmentId,"",this.state.pageNr);
     }
 
     componentWillUnmount () {
@@ -51,7 +51,7 @@ export default class Project extends React.Component {
     onDropDownChange(){
         const status=this.refs.status.options[this.refs.status.selectedIndex].value;
         const pageNr = 1;
-        Controller.getProjectsFilteredByStatus(this.props.routeParams.departmentId,status,pageNr);
+        Controller.getAllDepProjects(this.props.routeParams.departmentId,status,pageNr);
     }
 
     showAddForm(){
@@ -71,7 +71,7 @@ export default class Project extends React.Component {
         if (this.state.pageNr!=1){
             const whereTo=this.state.pageNr-1
 
-            Controller.getAllDepProjects(this.props.routeParams.departmentId,whereTo);
+            Controller.getAllDepProjects(this.props.routeParams.departmentId,"",whereTo);
             
              this.setState({
                 pageNr:this.state.pageNr-1
@@ -84,7 +84,7 @@ export default class Project extends React.Component {
 
         const whereTo=this.state.pageNr+1
 
-        Controller.getAllDepProjects(this.props.routeParams.departmentId,whereTo);
+        Controller.getAllDepProjects(this.props.routeParams.departmentId,"",whereTo);
 
         this.setState({
             pageNr:this.state.pageNr+1

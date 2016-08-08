@@ -127,40 +127,23 @@ namespace Manager.Services
             return new OperationResult(false, Messages.ErrorWhileUpdatingProject);
         }
 
-        public IEnumerable<ProjectInfo> GetAllDepartmentProjects(int depId, int? pageSize, int? pageNr)
+        public IEnumerable<ProjectInfo> GetAllDepartmentProjects(int departmentId, string status, int? pageSize, int? pageNr)
         {
-            if (_projectValidator.ValidateId(depId))
+            if (_projectValidator.ValidateId(departmentId))
             {
-                var department = _departmentRepository.GetDepartmentById(depId);
+                var department = _departmentRepository.GetDepartmentById(departmentId);
                 if (department != null)
                 {
-                    var projects = _projectRepository.GetAllDepartmentProjects(department, pageSize, pageNr);
+                    var projects = _projectRepository.GetAllDepartmentProjects(department, status, pageSize, pageNr);
                     if (projects != null)
                     {
                         var projectInfos = _mapper.Map<IEnumerable<ProjectInfo>>(projects);
+
                         return projectInfos;
                     }
                 }
             }
-            return null;
-        }
 
-        public IEnumerable<ProjectInfo> GetProjectsFilteredByStatus(int departmentId, string status, int? pageSize, int? pageNr)
-        {
-            if (status != "" && status != null)
-            {
-                //if ((ProjectStatus)Enum.Parse(typeof(ProjectStatus), status) is ProjectStatus)
-                //{
-                var department = _departmentRepository.GetDepartmentById(departmentId);
-                var projects = _projectRepository.GetProjectsFilteredByStatus(department, status, pageSize, pageNr);
-                if (projects != null)
-                {
-                    var projectInfos = _mapper.Map<IEnumerable<ProjectInfo>>(projects);
-
-                    return projectInfos;
-                }
-                //}
-            }
             return null;
         }
 
@@ -170,8 +153,6 @@ namespace Manager.Services
         }
         public OperationResult DeleteEmployeeFromProject(int employeeId, int projectId)
         {
-
-
             if (_projectValidator.ValidateId(employeeId) && _projectValidator.ValidateId(projectId))
             {
                 var employeeProject = _projectRepository.GetEmployeeProjectById(employeeId, projectId);

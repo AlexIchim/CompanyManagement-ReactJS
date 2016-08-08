@@ -95,14 +95,9 @@ namespace DataAccess.Repositories
             return _context.EmployeeProjects.Where(ep => ep.ProjectId == projectId).ToList();
         }
 
-        public IEnumerable<Project> GetAllDepartmentProjects(Department department, int? pageSize, int? pageNr)
+        public IEnumerable<Project> GetAllDepartmentProjects(Department department, string status, int? pageSize, int? pageNr)
         {
-            return _context.Projects.Where(d => d.DepartmentId == department.Id).OrderBy(d => d.Name).Paginate(pageSize, pageNr).ToArray();
-        }
-
-        public IEnumerable<Project> GetProjectsFilteredByStatus(Department department,string status, int? pageSize, int? pageNr)
-        {
-            return _context.Projects.Where(p => p.Status.ToString() == status && p.DepartmentId==department.Id).OrderBy(d => d.Name).Paginate(pageSize, pageNr).ToArray();
+            return _context.Projects.Where(p => (string.IsNullOrEmpty(status) || p.Status.ToString() == status) && p.DepartmentId == department.Id).OrderBy(d => d.Name).Paginate(pageSize, pageNr).ToArray();
         }
 
         public IEnumerable<string> GetProjectStatusDescriptions()
