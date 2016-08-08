@@ -1,10 +1,13 @@
-﻿using AutoMapper;
+﻿using System;
+using AutoMapper;
 using Contracts;
 using Domain.Models;
 using Manager.InfoModels;
 using Manager.InputInfoModels;
 using System.Collections.Generic;
 using System.Linq;
+using Domain.Enums;
+using Manager.Descriptors;
 
 namespace Manager.Services
 {
@@ -200,14 +203,29 @@ namespace Manager.Services
             return _employeeRepository.ComputeTotalAllocation(employeeId);
         }
 
-        public IEnumerable<string> GetJobTypesDescriptions()
+        public IEnumerable<JobTypeInfo> GetJobTypesDescriptions()
         {
-            return _employeeRepository.GetJobTypesDescriptions();
+            Array values = Enum.GetValues(typeof(JobType));
+
+            return (from JobType jobType in values
+                select new JobTypeInfo
+                {
+                    Id = (int) jobType,
+                    Description = jobType.GetDescription()
+                }).ToList();
         }
 
-        public IEnumerable<string> GetPositionTypesDescriptions()
+        public IEnumerable<PositionTypeInfo> GetPositionTypesDescriptions()
         {
-            return _employeeRepository.GetPositionTypeDescriptions();
+            Array values = Enum.GetValues(typeof(PositionType));
+            foreach (PositionType positionType in values)
+            {
+                yield return new PositionTypeInfo
+                {
+                    Id = (int) positionType,
+                    Description = positionType.GetDescription()
+                };
+            }
         }
     }
 }

@@ -4,7 +4,7 @@ import * as $ from 'jquery';
 import configs from '../helpers/calls'
 import Context from '../../context/Context.js';
 import * as Immutable from 'immutable';
-import Form from './Form.jsx'
+import Form from './Form';
 import * as Controller from '../controller';
 import EmployeeItem from './EmployeeItem.jsx'
 
