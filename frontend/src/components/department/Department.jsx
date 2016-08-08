@@ -17,7 +17,9 @@ export default class Department extends React.Component {
         this.state = {
             add: false,
             departments: Context.cursor.get("departments"),
-            pageNr:1
+            pageNr:1,
+            pageSize:3,
+            nrOfPages:null
         }
     }
 
@@ -27,7 +29,7 @@ export default class Department extends React.Component {
     }
 
     componentDidMount(){
-         Controller.getAllDepOffice(this.props.routeParams.officeId,this.state.pageNr);
+         this.getAllDepartments(this.state.pageNr);
     }
 
     componentWillUnmount () {
@@ -39,6 +41,28 @@ export default class Department extends React.Component {
             departments: cursor.get("departments")         
         });
 
+    }
+
+    getAllDepartments(pageNr){
+
+        Controller.getAllDepOffice(this.props.routeParams.officeId,pageNr);
+
+        this.setNumberOfPages();
+    }
+
+    setNumberOfPages(){
+        $.ajax({
+            method: 'GET',
+            async: false,
+            url: configs.baseUrl + 'api/office/getAllDepOffice?officeId=' + this.props.routeParams.officeId+'&pageSize=null&pageNr=null',
+            success: function (data) {
+                this.setState(
+                    {
+                        nrOfPages: data.length / this.state.pageSize + 1
+                    }
+                )
+            }.bind(this)
+        })
     }
     
     showAddForm(){
@@ -55,10 +79,13 @@ export default class Department extends React.Component {
 
     back(){
 
-        if (this.state.pageNr!=1){
+
+
+        if (this.state.pageNr>1){
+
             const whereTo=this.state.pageNr-1
-            console.log(2)
-            Controller.getAllDepOffice(this.props.routeParams.officeId,whereTo);
+
+            this.getAllDepartments(whereTo);
             
              this.setState({
                 pageNr:this.state.pageNr-1
@@ -68,15 +95,21 @@ export default class Department extends React.Component {
     }
 
     next(){
-
+       
         const whereTo=this.state.pageNr+1
-        cosole.log(3)
 
-        Controller.getAllDepOffice(this.props.routeParams.officeId,whereTo);
+        this.setNumberOfPages();
 
-        this.setState({
-            pageNr:this.state.pageNr+1
-        })
+        if (whereTo < this.state.nrOfPages){
+            
+             this.getAllDepartments(whereTo);
+
+            this.setState({
+                pageNr:this.state.pageNr+1
+            })
+
+        }
+
     }
 
     render() {
