@@ -17,13 +17,13 @@ export default class Project extends React.Component{
     }
     componentWillMount(){
         this.setState({
-            formToggle:false,
-            form: false
+            formToggle:false
         });
         this.subscription = Context.subscribe(this.onContextChange.bind(this));
         //const projectId = this.props.routeParams['projectId'];
-
+        Context.cursor.set("items",[]);
         MyController.GetAllProjects();
+
     }
 
     componentWillUnmount(){
@@ -32,47 +32,42 @@ export default class Project extends React.Component{
 
     onContextChange(cursor){
         this.setState({
-            formToggle: false
+            items: Accessors.items(Context.cursor)
         });
-
     }
 
     onAddButtonClick(){
-        Context.cursor.set('formToggle',true);
-    }
-
-    onEditButtonClick(project){
-        Context.cursor.set('formToggle', true);
-        Context.cursor.set('model', project)
-    }
-
-
-    hideModal(){
-        Context.cursor.set('formToggle',false);
         Context.cursor.set('model',null);
         this.setState({
             formToggle: true
         });
     }
+
+    onEditButtonClick(project){
+        this.setState({
+            formToggle: true
+        });
+        Context.cursor.set('model', project)
+    }
+
     toggleModal(){
         this.setState({formToggle: false})
     }
 
     render(){
         let modal = "";
-        if(Accessors.formToggle(Context.cursor)){
-            if(Accessors.model(Context.cursor)){
-                modal=<EditForm onCancelClick={this.toggleModal.bind(this)}
-                                FormAction={MyController.Update}
-                           Title="Edit Project"/>;
-            }else{
-                modal=<Form onCancelClick={this.toggleModal.bind(this)}
-                            FormAction={MyController.Add}
-                           Title="Add Project"/>;
+        if(this.state.formToggle) {
+            if (Accessors.model(Context.cursor)) {
+                modal = <EditForm onCancelClick={this.toggleModal.bind(this)}
+                                  FormAction={MyController.Update}
+                                  Title="Edit Project"/>;
+            } else {
+                modal = <Form onCancelClick={this.toggleModal.bind(this)}
+                              FormAction={MyController.Add}
+                              Title="Add Project"/>;
             }
         }
-
-        const items = Accessors.items(Context.cursor).map( (project, index) => {
+        const items =this.state.items.map( (project, index) => {
             return (
                 <ProjectItem
                     node = {project}
@@ -105,7 +100,6 @@ export default class Project extends React.Component{
                 </thead>
                 <tbody>
                 {items}
-
                 </tbody>
             </table>
                 </div>

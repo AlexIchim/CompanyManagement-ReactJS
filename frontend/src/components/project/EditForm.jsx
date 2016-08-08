@@ -34,10 +34,15 @@ export default class EditForm extends React.Component {
 
         this.props.FormAction();
     }
+
+    onInputChange(){
+
+        console.log('input was changed');
+    }
     render(){
 
         const items = Context.cursor.get('dropdownItems').map( (status, index) => {
-            return ( <option>{status}</option>
+            return ( <option key={index} >{status}</option>
             )});
 
         const model = Accessors.model(Context.cursor);
@@ -55,7 +60,7 @@ export default class EditForm extends React.Component {
                 <div className="form-group">
                     <label htmlFor="inputName" className="col-sm-2 control-label"> Name</label>
                     <div className="col-sm-10">
-                        <input type="text"  ref="inputName" className="form-control"  placeholder= {name}>
+                        <input type="text"  ref="inputName" className="form-control"  onChange={this.OnInputChange} placeholder= {name}>
                         </input>
                     </div>
                 </div>

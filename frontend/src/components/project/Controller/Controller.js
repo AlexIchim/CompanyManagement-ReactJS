@@ -7,6 +7,7 @@ export default new class Controller{
 
 
     static ajaxCall(){
+        console.log('ajax call');
         $.ajax({
             method: 'GET',
             url: config.base + 'department/projects/1/50/1',
@@ -42,6 +43,7 @@ export default new class Controller{
     }
 
     Update() {
+        console.log('model is: ', Context.cursor.get('model'));
         $.ajax({
             method: 'PUT',
             url: config.base + 'project/update',
@@ -54,8 +56,12 @@ export default new class Controller{
             async: false,
             success: function (data) {
                 console.log('successfully updated')
+
             }.bind(this)
         });
+
+        Controller.ajaxCall();
+
     }
 
     Delete(element){
