@@ -33,7 +33,7 @@ namespace Domain.Models {
         public string Name { get; set; }
         public string Address { get; set; }
         public virtual Department Department { get; set; }
-        public ICollection<Assignment> Assignments { get; set; }
+        public virtual ICollection<Assignment> Assignments { get; set; }
         public DateTime EmploymentDate { get; set; }
         public DateTime? ReleasedDate { get; set; }
         public JobTypes JobType { get; set; }

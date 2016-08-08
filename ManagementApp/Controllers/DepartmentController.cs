@@ -6,7 +6,7 @@ using Manager.Services;
 namespace ManagementApp.Controllers
 {
     [RoutePrefix("api/department")]
-    [EnableCors("*", "*", "GET, POST, PUT")]
+    [EnableCors("*", "*", "*")]
     public class DepartmentController : ApiController
     {
         private readonly DepartmentService _departmentService;

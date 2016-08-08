@@ -84,6 +84,8 @@ export default class Departments extends React.Component{
             }
         }
 
+        console.log("Hellooooo: ", this.state.items);
+
         const items = this.state.items.map( (department, index) => {
             return (
                 <Department

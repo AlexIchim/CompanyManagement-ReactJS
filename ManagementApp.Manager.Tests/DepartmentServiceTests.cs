@@ -137,10 +137,10 @@ namespace ManagementApp.Manager.Tests
             };
 
             _mapperMock.Setup(m => m.Map<IEnumerable<EmployeeInfo>>(employees)).Returns(employeesInfo);
-            _departmentRepositoryMock.Setup(m => m.GetMembersOfDepartment(1,"", 2, 0, null)).Returns(employees);
+            _departmentRepositoryMock.Setup(m => m.GetMembersOfDepartment(1, 1, 1, "", 2, 0, null)).Returns(employees);
 
             //Act
-            var result = _departmentService.GetMembersOfDepartment(1, jobType:2, position:0);
+            var result = _departmentService.GetMembersOfDepartment(1, 1, 1, jobType:2, position:0);
 
             //Assert
             CollectionAssert.AreEqual(employeesInfo, result);
@@ -151,10 +151,10 @@ namespace ManagementApp.Manager.Tests
             //Arrange
 
             //Act
-            _departmentService.GetMembersOfDepartment(1, name:"Employee", jobType:1, position:1);
+            _departmentService.GetMembersOfDepartment(1, 1, 1, name:"Employee", jobType:1, position:1);
 
             //Assert
-            _departmentRepositoryMock.Verify(x => x.GetMembersOfDepartment(1,"Employee", 1, 1, null), Times.Once);
+            _departmentRepositoryMock.Verify(x => x.GetMembersOfDepartment(1, 1, 1, "Employee", 1, 1, null), Times.Once);
         }
 
         [Test]
@@ -186,10 +186,10 @@ namespace ManagementApp.Manager.Tests
             };
 
             _mapperMock.Setup(m => m.Map<IEnumerable<ProjectInfo>>(projects)).Returns(projectsInfo);
-            _departmentRepositoryMock.Setup(m => m.GetProjectsOfDepartment(1, 0)).Returns(projects);
+            _departmentRepositoryMock.Setup(m => m.GetProjectsOfDepartment(1, 1, 1, 0)).Returns(projects);
 
             //Act
-            var result = _departmentService.GetProjectsOfDepartment(1, status:0);
+            var result = _departmentService.GetProjectsOfDepartment(1, 1, 1, status:0);
 
             //Assert
             CollectionAssert.AreEqual(projectsInfo, result);
@@ -200,10 +200,10 @@ namespace ManagementApp.Manager.Tests
             //Arrange
 
             //Act
-            _departmentService.GetProjectsOfDepartment(1, status:0);
+            _departmentService.GetProjectsOfDepartment(1, 1, 1, status:0);
 
             //Assert
-            _departmentRepositoryMock.Verify(x => x.GetProjectsOfDepartment(1, 0), Times.Once);
+            _departmentRepositoryMock.Verify(x => x.GetProjectsOfDepartment(1, 1, 1, 0), Times.Once);
         }
 
 

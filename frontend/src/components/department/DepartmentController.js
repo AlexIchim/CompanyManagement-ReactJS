@@ -9,7 +9,7 @@ export default new class DepartmentController{
     static ajaxCall(officeId){
         $.ajax({
             method: 'GET',
-            url: config.base + 'office/departments/' + officeId,
+            url: config.base + 'office/departments/' + officeId + '/5/1',
             async: false,
             success: function (data) {
                 Context.cursor.set('items', data);
