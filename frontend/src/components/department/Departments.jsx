@@ -23,7 +23,6 @@ export default class Departments extends React.Component{
 
         Context.cursor.set("items",[]);
 
-        //const officeId = this.props.routeParams['officeId'];
         Controller.getDepartments(officeId);
     }
 
@@ -35,19 +34,24 @@ export default class Departments extends React.Component{
     onContextChange(cursor){
         console.log("Context has changed!");
         this.setState({
-            formToggle: false
+            formToggle: false,
+            items: cursor.get('items')
         });
     }
 
     onAddButtonClick(){
-        Context.cursor.set('model',null);
+        console.log("Add button pressed!");
 
+        Context.cursor.set('model',null);
         this.setState({
             formToggle: true
         });
     }
+
     onEditButtonClick(index){
-        const department=Context.cursor.get('items')[index];
+        console.log("Edit button pressed!");
+
+        const department = this.state.items[index];
         Context.cursor.set("model", department);
 
         this.setState({
@@ -56,24 +60,31 @@ export default class Departments extends React.Component{
     }
 
     toggleModal(){
-        this.setState({formToggle: false})
+        this.setState({
+            formToggle: false
+        })
     }
 
     render(){
+
+        console.log("Form toggle: ", this.state.formToggle);
+
         let form="";
         if(this.state.formToggle){
             if(Accessors.model(Context.cursor)){
                 form=<Form onCancelClick={this.toggleModal.bind(this)}
                            FormAction={Controller.Update.bind(this, this.state.officeId)}
-                           Title="Edit Department"/>;
+                           Title="Edit Department"
+                           officeId={this.state.officeId}/>;
             }else{
                 form=<Form onCancelClick={this.toggleModal.bind(this)}
                            FormAction={Controller.Add.bind(this, this.state.officeId)}
-                           Title="Add Department"/>;
+                           Title="Add Department"
+                           officeId={this.state.officeId}/>;
             }
         }
 
-        const items = Accessors.items(Context.cursor).map( (department, index) => {
+        const items = this.state.items.map( (department, index) => {
             return (
                 <Department
                     element={department}

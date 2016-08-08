@@ -3,12 +3,11 @@ import ModalTemplate from '../ModalTemplate';
 import Context from '../../context/Context';
 import $ from 'jquery';
 import config from '../helper';
-import Accessors from '../../context/Accessors';
 
 const DropdownItem = (props) => {
     return (
-        <option>
-            {props.element}
+        <option value={props.element.Id}>
+            {props.element.Name}
         </option>
     )
 }
@@ -20,50 +19,78 @@ export default class Form extends React.Component{
 
     componentWillMount(){
 
+        this.setState({
+            departmentManagers: null
+        });
+
+        this.subscription=Context.subscribe(this.onContextChange.bind(this));
+
         $.ajax({
             method: 'GET',
-            url: config.base + 'employee/getAll',
+            url: config.base + 'employee/departmentManagers',
             async: false,
             success: function (data) {
-                //Context.cursor.set('dropdownItems', data);
+                this.setState({
+                    departmentManagers: data
+                })
             }.bind(this)
         })
+    }
 
+    componentWillUnmount(){
+        this.subscription.dispose();
+    }
+
+    onContextChange(newGlobalCursor){
+        this.setState({
+            model: newGlobalCursor.get('model'),
+            departmentName: newGlobalCursor.get('model') && newGlobalCursor.get('model').Name || ""
+        })
+    }
+
+    onModelChange(){
+        this.setState({
+            model: this.state.model,
+            departmentName: this.refs.departmentNameInput.value
+        })
     }
 
     onStoreClick(){
-        let model=Context.cursor.get("model");
+        let currentModel = this.state.model;
+        let modelToStore = {};
 
-        if(!model){
-            model={};
+        if (currentModel){
+            modelToStore.Id = currentModel.Id;
         }
 
-        let name=this.refs.inputName.value;
-        //let departmentManagerId = 1;
+        modelToStore.Name = this.refs.departmentNameInput.value;
+        var select = document.getElementById('dropdown');
+        var departmentManagerId = select.options[select.selectedIndex].value;
 
-        model.Name = (name)? name : model.Name;
-        model.DepartmentManagerId = 1;
-        model.OfficeId = 1;
+        modelToStore.DepartmentManagerId = departmentManagerId;
+        modelToStore.OfficeId = this.props.officeId;
 
-        Context.cursor.set("model", model);
-
+        Context.cursor.set("model", modelToStore);
         this.props.FormAction();
     }
 
     render(){
+        let selectedDepartmentManager = -1;
+        if (this.state.model){
+            selectedDepartmentManager =  this.state.model.DepartmentManagerId;
+        }
 
-        const model=Context.cursor.get('model');
-        const name=(model)? model.Name : "Name";
+        const departmentName = this.state.departmentName;
 
-        /*const departmentManagers = Accessors.dropdownItems(Context.cursor).map( (item, index) => {
+        const departmentManagers = this.state.departmentManagers.map( (item, index) => {
                 return (
                     <DropdownItem
-                        element = {item.Name}
+                        element = {item}
                         key={index}
                     />
                 )
             }
-        );*/
+        );
 
         return(
 
@@ -72,22 +99,23 @@ export default class Form extends React.Component{
                            Title={this.props.Title}>
 
                 <div className="form-group">
-
                     <label htmlFor="inputName" className="col-sm-4 control-label">Name</label>
                     <div className="col-sm-8">
                         <input type="text"
                                className="form-control"
-                               ref="inputName"
-                               placeholder={name}>
+                               ref="departmentNameInput"
+                               onChange={this.onModelChange.bind(this)}
+                               value={departmentName}
+                               placeholder="Name">
                         </input>
                     </div>
 
-                    {/*<label htmlFor="inputName" className="col-sm-4 control-label">Department Manager</label>
+                    <label htmlFor="inputName" className="col-sm-4 control-label">Department Manager</label>
                     <div className="col-sm-8">
-                        <select id='dropdown' className="selectpicker">
+                        <select id='dropdown' className="selectpicker" defaultValue={selectedDepartmentManager}>
                             {departmentManagers}
                         </select>
-                    </div>*/}
+                    </div>
 
                 </div>
 

@@ -19,7 +19,10 @@ namespace Manager.Mapper
                  department => department.MapFrom(src => src.Projects.Count))
             .ForMember(
                  departmentInfo => departmentInfo.DepartmentManager,
-                 department => department.MapFrom(src => src.DepartmentManager.Name)
+                 department => department.MapFrom(src => src.DepartmentManager.Name))
+            .ForMember(
+                 departmentInfo => departmentInfo.DepartmentManagerId,
+                 department => department.MapFrom(src => src.DepartmentManager.Id)
             );
             CreateMap<AddDepartmentInputInfo, Department>();
 
