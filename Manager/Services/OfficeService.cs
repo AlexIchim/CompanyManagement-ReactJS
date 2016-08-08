@@ -43,6 +43,13 @@ namespace Manager.Services
             return departmentsInfos;
         }
 
+        public IEnumerable<EmployeeInfo> GetAllAvailableEmployeesOfAnOffice(int officeId, int pageSize, int pageNumber, int? department = null, int? position = null) {
+            var employees = _officeRepository.GetAllAvailableEmployeesOfAnOffice(officeId, pageSize, pageNumber, department, position);
+            var employeesInfos = _mapper.Map<IEnumerable<EmployeeInfo>>(employees);
+
+            return employeesInfos;
+        }
+
         public OperationResult Add(AddOfficeInputInfo inputInfo)
         {
             var validationResult =_addOfficeValidator.Validate(inputInfo);

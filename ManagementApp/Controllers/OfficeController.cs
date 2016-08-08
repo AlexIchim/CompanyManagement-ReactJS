@@ -36,6 +36,13 @@ namespace ManagementApp.Controllers
             return Json(result);
         }
 
+        [Route("availableEmployees/{officeId}/{pageSize}/{pageNumber}")]
+        [HttpGet]
+        public IHttpActionResult GetAllAvailableEmployeesOfAnOffice(int officeId, int pageSize, int pageNumber, int? department = null, int? position = null) {
+            var result = _officeService.GetAllAvailableEmployeesOfAnOffice(officeId, pageSize, pageNumber, department, position);
+            return Json(result);
+        }
+
         [Route("add")]
         [HttpPost]
         public IHttpActionResult Add([FromBody] AddOfficeInputInfo inputInfo)

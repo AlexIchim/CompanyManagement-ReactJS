@@ -12,6 +12,8 @@ namespace Manager.InfoModels
         public DateTime TerminationDate { get; set; }
         public string JobType { get; set; }
         public string Position { get; set; }
-        public int Allocation { get; set; }    
+        public int Allocation { get; set; }
+        public int RemainingAllocation { get; set; }
+        public string Department { get; set; }  
     }
 }

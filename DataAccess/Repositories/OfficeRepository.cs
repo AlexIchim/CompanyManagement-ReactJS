@@ -39,6 +39,32 @@ namespace DataAccess.Repositories
                     .ToArray();
         }
 
+        public IEnumerable<Employee> GetAllAvailableEmployeesOfAnOffice(int officeId, int pageSize, int pageNumber, int? department = null, int? position = null)
+        {
+            return _context.Employees
+                .Where(e => 
+                            (e.Department.Office.Id == officeId) &&
+                            ((department.HasValue && e.Department.Id == department) || !department.HasValue) &&
+                            ((position.HasValue && (int)e.Position == position) || !position.HasValue)
+                      )
+                .Join(_context.Assignments,
+                    employee => employee.Id, assignment => assignment.EmployeeId,
+                    (employee, assignment) => new {
+                        employee,
+                        assignment
+                    }
+                )
+                .GroupBy(x => x.employee)
+                .Select(g => new {
+                    Employee = g.Key,
+                    Allocation = g.Sum(x => x.assignment.Allocation)
+                })
+                .Where(x => x.Allocation < 100)
+                .OrderBy(x => x.Employee.Id)
+                .Paginate(pageSize, pageNumber)
+                .ToArray().Select(x => x.Employee);
+        }
+
         public void Add(Office office)
         {
             _context.Offices.Add(office);

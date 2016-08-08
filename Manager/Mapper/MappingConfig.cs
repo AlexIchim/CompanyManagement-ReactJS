@@ -39,6 +39,14 @@ namespace Manager.Mapper
                 .ForMember(
                     employeeInfo => employeeInfo.Allocation,
                     employee => employee.MapFrom(src => src.GetAllocation())
+                )
+                .ForMember(
+                    employeeInfo => employeeInfo.RemainingAllocation,
+                    employee => employee.MapFrom(src => src.GetRemainingAllocation())
+                )
+                .ForMember(
+                    employeeInfo => employeeInfo.Department,
+                    employee => employee.MapFrom(src => src.Department.Name)
                 );
             CreateMap<AddEmployeeInputInfo, Employee>();
 
