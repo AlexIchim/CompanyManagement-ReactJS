@@ -120,24 +120,5 @@ namespace DataAccess.Repositories
             return fullyAllocatedEmployees;
         }
 
-        public IEnumerable<string> GetJobTypesDescriptions()
-        {
-            List<string> descriptions = new List<string>();
-            foreach (JobType jt in Enum.GetValues(typeof(JobType)))
-            {
-                descriptions.Add(jt.GetDescription());
-            }
-            return descriptions;
-        }
-
-        public IEnumerable<string> GetPositionTypeDescriptions()
-        {
-            List<string> descriptions = new List<string>();
-            foreach (PositionType pt in Enum.GetValues(typeof(PositionType)))
-            {
-                descriptions.Add(pt.GetDescription());
-            }
-            return descriptions;
-        }
     }
 }
