@@ -73,6 +73,7 @@ namespace Manager.Mapper
                    
             CreateMap<Department, EmployeeInfo>();
 
+            CreateMap<Employee, NotFullyAllocatedEmployeesInfo>();
 
         }
     }

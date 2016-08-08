@@ -6,7 +6,7 @@ import configs from '../helpers/calls'
 import * as Controller from '../controller';
 import * as Immutable from 'immutable';
 import MemberItem from './MemberItem.jsx'
-
+import FormAssign from './FormAssign.jsx'
 
 
 export default class Member extends React.Component{
@@ -17,12 +17,25 @@ export default class Member extends React.Component{
         this.state ={
             members: Context.cursor.get("members"),
             assign:false,
-            pageNr:1
+            pageNr:1,
+            positionTypes:[]
         }
     }
 
     componentWillMount(){
         this.subscription = Context.subscribe(this.onContextChange.bind(this));
+
+        $.ajax({
+            method: 'GET',
+            async: false,
+            url: configs.baseUrl + 'api/employee/getPoisitionTypes',
+            success: function (data) {
+                console.log(data, this);
+                this.setState({
+                    positionTypes: data
+                })
+            }.bind(this)
+        })      
     }
 
      componentDidMount(){
@@ -41,13 +54,13 @@ export default class Member extends React.Component{
 
     }
 
-    showAddForm(){
+    showAssignForm(){
         this.setState({
             assign:true
         });
     }
 
-    closeAddForm(){
+    closeAssignForm(){
         this.setState({
             assign: !this.state.assign
         })
@@ -92,10 +105,24 @@ export default class Member extends React.Component{
 
         });
 
+          const positionTypes=this.state.positionTypes.map((el, x) => {
+            return (
+                <option value={el} key={x} >{el}</option>                         
+            )
+        });
+
+
+        const assignModal = this.state.assign ? <FormAssign projectId={this.props.routeParams.projectId} officeId={this.props.routeParams.officeId} show = {this.state.assign} close={this.closeAssignForm.bind(this)} /> : '';
+
         return(
             <div>
                 <h1>{this.props.routeParams.projectName + ' Members'}  </h1>
-                <button className="btn btn-xs btn-info" > <span className="glyphicon glyphicon-plus-sign"></span> Assign employee </button>
+                <button className="btn btn-xs btn-info" onClick={this.showAssignForm.bind(this)} > <span className="glyphicon glyphicon-plus-sign"></span> Assign employee </button>
+
+                <select className="selectpicker" ref="positionTypes" >
+                    {positionTypes}                    
+                </select>
+
                 <table className="table table-condensed" id="table1">
                     <thead>
                     <tr>
@@ -120,6 +147,8 @@ export default class Member extends React.Component{
                                 <i className="fa fa-arrow-right fa-2x" aria-hidden="true"></i>
                     </button>              
                 </div>
+
+                {assignModal}
 
             </div>
         )

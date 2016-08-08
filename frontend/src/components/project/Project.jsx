@@ -107,6 +107,7 @@ export default class Project extends React.Component {
                     node = {el}
                     key= {x}
                     departmentId={this.props.routeParams.departmentId}   
+                    officeId={this.props.routeParams.officeId}
                 />
             )
         });

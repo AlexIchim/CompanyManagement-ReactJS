@@ -6,51 +6,215 @@ import * as Immutable from 'immutable';
 import * as Controller from '../controller';
 
 
-export default class Form extends React.Component{
+export default class FormAssign extends React.Component{
     
     constructor(){
         super();
         this.state={
-            
+            positionTypes:[],
+            departments:[],
+            availableEmployees:[],
+            pageNr:1,
+            employeeToAssign:{
+
+            }
         }
     }
 
     componentWillMount(){
-        this.subscription = Context.subscribe(this.onContextChange.bind(this));
+
+         $.ajax({
+            method: 'GET',
+            async: false,
+            url: configs.baseUrl + 'api/employee/getPoisitionTypes',
+            success: function (data) {
+                console.log(data, this);
+                this.setState({
+                    positionTypes: data
+                })
+            }.bind(this)
+        })        
+
+        $.ajax({
+            method: 'GET',
+            async: false,
+            url: configs.baseUrl + 'api/office/getAllDepOffice?officeId='+ this.props.officeId+'&pageSize=null'+'&pageNr=null',
+            success: function (data) {
+                console.log(data, this);
+                this.setState({
+                    departments: data
+                })
+            }.bind(this)
+        })   
+
+        $.ajax({
+            method: 'GET',
+            async: false,
+          url: configs.baseUrl + 'api/employee/GetEmployeesThatAreNotFullyAllocated?projectId='+ this.props.projectId +'&pageSize=5'+'&pageNr=1',
+            success: function (data) {
+                console.log(data, this);
+                this.setState({
+                    availableEmployees: data
+                })
+            }.bind(this)
+        })                   
     }
 
+
     assign(cb){
-   
+
+        const inputInfo = {
+             projectId:this.state.employeeToAssign.projectId,
+             employeeId:this.state.employeeToAssign.employeeId,
+             allocation:this.state.employeeToAssign.allocation
+
+        }
+
+        console.log(inputInfo);
+
+        $.ajax({
+            method: 'POST',
+            async: false,
+            url: configs.baseUrl + 'api/employee/assignEmployee',
+            data:inputInfo,
+            success: function (data) {               
+                 cb(); 
+                 refresh();
+            }.bind(this)
+        })   
               
     }
 
-    refresh(projectId){
-         Controller.getEmployeesByProjectId(projectId,1);
+    refresh(){
+        Controller.getEmployeesByProjectId(this.props.projectId,1);
     }
-    
+
+     back(){
+
+        if (this.state.pageNr!=1){
+            const whereTo=this.state.pageNr-1
+
+            $.ajax({
+            method: 'GET',
+            async: false,
+            url: configs.baseUrl + 'api/employee/GetEmployeesThatAreNotFullyAllocated?projectId='+ this.props.projectId +'&pageSize=5'+'&pageNr='+whereTo,
+            success: function (data) {
+                console.log(data, this);
+                this.setState({
+                    availableEmployees: data
+                })
+            }.bind(this)
+        })    
+            
+             this.setState({
+                pageNr:this.state.pageNr-1
+            })
+        }
+                
+    }
+
+    next(){
+
+        const whereTo=this.state.pageNr+1
+
+        $.ajax({
+            method: 'GET',
+            async: false,
+            url: configs.baseUrl + 'api/employee/GetEmployeesThatAreNotFullyAllocated?projectId='+ this.props.projectId +'&pageSize=5'+'&pageNr='+whereTo,
+            success: function (data) {
+                console.log(data, this);
+                this.setState({
+                    availableEmployees: data
+                })
+            }.bind(this)
+        })    
+
+        this.setState({
+            pageNr:this.state.pageNr+1
+        })
+    }
+
+    onChange(employeeId){
+   
+            let employee={
+                projectId:this.props.projectId,
+                employeeId:employeeId,
+                allocation:$("#"+employeeId).data('allocation')
+            }
+
+             
+            this.setState({
+                employeeToAssign:employee
+            })
+            console.log(employee);
+        }
+         
+
+       
     render(){
-        const departmentManagers=this.state.departmentManagers.map((el, x) => {
+        const positionTypes=this.state.positionTypes.map((el, x) => {
+            return (
+                <option value={el} key={x} >{el}</option>                         
+            )
+        });
+
+        const departments=this.state.departments.map((el, x) => {
             return (
                 <option value={el.Id} key={x} >{el.Name}</option>                         
             )
         });
 
+        const items= this.state.availableEmployees.map((el,x)=>{
+            return (
+                <tr key={el.Id}>
+                    <td>{el.Name}</td>
+                    <td>{el.DepartmentName}</td>
+                    <td>{el.Role}</td>
+                    <td>{el.RemainingAllocation}</td>
+                    <td><input id={el.Id} data-allocation={el.RemainingAllocation} ref="radio" type="radio" name="radio" onChange={this.onChange.bind(this,el.Id)} /></td>
+                </tr>
+            )
+        })
+
         return(
 
-        <Modal title={'Add new department'} button={'Add'} close={this.props.close} action={this.store.bind(this)}>
-            <div className="form-group">
-                <label className="col-sm-4 control-label"> Name </label>
-                <div className="col-sm-6">
-                    <input  ref="name" className="form-control" placeholder="Name"/>
-                </div>
+        <Modal title={'Assign employee'} button={'Assign'} close={this.props.close} action={this.assign.bind(this)}>
+            <div className="filter">
+                <select className="selectpicker" ref="positionTypes" >
+                    {positionTypes}                    
+                </select>
+
+                <select className="selectpicker" ref="departments" >
+                    {departments}                    
+                </select>
             </div>
-           
-           <label className="col-sm-4 control-label"> Department manager </label>
-       
-            <select className="selectpicker" ref="managersDropdown" >
-                {departmentManagers}                    
-            </select>
-     
+
+            <table className="table table-striped" id="table1">
+                    <thead>
+                    <tr>
+                        <th className="col-md-2">Name</th>
+                        <th className="col-md-2">Department</th>
+                        <th className="col-md-2">Position</th>
+                        <th className="col-md-2">Remaining Allocation</th>
+                        <th className="col-md-2"></th>
+                    </tr>
+                    </thead>
+                    <tbody>
+
+                    {items}
+                  
+                    </tbody>
+            </table>
+
+                  <div>
+                    <button className="leftArrow" onClick={this.back.bind(this)}>
+                                <i className="fa fa-arrow-left fa-2x" aria-hidden="true"></i>
+                    </button>
+                    <button className="rightArrow" onClick={this.next.bind(this)}>
+                                <i className="fa fa-arrow-right fa-2x" aria-hidden="true"></i>
+                    </button>              
+                </div>
+        
        
         </Modal>
         )
