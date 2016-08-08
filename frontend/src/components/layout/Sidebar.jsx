@@ -4,9 +4,9 @@ import {Link} from 'react-router';
 const Sidebar = () => {
     return (
         <aside className="main-sidebar">
-            <section className="sidebar">
+            <section className="sidebar sidebar-custom">
+                <h1>Firm offices</h1>
                 <ul className="sidebar-menu">
-                    <li className="header">MAIN NAVIGATION</li>
                     <li className="treeview">
                         <Link to="#">
                             <i className="fa fa-dashboard"></i> <span>Dashboard</span>

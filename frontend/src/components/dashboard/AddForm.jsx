@@ -4,6 +4,7 @@ import configs from '../helpers/calls';
 import * as Immutable from 'immutable';
 import Context from '../../context/Context.js';
 import * as $ from 'jquery';
+import * as Controller from '../controller';
 
 
 export default class EditForm extends React.Component{
@@ -35,15 +36,7 @@ export default class EditForm extends React.Component{
     }
 
     refresh(){
-        $.ajax({
-            method: 'GET',
-            async: false,
-            url: configs.baseUrl + 'api/office/getAll',
-            success: function (data) {
-                Context.cursor.set("offices", Immutable.fromJS(data));
-
-            }.bind(this)
-        })
+       Controller.getAllOffices();
     }
 
 

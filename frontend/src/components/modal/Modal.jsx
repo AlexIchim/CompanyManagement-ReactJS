@@ -29,8 +29,8 @@ export default class  Modal extends React.Component{
                                 </div>
 
                                 <div className="box-footer">
-                                    <button type="button" className="btn btn-default" onClick={this.props.action.bind(this, this.cancel.bind(this))} > {this.props.button} </button>
-                                    <button type="button" className="btn btn-default" onClick={this.cancel.bind(this)}> Cancel</button>     
+                                    <button type="button" className="col-sm-2 btn btn-primary" onClick={this.props.action.bind(this, this.cancel.bind(this))} > {this.props.button} </button>
+                                    <button type="button" className="col-sm-2 btn btn-default cancel-button" onClick={this.cancel.bind(this)}> Cancel</button>
                                 </div>
                             </form>
                         </div>
