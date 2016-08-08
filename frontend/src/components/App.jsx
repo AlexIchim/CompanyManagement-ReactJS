@@ -3,7 +3,6 @@ import Header from './layout/Header.jsx';
 import Sidebar from './layout/Sidebar.jsx';
 import Context from '../context/Context';
 
-
 class App extends Component {
 
     componentWillMount() {

@@ -14,7 +14,6 @@ const Routes = () => {
                 <IndexRoute component={Dashboard}/>
                 <Route path="ConcertsList" component={ConcertsList}>
                 </Route>
-
                 <Route path="office/departments/:officeId" component={Departments}>
                 </Route>
 

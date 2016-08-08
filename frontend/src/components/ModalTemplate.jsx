@@ -6,11 +6,13 @@ export default class ModalTemplate extends React.Component{
         const formModal=this.refs.formModal;
         $(formModal).modal('show');
     }
+
     onStoreClick(){
         const formModal=this.refs.formModal;
         $(formModal).modal('hide');
         this.props.onStoreClick();
     }
+    
     onCancelClick(){
         const formModal=this.refs.formModal;
         $(formModal).modal('hide');

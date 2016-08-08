@@ -45,32 +45,8 @@ const Multilevel = () => {
 
 
 class Sidebar extends React.Component{
-    // constructor(){
-    //     super();
-    // }
-    //
-    // componentWillMount(){
-    //     $.ajax({
-    //         method:'GET',
-    //         url: config.base+'office/getAll',
-    //         async:false,
-    //         success: function(data){
-    //             this.setState({
-    //                 offices: cursor.get('items')
-    //             });
-    //             Context.cursor.set('items',data);
-    //             Context.cursor.set('formToggle',false);
-    //         }.bind(this)
-    //     });
-    // }
-    //
 
     render(){
-        // const image = this.state.offices.map ( (office, index) => {
-        //     return (
-        //             office.Image
-        //     );
-        // })
         return (
             <aside className="main-sidebar">
                 <section className="sidebar">

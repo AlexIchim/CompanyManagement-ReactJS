@@ -4,6 +4,7 @@ import * as $ from 'jquery';
 import {Link} from 'react-router';
 import Form from './Form';
 
+
 const Department = (props) => {
     return (
         <tr>

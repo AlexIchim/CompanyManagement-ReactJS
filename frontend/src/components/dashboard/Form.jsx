@@ -47,6 +47,7 @@ export default class Form extends React.Component{
 
         this.props.FormAction();
     }
+    
     render(){
 
         const model=Context.cursor.get('model');
@@ -61,6 +62,7 @@ export default class Form extends React.Component{
             <ModalTemplate onCancelClick={this.props.onCancelClick}
                            onStoreClick={this.onStoreClick.bind(this)}
                            Title={this.props.Title}>
+                           onAirClick={this.props.onCancelClick}
 
                 <div className="form-group">
                     <label htmlFor="inputName" className="col-sm-2 control-label"> Name</label>

@@ -19,6 +19,7 @@ export default new class OfficeController {
         console.log("Ajax Finished");
     }
 
+
     Add(){
         console.log("Add called");
         $.ajax({
@@ -31,7 +32,8 @@ export default new class OfficeController {
             }.bind(this)
         });
     }
-        
+
+
     Update(){
         console.log("Update called");
         $.ajax({
@@ -45,5 +47,4 @@ export default new class OfficeController {
         });
 
     }
-
 }
