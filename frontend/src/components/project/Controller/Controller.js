@@ -59,7 +59,7 @@ export default new class Controller{
     }
 
     Update() {
-        console.log('model is: ', Context.cursor.get('model'));
+        console.log('model is: ', Context.cursor.get('model').Status);
         $.ajax({
             method: 'PUT',
             url: config.base + 'project/update',
@@ -107,15 +107,19 @@ export default new class Controller{
         });
     }
 
-    EditAllocation(projectMember, projectId){
-        $.ajax({
-            method: 'GET',
-            url: config.base + "project/editAllocation",
-            async: false,
-            success: function(data){
-                console.log('successfully changed allocation');
-            }.bind(this)
-        });
+    EditAllocation(projectId){
+        // $.ajax({
+        //     method: 'GET',
+        //     url: config.base + "project/editAllocation",
+        //     data: {
+        //         projectId: projectId,
+        //         employeeId: Context.cursor.get('model').Id,
+        //     },
+        //     async: false,
+        //     success: function(data){
+        //         console.log('successfully changed allocation');
+        //     }.bind(this)
+        // });
         Controller.GetAllProjectMembers(projectId);
     }
 

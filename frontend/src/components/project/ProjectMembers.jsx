@@ -5,7 +5,7 @@ import Controller from './controller/Controller';
 import Context from '../../context/Context';
 import Accessors from '../../context/Accessors'
 import Form from './form/Form';
-
+import EditAllocationForm from './form/EditAllocationForm'
 
 const Item = (props) => {
 
@@ -68,7 +68,8 @@ class ProjectMembers extends React.Component {
             formToggle: true
         });
     }
-    onEditAllocationClick(){
+    onEditAllocationClick(projectMember){
+        Context.cursor.set('model', projectMember)
         this.setState({
             formToggle: true
         });
@@ -82,7 +83,7 @@ class ProjectMembers extends React.Component {
             return (
                 <Item
                     element = {projectMember}
-                    onEdit = {this.onEditAllocationClick.bind(this)}
+                    onEdit = {this.onEditAllocationClick.bind(this, projectMember)}
                     key = {index}
                     FormAction={Controller.EditAllocation.bind(this, projectMember, this.state.projectId)}
                     />
@@ -90,9 +91,10 @@ class ProjectMembers extends React.Component {
         });
         if(this.state.formToggle) {
             if (Accessors.model(Context.cursor)) {
-                modal = <EditForm onCancelClick={this.toggleModal.bind(this)}
-                                  FormAction={Controller.Update}
-                                  Title="Edit Project"/>;
+                modal = <EditAllocationForm
+                                  onCancelClick={this.toggleModal.bind(this)}
+                                  FormAction={Controller.Update.bind(this, this.state.projectId)}
+                                  Title="Edit Project Allocation"/>;
             } else {
                 modal = <Form onCancelClick={this.toggleModal.bind(this)}
                               FormAction={Controller.Add}

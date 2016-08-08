@@ -6,6 +6,7 @@ using Domain.Models;
 using Manager.InfoModels;
 using Manager.InputInfoModels;
 using Manager.Validators;
+using Domain.Extensions;
 
 namespace Manager.Services
 {
@@ -106,6 +107,28 @@ namespace Manager.Services
             var projectsInfos = _mapper.Map<IEnumerable<ProjectInfo>>(projects);
 
             return projectsInfos;
+        }
+
+        public IEnumerable<PositionTypeInfo> GetPositions()
+        {
+            var values = Enum.GetValues(typeof(Position));
+
+            foreach (Position position in values)
+            {
+                yield return
+                    new PositionTypeInfo {Index = (int) position, Description = position.GetDescriptionFromEnumValue()};
+            }
+        }
+
+        public IEnumerable<JobTypeInfo> GetJobTypes()
+        {
+            var values = Enum.GetValues(typeof(JobTypes));
+
+            foreach (Position position in values)
+            {
+                yield return
+                    new JobTypeInfo() { Index = (int)position, Description = position.GetDescriptionFromEnumValue() };
+            }
         }
 
     }

@@ -63,5 +63,21 @@ namespace ManagementApp.Controllers
             var result = _employeeService.Delete(employeeId, DateTime.Now);
             return Json(result);
         }
+
+        [Route("getPositions")]
+        [HttpGet]
+        public IHttpActionResult GetPositions()
+        {
+            var result = _employeeService.GetPositions();
+            return Json(result);
+        }
+
+        [Route("getJobTypes")]
+        [HttpGet]
+        public IHttpActionResult GetJobTypes()
+        {
+            var result = _employeeService.GetJobTypes();
+            return Json(result);
+        }
     }
 }

@@ -26,6 +26,7 @@ export default class EditForm extends React.Component {
 
     onStoreClick(){
         let model = Context.cursor.get('model');
+
         if(!model){
             model = {}
         }
@@ -33,6 +34,7 @@ export default class EditForm extends React.Component {
         let duration = this.refs.inputDuration.value;
         var select = document.getElementById('dropdown');
         var status = select.options[select.selectedIndex].index;
+        console.log('status selected:', status);
 
         model.Name = (name) ? name : model.Name;
         model.Duration = (duration) ? duration : model.Duration;
@@ -75,7 +77,7 @@ export default class EditForm extends React.Component {
         const projectName = this.state.projectName;
         const projectDuration = this.state.projectDuration;
         const items = this.state.dropdownItems.map( (status, index) => {
-            return ( <option key={index} >{status}</option>
+            return ( <option key={status.Index} >{status.Description}</option>
             )});
 
         const model = Accessors.model(Context.cursor);
