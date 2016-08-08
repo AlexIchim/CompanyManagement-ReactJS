@@ -29,7 +29,7 @@ export default class DepartmentItem extends React.Component{
 
     render(){
         const linkEmployees = "department/" + this.props.node.get('Id')  + '/' + this.props.node.get('Name') + "/employees";
-        const linkProjects = "department/" + this.props.node.get('Id')  + '/' + this.props.node.get('Name') + "/projects";
+        const linkProjects = "department/" + this.props.node.get('Id')  + '/' + this.props.node.get('Name') + '/' + this.props.officeId + "/projects";
 
         const editModal = this.state.edit ? <EditForm officeId={this.props.officeId} element={this.props.node} show = {this.state.edit} close={this.closeEditForm.bind(this)} /> : '';
 

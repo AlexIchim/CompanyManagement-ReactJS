@@ -195,4 +195,10 @@
   <data name="SuccessfullyDeletedEmployeeProject" xml:space="preserve">
     <value>'Employee Project was succesfully deleted'</value>
   </data>
+  <data name="ErrorAssignEmployee" xml:space="preserve">
+    <value>'Error assigning employee'</value>
+  </data>
+  <data name="SuccessfullyAssignEmployee" xml:space="preserve">
+    <value>'Employee was succesfully assigned'</value>
+  </data>
 </root>

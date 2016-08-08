@@ -15,14 +15,16 @@ namespace Manager.Services
         private readonly IMapper _mapper;
         private readonly IEmployeeValidator _employeeValidator;
         private readonly IEmployeeProjectValidator _employeeProjectValidator;
+        private readonly IProjectRepository _projectRepository;
 
-        public EmployeeService(IMapper mapper, IEmployeeRepository employeeRepository, IDepartmentRepository departmentRepository, IEmployeeValidator employeeValidator, IEmployeeProjectValidator employeeProjectValidator)
+        public EmployeeService(IMapper mapper, IEmployeeRepository employeeRepository, IDepartmentRepository departmentRepository, IEmployeeValidator employeeValidator, IEmployeeProjectValidator employeeProjectValidator, IProjectRepository projectRepository)
         {
             _employeeRepository = employeeRepository;
             _departmentRepository = departmentRepository;
             _mapper = mapper;
             _employeeValidator = employeeValidator;
             _employeeProjectValidator = employeeProjectValidator;
+            _projectRepository = projectRepository;
         }
 
         public IEnumerable<ProjectsOfAnEmployeeInfo> GetProjectByEmployeeId(int employeeId)
@@ -180,17 +182,21 @@ namespace Manager.Services
             foreach (EmployeeInfo ei in employeeInfos)
             {
                 ei.TotalAllocation = _employeeRepository.ComputeTotalAllocation(ei.Id);
+                ei.Role = _projectRepository.GetEmployeeRoleById(ei.Id);
+
             }
             return employeeInfos;
         }
 
-        public IEnumerable<EmployeeInfo> GetEmployeesThatAreNotFullyAllocated()
+        public IEnumerable<NotFullyAllocatedEmployeesInfo> GetEmployeesThatAreNotFullyAllocated(int projectId, int? pageSize, int? pageNr)
         {
-            var employees = _employeeRepository.GetEmployeesThatAreNotFullyAllocated();
-            var employeeInfos = _mapper.Map<IEnumerable<EmployeeInfo>>(employees);
-            foreach (EmployeeInfo ei in employeeInfos)
+            var employees = _employeeRepository.GetEmployeesThatAreNotFullyAllocated(projectId, pageSize,pageNr);
+            var employeeInfos = _mapper.Map<IEnumerable<NotFullyAllocatedEmployeesInfo>>(employees);
+            foreach (NotFullyAllocatedEmployeesInfo ei in employeeInfos)
             {
-                ei.TotalAllocation = _employeeRepository.ComputeTotalAllocation(ei.Id);
+                ei.RemainingAllocation = 100-_employeeRepository.ComputeTotalAllocation(ei.Id);
+                ei.Role = _projectRepository.GetEmployeeRoleById(ei.Id);
+                ei.DepartmentName = _departmentRepository.GetDepartmentById(ei.DepartmentId).Name;
             }
             return employeeInfos;
         }
@@ -208,6 +214,20 @@ namespace Manager.Services
         public IEnumerable<string> GetPositionTypesDescriptions()
         {
             return _employeeRepository.GetPositionTypeDescriptions();
+        }
+
+        public OperationResult AssignEmployee(AssignEmployeeInputInfo inputInfo)
+        {
+            var project = _projectRepository.GetProjectById(inputInfo.ProjectId);
+            var employee = _employeeRepository.GetById(inputInfo.EmployeeId);
+
+            if (project != null && employee != null)
+            {
+                _employeeRepository.AssignEmployee(new EmployeeProject(employee, project, inputInfo.Allocation));
+
+                return new OperationResult(true, Messages.SuccessfullyAssignEmployee);
+            }
+            return new OperationResult(false, Messages.ErrorAssignEmployee);
         }
     }
 }
