@@ -30,8 +30,15 @@ namespace DataAccess.Repositories
             return _context.Offices.SingleOrDefault(o => o.Id == id);
         }
 
+        public int CountAllDepartmentsOfAnOffice(int officeId)
+        {
+            return
+                _context.Departments.Where(d => d.Office.Id == officeId)
+                    .OrderBy(d => d.Id).Count();
+        }
+
         public IEnumerable<Department> GetAllDepartmentsOfAnOffice(int officeId, int pageSize, int pageNumber)
-        { 
+        {
             return
                 _context.Departments.Where(d => d.Office.Id == officeId)
                     .OrderBy(d => d.Id)

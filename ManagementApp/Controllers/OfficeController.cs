@@ -29,6 +29,13 @@ namespace ManagementApp.Controllers
             return Json(result);
         }
 
+        [Route("departmentsCount/{officeId}")]
+        [HttpGet]
+        public IHttpActionResult GetAllDepartmentsOfAnOffice(int officeId)
+        {
+            return Json(_officeService.CountAllDepartmentsOfAnOffice(officeId));
+        }
+
         [Route("departments/{officeId}/{pageSize}/{pageNumber}")]
         [HttpGet]
         public IHttpActionResult GetAllDepartmentsOfAnOffice(int officeId, int pageSize, int pageNumber) {

@@ -7,6 +7,7 @@ import * as Rx from 'rx';
 const initialState = {
     user : mock,
     items: null,
+    totalNumberOfItems: null,
     model:null,
     dropdownItems: null
 };

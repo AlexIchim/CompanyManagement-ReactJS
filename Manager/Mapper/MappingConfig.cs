@@ -1,4 +1,5 @@
-﻿using AutoMapper;
+﻿using System.Linq;
+using AutoMapper;
 using Domain.Models;
 using Manager.InfoModels;
 using Manager.InputInfoModels;
