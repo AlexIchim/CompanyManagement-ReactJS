@@ -17,22 +17,18 @@ export default class AddProject extends React.Component{
     }
 
     addProject(){
-        
-        if(this.state.message === "")
-        {
             let projectObject = {
                 name : this.refs.name.value,
                 status : this.state.status,
                 duration : this.refs.duration.value,
                 departmentId : this.props.departmentId
-            }
+            };
 
             addProject(
                 projectObject,
                 false,
                 this.props.saveFunc
-            )
-        }
+            );
     }
 
     changeOption(e){
@@ -67,6 +63,10 @@ export default class AddProject extends React.Component{
 
     render(){
 
+        const addButton = this.state.message === "" ? (
+            <button className="btn btn-info" onClick={this.addProject.bind(this)}>Add</button>
+        ) : (<button className="btn btn-info" disabled>Add</button>);
+
         return (
             <div className="box info-box">
                 <div className="box-header with-border">
@@ -86,13 +86,13 @@ export default class AddProject extends React.Component{
                         </select>
                     </div>
                     <label>Duration</label>
-                    <input type="text" className="form-control" ref="duration" placeholder="Duration" onChange={this.onChangeFunction.bind(this)}></input>
+                    <input type="text" autoComplete="off" className="form-control" ref="duration" placeholder="Duration" onChange={this.onChangeFunction.bind(this)}></input>
                     <div>{this.state.message}</div>
                 </div>
 
                 <div className="box-footer">
-                    <button className="btn btn-default" onClick={this.addProject.bind(this)}>Add</button>
-                    <button className="btn btn-default" onClick={this.props.hideFunc}>Cancel</button>
+                    {addButton}
+                    <button className="btn btn-info" onClick={this.props.hideFunc}>Cancel</button>
                 </div>
             </form>
             </div>
