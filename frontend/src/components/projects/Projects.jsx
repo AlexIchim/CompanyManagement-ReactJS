@@ -184,7 +184,7 @@ export default class Projects extends Component{
                     </table>
                 </div>
                 <div>
-                    <button>DoesSomething</button>
+                    
                 </div>
             </div>
         );

@@ -39,33 +39,38 @@ export default class AddProject extends React.Component{
 
     }
 
-    onChangeFunction(e){
-        const val = parseInt(e.target.value);
-        
-        if(isNaN(val))
+    onInputChange(){
+        const newProjectName = this.refs.name.value;
+        const newProjectDuration = parseInt(this.refs.duration.value);
+        if(newProjectName === "")
         {
-            e.target.value = "";
+            this.setState({
+                message : "Error!!! Project name cannot be empty."
+            });
+        } else if(newProjectName.length > 100) {
+            this.setState({
+                message : "Error!!! Project name cannot be longer than 100 characters."
+            });
+        } else if(isNaN(newProjectDuration)) {
+            this.refs.duration.value = "0";
+        } else if(newProjectDuration > 120) {
+            this.setState({
+                message : "Error!!! A project cannot last more than 120 months."
+            });
         } else {
-            if(val > 120)
-            {
-                this.setState({
-                    message : "Error!!! A project cannot last more than 120 months."
-                });
-            } else {
-                this.setState({
-                    message : ""
-                })
-                e.target.value = val.toString();
-            }
+            this.setState({
+                message : ""
+            });
+            this.refs.duration.value = newProjectDuration;
         }
-        
+
     }
 
     render(){
 
         const addButton = this.state.message === "" ? (
-            <button className="btn btn-info" onClick={this.addProject.bind(this)}>Add</button>
-        ) : (<button className="btn btn-info" disabled>Add</button>);
+            <button type="button" className="btn btn-info" onClick={this.addProject.bind(this)}>Add</button>
+        ) : (<button type="button" className="btn btn-info" disabled>Add</button>);
 
         return (
             <div className="box info-box">
@@ -75,7 +80,7 @@ export default class AddProject extends React.Component{
             <form className="form-horizontal">
                 <div className="box-body">
                     <label>Name</label>
-                    <input type="text" className="form-control" ref="name" placeholder="Project name"></input>
+                    <input type="text" className="form-control" ref="name" placeholder="Project name" autoComplete="off" onChange={this.onInputChange.bind(this)}></input>
                     <label>Status</label>
                     <div>
                         <select className="form-control" id="choice" onChange={this.changeOption.bind(this)}>
@@ -86,13 +91,13 @@ export default class AddProject extends React.Component{
                         </select>
                     </div>
                     <label>Duration</label>
-                    <input type="text" autoComplete="off" className="form-control" ref="duration" placeholder="Duration" onChange={this.onChangeFunction.bind(this)}></input>
-                    <div>{this.state.message}</div>
+                    <input type="text" autoComplete="off" className="form-control" ref="duration" placeholder="Duration" onChange={this.onInputChange.bind(this)}></input>
+                    <div><font color="red"><b>{this.state.message}</b></font></div>
                 </div>
 
                 <div className="box-footer">
                     {addButton}
-                    <button className="btn btn-info" onClick={this.props.hideFunc}>Cancel</button>
+                    <button type="button" className="btn btn-info" onClick={this.props.hideFunc}>Cancel</button>
                 </div>
             </form>
             </div>
