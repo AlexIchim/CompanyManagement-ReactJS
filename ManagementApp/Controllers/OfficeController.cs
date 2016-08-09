@@ -13,7 +13,7 @@ using Manager.Services;
 namespace ManagementApp.Controllers
 {
     [RoutePrefix("api/office")]
-    [EnableCors("*","*","GET, POST, PUT")]
+    [EnableCors("*", "*", "*")]
     public class OfficeController : ApiController
     {
         private readonly OfficeService _officeService;
@@ -31,10 +31,17 @@ namespace ManagementApp.Controllers
             return Json(result);
         }
 
-        [Route("departments/{officeId}")]
+        [Route("departments/{officeId}/{pageSize}/{pageNumber}")]
         [HttpGet]
-        public IHttpActionResult GetAllDepartmentsOfAnOffice(int officeId) {
-            var result = _officeService.GetAllDepartmentsOfAnOffice(officeId);
+        public IHttpActionResult GetAllDepartmentsOfAnOffice(int officeId, int pageSize, int pageNumber) {
+            var result = _officeService.GetAllDepartmentsOfAnOffice(officeId, pageSize, pageNumber);
+            return Json(result);
+        }
+
+        [Route("availableEmployees/{officeId}/{pageSize}/{pageNumber}")]
+        [HttpGet]
+        public IHttpActionResult GetAllAvailableEmployeesOfAnOffice(int officeId, int pageSize, int pageNumber, int? department = null, int? position = null) {
+            var result = _officeService.GetAllAvailableEmployeesOfAnOffice(officeId, pageSize, pageNumber, department, position);
             return Json(result);
         }
 

@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Web.Http;
+using System.Web.Http.Cors;
 using Manager.InputInfoModels;
 using Manager.Services;
 
 namespace ManagementApp.Controllers
 {
     [RoutePrefix("api/employee")]
+    [EnableCors("*", "*", "*")]
     public class EmployeeController : ApiController
     {
         private readonly EmployeeService _employeeService;
@@ -20,6 +22,13 @@ namespace ManagementApp.Controllers
         public IHttpActionResult GetAll()
         {
             var result = _employeeService.GetAll();
+            return Json(result);
+        }
+
+        [Route("departmentManagers")]
+        [HttpGet]
+        public IHttpActionResult GetDepartmentManagers() {
+            var result = _employeeService.GetDepartmentManagers();
             return Json(result);
         }
 

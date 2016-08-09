@@ -33,6 +33,13 @@ namespace Manager.Services
             return employeeInfos;
         }
 
+        public IEnumerable<EmployeeInfo> GetDepartmentManagers() {
+            var employees = _employeeRepository.GetDepartmentManagers();
+            var employeeInfos = _mapper.Map<IEnumerable<EmployeeInfo>>(employees);
+
+            return employeeInfos;
+        }
+
         public EmployeeInfo GetById(int id)
         {
             var employee = _employeeRepository.GetById(id);
@@ -85,19 +92,6 @@ namespace Manager.Services
 
             _employeeRepository.Delete(employee.Id, releaseDate);
             return new OperationResult(true, Messages.SuccessfullyDeletedEmployee);
-        }
-
-        public int GetRemainingAllocation(int employeeId)
-        {
-            var employee = _employeeRepository.GetById(employeeId);
-            int totalAllocation = 0;
-            foreach (var assignment in employee.Assignments)
-            {
-                totalAllocation += assignment.Allocation;
-            }
-            int remainingAllocation = 100 - totalAllocation;
-
-            return remainingAllocation;
         }
 
         public IEnumerable<ProjectInfo> GetProjectsOfEmployee(int employeeId)

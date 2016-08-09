@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using AutoMapper;
 using Contracts;
 using Domain.Models;
@@ -43,21 +44,28 @@ namespace Manager.Services
             return departmentInfo;
         }
 
-        public IEnumerable<EmployeeInfo> GetAllMembersOfADepartment(int departmentId)
-        {
-            var employees = _departmentRepository.GetAllMembersOfADepartment(departmentId);
-            var employeesInfos = _mapper.Map<IEnumerable<EmployeeInfo>>(employees);
-
-            return employeesInfos;
-        }
-
-        public IEnumerable<ProjectInfo> GetAllProjectsOfADepartment(int departmentId) {
-            var projects = _departmentRepository.GetAllProjectsOfADepartment(departmentId);
+        public IEnumerable<ProjectInfo> GetProjectsOfDepartment(int departmentId, int pageSize, int pageNumber, int? status = null) {
+            var projects = _departmentRepository.GetProjectsOfDepartment(departmentId, pageSize, pageNumber, status);
             var projectsInfos = _mapper.Map<IEnumerable<ProjectInfo>>(projects);
 
             return projectsInfos;
         }
 
+        public IEnumerable<EmployeeInfo> GetMembersOfDepartment(int departmentId, int pageSize, int pageNumber, string name = "", int? jobType = null, int? position = null, int? allocation = null)
+        {
+            var employees = _departmentRepository.GetMembersOfDepartment(departmentId, pageSize, pageNumber, name, jobType, position, allocation);
+            var employeesInfos = _mapper.Map<IEnumerable<EmployeeInfo>>(employees);
+
+            return employeesInfos;
+        }
+
+        public IEnumerable<ProjectInfo> FilterProjectsOfADepartmentByStatus(int departmentId, string status)
+        {
+            var projects = _departmentRepository.FilterProjectsOfADepartmentByStatus(departmentId, status);
+            var projectsInfos = _mapper.Map<IEnumerable<ProjectInfo>>(projects);
+
+            return projectsInfos;
+        }
         public OperationResult AddDepartment(AddDepartmentInputInfo inputInfo)
         {
             var validationResult = _addDepartmentValidator.Validate(inputInfo);

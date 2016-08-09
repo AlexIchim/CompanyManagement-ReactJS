@@ -1,6 +1,5 @@
 import * as React from 'react';
 import Tile from './Tile';
-import config from '../helper';
 import Context from '../../context/Context';
 import Accessors from '../../context/Accessors';
 import '../../assets/less/index.less';
@@ -17,11 +16,12 @@ export default class Dashboard extends React.Component{
             formToggle:false
         });
         
-        Context.subscribe(this.onContextChange.bind(this));
 
         Context.cursor.set("items",[]);
         Controller.GetAll();
         
+    componentWillUnmount(){
+        this.subscription.dispose();
     }
 
     onContextChange(cursor){
@@ -40,7 +40,6 @@ export default class Dashboard extends React.Component{
     onEditButtonClick(index){
         const office=Context.cursor.get('items')[index];
         Context.cursor.set("model", office);
-
         this.setState({
             formToggle: true
         });
@@ -70,7 +69,7 @@ export default class Dashboard extends React.Component{
                     parentClass="bg-aqua"
                     phone={office.Phone}
                     address={office.Address}
-                    link={"Departments/"+office.Id}
+                    link={"office/departments/"+office.Id + "/5/1"}
                     icon={office.Image}
                     key={index}
                     index={index}
@@ -94,7 +93,7 @@ export default class Dashboard extends React.Component{
                 
             </div>
                 </div>
-            
+
         )
     }
 }

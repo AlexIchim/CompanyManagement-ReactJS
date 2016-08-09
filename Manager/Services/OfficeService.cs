@@ -36,11 +36,18 @@ namespace Manager.Services
             return officeInfos;
         }
 
-        public IEnumerable<DepartmentInfo> GetAllDepartmentsOfAnOffice(int officeId) {
-            var departments = _officeRepository.GetAllDepartmentsOfAnOffice(officeId);
+        public IEnumerable<DepartmentInfo> GetAllDepartmentsOfAnOffice(int officeId, int pageSize, int pageNumber) {
+            var departments = _officeRepository.GetAllDepartmentsOfAnOffice(officeId, pageSize, pageNumber);
             var departmentsInfos = _mapper.Map<IEnumerable<DepartmentInfo>>(departments);
 
             return departmentsInfos;
+        }
+
+        public IEnumerable<EmployeeInfo> GetAllAvailableEmployeesOfAnOffice(int officeId, int pageSize, int pageNumber, int? department = null, int? position = null) {
+            var employees = _officeRepository.GetAllAvailableEmployeesOfAnOffice(officeId, pageSize, pageNumber, department, position);
+            var employeesInfos = _mapper.Map<IEnumerable<EmployeeInfo>>(employees);
+
+            return employeesInfos;
         }
 
         public OperationResult Add(AddOfficeInputInfo inputInfo)

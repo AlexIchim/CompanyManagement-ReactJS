@@ -35,7 +35,7 @@ class Tile extends React.Component<any, any>{
                     </div>
                 </div>
             </div>
-            
+
         )
     }
 }
