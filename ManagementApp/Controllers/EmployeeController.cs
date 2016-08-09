@@ -130,6 +130,13 @@ namespace ManagementApp.Controllers
             return Json(result);
         }
 
+        [Route("getEmployeeById")]
+        [HttpPost]
+        public IHttpActionResult GetEmployeeById(int employeeId)
+        {
+            var result = _employeeService.GetEmployeeById(employeeId);
+            return Json(result);
+        }
 
 
 

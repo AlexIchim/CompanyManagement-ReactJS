@@ -255,5 +255,11 @@ namespace Manager.Services
             }
             return new OperationResult(false, Messages.ErrorAssignEmployee);
         }
+
+        public MemberInfo GetEmployeeById(int employeeId)
+        {
+            var employee = _employeeRepository.GetById(employeeId);
+            return _mapper.Map<MemberInfo>(employee);
+        }
     }
 }
