@@ -30,7 +30,7 @@ export default class Member extends React.Component{
         $.ajax({
             method: 'GET',
             async: false,
-            url: configs.baseUrl + 'api/employee/getPoisitionTypes',
+            url: configs.baseUrl + 'api/employee/getPositionTypes',
             success: function (data) {
                 console.log(data, this);
                 this.setState({
@@ -140,7 +140,7 @@ export default class Member extends React.Component{
 
           const positionTypes=this.state.positionTypes.map((el, x) => {
             return (
-                <option value={el} key={x} >{el}</option>                         
+                <option value={el} key={x} >{el.Description}</option>
             )
         });
 
