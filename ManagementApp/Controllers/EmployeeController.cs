@@ -1,4 +1,5 @@
-﻿using Manager.Services;
+﻿using System.Linq;
+using Manager.Services;
 using Manager.InputInfoModels;
 using System.Web.Http;
 using System.Web.Http.Cors;
@@ -45,6 +46,13 @@ namespace ManagementApp.Controllers
         {
             var result = _employeeService.GetAvailableEmployees(departmentId, positionId, projectId, pageSize, pageNumber);
             return Json(result, _camelCaseJsonSettings);
+        }
+
+        [Route("available/count")]
+        [HttpGet]
+        public int GetAvailableEmployeesCount(int? departmentId = null, int? positionId = null, int? projectId = null)
+        {
+            return _employeeService.GetAvailableEmployeesCount(departmentId, positionId, projectId);
         }
 
 

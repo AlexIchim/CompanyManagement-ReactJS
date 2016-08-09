@@ -47,6 +47,11 @@ namespace Manager.Services
             return employeeInfos;
         }
 
+        public int GetAvailableEmployeesCount(int? departmentId = null, int? positionId = null, int? projectId = null)
+        {
+            return _employeeRepository.GetAvailableEmployeesCount(departmentId, positionId, projectId);
+        }
+
         public EmployeeInfo GetById(int id)
         {
             var employee = _employeeRepository.GetById(id);

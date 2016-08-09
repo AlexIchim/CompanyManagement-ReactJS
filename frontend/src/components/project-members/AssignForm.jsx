@@ -1,7 +1,7 @@
 import React from 'react';
 import * as Controller from '../../api/controller';
 import AvailableEmployee from './AvailableEmployee';
-import Context from "../../context/Context";
+import PaginatedTable from '../layout/PaginatedTable';
 
 export default class AssignForm extends React.Component {
 
@@ -9,13 +9,16 @@ export default class AssignForm extends React.Component {
         super();
         this.state ={
             availableEmployees: [],
+            totalAvailableEmployees: 0,
             departmentName: "",
             departments: [],
             positions: [],
             allocation: {},
             departmentIdFilter: null,
             positionIdFilter: null,
-            readyToSave: false
+            readyToSave: false,
+            pageSize: 5,
+            pageNumber: 1
         }
     }
 
@@ -24,19 +27,19 @@ export default class AssignForm extends React.Component {
 
     }
 
-    componentDidMount(){
-        this.availableEmployees();
-    }
-
-    availableEmployees(deptId, posId){
+    getAvailableEmployees(deptId, posId){
         Controller.getAvailableEmployees(
             deptId,
             posId,
-            false,
+            this.props.projectId,
+            this.state.pageSize,
+            1,
+            true,
             (data) => {
                 this.setState({
-                    availableEmployees: data
-                })
+                    availableEmployees: data,
+                    pageNumber: 1
+                });
             }
         )
     }
@@ -53,8 +56,25 @@ export default class AssignForm extends React.Component {
         )
     }
 
+    getAvailableEmployeesCount(deptId, posId){
+        Controller.getAvailableEmployeesCount(
+            deptId,
+            posId,
+            this.props.projectId,
+            true,
+            (data) => {
+                this.setState({
+                    totalAvailableEmployees: data,
+                    pageNumber: 1
+                });
+            }
+        );
+    }
+
     fetchData(){
-        this.availableEmployees();
+        this.getAvailableEmployees();
+        this.getAvailableEmployeesCount();
+
         Controller.getDepartments(
             true,
             (data) => {
@@ -80,7 +100,10 @@ export default class AssignForm extends React.Component {
         this.setState({
             departmentIdFilter: deptId
         });
-        this.availableEmployees(deptId, this.state.positionIdFilter);
+
+        this.getAvailableEmployeesCount(deptId, this.state.positionIdFilter);
+        this.getAvailableEmployees(deptId, this.state.positionIdFilter);
+
 
     }
 
@@ -90,7 +113,9 @@ export default class AssignForm extends React.Component {
         this.setState({
             positionIdFilter: posId
         });
-        this.availableEmployees(this.state.departmentIdFilter,posId);
+
+        this.getAvailableEmployeesCount(this.state.departmentIdFilter,posId);
+        this.getAvailableEmployees(this.state.departmentIdFilter,posId);
 
     }
 
@@ -107,7 +132,6 @@ export default class AssignForm extends React.Component {
     }
 
     onSave(){
-        console.log("@@@@", this.refs.message);
         if (this.state.readyToSave){
             Controller.addAllocation(
                 this.state.allocation,
@@ -123,6 +147,25 @@ export default class AssignForm extends React.Component {
 
     hideError(){
         this.refs.message.innerHTML = ''
+    }
+
+    paginationChangeHandler(pageSize, pageNumber){
+        Controller.getAvailableEmployees(
+            this.state.departmentIdFilter,
+            this.state.positionIdFilter,
+            this.props.projectId,
+            pageSize,
+            pageNumber,
+            true,
+            (data) => {
+                this.setState({
+                    availableEmployees: data,
+                    pageSize: pageSize,
+                    pageNumber: pageNumber
+                });
+            }
+        );
+
     }
 
     render(){
@@ -144,6 +187,18 @@ export default class AssignForm extends React.Component {
             (pos,ind) => <option key={pos.id} value={pos.id}>{pos.name}</option>
         );
 
+        const header = (
+            <thead>
+            <tr>
+                <th> Name </th>
+                <th> Department </th>
+                <th> Position </th>
+                <th> Remaining allocation </th>
+                <th> Choose employee </th>
+            </tr>
+            </thead>
+        );
+
         return(
             <div>
                 <div className="box info-box">
@@ -152,7 +207,7 @@ export default class AssignForm extends React.Component {
                             <h3 className="box-title"><strong>Assign employee</strong></h3>
                             <br/><br/>
                             <div className="form-group">
-                                 <select className="form-control " defaultValue="Department" onChange={this.onChangeDepartment.bind(this)}>
+                                 <select className="form-control" defaultValue="Department" onChange={this.onChangeDepartment.bind(this)}>
                                      <option value="-1" >Department</option>
                                     {departments}
                                  </select>
@@ -170,31 +225,20 @@ export default class AssignForm extends React.Component {
                         </div>
                         <div className="formBody">
 
-                       <table className="table table-hover table-bordered">
-                           <thead>
-                               <tr>
-                                   <th> Name </th>
-                                   <th> Department </th>
-                                   <th> Position </th>
-                                   <th> Remaining allocation </th>
-                                   <th> Choose employee </th>
-                               </tr>
-                           </thead>
-
-                           <tbody>
-
-                                {items}
-
-                           </tbody>
-
-                       </table>
-
-
                         </div>
 
                         <div className="box-footer">
+                            <PaginatedTable
+                                header={header}
+                                listOfItems={items}
+                                totalCount={this.state.totalAvailableEmployees}
+                                pageSize={this.state.pageSize}
+                                selectedPage={this.state.pageNumber}
+                                changeHandler={this.paginationChangeHandler.bind(this)}
+                            />
+                            <br/><br/>
                             <span type="text" ref="message"/>
-                            <br/>
+                            <br/><br/>
                             <button type="button" className="btn btn-md btn-info" onClick={this.onSave.bind(this)}> Save</button>
                             <button type="button" className="btn btn-md btn-info" onClick={this.props.hideFunc}> Cancel</button>
                         </div>

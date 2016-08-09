@@ -17,6 +17,7 @@ export default class PaginatedTable extends React.Component {
     }
     
     onButtonClick(button){
+        console.log('some button pressed!!!',button);
         this.setState({
             numberInput: ''
         });
@@ -84,7 +85,7 @@ export default class PaginatedTable extends React.Component {
                 </table>
                 
                 <div>
-                    <div className="col-md-6">
+                    <div className="col-md-4">
                         <label>Page size:</label>&nbsp;&nbsp;
                         <select className="dropdown-toggle" value={pageSize} onChange={this.onDropdownChange.bind(this)}>
                             <option value="5">5</option>
@@ -94,18 +95,18 @@ export default class PaginatedTable extends React.Component {
                             <option value="100">100</option>
                         </select>
                     </div>
-                    <div className="col-md-6 pull-right text-right">
+                    <div className="col-md-8 pull-right text-right">
                         <span>{selectedPage} of {nrOfPages}</span>&nbsp;&nbsp;&nbsp;
-                        <button className="btn" disabled={selectedPage===1}
+                        <button type="button" className="btn" disabled={selectedPage <= 1}
                             onClick={this.onButtonClick.bind(this,'first')}    
                         ><strong>&lt;&lt;</strong></button>
-                        <button className="btn" disabled={selectedPage===1}
+                        <button type="button" className="btn" disabled={selectedPage <= 1}
                             onClick={this.onButtonClick.bind(this,'previous')}    
                         ><strong>&lt;</strong></button>
-                        <button className="btn" disabled={selectedPage===nrOfPages}
+                        <button type="button" className="btn" disabled={selectedPage >= nrOfPages}
                             onClick={this.onButtonClick.bind(this,'next')}    
                         ><strong>&gt;</strong></button>
-                        <button className="btn" disabled={selectedPage===nrOfPages}
+                        <button type="button" className="btn" disabled={selectedPage >= nrOfPages}
                             onClick={this.onButtonClick.bind(this,'last')}    
                         ><strong>&gt;&gt;</strong></button>
                         <span>Go to page: </span>

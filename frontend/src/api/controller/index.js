@@ -1,6 +1,7 @@
 export {default as getAllOffices}                  from './getAllOffices';
 export {default as getAllProjects}                 from './getAllProjects';
 export {default as getAvailableEmployees}          from './getAvailableEmployees';
+export {default as getAvailableEmployeesCount}     from './getAvailableEmployeesCount';
 export {default as getDepartmentCountByOffice}     from './getDepartmentCountByOffice';
 export {default as getDepartmentName}              from './getDepartmentName';
 export {default as getDepartments}                 from './getDepartments';
