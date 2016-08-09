@@ -18,7 +18,7 @@ namespace Manager.InputInfoModels
 
         public DateTime EmploymentDate { get; set; }
 
-        public DateTime ReleaseDate { get; set; }
+        public DateTime? ReleaseDate { get; set; }
 
         public JobType JobType { get; set; }
 

@@ -2,7 +2,7 @@ import * as React from 'react';
 import classNames from 'classnames';
 import {Link} from 'react-router';
 //import Form from './Form';
-//import EditForm from './EditForm';
+import EditForm from './EditForm';
 import "./../../assets/less/index.less";
 
 export default class EmployeeItem extends React.Component{
@@ -31,11 +31,9 @@ export default class EmployeeItem extends React.Component{
         //const linkEmployees = "department/" + this.props.node.get('Id')  + '/' + this.props.node.get('Name') + "/employees";
         //const linkProjects = "department/" + this.props.node.get('Id')  + '/' + this.props.node.get('Name') + "/projects";
 
-        //const editModal = this.state.edit ? <EditForm officeId={this.props.officeId} element={this.props.node} show = {this.state.edit} close={this.closeEditForm.bind(this)} /> : '';
-
+        const editModal = this.state.edit ? <EditForm departmentId={this.props.departmentId} element={this.props.node} show = {this.state.edit} close={this.closeEditForm.bind(this)} /> : '';
+        
         return(
-
-         
                 <tr>
                 <td>{this.props.node.get('Name')}</td>
                 <td>{this.props.node.get('Address')}</td>
@@ -44,6 +42,10 @@ export default class EmployeeItem extends React.Component{
                 <td>{this.props.node.get('JobType')}</td>
                 <td>{this.props.node.get('PositionType')}</td>
                 <td>{this.props.node.get('TotalAllocation')}</td>
+                <td>
+                    <button className="linkButton" onClick={this.showEditForm.bind(this)}> Edit</button>
+                    {editModal}
+                </td>
                
                 </tr>
            

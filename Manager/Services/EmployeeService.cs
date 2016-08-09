@@ -75,7 +75,15 @@ namespace Manager.Services
                         employee.Name = inputInfo.Name;
                         employee.Address = inputInfo.Address;
                         employee.EmploymentDate = inputInfo.EmploymentDate;
-                        employee.ReleaseDate = inputInfo.ReleaseDate;
+                        if (inputInfo.ReleaseDate.Equals(DateTime.MinValue))
+                        {
+                            employee.ReleaseDate = null;
+                        }
+                        else
+                        {
+                            employee.ReleaseDate = inputInfo.ReleaseDate;
+                        }
+                      
                         employee.JobType = inputInfo.JobType;
                         employee.PositionType = inputInfo.PositionType;
 
