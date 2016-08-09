@@ -1,5 +1,5 @@
 import React from 'react';
-import ModalTemplate from '../ModalTemplate';
+import ViewDetailsModalTemplate from '../ViewDetailsModalTemplate';
 import Controller from '../Command';
 import config from '../helper';
 import MyController from './Controller/Controller.js';
@@ -12,18 +12,18 @@ export default class EditForm extends React.Component {
     }
     render(){
         const model = Accessors.model(Context.cursor);
-        const duration = model.Duration;
-        const status = model.Status;
+        const projects = model.Projects;
         const name = model.Name;
         const address = model.Address;
         const employmentDate = model.EmploymentDate;
         const releasedDate = model.ReleasedDate;
         const jobType = model.JobType;
         const position = model.Position;
+        const allocation = model.Allocation;
 
         return(
 
-            <ModalTemplate onCancelClick={this.props.onCancelClick}
+            <ViewDetailsModalTemplate onCancelClick={this.props.onCancelClick}
                            onStoreClick={MyController.Edit.bind(this)}
                            Title={this.props.Title}
                            Model={this.props.Model}>
@@ -35,20 +35,22 @@ export default class EditForm extends React.Component {
                                 <img className="img-circle hoverZoomLink" src="../../../src/assets/less/themes/lte/img/full_logo.png" alt="User Avatar"></img>
                             </div>
                             <h3 className="widget-user-username">{name}</h3>
-                            <h5 className="widget-user-desc">Lead Developer</h5>
+                            <h5 className="widget-user-desc">{position}</h5>
                         </div>
                         <div className="box-footer no-padding">
                             <ul className="nav nav-stacked">
+                                <li><a href="#">Projects <span className="pull-right badge bg-aqua">{projects}</span></a></li>
+                                <li><a href="#">Allocation <span className="pull-right badge bg-green">{allocation}</span></a></li>
                                 <li><a href="#">Address <span className="pull-right badge bg-blue">{address}</span></a></li>
-                                <li><a href="#">Projects <span className="pull-right badge bg-aqua">5</span></a></li>
-                                <li><a href="#">Allocation <span className="pull-right badge bg-green">80</span></a></li>
-                                <li><a href="#">Followers <span className="pull-right badge bg-red">842</span></a></li>
+                                <li><a href="#">Job Type <span className="pull-right badge bg-red">{jobType}</span></a></li>
+                                <li><a href="#">Employment Date <span className="pull-right badge bg-red">{employmentDate}</span></a></li>
+                                <li><a href="#">Termination Date <span className="pull-right badge bg-red">{releasedDate}</span></a></li>
                             </ul>
                         </div>
                     </div>
                 </div>
 
-            </ModalTemplate>
+            </ViewDetailsModalTemplate>
         )
     }
 

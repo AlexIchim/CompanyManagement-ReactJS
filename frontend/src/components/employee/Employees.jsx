@@ -7,8 +7,8 @@ import Accessors from '../../context/Accessors';
 import Context from '../../context/Context';
 import Command from '../Command';
 import MyController from './Controller/Controller'
-import EditForm from './EditForm';
 import ViewDetailsForm from './ViewDetailsForm'
+import '../../assets/less/index.less'
 
 export default class Employees extends React.Component{
     constructor(){
@@ -119,64 +119,62 @@ export default class Employees extends React.Component{
 
                 {modal}
 
-            <table className="table table-hover">
-                <thead>
                 <h1> Employees </h1>
-                <button id="store" className="btn btn-success margin-top" onClick={this.onAddButtonClick.bind(this)}>
+                    <div className="input-group input-group-xs col-md-4">
+                        <div className="input-group-btn">
+                            <button type="button" className="btn btn-warning">Search by name</button>
+                        </div>
+                        <input type="text"  ref="inputName" className="form-control" placeholder="Search..." >
+                        </input>
+                    </div>
+                <p></p>
+                <div><button id="store" className="btn btn-success margin-top" onClick={this.onAddButtonClick.bind(this)}>
                     Add New Employee
                 </button>
-                <p></p>
-                <div className="btn-group">
-                    <button type="button" className="btn btn-info">Job Type</button>
-                    <button type="button" className="btn btn-info dropdown-toggle" data-toggle="dropdown">
-                        <span className="caret"></span>
-                        <span className="sr-only">Toggle Dropdown</span>
-                    </button>
-                    {/*<ul className="dropdown-menu" role="menu">
-                        <li><a href="#">Action</a></li>
-                        <li><a href="#">Another action</a></li>
-                        <li><a href="#">Something else here</a></li>
-                        <li className="divider"></li>
-                        <li><a href="#">Separated link</a></li>
-                    </ul>*/}
                     &nbsp;
-                </div>
+                    <div className="btn-group">
+                        <button type="button" className="btn btn-info">Job Type</button>
+                        <button type="button" className="btn btn-info dropdown-toggle" data-toggle="dropdown">
+                            <span className="caret"></span>
+                            <span className="sr-only">Toggle Dropdown</span>
+                        </button>
+                        <ul className="dropdown-menu" role="menu">
+                            <li><a href="#">Part Time 4</a></li>
+                            <li><a href="#">Part Time 6</a></li>
+                            <li><a href="#">Full Time</a></li>
+                        </ul>
+                    </div>
+                    &nbsp;
                     <div className="btn-group">
                         <button type="button" className="btn btn-info">Position</button>
                         <button type="button" className="btn btn-info dropdown-toggle" data-toggle="dropdown">
                             <span className="caret"></span>
                             <span className="sr-only">Toggle Dropdown</span>
                         </button>
-                        {/*<ul className="dropdown-menu" role="menu">
-                         <li><a href="#">Action</a></li>
-                         <li><a href="#">Another action</a></li>
-                         <li><a href="#">Something else here</a></li>
-                         <li className="divider"></li>
-                         <li><a href="#">Separated link</a></li>
-                         </ul>*/}
+                        <ul className="dropdown-menu" role="menu">
+                            <li><a href="#">Developer</a></li>
+                            <li><a href="#">Project Manager</a></li>
+                            <li><a href="#">QA</a></li>
+                            <li><a href="#">Department Manager</a></li>
+                        </ul>
                     </div>
                     &nbsp;
-                        <div className="btn-group">
-                            <button type="button" className="btn btn-info">Allocation</button>
-                            <button type="button" className="btn btn-info dropdown-toggle" data-toggle="dropdown">
-                                <span className="caret"></span>
-                                <span className="sr-only">Toggle Dropdown</span>
-                            </button>
-                            {/*<ul className="dropdown-menu" role="menu">
-                             <li><a href="#">Action</a></li>
-                             <li><a href="#">Another action</a></li>
-                             <li><a href="#">Something else here</a></li>
-                             <li className="divider"></li>
-                             <li><a href="#">Separated link</a></li>
-                             </ul>*/}
-                        </div>
-
+                    <div className="btn-group">
+                        <button type="button" className="btn btn-info">Allocation</button>
+                        <button type="button" className="btn btn-info dropdown-toggle" data-toggle="dropdown">
+                            <span className="caret"></span>
+                            <span className="sr-only">Toggle Dropdown</span>
+                        </button>
+                        <ul className="dropdown-menu" role="menu">
+                            <li><a href="#">Fully Allocated</a></li>
+                            <li><a href="#">Available</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <table className="table table-hover">
+                <thead>
                 <tr>
                     <td><h3> Name </h3></td>
-                    <td><h3> Address </h3></td>
-                    <td><h3> Employment Date </h3></td>
-                    <td><h3> Termination Date </h3></td>
-                    <td><h3> Job Type </h3></td>
                     <td><h3> Position </h3></td>
                     <td><h3> Allocation </h3></td>
                     <td><h3> Actions </h3></td>

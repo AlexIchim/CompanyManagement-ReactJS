@@ -2,16 +2,13 @@ import * as React from 'react'
 import * as $ from 'jquery'
 import {Link} from 'react-router';
 import Command from '../Command';
+import '../../assets/less/index.less'
+
 
 const EmployeeItem = (props) => {
 
-
-    const id = props.node.Id;
     const name = props.node.Name;
     const address = props.node.Address;
-    const employmentDate = props.node.EmploymentDate;
-    const releasedDate = props.node.ReleasedDate;
-    const jobType = props.node.JobType;
     const position = props.node.Position;
     const allocation = props.node.Allocation;
     const link = props.Link;
@@ -21,20 +18,8 @@ const EmployeeItem = (props) => {
 
     return (
         <tr>
-            <td>
+            <td className="name-td">
                 {name}
-            </td>
-            <td>
-                {address}
-            </td>
-            <td>
-                {employmentDate}
-            </td>
-            <td>
-                {releasedDate}
-            </td>
-            <td>
-                {jobType}
             </td>
             <td>
                 {position}
