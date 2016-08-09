@@ -8,6 +8,7 @@ import Form from './form/Form';
 import EditAllocationForm from './form/EditAllocationForm'
 import AssignEmployeeForm from './form/AssignEmployeeForm'
 
+
 const Item = (props) => {
     return (
         <tr>
@@ -48,6 +49,8 @@ class ProjectMembers extends React.Component {
                 })
             }.bind(this)
         });
+
+
         this.subscription = Context.subscribe(this.onContextChange.bind(this));
 
     }
@@ -80,6 +83,7 @@ class ProjectMembers extends React.Component {
     }
     render(){
         let modal = "";
+
         const items = this.state.projectMembers.map ( (projectMember, index) => {
             return (
                 <Item
@@ -119,6 +123,7 @@ class ProjectMembers extends React.Component {
                     <td><h3>Role</h3></td>
                     <td><h3>Allocation</h3></td>
                 </tr>
+
                 </thead>
                 <tbody>
                     {items}
