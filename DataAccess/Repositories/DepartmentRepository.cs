@@ -31,6 +31,7 @@ namespace DataAccess.Repositories
         {
             return _context.Departments.SingleOrDefault(d => d.Name == name && d.OfficeId == officeId);
         }
+
         public IEnumerable<Project> GetProjectsByDepartmentId(int id, int? pageSize = null, int? pageNumber = null)
         {
             var dept = _context.Departments.SingleOrDefault(d => d.Id == id);
@@ -42,6 +43,17 @@ namespace DataAccess.Repositories
             {
                 return dept.Projects.Paginate(pageSize, pageNumber).ToArray();
             }
+        }
+
+        public int GetProjectCountByDepartmentId(int id)
+        {
+            var dept = _context.Departments.SingleOrDefault(d => d.Id == id);
+            if (dept == null)
+            {
+                return 0;
+            }
+
+            return dept.Projects.Count();
         }
 
         public IEnumerable<Employee> GetEmployeesByDepartmentId(int id, int? pageSize = null, int? pageNumber = null)

@@ -1,8 +1,7 @@
 export {default as getAllOffices}                  from './getAllOffices';
-export {default as getAllProjects}                 from './getAllProjects';
 export {default as getAvailableEmployees}          from './getAvailableEmployees';
+export {default as getDepartmentById}              from './getDepartmentById';
 export {default as getDepartmentCountByOffice}     from './getDepartmentCountByOffice';
-export {default as getDepartmentName}              from './getDepartmentName';
 export {default as getDepartments}                 from './getDepartments';
 export {default as getDepartmentsByOffice}         from './getDepartmentsByOffice';
 export {default as getDepartmentsManagers}         from './getDepartmentsManagers';
@@ -12,7 +11,9 @@ export {default as getEmployeesByDepartmentId}     from './getEmployeesByDepartm
 export {default as getEmployeesByProjectId}        from './getEmployeesByProjectId';
 export {default as getOfficeName}                  from './getOfficeName';
 export {default as getPositions}                   from './getPositions';
+export {default as getProjectCountByDepartmentId}  from './getProjectCountByDepartmentId';
 export {default as getProjectName}                 from './getProjectName';
+export {default as getProjectsByDepartmentId}      from './getProjectsByDepartmentId';
 
 export {default as addAllocation}                  from './addAllocation';
 export {default as addDepartment}                  from './addDepartment';

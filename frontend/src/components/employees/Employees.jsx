@@ -41,7 +41,7 @@ export default class Employees extends Component {
     init(){
         Command.setCurrentOffice(this.props.params.officeId);
         Command.setCurrentDepartment(this.props.params.departmentId);
-        Controller.getDepartmentName(
+        Controller.getDepartmentById(
             this.props.params.departmentId,
             true,
             (data) => {
