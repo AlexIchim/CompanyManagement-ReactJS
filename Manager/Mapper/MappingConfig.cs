@@ -11,6 +11,8 @@ namespace Manager.Mapper
         {
             CreateMap<Department, DepartmentInfo>();
             CreateMap<AddDepartmentInputInfo, Department>();
+            CreateMap<Ticket, TicketInfo>();
+            CreateMap<AddTicketInputInfo, Ticket>();
         }
     }
 }

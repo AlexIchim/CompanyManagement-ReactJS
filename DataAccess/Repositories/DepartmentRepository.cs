@@ -30,7 +30,7 @@ namespace DataAccess.Repositories
             _context.Departments.Add(department);
             Save();
         }
-        
+
         public void Save()
         {
             _context.SaveChanges();

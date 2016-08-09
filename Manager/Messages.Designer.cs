@@ -79,11 +79,29 @@ namespace Manager {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to &apos;Ticket was added with success&apos;.
+        /// </summary>
+        public static string SuccessfullyAddedTicket {
+            get {
+                return ResourceManager.GetString("SuccessfullyAddedTicket", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to &apos;Department was updated with success&apos;.
         /// </summary>
         public static string SuccessfullyUpdatedDepartment {
             get {
                 return ResourceManager.GetString("SuccessfullyUpdatedDepartment", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to &apos;Ticket was updated with success&apos;.
+        /// </summary>
+        public static string SuccessfullyUpdatedTicket {
+            get {
+                return ResourceManager.GetString("SuccessfullyUpdatedTicket", resourceCulture);
             }
         }
     }

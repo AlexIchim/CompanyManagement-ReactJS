@@ -1,29 +1,20 @@
 import * as React from 'react';
 import Tile from './Tile';
 
+
 export default class Dashboard extends React.Component{
     constructor(){
         super();
     }
-
-
     render(){
         return (
             <div className="row">
 
-
-                <Tile
-                    parentClass="bg-aqua"
-                    phone="213123"
-                    address="Address: Ajax requests"
-                    link="/change-me"
-                    icon="envelope-o"
-                />
                 <Tile
                     parentClass="bg-green"
                     phone="213123"
                     address="Address: Sample controls"
-                    link="/change-me"
+                    link="departments/1"
                     icon="user"
                 />
 

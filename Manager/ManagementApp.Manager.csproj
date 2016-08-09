@@ -59,8 +59,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="InfoModels\DepartmentInfo.cs" />
+    <Compile Include="InfoModels\TicketInfo.cs" />
+    <Compile Include="InputInfoModels\AddTicketInputInfo.cs" />
     <Compile Include="InputInfoModels\UpdateDepartmentInputInfo.cs" />
     <Compile Include="InputInfoModels\AddDepartmentInputInfo.cs" />
+    <Compile Include="InputInfoModels\UpdateTicketInputInfo.cs" />
     <Compile Include="Mapper\MappingConfig.cs" />
     <Compile Include="OperationResult.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -70,6 +73,7 @@
       <DependentUpon>Messages.resx</DependentUpon>
     </Compile>
     <Compile Include="Services\DepartmentService.cs" />
+    <Compile Include="Services\TicketService.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

@@ -58,9 +58,14 @@
     <Compile Include="Migrations\201607281335068_DataModelTest.Designer.cs">
       <DependentUpon>201607281335068_DataModelTest.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201608031233159_CreateTicketTable.cs" />
+    <Compile Include="Migrations\201608031233159_CreateTicketTable.Designer.cs">
+      <DependentUpon>201608031233159_CreateTicketTable.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositories\DepartmentRepository.cs" />
+    <Compile Include="Repositories\TicketRepository.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
@@ -79,6 +84,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201607281335068_DataModelTest.resx">
       <DependentUpon>201607281335068_DataModelTest.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201608031233159_CreateTicketTable.resx">
+      <DependentUpon>201608031233159_CreateTicketTable.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
