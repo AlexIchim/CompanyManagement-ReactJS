@@ -10,7 +10,8 @@ export default class EditDetails extends React.Component {
                     name: '',
                     departmentManagerId: 1
                 },
-                departmentManagerList: []
+                departmentManagerList: [],
+                message: ["", ""]
             };
     }
 
@@ -44,6 +45,36 @@ export default class EditDetails extends React.Component {
         })
     }
 
+    onNameChange(e){
+        const val = e.target.value;
+        if (val === "") {
+            this.state.message[0] = "Name can not be empty!";
+            this.setState({
+                department: {
+                    name : val
+                }
+            });
+        } else {
+            if (val.length > 100) {
+                this.state.message[0] = "Name too long!";
+                this.setState({
+                    department: {
+                        name : val
+                    }
+                });
+            }
+            else {
+                this.state.message[0] = ""
+                this.setState({
+                    department: {
+                        name : val
+                    }
+                });
+            }
+        }
+        console.log(this.state.department.name);
+    }
+
 
     save() {
         let department = this.state.department;
@@ -61,6 +92,10 @@ export default class EditDetails extends React.Component {
             )
         });
 
+        const editButton = this.state.message[0] === "" && this.state.message[1] === "" ? (
+            <button className="btn btn-default" onClick={this.save.bind(this)}>Update</button>
+        ) : (<button className="btn btn-default" disabled>Update</button>);
+
         return (
             <div className="box">
                 <div className="box-header with-border">
@@ -71,7 +106,7 @@ export default class EditDetails extends React.Component {
                         <label>Name:</label>
                         <input name="name" className="form-control" type="text"
                                value={this.state.department.name}
-                               onChange={this.onChangeFunc.bind(this)}/>
+                               onChange={this.onNameChange.bind(this)}/>
                     </div>
                     <div className="form-group">
                         <label>Department Manager:</label>
@@ -85,7 +120,7 @@ export default class EditDetails extends React.Component {
                 </div>
 
                 <div className="box-footer">
-                    <button type="button" className="btn btn-default" onClick={this.save.bind(this)}> Update</button>
+                    {editButton}
                     <button type="button" className="btn btn-default" onClick={this.props.hideFunc}> Cancel</button>
                 </div>
             </div>

@@ -6,8 +6,9 @@ export default class AddDetails extends React.Component {
         super();
         this.state = {
             name: '',
-            departmentManagerId:-1,
-            departmentManagerList: []
+            departmentManagerId: -1,
+            departmentManagerList: [],
+            message: ["Name can not be empty!", "Choose department manager!!"]
         };
     }
 
@@ -24,7 +25,7 @@ export default class AddDetails extends React.Component {
     }
 
     save() {
-        Controller.addDepartment({
+            Controller.addDepartment({
                 name: this.state.name,
                 officeId: this.props.officeId,
                 departmentManagerId: this.state.departmentManagerId
@@ -38,6 +39,11 @@ export default class AddDetails extends React.Component {
                 <option key={element.id} value={element.id}>{element.name}</option>
             )
         });
+
+        const addButton = this.state.message[0] === "" && this.state.message[1] === "" ? (
+            <button className="btn btn-default" onClick={this.save.bind(this)}>Add</button>
+        ) : (<button className="btn btn-default" disabled>Add</button>);
+
 
         console.log(this.state.departmentManagerList);
         return (
@@ -55,16 +61,22 @@ export default class AddDetails extends React.Component {
                         <div className="form-group">
                             <label>Department Manager:</label>
                             <select className="form-control"
-                                    value={this.state.departmentManagerId}
                                     onChange={this.onDepartmentManagerChange.bind(this)}
                             >
+                                <option value="" disabled selected>Select your option</option>
                                 {departmentManagers}
                             </select>
+                        </div>
+                        <div>
+                           {this.state.message[0]}
+                        </div>
+                        <div>
+                           {this.state.message[1]}
                         </div>
                     </div>
 
                     <div className="box-footer">
-                        <button type="button" className="btn btn-default" onClick={this.save.bind(this)}> Add</button>
+                        {addButton}
                         <button type="button" className="btn btn-default" onClick={this.props.hideFunc}> Cancel</button>
                     </div>
             </div>
@@ -72,14 +84,41 @@ export default class AddDetails extends React.Component {
     }
 
     onNameChange(e){
-        this.setState({
-            name: e.target.value
-        });
+        const val = e.target.value;
+        if (val === "") {
+            this.state.message[0] = "Name can not be empty!";
+            this.setState({
+                name: val
+            });
+        } else {
+            if (val.length > 100) {
+                this.setState({
+                    name:val
+                });
+                this.state.message[0] = "Name too long!";
+            }
+            else {
+                this.state.message[0] = ""
+                this.setState({
+                    name: val
+                });
+            }
+        }
     }
 
     onDepartmentManagerChange(e){
-        this.setState({
-            departmentManagerId: e.target.value
-        });
+
+        const val = e.target.value;
+        if (this.state.departmentManagerId == -1) {
+            this.state.message[1] = "Choose department manager!!";
+            this.setState({
+                departmentManagerId: val
+            });
+        } else {
+            this.state.message[1] = "";
+            this.setState({
+                departmentManagerId: e.target.value
+            });
+        }
     }
 }
