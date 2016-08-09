@@ -13,9 +13,21 @@ export default class DepartmentRow extends React.Component<any, any>{
                 <td>{props.node.departmentManagerName}</td>
                 <td>{props.node.employeeCount}</td>
                 <td>{props.node.projectCount}</td>
-                <td><Link to={linkEmployees}>View employees |</Link>
-                    <Link to={linkProjects}> View projects |</Link>
-                    <button onClick={props.onEdit}>Edit</button></td>
+                <td>
+                <Link to={linkEmployees}>
+                    <button className="btn btn-md btn-default">
+                        View employees
+                    </button>
+                </Link>
+                <Link to={linkProjects}>
+                    <button className="btn btn-md btn-default">
+                        View projects
+                    </button>
+                </Link>
+                    <button className="btn btn-md btn-default" onClick={props.onEdit}>
+                        Edit
+                    </button>
+                </td>
             </tr>
         )
     }

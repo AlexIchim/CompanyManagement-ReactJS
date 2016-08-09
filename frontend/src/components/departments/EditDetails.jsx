@@ -5,12 +5,13 @@ export default class EditDetails extends React.Component {
     constructor(){
         super();
         this.state = {
-            department: {
-                id: '-1',
-                name: '',
-                departmentManagerId: 1
-            }
-        };
+                department: {
+                    id: '-1',
+                    name: '',
+                    departmentManagerId: 1
+                },
+                departmentManagerList: []
+            };
     }
 
     componentDidMount(){
@@ -25,12 +26,11 @@ export default class EditDetails extends React.Component {
             department: department
         });
 
-        Controller.getDepartmentsManagers(null,
+        Controller.getDepartmentsManagers(
             true,
             (data) => {
                 this.setState({
-                    departmentManagerId: data[0].id,
-                    managers: data
+                    departmentManagerList: data
                 });
             }
         );
@@ -54,7 +54,8 @@ export default class EditDetails extends React.Component {
     }
 
     render () {
-        const departmentManagers = this.props.managers.map((element, index) => {
+
+        const departmentManagers = this.state.departmentManagerList.map((element, index) => {
             return (
                 <option key={element.id} value={element.id}>{element.name}</option>
             )

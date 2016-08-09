@@ -6,17 +6,18 @@ export default class AddDetails extends React.Component {
         super();
         this.state = {
             name: '',
-            departmentManagerId:-1
+            departmentManagerId:-1,
+            departmentManagerList: []
         };
     }
 
     componentDidMount(){
-        Controller.getDepartmentsManagers(null,
+        Controller.getDepartmentsManagers(
             true,
             (data) => {
                 this.setState({
                     departmentManagerId: data[0].id,
-                    managers: data
+                    departmentManagerList: data
                 });
             }
         );
@@ -32,12 +33,13 @@ export default class AddDetails extends React.Component {
 
     render () {
 
-        const departmentManagers = this.props.managers.map((element, index) => {
+        const departmentManagers = this.state.departmentManagerList.map((element, index) => {
             return (
                 <option key={element.id} value={element.id}>{element.name}</option>
             )
         });
 
+        console.log(this.state.departmentManagerList);
         return (
             <div className="box">
                 <div className="box-header with-border">
