@@ -159,16 +159,18 @@ namespace Manager.Services
         }
 
 
-        public IEnumerable<String> GetStatusDescription()
+        public IEnumerable<StatusTypeInfo> GetStatusDescription()
         {
-            List<String> myList = new List<string>();
             var values = Enum.GetValues(typeof(Status));
-            foreach (Enum elem in values)
+            
+            foreach (Status value in values)
             {
-                var descr = elem.GetDescriptionFromEnumValue();
-                myList.Add(descr);
+                yield return new StatusTypeInfo {Index = (int) value, Description = value.GetDescriptionFromEnumValue()};
             }
-            return myList.AsEnumerable();
+
+            //return from Status value in values
+                //select new StatusTypeInfo {Index = (int)value, Description = value.GetDescriptionFromEnumValue()};
+            
         }
 
 

@@ -13,8 +13,8 @@ using NUnit.Framework;
 
 namespace ManagementApp.Manager.Tests
 {
-    [TestFixture]
-    public class DepartmentServiceTests
+    // [TestFixture]
+    /* public class DepartmentServiceTests
     {
         private DepartmentService _departmentService;
         private Mock<IDepartmentRepository> _departmentRepositoryMock;
@@ -459,4 +459,5 @@ namespace ManagementApp.Manager.Tests
             };
         }
     }
+}*/
 }
