@@ -61,7 +61,23 @@ namespace DataAccess.Migrations
                 new Project() { Id = 3, Name = "HR Application", Status = "In progress", Duration = 5, DepartmentId = 1 },
                 new Project() { Id = 4, Name = "Wedding planner", Status = "On hold", Duration = null, DepartmentId = 2 },
                 new Project() { Id = 5, Name = "Todo MVC", Status = "On hold", Duration = 1, DepartmentId = 2 },
-                new Project() { Id = 6, Name = "Todo without TypeScript", Status = "Done", Duration = 1, DepartmentId = 3 }
+                new Project() { Id = 6, Name = "Todo without TypeScript", Status = "Done", Duration = 1, DepartmentId = 3 },
+
+                new Project() { Id = 10, Name = ".NET Project 1", Status = "In progress", Duration = null, DepartmentId = 1 },
+                new Project() { Id = 11, Name = ".NET Project 2", Status = "In progress", Duration = null, DepartmentId = 1 },
+                new Project() { Id = 12, Name = ".NET Project 3", Status = "In progress", Duration = null, DepartmentId = 1 },
+                new Project() { Id = 13, Name = ".NET Project 4", Status = "In progress", Duration = null, DepartmentId = 1 },
+                new Project() { Id = 14, Name = ".NET Project 5", Status = "In progress", Duration = null, DepartmentId = 1 },
+                new Project() { Id = 15, Name = ".NET Project 6", Status = "In progress", Duration = null, DepartmentId = 1 },
+                new Project() { Id = 16, Name = ".NET Project 7", Status = "In progress", Duration = null, DepartmentId = 1 },
+                new Project() { Id = 17, Name = ".NET Project 8", Status = "In progress", Duration = null, DepartmentId = 1 },
+                new Project() { Id = 18, Name = ".NET Project 9", Status = "In progress", Duration = null, DepartmentId = 1 },
+                new Project() { Id = 19, Name = ".NET Project 10", Status = "In progress", Duration = null, DepartmentId = 1 },
+                new Project() { Id = 20, Name = ".NET Project 11", Status = "In progress", Duration = null, DepartmentId = 1 },
+                new Project() { Id = 21, Name = ".NET Project 12", Status = "In progress", Duration = null, DepartmentId = 1 },
+                new Project() { Id = 22, Name = ".NET Project 13", Status = "In progress", Duration = null, DepartmentId = 1 },
+                new Project() { Id = 23, Name = ".NET Project 14", Status = "In progress", Duration = null, DepartmentId = 1 },
+                new Project() { Id = 24, Name = ".NET Project 15", Status = "In progress", Duration = null, DepartmentId = 1 }
             );
 
             context.Positions.AddOrUpdate(

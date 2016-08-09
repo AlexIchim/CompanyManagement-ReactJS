@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import {Link} from 'react-router';
 import * as $ from 'jquery';
 import config from '../../api/config.js';
@@ -9,19 +9,24 @@ import EditDetails from './EditDetails';
 import AddProject from './AddProject';
 import Item from './Item';
 import addProject from '../../api/controller/addProject';
-import getAllProjects from '../../api/controller/getAllProjects';
-import deleteProject from '../../api/controller/deleteProject';
 
-export default class Projects extends Component{
+import PaginatedTable from '../layout/PaginatedTable';
+
+import * as Controller from '../../api/controller';
+
+export default class Projects extends React.Component{
     constructor () {
         super();
         this.state = {
             projects: [],
             officeId : null,
             departmentName : '',
-            departmentId : null,
             showModalTemplate : null,
-            modalProject : {}
+            modalProject : {},
+
+            projectCount: 0,
+            pageSize: 5,
+            pageNumber: 1
         }
     }
 
@@ -31,17 +36,13 @@ export default class Projects extends Component{
     }
 
     deleteProject(id){
-       deleteProject(
+       Controller.deleteProject(
            id,
            true,
            (data) => {
-               this.fetchData();
+               this.callApi();
            }
        );
-    }
-
-    fetchData(){
-        this.callApi();
     }
 
     addProject(){
@@ -68,7 +69,6 @@ export default class Projects extends Component{
         this.callApi();
     }
 
-    
     componentWillReceiveProps(newProps){
         this.props = newProps;
         this.callApi();
@@ -78,8 +78,10 @@ export default class Projects extends Component{
         Command.setCurrentOffice(this.props.params.officeId);
         Command.setCurrentDepartment(this.props.params.departmentId);
 
-        getAllProjects(
+        Controller.getProjectsByDepartmentId(
             this.props.params.departmentId,
+            this.state.pageSize,
+            this.state.pageNumber,
             true,
             (data) => {
                 this.setState({
@@ -87,29 +89,42 @@ export default class Projects extends Component{
                 });
         });
 
-        $.ajax({
-            method: 'GET',
-            url: config.baseUrl + 'offices/' + this.props.params['officeId'],
-            success: function(data) {
+        Controller.getProjectCountByDepartmentId(
+            this.props.params.departmentId,
+            true,
+            (data) => {
                 this.setState({
-                    officeId : data.id
-                })
-            }.bind(this)
+                    projectCount : data
+                });
         });
 
-        $.ajax({
-            method: 'GET',
-            url: config.baseUrl + 'departments/' + this.props.params['departmentId'],
-            success: function(data) {
-                
+        Controller.getDepartmentById(
+            this.props.params.departmentId,
+            true,
+            (data) => {
                 this.setState({
-                    departmentName : data.name
-                })
-            }.bind(this)
-        });
+                    departmentName: data.name
+                });
+            }
+        );
     }
 
     
+    paginationChangeHandler(pageSize, pageNumber){
+        Controller.getProjectsByDepartmentId(
+            this.props.params.departmentId,
+            pageSize,
+            pageNumber,
+            true,
+            (data) => {
+                this.setState({
+                    projects: data,
+                    pageSize: pageSize,
+                    pageNumber: pageNumber
+                });
+            }
+        );
+    }
 
     render() {
         
@@ -134,7 +149,7 @@ export default class Projects extends Component{
                                             hideFunc={hideFunc} 
                                             updateFunc={function(){
                                                 hideFunc();
-                                                this.fetchData();
+                                                this.callApi();
                                             }.bind(this)}
                                             departmentId={this.props.params['departmentId']}
                                             projectId={this.props.params['projectId']}
@@ -144,7 +159,7 @@ export default class Projects extends Component{
                                             hideFunc={hideFunc}
                                             saveFunc={function(){
                                                 hideFunc();
-                                                this.fetchData();
+                                                this.callApi();
                                             }.bind(this)}
                                             departmentId={this.props.params['departmentId']}
                                         />;
@@ -155,36 +170,37 @@ export default class Projects extends Component{
             />
         ) : null;
 
+        const header = (
+            <thead>
+                <tr>
+                    <th className="col-md-2">Project Name</th>
+                    <th className="col-md-2">Team Members</th>
+                    <th className="col-md-2">Duration</th>
+                    <th className="col-md-2">Status</th>
+                    <th className="col-md-2">Actions</th>
+                </tr>
+            </thead>
+        );
+
         return (
             <div>
                 <div>
-                    <h1><b>{this.state.departmentName}</b> Department Projects</h1>
+                    <h1>{this.state.departmentName} Department Projects</h1>
                     {modalTemplate}
                     <button className="btn btn-md btn-info" onClick={this.addProject.bind(this)}>
                         <span className="glyphicon glyphicon-plus-sign"></span>
                         &nbsp;Add new project
                     </button>
 
-                    <table className="table table-condensed" id="table">
-                        <thead>
-                            <tr>
-                                <th className="col-md-2">Project Name</th>
-                                <th className="col-md-2">Team Members</th>
-                                <th className="col-md-2">Duration</th>
-                                <th className="col-md-2">Status</th>
-                                <th className="col-md-2">Actions</th>
-                            </tr>
-                        </thead>
+                    <PaginatedTable 
+                        header={header} 
+                        listOfItems={items}
+                        totalCount={this.state.projectCount}
+                        pageSize={this.state.pageSize}
+                        selectedPage={this.state.pageNumber}
+                        changeHandler={this.paginationChangeHandler.bind(this)}
+                    />
 
-                        <tbody>
-
-                        {items}
-
-                        </tbody>
-                    </table>
-                </div>
-                <div>
-                    
                 </div>
             </div>
         );

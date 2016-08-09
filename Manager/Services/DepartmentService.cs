@@ -45,6 +45,11 @@ namespace Manager.Services
             return projectInfos;
         }
 
+        public int GetProjectCountByDepartmentId(int id, int? pageSize = null, int? pageNumber = null)
+        {
+            return _departmentRepository.GetProjectCountByDepartmentId(id);
+        }
+
         public IEnumerable<EmployeeInfo> GetEmployeesByDepartmentId(int id, int? pageSize = null, int? pageNumber = null)
         {
             var employees = _departmentRepository.GetEmployeesByDepartmentId(id, pageSize, pageNumber);

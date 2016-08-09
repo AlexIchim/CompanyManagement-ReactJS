@@ -8,6 +8,7 @@ namespace Contracts
         IEnumerable<Department> GetAll();
         Department GetById(int id);
         Department GetByName(string name, int officeId);
+        int GetProjectCountByDepartmentId(int id);
         IEnumerable<Project> GetProjectsByDepartmentId(int id, int? pageSize = null, int? pageNumber = null);
         IEnumerable<Employee> GetEmployeesByDepartmentId(int id, int? pageSize = null, int? pageNumber = null);
         int GetEmployeeCountByDepartmentId(int id);
