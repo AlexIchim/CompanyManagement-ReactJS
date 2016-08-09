@@ -8,6 +8,6 @@ namespace Manager.InfoModels
         public string Name { get; set; }
         public int NrMembers { get; set; }
         public string Duration { get; set; }
-        public Status Status { get; set; }
+        public string Status { get; set; }
     }
 }

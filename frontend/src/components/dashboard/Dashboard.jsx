@@ -24,6 +24,10 @@ export default class Dashboard extends React.Component{
         
     }
 
+    componentWillUnmount(){
+        this.subscription.dispose();
+    }
+    
     onContextChange(cursor){
         this.setState({
             formToggle: false
@@ -55,11 +59,11 @@ export default class Dashboard extends React.Component{
         if(this.state.formToggle){
             if(Accessors.model(Context.cursor)){
                 form=<Form onCancelClick={this.toggleModal.bind(this)}
-                           FormAction={Controller.Update}
+                           FormAction={() => { Controller.Update() }}
                            Title="Edit Office"/>;
             }else{
                 form=<Form onCancelClick={this.toggleModal.bind(this)}
-                           FormAction={Controller.Add}
+                           FormAction={() => { Controller.Add() }}
                            Title="Add Office"/>;
             }
         }

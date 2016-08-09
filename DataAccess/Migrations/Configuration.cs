@@ -4,7 +4,6 @@ using Domain.Models;
 namespace DataAccess.Migrations {
     using System;
     using System.Data.Entity;
-    using System.Data.Entity;
     using System.Data.Entity.Migrations;
     using System.Linq;
 
@@ -15,106 +14,117 @@ namespace DataAccess.Migrations {
 
         protected override void Seed(DataAccess.Context.DbContext context) {
 
-            Employee employee = new Employee() {
-                Name = "Name1",
-                Address = "Address1",
-                EmploymentDate = new DateTime(2016, 10, 10),
-                //ReleasedDate = new DateTime(2016, 11, 11),
-                JobType = JobTypes.fullTime,
-                Position = Position.Developer
-            };
-
-            Employee employee2 = new Employee() {
-                Name = "Name2",
-                Address = "Address2",
-                EmploymentDate = new DateTime(2015, 10, 10),
-                //ReleasedDate = new DateTime(2016, 11, 11),
-                JobType = JobTypes.fullTime,
-                Position = Position.Developer
-            };
-
-            Employee employee3 = new Employee() {
-                Name = "Name3",
-                Address = "Address3",
-                EmploymentDate = new DateTime(2015, 10, 10),
-                //ReleasedDate = new DateTime(2016, 11, 11),
-                JobType = JobTypes.fullTime,
-                Position = Position.Developer
-            };
-
-            ICollection<Employee> employeesList1 = new List<Employee>();
-            employeesList1.Add(employee);
-            employeesList1.Add(employee2);
-            ICollection<Employee> employeesList2 = new List<Employee>();
-            employeesList2.Add(employee3);
-
-            Office office = new Office() {
+            Office office1 = new Office() {
                 Name = "Office1",
                 Address = "Address1",
-                Phone = "0725658985",
+                Phone = "Phone1",
                 Image = new byte[50]
             };
 
             Office office2 = new Office() {
                 Name = "Office2",
                 Address = "Address2",
-                Phone = "0725658985",
+                Phone = "Phone2",
                 Image = new byte[50],
-
             };
 
             Office office3 = new Office() {
                 Name = "Office3",
-                Address = "Address2",
-                Phone = "0725658985",
+                Address = "Address3",
+                Phone = "Phone3",
                 Image = new byte[50],
-
             };
 
-            Department department = new Department() {
-                Name = "Dept1",
-                //Employees = employeesList1,
-                DepartmentManager = employee,
-                Office = office
+
+            Employee departmentManager = new Employee() {
+                Name = "DepartmentManager",
+                Address = "DepartmentManagerAddress",
+                EmploymentDate = new DateTime(2016, 1, 1),
+                JobType = JobTypes.fullTime,
+                Position = Position.DepartmentManager
+            };
+
+            Department department1 = new Department() {
+                Name = "Department1",
+                DepartmentManager = departmentManager,
+                Office = office1
             };
 
             Department department2 = new Department() {
-                Name = "Dept2",
-                //Employees = employeesList2,
-                DepartmentManager = employee,
-                Office = office
+                Name = "Department2",
+                DepartmentManager = departmentManager,
+                Office = office1
             };
 
             Department department3 = new Department() {
-                Name = "Dept3",
-                DepartmentManager = employee2,
-                Office = office
+                Name = "Department3",
+                DepartmentManager = departmentManager,
+                Office = office2
             };
 
-            Project project = new Project() {
+
+            Employee employee2 = new Employee() {
+                Name = "Employee2",
+                Address = "Address2",
+                EmploymentDate = new DateTime(2016, 2, 2),
+                Department = department1,
+                JobType = JobTypes.fullTime,
+                Position = Position.Developer
+            };
+
+            Employee employee3 = new Employee() {
+                Name = "Employee3",
+                Address = "Address3",
+                EmploymentDate = new DateTime(2016, 3, 3),
+                Department = department1,
+                JobType = JobTypes.fullTime,
+                Position = Position.QA
+            };
+
+            Employee employee4 = new Employee() {
+                Name = "Employee4",
+                Address = "Address4",
+                EmploymentDate = new DateTime(2016, 4, 4),
+                Department = department1,
+                JobType = JobTypes.fullTime,
+                Position = Position.Developer
+            };
+            Employee employee5 = new Employee()
+            {
+                Name = "Employee4",
+                Address = "Address4",
+                EmploymentDate = new DateTime(2016, 4, 4),
+                Department = department1,
+                JobType = JobTypes.fullTime,
+                Position = Position.Developer
+            };
+
+
+            Project project1 = new Project() {
                 Name = "Project1",
                 Duration = "variable",
                 Status = Status.NotStartedYet,
-                Department = department
+                Department = department1
             };
 
             Project project2 = new Project() {
                 Name = "Project2",
                 Duration = "3 months",
                 Status = Status.NotStartedYet,
-                Department = department
+                Department = department1
             };
 
             Project project3 = new Project() {
                 Name = "Project3",
                 Duration = "4 months",
                 Status = Status.InProgress,
-                Department = department3
+                Department = department2
             };
 
-            Assignment assignment = new Assignment() {
-                Employee = employee,
-                Project = project,
+
+            Assignment assignment1 = new Assignment() {
+                Employee = employee2,
+                Project = project1,
                 Allocation = 50
             };
 
@@ -132,52 +142,44 @@ namespace DataAccess.Migrations {
 
             Assignment assignment4 = new Assignment()
             {
-                Employee = employee2,
-                Project = project,
+                Employee = employee4,
+                Project = project1,
                 Allocation = 30
             };
 
-            Employee employee4 = new Employee() {
-                Name = "Name4",
-                Address = "Address4",
-                EmploymentDate = new DateTime(2018, 10, 10),
-                //ReleasedDate = new DateTime(2016, 11, 11),
-                Department = department2,
-                JobType = JobTypes.fullTime,
-                Position = Position.Developer
-            };
+
+            context.Offices.AddOrUpdate(
+                p => p.Id,
+                office1,
+                office2,
+                office3
+                );
 
             context.Employees.AddOrUpdate(
                 p => p.Id,
-                employee,
+                departmentManager,
                 employee2,
                 employee3,
                 employee4
                 );
 
-            context.Offices.AddOrUpdate(
-                p => p.Id,
-                office,
-                office2,
-                office3
-                );
             context.Departments.AddOrUpdate(
                 p => p.Id,
-                department,
+                department1,
                 department2,
                 department3
                 );
 
             context.Projects.AddOrUpdate(
                 p => p.Id,
-                project,
+                project1,
                 project2,
                 project3
                 );
 
             context.Assignments.AddOrUpdate(
                 p => new { p.EmployeeId, p.ProjectId },
-                assignment,
+                assignment1,
                 assignment2,
                 assignment3,
                 assignment4

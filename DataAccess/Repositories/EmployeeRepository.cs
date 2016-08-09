@@ -8,7 +8,7 @@ using Domain.Models;
 
 namespace DataAccess.Repositories
 {
-    public class EmployeeRepository: IEmployeeRepository
+    public class EmployeeRepository : IEmployeeRepository
     {
         private readonly DbContext _context;
 
@@ -20,6 +20,11 @@ namespace DataAccess.Repositories
         public IEnumerable<Employee> GetAll()
         {
             return _context.Employees.ToArray();
+        }
+
+        public IEnumerable<Employee> GetDepartmentManagers()
+        {
+            return _context.Employees.Where(e => e.Position == Position.DepartmentManager).ToArray();
         }
 
         public Employee GetById(int id)

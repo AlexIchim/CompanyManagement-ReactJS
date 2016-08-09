@@ -11,7 +11,7 @@ class Tile extends React.Component<any, any>{
     render(){
         const props = this.props;
         const parentClass = classNames("info-box-icon", props['parentClass']);
-        const icon = "data:image/jpg;base64,"+props['icon'];
+        const icon = props['icon'];
         return (
             <div className="col-md-6 col-sm-6 col-xs-12">
             <div className=" info-box-custom info-box">
@@ -35,7 +35,7 @@ class Tile extends React.Component<any, any>{
                     </div>
                 </div>
             </div>
-            
+
         )
     }
 }

@@ -1,10 +1,14 @@
-﻿using System.Web.Http;
+﻿using System;
+using System.Runtime.InteropServices;
+using System.Web.Http;
+using System.Web.Http.Cors;
 using Manager.InputInfoModels;
 using Manager.Services;
 
 namespace ManagementApp.Controllers
 {
     [RoutePrefix("api/project")]
+    [EnableCors("*","*", "*")]
     public class ProjectController : ApiController
     {
         private readonly ProjectService _projectService;
@@ -74,11 +78,11 @@ namespace ManagementApp.Controllers
             return Json(result);
         }
 
-        [Route("members/{projectId}")]
+        [Route("members/{projectId}/{pageSize}/{pageNumber}")]
         [HttpGet]
-        public IHttpActionResult GetMembersFromProject( int projectId)
+        public IHttpActionResult GetMembersFromProject(int projectId, int pageSize, int pageNumber, string role="")
         {
-            var result = _projectService.GetMembersFromProject(projectId);
+            var result = _projectService.GetMembersFromProject(projectId, pageSize, pageNumber, role);
             return Json(result);
         }
 
@@ -96,6 +100,16 @@ namespace ManagementApp.Controllers
             var result = _projectService.GetNrTeamMembers(projectId);
             return Json(result);
         }
-       
+
+
+        [Route("statusDescriptions")]
+        [HttpGet]
+        public IHttpActionResult GetStatusDescription()
+        {
+            var result = _projectService.GetStatusDescription();
+            return Json(result);
+        }
+
+
     }
 }

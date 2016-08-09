@@ -13,8 +13,8 @@ using NUnit.Framework;
 
 namespace ManagementApp.Manager.Tests
 {
-    [TestFixture]
-    public class DepartmentServiceTests
+    // [TestFixture]
+     public class DepartmentServiceTests
     {
         private DepartmentService _departmentService;
         private Mock<IDepartmentRepository> _departmentRepositoryMock;
@@ -115,7 +115,7 @@ namespace ManagementApp.Manager.Tests
         }
 
         [Test]
-        public void GetAllMembersOfADepartment_ReturnsDepartmentMembers()
+        public void GetMembersOfDepartment_ReturnsDepartmentMembers()
         {
             //Arrange
             var office = CreateOffice("Office1", "Address1", "Phone1", 1);
@@ -132,33 +132,33 @@ namespace ManagementApp.Manager.Tests
 
             var employeesInfo = new List<EmployeeInfo>
             {
-                CreateEmployeeInfo(1, "Employee1"),
-                CreateEmployeeInfo(2, "Employee2")
+                CreateEmployeeInfo(1, "Employee1", "fullTime", "Developer"),
+                CreateEmployeeInfo(2, "Employee2", "fullTime", "Developer")
             };
 
             _mapperMock.Setup(m => m.Map<IEnumerable<EmployeeInfo>>(employees)).Returns(employeesInfo);
-            _departmentRepositoryMock.Setup(m => m.GetAllMembersOfADepartment(1)).Returns(employees);
+            _departmentRepositoryMock.Setup(m => m.GetMembersOfDepartment(1, 1, 1, "", 2, 0, null)).Returns(employees);
 
             //Act
-            var result = _departmentService.GetAllMembersOfADepartment(1);
+            var result = _departmentService.GetMembersOfDepartment(1, 1, 1, jobType:2, position:0);
 
             //Assert
             CollectionAssert.AreEqual(employeesInfo, result);
         }
 
         [Test]
-        public void GetAllMembersOfADepartment_CallsGetAllMembersOfADepartmentFromrepository() {
+        public void GetMembersOfDepartment_CallsGetMembersOfDepartmentFromRepository() {
             //Arrange
 
             //Act
-            _departmentService.GetAllMembersOfADepartment(1);
+            _departmentService.GetMembersOfDepartment(1, 1, 1, name:"Employee", jobType:1, position:1);
 
             //Assert
-            _departmentRepositoryMock.Verify(x => x.GetAllMembersOfADepartment(1), Times.Once);
+            _departmentRepositoryMock.Verify(x => x.GetMembersOfDepartment(1, 1, 1, "Employee", 1, 1, null), Times.Once);
         }
 
         [Test]
-        public void GetAllProjectsOfADepartment_ReturnsDepartmentProjects() {
+        public void GetProjectsOfDepartment_ReturnsDepartmentProjects() {
             //Arrange
             var office = CreateOffice("Office1", "Address1", "Phone1", 1);
 
@@ -181,29 +181,29 @@ namespace ManagementApp.Manager.Tests
 
             var projectsInfo = new List<ProjectInfo>
             {
-                CreateProjectInfo(1, "Project1"),
-                CreateProjectInfo(2, "Project2")
+                CreateProjectInfo(1, "Project1", "NotStartedYet"),
+                CreateProjectInfo(2, "Project2", "NotStartedYet")
             };
 
             _mapperMock.Setup(m => m.Map<IEnumerable<ProjectInfo>>(projects)).Returns(projectsInfo);
-            _departmentRepositoryMock.Setup(m => m.GetAllProjectsOfADepartment(1)).Returns(projects);
+            _departmentRepositoryMock.Setup(m => m.GetProjectsOfDepartment(1, 1, 1, 0)).Returns(projects);
 
             //Act
-            var result = _departmentService.GetAllProjectsOfADepartment(1);
+            var result = _departmentService.GetProjectsOfDepartment(1, 1, 1, status:0);
 
             //Assert
             CollectionAssert.AreEqual(projectsInfo, result);
         }
 
         [Test]
-        public void GetAllProjectsOfADepartment_CallsGetAllProjectsOfADepartmentFromrepository() {
+        public void GetProjectsOfDepartment_CallsGetAllProjectsOfADepartmentFromRepository() {
             //Arrange
 
             //Act
-            _departmentService.GetAllProjectsOfADepartment(1);
+            _departmentService.GetProjectsOfDepartment(1, 1, 1, status:0);
 
             //Assert
-            _departmentRepositoryMock.Verify(x => x.GetAllProjectsOfADepartment(1), Times.Once);
+            _departmentRepositoryMock.Verify(x => x.GetProjectsOfDepartment(1, 1, 1, 0), Times.Once);
         }
 
 
@@ -442,17 +442,20 @@ namespace ManagementApp.Manager.Tests
             };
         }
 
-        private EmployeeInfo CreateEmployeeInfo(int id, string name) {
+        private EmployeeInfo CreateEmployeeInfo(int id, string name, string jobType, string position) {
             return new EmployeeInfo {
                 Id = id,
-                Name = name
+                Name = name,
+                JobType = jobType,
+                Position = position
             };
         }
 
-        private ProjectInfo CreateProjectInfo(int id, string name) {
+        private ProjectInfo CreateProjectInfo(int id, string name, string status) {
             return new ProjectInfo {
                 Id = id,
-                Name = name
+                Name = name,
+                Status = status
             };
         }
     }

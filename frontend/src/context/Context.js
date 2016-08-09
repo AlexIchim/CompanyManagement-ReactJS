@@ -7,7 +7,7 @@ const initialState = {
     user : mock,
     items: null,
     model:null,
-    formToggle: false
+    dropdownItems: null
 };
 
 class Context{
@@ -24,7 +24,7 @@ class Context{
     }
 
     subscribe(handleFunc){
-        this.subject.subscribe(handleFunc);
+        return this.subject.subscribe(handleFunc);
     }
 
 }

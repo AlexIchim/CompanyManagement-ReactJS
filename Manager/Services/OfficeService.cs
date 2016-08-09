@@ -36,15 +36,26 @@ namespace Manager.Services
             return officeInfos;
         }
 
-        public IEnumerable<DepartmentInfo> GetAllDepartmentsOfAnOffice(int officeId) {
-            var departments = _officeRepository.GetAllDepartmentsOfAnOffice(officeId);
+        public IEnumerable<DepartmentInfo> GetAllDepartmentsOfAnOffice(int officeId, int pageSize, int pageNumber) {
+            var departments = _officeRepository.GetAllDepartmentsOfAnOffice(officeId, pageSize, pageNumber);
             var departmentsInfos = _mapper.Map<IEnumerable<DepartmentInfo>>(departments);
 
             return departmentsInfos;
         }
 
+        public IEnumerable<EmployeeInfo> GetAllAvailableEmployeesOfAnOffice(int officeId, int pageSize, int pageNumber, int? department = null, int? position = null) {
+            var employees = _officeRepository.GetAllAvailableEmployeesOfAnOffice(officeId, pageSize, pageNumber, department, position);
+            var employeesInfos = _mapper.Map<IEnumerable<EmployeeInfo>>(employees);
+
+            return employeesInfos;
+        }
+
         public OperationResult Add(AddOfficeInputInfo inputInfo)
         {
+            if (inputInfo == null)
+            {
+                return new OperationResult(false, Messages.ErrorWhileAddingProject);
+            }
             var validationResult =_addOfficeValidator.Validate(inputInfo);
             if (!validationResult.IsValid)
             {
@@ -59,6 +70,10 @@ namespace Manager.Services
 
         public OperationResult Update(UpdateOfficeInputInfo inputInfo)
         {
+            if (inputInfo == null)
+            {
+                return new OperationResult(false, Messages.ErrorWhileUpdatingOffice);
+            }
             var validationResult = _updateOfficeValidator.Validate(inputInfo);
             if (!validationResult.IsValid)
             {
@@ -72,10 +87,14 @@ namespace Manager.Services
                 return new OperationResult(false, Messages.ErrorWhileUpdatingOffice);
             }
 
-            office.Name = inputInfo.Name;
-            office.Address = inputInfo.Address;
-            office.Phone = inputInfo.Phone;
-            office.Image = inputInfo.Image;
+            var updatedOffice = _mapper.Map<Office>(inputInfo);
+
+            office.Name = updatedOffice.Name;
+            office.Address = updatedOffice.Address;
+            office.Image = updatedOffice.Image;
+            office.Phone = updatedOffice.Phone;
+
+            updatedOffice.Id = office.Id;
 
             _officeRepository.Save();
 

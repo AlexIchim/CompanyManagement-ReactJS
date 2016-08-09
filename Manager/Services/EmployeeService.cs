@@ -6,6 +6,7 @@ using Domain.Models;
 using Manager.InfoModels;
 using Manager.InputInfoModels;
 using Manager.Validators;
+using Domain.Extensions;
 
 namespace Manager.Services
 {
@@ -28,6 +29,13 @@ namespace Manager.Services
         public IEnumerable<EmployeeInfo> GetAll()
         {
             var employees = _employeeRepository.GetAll();
+            var employeeInfos = _mapper.Map<IEnumerable<EmployeeInfo>>(employees);
+
+            return employeeInfos;
+        }
+
+        public IEnumerable<EmployeeInfo> GetDepartmentManagers() {
+            var employees = _employeeRepository.GetDepartmentManagers();
             var employeeInfos = _mapper.Map<IEnumerable<EmployeeInfo>>(employees);
 
             return employeeInfos;
@@ -87,19 +95,6 @@ namespace Manager.Services
             return new OperationResult(true, Messages.SuccessfullyDeletedEmployee);
         }
 
-        public int GetRemainingAllocation(int employeeId)
-        {
-            var employee = _employeeRepository.GetById(employeeId);
-            int totalAllocation = 0;
-            foreach (var assignment in employee.Assignments)
-            {
-                totalAllocation += assignment.Allocation;
-            }
-            int remainingAllocation = 100 - totalAllocation;
-
-            return remainingAllocation;
-        }
-
         public IEnumerable<ProjectInfo> GetProjectsOfEmployee(int employeeId)
         {
             var employee = _employeeRepository.GetById(employeeId);
@@ -112,6 +107,28 @@ namespace Manager.Services
             var projectsInfos = _mapper.Map<IEnumerable<ProjectInfo>>(projects);
 
             return projectsInfos;
+        }
+
+        public IEnumerable<PositionTypeInfo> GetPositions()
+        {
+            var values = Enum.GetValues(typeof(Position));
+
+            foreach (Position position in values)
+            {
+                yield return
+                    new PositionTypeInfo {Index = (int) position, Description = position.GetDescriptionFromEnumValue()};
+            }
+        }
+
+        public IEnumerable<JobTypeInfo> GetJobTypes()
+        {
+            var values = Enum.GetValues(typeof(JobTypes));
+
+            foreach (JobTypes jobType in values)
+            {
+                yield return
+                    new JobTypeInfo() { Index = (int)jobType, Description = jobType.GetDescriptionFromEnumValue() };
+            }
         }
 
     }
