@@ -1,10 +1,7 @@
 import * as React from 'react'
-import * as $ from 'jquery'
 import {Link} from 'react-router';
-import Command from '../Command';
 
 const ProjectItem = (props) => {
-
 
     const id = props.node.Id;
     const name = props.node.Name;
@@ -18,20 +15,11 @@ const ProjectItem = (props) => {
     return (
         <tr>
 
+            <td>{name}</td>
+            <td>{nrMembers}</td>
+            <td>{duration}</td>
+            <td>{status}</td>
             <td>
-                {name}
-            </td>
-            <td>
-                {nrMembers}
-            </td>
-            <td>
-                {duration}
-            </td>
-            <td>
-                {status}
-            </td>
-            <td>
-
                 <tr>
                     <td>
                         <Link to={link} className="small-box-footer">
@@ -46,10 +34,8 @@ const ProjectItem = (props) => {
                 <button className="btn btn-danger margin-top" onClick={deleteF}><i className="fa fa-trash" ></i>
                     Delete
                 </button></td>
-                        </tr>
-
+                </tr>
             </td>
-
         </tr>
     )
 }

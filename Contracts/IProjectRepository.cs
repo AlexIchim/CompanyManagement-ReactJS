@@ -18,11 +18,9 @@ namespace Contracts
         void Save();
         IEnumerable<Project> GetAll();
         Project GetById(int id);
-        IEnumerable<Assignment> GetMembersFromProject(int projectId);
+        IEnumerable<Assignment> GetMembersFromProject(int projectId, int pageSize, int pageNumber, string role="");
         int GetAllocationOfEmployeeFromProject(int projectId, int employeeId);
         int GetNrTeamMembers(int projectId);
-
-        IEnumerable<Assignment> FilterProjectMemberByRole(string role, int projectId);
 
     }
 }

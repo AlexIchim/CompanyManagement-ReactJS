@@ -1,94 +1,87 @@
-import config from '../helper';
 import * as React from 'react'
-import * as $ from 'jquery'
 import ProjectItem from './ProjectItem.jsx'
-import Form from './Form.jsx';
+import Form from './form/Form.jsx';
 import Accessors from '../../context/Accessors';
 import Context from '../../context/Context';
-import Command from '../Command';
-import MyController from './Controller/Controller'
-import EditForm from './EditForm';
+import MyController from './controller/Controller'
+import EditForm from './form/EditForm';
+
 
 export default class Project extends React.Component{
     constructor(){
         super();
-        this.setState({
-            form: false
-        })
     }
     componentWillMount(){
-        Context.subscribe(this.onContextChange.bind(this));
+        this.setState({
+            formToggle:false
+        });
+        this.subscription = Context.subscribe(this.onContextChange.bind(this));
         //const projectId = this.props.routeParams['projectId'];
+        Context.cursor.set("items",[]);
+        MyController.GetAllProjects();
 
-        MyController.getAllProjects();
+    }
+
+    componentWillUnmount(){
+        this.subscription.dispose();
     }
 
     onContextChange(cursor){
-        console.log('projects:', cursor.get('items'));
         this.setState({
-            projects: cursor.get('items')
-        });
-    }
-
-    closeForm(){
-        this.setState({
-            form: !this.state.form
-        });
-    }
-    showForm(){
-        this.setState({
-            form: !this.state.form
+            items: Accessors.items(Context.cursor),
+            formToggle: false
         });
     }
 
     onAddButtonClick(){
-        Context.cursor.set('formToggle',true);
+        Context.cursor.set('model',null);
+        this.setState({
+            formToggle: true
+        });
     }
 
     onEditButtonClick(project){
-        Context.cursor.set('formToggle', true);
         Context.cursor.set('model', project)
+        this.setState({
+            formToggle: true
+        });
     }
 
-    onDeleteButtonClick(element){
-        MyController.Delete(element);
-    }
-
-    onModalSaveClick(){
-        console.log("STORING!");
-        Command.hideModal();
+    toggleModal(){
+        this.setState({
+            formToggle: false
+        });
+        console.log('toggle modal?', this.state.formToggle);
     }
 
     render(){
-        console.log('model is:', Accessors.model(Context.cursor));
         let modal = "";
-        console.log('store?', Accessors.formToggle(Context.cursor));
-        if(Accessors.formToggle(Context.cursor)){
-            if(Accessors.model(Context.cursor)){
-                modal=<EditForm onCancelClick={Command.hideModal.bind(this)}
-                           onStoreClick={this.onModalSaveClick.bind(this)}
-                           Title="Edit Project"/>;
-            }else{
-                modal=<Form onCancelClick={Command.hideModal.bind(this)}
-                           onStoreClick={this.onModalSaveClick.bind(this)}
-                           Title="Add Project"/>;
+        if(this.state.formToggle) {
+            if (Accessors.model(Context.cursor)) {
+                modal = <EditForm onCancelClick={this.toggleModal.bind(this)}
+                                  FormAction={MyController.Update}
+                                  Title="Edit Project"/>;
+            }
+            else {
+                modal = <Form onCancelClick={this.toggleModal.bind(this)}
+                              FormAction={MyController.Add}
+                              Title="Add Project"/>;
             }
         }
-        const items = this.state.projects.map( (project, index) => {
+        const items =this.state.items.map( (project, index) => {
             return (
                 <ProjectItem
                     node = {project}
                     key = {index}
                     Link = {"project/members/" + project.Id}
                     onEdit = {this.onEditButtonClick.bind(this, project)}
-                    onDelete = {this.onDeleteButtonClick.bind(this, project)}
+                    onDelete = {MyController.Delete.bind(this, project)}
                     />
             )
         });
 
         return (
             <div>
-
                 {modal}
 
             <table className="table table-stripped">
@@ -106,8 +99,7 @@ export default class Project extends React.Component{
                 </tr>
                 </thead>
                 <tbody>
-
-                    {items}
+                {items}
                 </tbody>
             </table>
                 </div>

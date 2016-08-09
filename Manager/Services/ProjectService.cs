@@ -6,6 +6,7 @@ using Manager.InfoModels;
 using Manager.InputInfoModels;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.InteropServices;
 using FluentValidation.Results;
 using Manager.Validators;
 using Domain.Extensions;
@@ -138,9 +139,9 @@ namespace Manager.Services
 
         }
 
-        public IEnumerable<ProjectMemberInfo> GetMembersFromProject(int projectId)
+        public IEnumerable<ProjectMemberInfo> GetMembersFromProject(int projectId, int pageSize, int pageNumber, string role="")
         {
-            var assignments = _projectRepository.GetMembersFromProject(projectId);
+            var assignments = _projectRepository.GetMembersFromProject(projectId, pageSize, pageNumber, role);
             var assignmentsInfo = _mapper.Map<IEnumerable<ProjectMemberInfo>>(assignments);
 
             return assignmentsInfo;
@@ -156,23 +157,19 @@ namespace Manager.Services
             return _projectRepository.GetNrTeamMembers(projectId);
         }
 
-        public IEnumerable<ProjectMemberInfo> FilterProjectMemberByRole(string role, int projectId)
-        {
-            var assignments = _projectRepository.FilterProjectMemberByRole(role, projectId);
-            var assignmentsInfo = _mapper.Map<IEnumerable<ProjectMemberInfo>>(assignments);
-            return assignmentsInfo;
-        }
 
-        public IEnumerable<String> GetStatusDescription()
+        public IEnumerable<StatusTypeInfo> GetStatusDescription()
         {
-            List<String> myList = new List<string>();
             var values = Enum.GetValues(typeof(Status));
-            foreach (Enum elem in values)
+            
+            foreach (Status value in values)
             {
-                var descr = elem.GetDescriptionFromEnumValue();
-                myList.Add(descr);
+                yield return new StatusTypeInfo {Index = (int) value, Description = value.GetDescriptionFromEnumValue()};
             }
-            return myList.AsEnumerable();
+
+            //return from Status value in values
+                //select new StatusTypeInfo {Index = (int)value, Description = value.GetDescriptionFromEnumValue()};
+            
         }
 
 

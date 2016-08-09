@@ -3,6 +3,7 @@ import Tile from './Tile';
 import config from '../helper';
 import Context from '../../context/Context';
 import Accessors from '../../context/Accessors';
+import '../../assets/less/index.less';
 import Controller from './OfficeController';
 
 import Form from './Form';
@@ -11,7 +12,6 @@ export default class Dashboard extends React.Component{
     constructor(){
         super();
     }
-
     componentWillMount(){
         this.setState({
             formToggle:false
@@ -24,6 +24,10 @@ export default class Dashboard extends React.Component{
         
     }
 
+    componentWillUnmount(){
+        this.subscription.dispose();
+    }
+    
     onContextChange(cursor){
         this.setState({
             formToggle: false
@@ -55,11 +59,11 @@ export default class Dashboard extends React.Component{
         if(this.state.formToggle){
             if(Accessors.model(Context.cursor)){
                 form=<Form onCancelClick={this.toggleModal.bind(this)}
-                           FormAction={Controller.Update}
+                           FormAction={() => { Controller.Update() }}
                            Title="Edit Office"/>;
             }else{
                 form=<Form onCancelClick={this.toggleModal.bind(this)}
-                           FormAction={Controller.Add}
+                           FormAction={() => { Controller.Add() }}
                            Title="Add Office"/>;
             }
         }
@@ -80,14 +84,20 @@ export default class Dashboard extends React.Component{
         })
 
         return (
+            <div>
+
+                <div className=" glyphicon glyphicon-plus-sign custom-add-icon "
+                        onClick={this.onAddButtonClick.bind(this)}>
+                    <p className="add-span"></p>
+                </div>
+
             <div className="row">
                 {form}
                 {items}
-                <button className="btn btn-success"
-                        onClick={this.onAddButtonClick.bind(this)}>
-                    Add
-                </button>
+
+                
             </div>
+                </div>
             
         )
     }

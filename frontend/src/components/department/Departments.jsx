@@ -1,93 +1,110 @@
 {/*import * as React from 'react';
-import config from '../helper';
-import * as $ from 'jquery';
-import {Link} from 'react-router';
+import Department from './DepartmentItem';
+import Context from '../../context/Context';
+import Accessors from '../../context/Accessors';
+import Controller from './DepartmentController';
 import Form from './Form';
 
-const Department = (props) => {
-    return (
-        <tr>
-            <td>{props.element['Name']}</td>
-            <td>{props.element['DepartmentManager']}</td>
-            <td>{props.element['NumberOfEmployees']}</td>
-            <td>{props.element['NumberOfProjects']}</td>
-            <td>
-                <Link to={props.linkToEmployees}>
-                    View Employees
-                </Link>
-                <hr/>
-                <Link to={props.linkToProjects}>
-                    View Projects
-                </Link>
-                <hr/>
-                <button id="editDepartment" className="btn btn-danger margin-top">
-                    Edit
-                </button>
-            </td>
-        </tr>
-    )
-}
-
-class Departments extends React.Component{
-
+export default class Departments extends React.Component{
     constructor(){
         super();
-        this.state = {
-            store: false
-        }
-    }
-
-    showStoreForm(){
-        this.setState({
-            store: !this.state.store
-        })
-    }
-
-    closeStoreForm(){
-        this.setState({
-            store: !this.state.store
-        })
     }
 
     componentWillMount(){
 
         const officeId = this.props.routeParams['officeId'];
 
-        $.ajax({
-            method: 'GET',
-            url: config.base + 'office/departments/' + officeId,
-            async: false,
-            success: function (data) {
-                this.setState({
-                    departments: data
-                })
-            }.bind(this)
+        this.setState({
+            formToggle:false,
+            officeId: officeId
+        });
+
+        this.subscription=Context.subscribe(this.onContextChange.bind(this));
+
+        Context.cursor.set("items",[]);
+
+        Controller.getDepartments(officeId);
+    }
+
+    componentWillUnmount(){
+        this.subscription.dispose();
+    }
+
+
+    onContextChange(cursor){
+        console.log("Context has changed!");
+        this.setState({
+            formToggle: false,
+            items: cursor.get('items')
+        });
+    }
+
+    onAddButtonClick(){
+        console.log("Add button pressed!");
+
+        Context.cursor.set('model',null);
+        this.setState({
+            formToggle: true
+        });
+    }
+
+    onEditButtonClick(index){
+        console.log("Edit button pressed!");
+
+        const department = this.state.items[index];
+        Context.cursor.set("model", department);
+
+        this.setState({
+            formToggle: true
+        });
+    }
+
+    toggleModal(){
+        this.setState({
+            formToggle: false
         })
     }
 
     render(){
 
-        const modal = this.state.store ? <Form show = {this.state.store}  close={this.closeStoreForm.bind(this)} /> : '';
+        console.log("Form toggle: ", this.state.formToggle);
 
-        const items = this.state.departments.map( (department, index) => {
+        let form="";
+        if(this.state.formToggle){
+            if(Accessors.model(Context.cursor)){
+                form=<Form onCancelClick={this.toggleModal.bind(this)}
+                           FormAction={Controller.Update.bind(this, this.state.officeId)}
+                           Title="Edit Department"
+                           officeId={this.state.officeId}/>;
+            }else{
+                form=<Form onCancelClick={this.toggleModal.bind(this)}
+                           FormAction={Controller.Add.bind(this, this.state.officeId)}
+                           Title="Add Department"
+                           officeId={this.state.officeId}/>;
+            }
+        }
+
+        console.log("Hellooooo: ", this.state.items);
+
+        const items = this.state.items.map( (department, index) => {
             return (
                 <Department
                     element={department}
                     linkToEmployees={"department/members/" + department.Id}
                     linkToProjects={"department/projects/" + department.Id}
                     key={index}
+                    onEditButtonClick={this.onEditButtonClick.bind(this, index)}
                 />
             )
         })
 
         return (
-
             <div>
 
-                {modal}
+                {form}
 
-                <button id="addDepartment" className="btn btn-success margin-top" onClick={this.showStoreForm.bind(this)}>
-                    Add new department
+                <button className="btn btn-success" onClick={this.onAddButtonClick.bind(this)}>
+                    Add Department
                 </button>
 
                 <table className="table table-stripped">
@@ -101,7 +118,7 @@ class Departments extends React.Component{
                     </tr>
                     </thead>
                     <tbody>
-                        {items}
+                    {items}
                     </tbody>
                 </table>
 
@@ -109,5 +126,4 @@ class Departments extends React.Component{
         )
     }
 }
-
-export default Departments;*/}
+export default Departments;

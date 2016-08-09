@@ -7,7 +7,7 @@ using Manager.Services;
 namespace ManagementApp.Controllers
 {
     [RoutePrefix("api/employee")]
-    [EnableCors("*", "*", "GET")]
+    [EnableCors("*", "*", "*")]
     public class EmployeeController : ApiController
     {
         private readonly EmployeeService _employeeService;
@@ -22,6 +22,13 @@ namespace ManagementApp.Controllers
         public IHttpActionResult GetAll()
         {
             var result = _employeeService.GetAll();
+            return Json(result);
+        }
+
+        [Route("departmentManagers")]
+        [HttpGet]
+        public IHttpActionResult GetDepartmentManagers() {
+            var result = _employeeService.GetDepartmentManagers();
             return Json(result);
         }
 
@@ -57,11 +64,22 @@ namespace ManagementApp.Controllers
             return Json(result);
         }
 
+        [Route("getPositions")]
+        [HttpGet]
+        public IHttpActionResult GetPositions()
         [Route("projects/{employeeId}")]
         [HttpDelete]
         public IHttpActionResult GetProjectsOfEmployee(int employeeId)
         {
             var result = _employeeService.GetProjectsOfEmployee(employeeId);
+            return Json(result);
+        }
+
+        [Route("getJobTypes")]
+        [HttpGet]
+        public IHttpActionResult GetJobTypes()
+        {
+            var result = _employeeService.GetJobTypes();
             return Json(result);
         }
     }

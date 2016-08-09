@@ -219,10 +219,10 @@ namespace ManagementApp.Manager.Tests
             employee.Assignments.Add(assignment[0]);
 
             _mapperMock.Setup(m => m.Map < IEnumerable<ProjectMemberInfo>>(assignment)).Returns(assignmentInfo);
-            _projectRepositoryMock.Setup(m => m.GetMembersFromProject(1)).Returns(assignment);
+            _projectRepositoryMock.Setup(m => m.GetMembersFromProject(1, 1, 1, "")).Returns(assignment);
 
             //Act
-            var result = _projectService.GetMembersFromProject(1);
+            var result = _projectService.GetMembersFromProject(1, 1, 1, "");
 
             //Assert
             CollectionAssert.AreEqual(assignmentInfo, result);

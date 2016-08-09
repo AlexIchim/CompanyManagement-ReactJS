@@ -1,73 +1,125 @@
-import React from 'react';
+import * as React from 'react';
 import ModalTemplate from '../ModalTemplate';
+import Context from '../../context/Context';
+import $ from 'jquery';
+import config from '../helper';
+
+const DropdownItem = (props) => {
+    return (
+        <option value={props.element.Id}>
+            {props.element.Name}
+        </option>
+    )
+}
 
 export default class Form extends React.Component{
-
     constructor(){
         super();
-        {/*this.state={
-            office: {
-
-            }
-        }*/}
     }
 
     componentWillMount(){
-        {/*this.setState({
-            office: this.props.element
-        })*/}
-    }
 
-    changeName(){
-        {/*const value = this.refs.inputName.value;
-        const newOffice = this.state.office;
-        newOffice.Name = value;
         this.setState({
-            office: newOffice
-        })*/}
+            departmentManagers: null
+        });
+
+        this.subscription=Context.subscribe(this.onContextChange.bind(this));
+
+        $.ajax({
+            method: 'GET',
+            url: config.base + 'employee/departmentManagers',
+            async: false,
+            success: function (data) {
+                this.setState({
+                    departmentManagers: data
+                })
+            }.bind(this)
+        })
     }
 
+    componentWillUnmount(){
+        this.subscription.dispose();
+    }
 
+    onContextChange(newGlobalCursor){
+        this.setState({
+            model: newGlobalCursor.get('model'),
+            departmentName: newGlobalCursor.get('model') && newGlobalCursor.get('model').Name || ""
+        })
+    }
 
+    onModelChange(){
+        this.setState({
+            model: this.state.model,
+            departmentName: this.refs.departmentNameInput.value
+        })
+    }
 
-    componentWillReceiveProps(props){
-        console.log('props', props);
+    onStoreClick(){
+        let currentModel = this.state.model;
+        let modelToStore = {};
+
+        if (currentModel){
+            modelToStore.Id = currentModel.Id;
+        }
+
+        modelToStore.Name = this.refs.departmentNameInput.value;
+        var select = document.getElementById('dropdown');
+        var departmentManagerId = select.options[select.selectedIndex].value;
+
+        modelToStore.DepartmentManagerId = departmentManagerId;
+        modelToStore.OfficeId = this.props.officeId;
+
+        Context.cursor.set("model", modelToStore);
+        this.props.FormAction();
     }
 
     render(){
+        let selectedDepartmentManager = -1;
+        if (this.state.model){
+            selectedDepartmentManager =  this.state.model.DepartmentManagerId;
+        }
+
+        const departmentName = this.state.departmentName;
+
+        const departmentManagers = this.state.departmentManagers.map( (item, index) => {
+                return (
+                    <DropdownItem
+                        element = {item}
+                        key={index}
+                    />
+                )
+            }
+        );
+
         return(
 
-            <ModalTemplate onCloseClick={this.props.onCloseClick} 
-                           onStoreClick={function(){ console.log('haha') }} 
-                           Title="TEST TITLE">
+            <ModalTemplate onCancelClick={this.props.onCancelClick}
+                           onStoreClick={this.onStoreClick.bind(this)}
+                           Title={this.props.Title}>
 
                 <div className="form-group">
-                    <label htmlFor="inputName" className="col-sm-2 control-label"> Name</label>
-                    <div className="col-sm-10">
-                        <input type="text" className="form-control" ref="inputName" placeholder="Name" value="">
+                    <label htmlFor="inputName" className="col-sm-4 control-label">Name</label>
+                    <div className="col-sm-8">
+                        <input type="text"
+                               className="form-control"
+                               ref="departmentNameInput"
+                               onChange={this.onModelChange.bind(this)}
+                               value={departmentName}
+                               placeholder="Name">
                         </input>
                     </div>
-                </div>
 
-                <div className="form-group">
-                    <label htmlFor="inputAddress" className="col-sm-2 control-label"> Address</label>
-                    <div className="col-sm-10">
-                        <input type="text" className="form-control" ref="inputAddress" placeholder="Address" value="">
-                        </input>
+                    <label htmlFor="inputName" className="col-sm-4 control-label">Department Manager</label>
+                    <div className="col-sm-8">
+                        <select id='dropdown' className="selectpicker" defaultValue={selectedDepartmentManager}>
+                            {departmentManagers}
+                        </select>
                     </div>
-                </div>
 
-                <div className="form-group">
-                    <label htmlFor="inputPhone" className="col-sm-2 control-label"> Phone </label>
-                    <div className="col-sm-10">
-                        <input type="text" className="form-control" ref="inputPhone" placeholder="Phone" value="">
-                        </input>
-                    </div>
                 </div>
 
             </ModalTemplate>
         )
     }
-
-
 }

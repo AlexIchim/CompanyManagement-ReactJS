@@ -4,6 +4,8 @@ using Contracts;
 using DataAccess.Context;
 using Domain.Models;
 using System;
+using System.Runtime.InteropServices;
+using DataAccess.Extensions;
 
 namespace DataAccess.Repositories
 {
@@ -49,18 +51,17 @@ namespace DataAccess.Repositories
 
         public IEnumerable<Project> GetAll()
         {
-            return _context.Projects.ToArray();
+            return _context.Projects.Paginate(5, 1).ToArray();
         }
         public Project GetById(int id)
         {
             return _context.Projects.SingleOrDefault(p => p.Id == id);
         }
 
-        public IEnumerable<Assignment> GetMembersFromProject(int projectId)
+        public IEnumerable<Assignment> GetMembersFromProject(int projectId, int pageSize, int pageNumber, string role="")
 
         {
-            var assignments = _context.Assignments.Where(ep => ep.ProjectId == projectId);
-            return assignments.ToArray();
+            return _context.Assignments.Where(ep => (ep.ProjectId == projectId) && (((!role.Equals("")) && ep.Employee.Position.ToString() == role) || role.Equals(""))).OrderBy(ep =>ep.Project.Id).Paginate(pageSize, pageNumber).ToArray();
         }
 
         public int GetAllocationOfEmployeeFromProject(int projectId, int employeeId)
@@ -77,11 +78,6 @@ namespace DataAccess.Repositories
 
         }
 
-        public IEnumerable<Assignment> FilterProjectMemberByRole(string role, int projectId)
-        {
-            var assignments = _context.Assignments.Where(ep => ep.ProjectId == projectId && ep.Employee.Position.ToString() == role);
-            return assignments.ToArray();
-        }
     }
 
 }
