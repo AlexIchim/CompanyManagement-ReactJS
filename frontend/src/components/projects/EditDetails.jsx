@@ -11,7 +11,6 @@ export default class EditDetails extends React.Component {
         super();
         this.state = {
             project : null,
-            //status : "",
             message : ""
         }
     }
@@ -23,14 +22,13 @@ export default class EditDetails extends React.Component {
     }
 
     updateProject(){
-        if(this.state.message === "")
-        {
+        
             updateProject(
                 this.state.project,
                 true,
                 this.props.updateFunc
             );
-        }
+        
     }
 
     onChangeFunc(e){        
@@ -52,35 +50,42 @@ export default class EditDetails extends React.Component {
     }
 
     onChangeFunction(e){
-        let newProject = this.state.project; 
-        newProject[e.target.name] = parseInt(e.target.value);
-        this.setState({
-            project : newProject
-        });
-
         const val = parseInt(e.target.value);
-        if(isNaN(val))
-        {
-            e.target.value = "";
+        const newProject = this.props.project;
+        var newValue;
+
+        if(isNaN(val)){
+            newValue = "0";
         } else {
-            if(val > 120)
-            {
-                this.setState({
-                    message : "Error!!! A project cannot last more than 120 months."
-                });
-            } else {
-                this.setState({
-                    message : ""
-                })
-                e.target.value = val.toString();
-            }
+            newValue = val.toString();
         }
+
+        if(val > 120)
+        {
+            this.setState({
+                message : "Error!!! A project cannot last more than 120 months."
+            })
+        } else {
+            this.setState({
+                message : ""
+            })
+        }
+
+        e.target.value = newValue;
+        newProject['duration'] = parseInt(newValue);
         
+        this.setState({
+            project: newProject
+        });
     }
 
     render(){
         var project = this.state.project;
         const onEdit = this.props.onEdit;
+
+        const saveButton = this.state.message === "" ? (
+            <button type="button" className="btn btn-info" onClick={this.updateProject.bind(this)}>Save</button>
+        ) : (<button className="btn btn-info" disabled>Save</button>);
 
         return(
             <div className="box info-box">
@@ -101,13 +106,13 @@ export default class EditDetails extends React.Component {
                         </select>
                     </div>
                     <label>New duration</label>
-                    <input placeholder="variable" type="text" className="form-control" ref="duration" name="duration" value={project.duration} onChange={this.onChangeFunction.bind(this)}></input>
-                    <div>{this.state.message}</div>
+                    <input placeholder="variable" type="text" className="form-control" ref="duration" name="duration" value={project.duration} onChange={this.onChangeFunction.bind(this)}  autoComplete="off"></input>
+                    <div><b>{this.state.message}</b></div>
                 </div>
 
                 <div className="box-footer">
-                    <button className="btn btn-default" onClick={this.updateProject.bind(this)}>Edit</button>
-                    <button className="btn btn-default" onClick={this.props.hideFunc}>Cancel</button>
+                    {saveButton}
+                    <button className="btn btn-info" onClick={this.props.hideFunc}>Cancel</button>
                 </div>
             </form>
             </div>

@@ -157,30 +157,35 @@ export default class Projects extends Component{
 
         return (
             <div>
-                <h1><b>{this.state.departmentName}</b> Department Projects</h1>
-                {modalTemplate}
-                <button className="btn btn-md btn-info" onClick={this.addProject.bind(this)}>
-                    <span className="glyphicon glyphicon-plus-sign"></span>
-                     &nbsp;Add new project
-                </button>
+                <div>
+                    <h1><b>{this.state.departmentName}</b> Department Projects</h1>
+                    {modalTemplate}
+                    <button className="btn btn-md btn-info" onClick={this.addProject.bind(this)}>
+                        <span className="glyphicon glyphicon-plus-sign"></span>
+                        &nbsp;Add new project
+                    </button>
 
-                <table className="table table-condensed" id="table">
-                    <thead>
-                        <tr>
-                            <th className="col-md-2">Project Name</th>
-                            <th className="col-md-2">Team Members</th>
-                            <th className="col-md-2">Duration</th>
-                            <th className="col-md-2">Status</th>
-                            <th className="col-md-2">Actions</th>
-                        </tr>
-                    </thead>
+                    <table className="table table-condensed" id="table">
+                        <thead>
+                            <tr>
+                                <th className="col-md-2">Project Name</th>
+                                <th className="col-md-2">Team Members</th>
+                                <th className="col-md-2">Duration</th>
+                                <th className="col-md-2">Status</th>
+                                <th className="col-md-2">Actions</th>
+                            </tr>
+                        </thead>
 
-                    <tbody>
+                        <tbody>
 
-                    {items}
+                        {items}
 
-                    </tbody>
-                </table>
+                        </tbody>
+                    </table>
+                </div>
+                <div>
+                    <button>DoesSomething</button>
+                </div>
             </div>
         );
     }
