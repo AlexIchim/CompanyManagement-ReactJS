@@ -33,13 +33,13 @@ namespace ManagementApp.Manager.Tests
             //Arrange
             var offices = new List<Office>
             {
-                CreateOffice("Cluj-Napoca", "Motilor nr 16", "4016161251", new byte[] { 0x20, 0x20, 0x20}),
-                CreateOffice("London", "HighWay 13 Nr", "401616125411", new byte[] { 0x20, 0x20, 0x20})
+                CreateOffice("Cluj-Napoca", "Motilor nr 16", "4016161251", "image"),
+                CreateOffice("London", "HighWay 13 Nr", "401616125411", "image")
             };
             var officesInfo = new List<OfficeInfo>
             {
-                CreateOfficeInfo(1,"Cluj-Napoca", "Motilor nr 16", "4016161251", new byte[] { 0x20, 0x20, 0x20}),
-                CreateOfficeInfo(2,"London", "HighWay 13 Nr", "401616125411", new byte[] { 0x20, 0x20, 0x20})
+                CreateOfficeInfo(1,"Cluj-Napoca", "Motilor nr 16", "4016161251", "image"),
+                CreateOfficeInfo(2,"London", "HighWay 13 Nr", "401616125411", "image")
             };
 
             _officeRepositoryMock.Setup(m => m.GetAll()).Returns(offices);
@@ -68,8 +68,8 @@ namespace ManagementApp.Manager.Tests
         public void Add_CallsAddFromRepository()
         {
             //Arrange
-            var officeInputInfo = new AddOfficeInputInfo { Name = "Cluj-Napoca", Address = "Motilor nr12", Phone = "0740179200", Image = new byte[3] };
-            var office = new Office { Name = "Cluj-Napoca", Address = "Motilor nr12", Phone = "0740179200", Image = new byte[3] };
+            var officeInputInfo = new AddOfficeInputInfo { Name = "Cluj-Napoca", Address = "Motilor nr12", Phone = "0740179200", Image = "image" };
+            var office = new Office { Name = "Cluj-Napoca", Address = "Motilor nr12", Phone = "0740179200", Image = "image" };
 
             _mapperMock.Setup(m => m.Map<Office>(officeInputInfo)).Returns(office);
             _officeRepositoryMock.Setup(m => m.Add(office));
@@ -85,8 +85,9 @@ namespace ManagementApp.Manager.Tests
         public void Add_ReturnsSuccessfulMessage()
         {
             //Arrange
-            var officeInputInfo = new AddOfficeInputInfo { Name = "Cluj-Napoca", Address = "Motilor nr12", Phone = "0740179200", Image = new byte[3] };
-            var office = CreateOffice("Cluj-Napoca", "Motilor nr 16", "4016161251", new byte[] { 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20 });
+            var officeInputInfo = new AddOfficeInputInfo { Name = "Cluj-Napoca", Address = "Motilor nr12", Phone = "0740179200", Image = "image" };
+            var office = CreateOffice("Cluj-Napoca", "Motilor nr 16", "4016161251","" +
+                                                                                   "image");
 
             _mapperMock.Setup(m => m.Map<Office>(officeInputInfo)).Returns(office);
             _officeRepositoryMock.Setup(m => m.Add(office));
@@ -104,8 +105,8 @@ namespace ManagementApp.Manager.Tests
         public void Update_ReturnsSuccessfulMessage_WhenOfficeExists()
         {
             //Arrange
-            var officeInputInfo = new UpdateOfficeInputInfo { Id = 1, Name = "Cluj-Napoca", Address = "Motilor nr12", Phone = "0740179200", Image = new byte[3] };
-            var office = new Office { Name = "Cluj-Napoca", Address = "Motilor nr12", Phone = "0740179200", Image = new byte[3] };
+            var officeInputInfo = new UpdateOfficeInputInfo { Id = 1, Name = "Cluj-Napoca", Address = "Motilor nr12", Phone = "0740179200", Image = "image" };
+            var office = new Office { Name = "Cluj-Napoca", Address = "Motilor nr12", Phone = "0740179200", Image = "image" };
 
             _officeRepositoryMock.Setup(m => m.GetById(officeInputInfo.Id)).Returns(office);
 
@@ -122,8 +123,8 @@ namespace ManagementApp.Manager.Tests
         public void Update_CallsGetByIdFromRepository_WhenOfficeExists()
         {
             //Arrange
-            var officeInputInfo = new UpdateOfficeInputInfo { Id = 1, Name = "Cluj-Napoca", Address = "Motilor nr12", Phone = "0740179200", Image = new byte[3] };
-            var office = new Office { Name = "Cluj-Napoca", Address = "Motilor nr12", Phone = "0740179200", Image = new byte[3] };
+            var officeInputInfo = new UpdateOfficeInputInfo { Id = 1, Name = "Cluj-Napoca", Address = "Motilor nr12", Phone = "0740179200", Image = "image" };
+            var office = new Office { Name = "Cluj-Napoca", Address = "Motilor nr12", Phone = "0740179200", Image = "image" };
 
             _officeRepositoryMock.Setup(m => m.GetById(officeInputInfo.Id)).Returns(office);
 
@@ -138,8 +139,8 @@ namespace ManagementApp.Manager.Tests
         public void Update_CallsSaveFromRepository_WhenOfficeExists()
         {
             //Arrange
-            var officeInputInfo = new UpdateOfficeInputInfo { Id = 1, Name = "Cluj-Napoca", Address = "Motilor nr12", Phone = "0740179200", Image = new byte[3] };
-            var office = new Office { Name = "Cluj-Napoca", Address = "Motilor nr12", Phone = "0740179200", Image = new byte[3] };
+            var officeInputInfo = new UpdateOfficeInputInfo { Id = 1, Name = "Cluj-Napoca", Address = "Motilor nr12", Phone = "0740179200", Image = "image" };
+            var office = new Office { Name = "Cluj-Napoca", Address = "Motilor nr12", Phone = "0740179200", Image = "image" };
 
             _officeRepositoryMock.Setup(m => m.GetById(officeInputInfo.Id)).Returns(office);
 
@@ -154,7 +155,7 @@ namespace ManagementApp.Manager.Tests
         public void Update_ReturnsErrorMessage_WhenOfficeDoesNotExists()
         {
             //Arrange
-            var officeInputInfo = new UpdateOfficeInputInfo { Id = 1, Name = "Cluj-Napoca", Address = "Motilor nr12", Phone = "0740179200", Image = new byte[3] };
+            var officeInputInfo = new UpdateOfficeInputInfo { Id = 1, Name = "Cluj-Napoca", Address = "Motilor nr12", Phone = "0740179200", Image = "image" };
 
             _officeRepositoryMock.Setup(m => m.GetById(officeInputInfo.Id)).Returns((Office)null);
 
@@ -170,7 +171,7 @@ namespace ManagementApp.Manager.Tests
         public void Update_DoesNotCallSaveFromRepository_WhenOfficeDoesNotExists()
         {
             //Arrange
-            var officeInputInfo = new UpdateOfficeInputInfo { Id = 1, Name = "Cluj-Napoca", Address = "Motilor nr12", Phone = "0740179200", Image = new byte[3] };
+            var officeInputInfo = new UpdateOfficeInputInfo { Id = 1, Name = "Cluj-Napoca", Address = "Motilor nr12", Phone = "0740179200", Image = "image" };
 
             _officeRepositoryMock.Setup(m => m.GetById(officeInputInfo.Id)).Returns((Office)null);
 
@@ -185,11 +186,11 @@ namespace ManagementApp.Manager.Tests
         public void Add_ReturnsErrorMessageOnInvalidNameInput()
         {
             //Arrange
-            var officeInputInfoNameEmpty = new AddOfficeInputInfo { Name = "", Address = "Motilor nr12", Phone = "0740179200", Image = new byte[3] };
-            var officeNameEmpty = new Office() {Name = "Cluj-Napoca", Address = "Motilor nr12", Phone = "0740179200", Image = new byte[3] };
+            var officeInputInfoNameEmpty = new AddOfficeInputInfo { Name = "", Address = "Motilor nr12", Phone = "0740179200", Image = "image" };
+            var officeNameEmpty = new Office() {Name = "Cluj-Napoca", Address = "Motilor nr12", Phone = "0740179200", Image = "image" };
 
-            var officeInputInfoNameTooLong = new AddOfficeInputInfo { Name = new string('*', 101), Address = "Motilor nr12", Phone = "0740179200", Image = new byte[3] };
-            var officeNameTooLong = new Office() { Name = "", Address = "Motilor nr12", Phone = "0740179200", Image = new byte[3] };
+            var officeInputInfoNameTooLong = new AddOfficeInputInfo { Name = new string('*', 101), Address = "Motilor nr12", Phone = "0740179200", Image = "image" };
+            var officeNameTooLong = new Office() { Name = "", Address = "Motilor nr12", Phone = "0740179200", Image = "image" };
 
             _mapperMock.Setup(m => m.Map<Office>(officeInputInfoNameEmpty)).Returns(officeNameEmpty);
             _mapperMock.Setup(m => m.Map<Office>(officeInputInfoNameTooLong)).Returns(officeNameTooLong);
@@ -212,11 +213,11 @@ namespace ManagementApp.Manager.Tests
         public void Add_ReturnsErrorMessageOnInvalidAddressInput()
         {
             //Arrange
-            var officeInputInfoAddressEmpty = new AddOfficeInputInfo { Name = "Tokio", Address = "", Phone = "0740179200", Image = new byte[3] };
-            var officeAddressEmpty = new Office() { Name = "Cluj-Napoca", Address = "", Phone = "0740179200", Image = new byte[3] };
+            var officeInputInfoAddressEmpty = new AddOfficeInputInfo { Name = "Tokio", Address = "", Phone = "0740179200", Image = "image" };
+            var officeAddressEmpty = new Office() { Name = "Cluj-Napoca", Address = "", Phone = "0740179200", Image = "image" };
 
-            var officeInputInfoAddressTooLong = new AddOfficeInputInfo { Name = "Tokio", Address = new string('*', 301), Phone = "0740179200", Image = new byte[3] };
-            var officeAddressTooLong = new Office() { Name = "Cluj-Napoca", Address = new string('*', 301), Phone = "0740179200", Image = new byte[3] };
+            var officeInputInfoAddressTooLong = new AddOfficeInputInfo { Name = "Tokio", Address = new string('*', 301), Phone = "0740179200", Image = "image" };
+            var officeAddressTooLong = new Office() { Name = "Cluj-Napoca", Address = new string('*', 301), Phone = "0740179200", Image = "image" };
 
             _mapperMock.Setup(m => m.Map<Office>(officeInputInfoAddressEmpty)).Returns(officeAddressEmpty);
             _mapperMock.Setup(m => m.Map<Office>(officeInputInfoAddressTooLong)).Returns(officeAddressTooLong);
@@ -239,11 +240,11 @@ namespace ManagementApp.Manager.Tests
         public void Add_ReturnsErrorMessageOnInvalidPhoneInput()
         {
             //Arrange
-            var officeInputInfoPhoneEmpty = new AddOfficeInputInfo { Name = "Tokio", Address = "Motilor nr1", Phone = "", Image = new byte[3] };
-            var officePhoneEmpty = new Office() { Name = "Cluj-Napoca", Address = "", Phone = "0740179200", Image = new byte[3] };
+            var officeInputInfoPhoneEmpty = new AddOfficeInputInfo { Name = "Tokio", Address = "Motilor nr1", Phone = "", Image = "image" };
+            var officePhoneEmpty = new Office() { Name = "Cluj-Napoca", Address = "", Phone = "0740179200", Image = "image" };
 
-            var officeInputInfoPhoneTooLong = new AddOfficeInputInfo { Name = "Tokio", Address = "Motilor nr1", Phone = new string('*', 21), Image = new byte[3] };
-            var officePhoneTooLong = new Office() { Name = "Cluj-Napoca", Address = "Motilor nr1", Phone = "0740179200", Image = new byte[3] };
+            var officeInputInfoPhoneTooLong = new AddOfficeInputInfo { Name = "Tokio", Address = "Motilor nr1", Phone = new string('*', 21), Image = "image" };
+            var officePhoneTooLong = new Office() { Name = "Cluj-Napoca", Address = "Motilor nr1", Phone = "0740179200", Image = "image" };
 
             _mapperMock.Setup(m => m.Map<Office>(officeInputInfoPhoneEmpty)).Returns(officePhoneEmpty);
             _mapperMock.Setup(m => m.Map<Office>(officeInputInfoPhoneTooLong)).Returns(officePhoneTooLong);
@@ -265,7 +266,7 @@ namespace ManagementApp.Manager.Tests
 
 
 
-        private Office CreateOffice(string name, string address, string phone, byte[] image)
+        private Office CreateOffice(string name, string address, string phone, string image)
         {
             var office = new Office
             {
@@ -278,7 +279,7 @@ namespace ManagementApp.Manager.Tests
             return office;
         }
 
-        private OfficeInfo CreateOfficeInfo(int id, string name, string address, string phone, byte[] image)
+        private OfficeInfo CreateOfficeInfo(int id, string name, string address, string phone, string image)
         {
             return new OfficeInfo
             {

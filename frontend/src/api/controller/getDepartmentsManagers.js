@@ -1,7 +1,7 @@
 import $ from 'jquery';
 import {default as apiconfig} from '../config';
 
-export default (id, isAsync, callback) =>
+export default (isAsync, callback) =>
     $.ajax({
         method: 'GET',
         url: apiconfig.baseUrl + 'employees/managers',

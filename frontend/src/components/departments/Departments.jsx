@@ -78,7 +78,7 @@ export default class Departments extends Component {
     editDetails(department) {
         let managers = [];
 
-        Controller.getDepartmentsManagers(null,
+        Controller.getDepartmentsManagers(
             true,
             (data) => {
                 this.setState({
@@ -86,13 +86,11 @@ export default class Departments extends Component {
                 });
             }
         );
-
         this.setState({
             showModalTemplate: 'edit',
             modalDepartment: department,
             managerList: managers
         });
-
     }
 
     addDetails(department) {
@@ -140,6 +138,7 @@ export default class Departments extends Component {
     }
 
     render() {
+
         const items = this.state.departmentList.map((element, index) => {
             return (
                 <DepartmentRow
@@ -150,6 +149,7 @@ export default class Departments extends Component {
                 />
             )
         });
+
 
         const modalTemplate = this.state.showModalTemplate !== null ? (
             <ModalTemplate
