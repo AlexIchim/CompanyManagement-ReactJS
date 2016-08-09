@@ -31,13 +31,30 @@ namespace DataAccess.Repositories
                     ) &&
                     (departmentId == null || e.DepartmentId == departmentId) &&
                     (positionId == null || e.PositionId == positionId) &&
-                    (e.ProjectAllocations.Count(a => a.ProjectId != projectId) == 0)&&
+                    (e.ProjectAllocations.Count(a => a.ProjectId == projectId) == 0)&&
                     (!e.Position.Name.Equals("Department Manager"))
 
                 )
             )
             .OrderBy(e => e.Name)
             .Paginate(pageSize, pageNumber).ToArray();
+        }
+
+        public int GetAvailableEmployeesCount(int? departmentId, int? positionId, int? projectId)
+        {
+            return _context.Employees.Where(
+                e => (
+                    (
+                        e.ProjectAllocations.Count == 0 ||
+                        e.ProjectAllocations.Select(a => a.AllocationPercentage).Sum() < 100
+                        ) &&
+                    (departmentId == null || e.DepartmentId == departmentId) &&
+                    (positionId == null || e.PositionId == positionId) &&
+                    (e.ProjectAllocations.Count(a => a.ProjectId == projectId) == 0) &&
+                    (!e.Position.Name.Equals("Department Manager"))
+
+                    )
+                ).Count();
         }
 
         public IEnumerable<Employee> GetAllDepartmentManagers()
