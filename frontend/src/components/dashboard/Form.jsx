@@ -3,11 +3,11 @@ import ModalTemplate from '../ModalTemplate';
 import Context from '../../context/Context';
 import Accessors from '../../context/Accessors';
 import config from '../helper';
+import Validator from '../validator/OfficeValidator';
 
 export default class Form extends React.Component{
     constructor(){
         super();
-        
     }
     
     componentWillMount(){
@@ -54,6 +54,17 @@ export default class Form extends React.Component{
         this.props.FormAction();
         
     }
+
+    onChangeName(){
+
+    }
+    onChangePhone(){
+
+    }
+    onChangeAddress(){
+        
+    }
+
     render(){
 
         const model=Context.cursor.get('model');
