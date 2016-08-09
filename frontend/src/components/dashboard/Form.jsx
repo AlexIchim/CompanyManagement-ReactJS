@@ -51,19 +51,15 @@ export default class Form extends React.Component{
     render(){
 
         const model=Context.cursor.get('model');
-
-
         const name=(model)? model.Name : "Name";
         const addr=(model)? model.Address : "Address";
         const phone=(model)? model.Phone : "Phone";
 
         return(
-
             <ModalTemplate onCancelClick={this.props.onCancelClick}
                            onStoreClick={this.onStoreClick.bind(this)}
                            Title={this.props.Title}>
-                           onAirClick={this.props.onCancelClick}
-
+                           
                 <div className="form-group">
                     <label htmlFor="inputName" className="col-sm-2 control-label"> Name</label>
                     <div className="col-sm-10">
