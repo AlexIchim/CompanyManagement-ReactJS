@@ -11,7 +11,7 @@ class Tile extends React.Component<any, any>{
 
             <div className="col-md-6 col-sm-6 col-xs-12">
             <div className="info-box">
-                <span className={parentClass}><img className="uploadImage img-thumbnail" src={'data:image/jpg;base64,'+props['icon']}></img></span>
+                <span className={parentClass}><img className="officeImage" src={'data:image/jpg;base64,'+props['icon']}></img></span>
                 <button className="editIcon" onClick={props['onEdit']}><i className={props['editIcon']}></i></button>
                 <div className="info-box-content">
                     <span className="info-box-text">
