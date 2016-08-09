@@ -13,7 +13,7 @@ using Manager.Services;
 namespace ManagementApp.Controllers
 {
     [RoutePrefix("api/office")]
-    [EnableCors("*", "*", "*")]
+    [EnableCors("*", "*", "GET, POST, PUT")]
     public class OfficeController : ApiController
     {
         private readonly OfficeService _officeService;

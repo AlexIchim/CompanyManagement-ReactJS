@@ -6,6 +6,7 @@ import Context from '../../context/Context';
 export default new class OfficeController {
     
     GetAll(){
+        console.log("Refreshing");
         $.ajax({
             method:'GET',
             url: config.base+'office/getAll',
@@ -20,8 +21,8 @@ export default new class OfficeController {
     Add(){
         console.log("Add called");
         let model= Context.cursor.get("model");
-        //console.log("MODEL : ",model);
 
+        console.log("MODEl: ",model);
         $.ajax({
             method:'POST',
             url: config.base+'office/add',
@@ -33,19 +34,15 @@ export default new class OfficeController {
                 Image:model.Image
             },
             success: function(data){  
-                console.log("ADD RETURNED");
+                console.log("ADD RETURNED: ",data);
             }.bind(this)
         });             
         this.GetAll();
-        
     }
         
     Update(){
         console.log("Update called");
         let model= Context.cursor.get("model");
-        
-        
-
         $.ajax({
             method:'POST',
             url: config.base+'office/update',
@@ -58,7 +55,7 @@ export default new class OfficeController {
                 Image:model.Image
             },
             success: function(data){                
-                console.log("UPDATE RETURNED");
+                console.log("UPDATE RETURNED: ",data);
             }.bind(this)
         });
         this.GetAll();

@@ -364,7 +364,6 @@ namespace ManagementApp.Manager.Tests
             }
             return office;
         }
-
         private OfficeInfo CreateOfficeInfo(int id, string name, string address, string phone, byte[] image)
         {
             var officeInfo = new OfficeInfo()
@@ -377,7 +376,6 @@ namespace ManagementApp.Manager.Tests
             };
             return officeInfo;
         }
-
         private AddOfficeInputInfo CreateOfficeAddInputInfo(string name, string address, string phone, byte[] image)
         {
             var addOfficeInputInfo = new AddOfficeInputInfo
@@ -389,7 +387,6 @@ namespace ManagementApp.Manager.Tests
             };
             return addOfficeInputInfo;
         }
-
         private UpdateOfficeInputInfo CreateOfficeUpdateInputInfo(int id, string name, string address, string phone,
             byte[] image)
         {
@@ -403,22 +400,30 @@ namespace ManagementApp.Manager.Tests
             };
             return updateOfficeInputInfo;
         }
-
         static byte[] GetBytes(string str)
         {
             byte[] buffer = System.Text.Encoding.UTF8.GetBytes(str);
             return buffer;
         }
-
         static string GetString(byte[] bytes)
         {
             string s = System.Text.Encoding.UTF8.GetString(bytes, 0, bytes.Length);
             return s;
         }
-
+        private Department CreateDepartment(string name, Employee departmentManager, Office office, int? id = null)
+        {
+            var department = new Department
+            {
+                Name = name,
+                DepartmentManager = departmentManager,
+                Office = office
+            };
+            if (id != null)
+            {
+                department.Id = (int)id;
+            }
             return department;
         }
-
         private DepartmentInfo CreateDepartmentInfo(int id, string name, string departmentManager, int numberOfEmployees,
             int numberOfProjects)
         {
@@ -431,7 +436,6 @@ namespace ManagementApp.Manager.Tests
                 NumberOfProjects = numberOfProjects
             };
         }
-
         private Employee CreateEmployee(string name, int? id = null)
         {
             var employee = new Employee
@@ -445,7 +449,6 @@ namespace ManagementApp.Manager.Tests
             }
             return employee;
         }
-
         private EmployeeInfo CreateEmployeeInfo(int id, string name)
         {
             return new EmployeeInfo
@@ -454,8 +457,6 @@ namespace ManagementApp.Manager.Tests
                 Name = name
             };
         }
-
-
         #endregion
     }
 }
