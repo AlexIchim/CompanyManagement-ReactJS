@@ -38,10 +38,11 @@ namespace Manager.Validators
 
         private bool ValidateDates(DateTime ed, DateTime? rd)
         {
-            if (ed.Equals(ed.Millisecond))
+            if (ed.Equals(DateTime.MinValue))
                 return false;
-            if (rd != null && ed.CompareTo(rd) == 1) //>=
-                return false;
+            /*if (rd != null|| rd.Equals(DateTime.MinValue))
+                if (ed.CompareTo(rd) == 1)
+                    return false;*/
             return true;
         }
 

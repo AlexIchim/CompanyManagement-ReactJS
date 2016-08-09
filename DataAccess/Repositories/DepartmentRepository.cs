@@ -4,6 +4,7 @@ using Domain.Models;
 using System.Collections.Generic;
 using System.Linq;
 using Domain.Enums;
+using Manager.Services;
 
 namespace DataAccess.Repositories
 {
@@ -66,7 +67,10 @@ namespace DataAccess.Repositories
 
         public IEnumerable<Employee> GetAllDepartmentManagers()
         {
-            return _context.Employees.Where(e => e.PositionType == PositionType.DepartmentManager);
+
+            var assignedDM = _context.Departments.Select(d => d.DepartmentManager);
+            var departmentManagers = _context.Employees.Where(e => e.PositionType == PositionType.DepartmentManager && !assignedDM.Contains(e));
+            return departmentManagers;
         }
 
         public Employee GetEmployeeById(int? id)

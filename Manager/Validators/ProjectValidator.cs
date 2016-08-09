@@ -61,7 +61,7 @@ namespace Manager.Validators
 
         public bool ValidateAddProjectInfo(AddProjectInputInfo addInfo)
         {
-            bool validation = ValidateString(addInfo.Name) && ValidateString(addInfo.Status) && ValidateNullableId(addInfo.Duration) && ValidateNullableId(addInfo.DepartmentId);
+            bool validation = ValidateString(addInfo.Name) && ValidateNullableId(addInfo.Duration) && ValidateNullableId(addInfo.DepartmentId);
             return validation;
         }
 

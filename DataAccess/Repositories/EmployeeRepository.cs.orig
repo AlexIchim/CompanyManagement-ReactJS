@@ -7,6 +7,9 @@ using System.Data.Entity.Core.Objects;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using DataAccess.Extensions;
+using Domain.Enums;
+using Manager.Descriptors;
 
 namespace DataAccess.Repositories
 {
@@ -56,32 +59,9 @@ namespace DataAccess.Repositories
 
         public int ComputeTotalAllocation(int employeeId)
         {
-<<<<<<< HEAD
             return _context.EmployeeProjects.Where(ep => ep.EmployeeId == employeeId).ToList().Sum(ep => ep.Allocation);         
-=======
-            var array = _context.EmployeeProjects.Where(ep => ep.EmployeeId == employeeId).ToList();
-            int totalAllocation = 0;
-
-            foreach (var ep in array)
-            {
-                totalAllocation += ep.Allocation;
-            }
-
-            return totalAllocation;
->>>>>>> capac-andreimuresan
         }
 
-        public void UpdateTotalAllocation(int employeeId, int totalAllocation)
-        {
-            var employee = _context.Employees.SingleOrDefault(e => e.Id == employeeId);
-
-            if (employee != null)
-            {
-                employee.TotalAllocation = totalAllocation;
-                Save();
-            }
-            
-        }
 
         public void AddEmployeeToProject(EmployeeProject ep)
         {
@@ -98,9 +78,13 @@ namespace DataAccess.Repositories
             return _context.EmployeeProjects.Where(ep => ep.ProjectId == projectId).ToList();
         }
 
-        public IEnumerable<Employee> GetAllDepartmentEmployees(Department department)
+        public IEnumerable<Employee> GetAllDepartmentEmployees(Department department, int? pageSize, int? pageNr)
         {
-                return department.Employees;         
+            return
+                _context.Employees.Where(e => e.DepartmentId == department.Id)
+                    .OrderBy(e => e.Name)
+                    .Paginate(pageSize, pageNr)
+                    .ToArray();    
         }
         public void AddEmployee(Employee employee)
         {
@@ -110,15 +94,65 @@ namespace DataAccess.Repositories
 
         public IEnumerable<Employee> GetAllUnAllocatedEmployeesOnProject()
         {
-            var employees = _context.Employees.Where(e => e.TotalAllocation == 0);
-            return employees.ToArray();
+            var employees = _context.Employees.ToList();
+            List<Employee> unallocatedEmployees = new List<Employee>();
+            foreach (Employee employee in employees)
+            {
+                if (ComputeTotalAllocation(employee.Id) == 0)
+                {
+                    unallocatedEmployees.Add(employee);
+                }
+            } 
+            return unallocatedEmployees;
         }
 
-        public IEnumerable<Employee> GetEmployeesThatAreNotFullyAllocated()
+        public IEnumerable<Employee> GetEmployeesThatAreNotFullyAllocated(int projectId,int? pageSize, int? pageNr)
         {
-            var employees = _context.Employees.Where(e => e.TotalAllocation < 100);
-            return employees.ToArray();
+            var employees = _context.Employees.ToList();
+            List<Employee> notfullyAllocatedEmployees = new List<Employee>();
+            foreach (Employee employee in employees)
+            {
+                var employeeProject = GetEmployeeProjectCombinationById(projectId, employee.Id);
+                if (ComputeTotalAllocation(employee.Id) < 100 && employeeProject ==null)
+                {
+                    notfullyAllocatedEmployees.Add(employee);
+                }
+            }
+            return notfullyAllocatedEmployees.AsQueryable().Paginate(pageSize, pageNr);
         }
 
+<<<<<<< HEAD
+=======
+        public IEnumerable<string> GetJobTypesDescriptions()
+        {
+            List<string> descriptions = new List<string>();
+            foreach (JobType jt in Enum.GetValues(typeof(JobType)))
+            {
+                descriptions.Add(jt.GetDescription());
+            }
+            return descriptions;
+        }
+
+        public IEnumerable<string> GetPositionTypeDescriptions()
+        {
+            List<string> descriptions = new List<string>();
+            foreach (PositionType pt in Enum.GetValues(typeof(PositionType)))
+            {
+                descriptions.Add(pt.GetDescription());
+            }
+            return descriptions;
+        }
+
+        public void AssignEmployee(EmployeeProject ep)
+        {
+            _context.EmployeeProjects.Add(ep);
+            Save();
+        }
+
+        public EmployeeProject GetEmployeeProjectCombinationById(int projectId, int employeeId)
+        {
+            return _context.EmployeeProjects.SingleOrDefault(ep => ep.ProjectId == projectId && ep.EmployeeId == employeeId);
+        }
+>>>>>>> capac-Adi
     }
 }

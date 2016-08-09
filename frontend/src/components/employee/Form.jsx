@@ -1,9 +1,9 @@
 import React from 'react';
-import AddEmployeeModalTemplate from './AddEmployeeModalTemplate.jsx';
 import configs from '../helpers/calls';
 import Context from '../../context/Context.js';
 import * as Immutable from 'immutable';
 import * as Controller from '../controller';
+import Modal from '../modal/Modal.jsx';
 
 export default class Form extends React.Component{
 
@@ -24,6 +24,7 @@ export default class Form extends React.Component{
                 console.log(data, this);
                 this.setState({
                     jobTypes: data
+
                 })
             }.bind(this)
         })   
@@ -31,7 +32,7 @@ export default class Form extends React.Component{
         $.ajax({
             method: 'GET',
             async: false,
-            url: configs.baseUrl + 'api/employee/getPoisitionTypes',
+            url: configs.baseUrl + 'api/employee/getPositionTypes',
             success: function (data) {
                 console.log(data, this);
                 this.setState({
@@ -48,31 +49,30 @@ export default class Form extends React.Component{
 
     store(cb){
 
-        const jobTypes = this.refs.jobType.options[this.refs.jobType.selectedIndex].value
-        const positionypes = this.refs.positionType.options[this.refs.positionType.selectedIndex].value
+        const jobType = this.refs.jobType.options[this.refs.jobType.selectedIndex].value
+        const positionType = this.refs.positionType.options[this.refs.positionType.selectedIndex].value
+
         var inputInfo = {
             DepartmentId: this.props.departmentId,
             Name: this.refs.name.value,
             Address: this.refs.address.value,
             EmploymentDate: this.refs.employmentDate.value,
             ReleaseDate: this.refs.releaseDate.value,
-            JobType: this.refs.jobType.value,
-            PositionType: this.refs.positionType.value
+            JobType: jobType,
+            PositionType: positionType
         }
+
+        console.log(inputInfo)
          $.ajax({
             method: 'POST',
             url: configs.baseUrl + 'api/employee/addEmployee',
             data:inputInfo,
             success: function (data) {              
-                Context.cursor.update('employees',(oldList) => {      
-                    return oldList.push( Immutable.fromJS(inputInfo) );
-                   
-                });
                  cb(); 
                  this.refresh(this.props.departmentId);
             }.bind(this)
         })   
-        console.log(3)
+        
     }
 
     refresh(departmentId){
@@ -82,18 +82,19 @@ export default class Form extends React.Component{
     render(){
         const jobTypes = this.state.jobTypes.map((el,x)=>{
             return (
-                <option value={el} key={x} > {el} </option>                         
+                <option value={el.Id} key={x} id={el.Id}  > {el.Description} </option>                         
             )
         });
         const positionTypes = this.state.positionTypes.map((el,x)=>{
             return (
-                <option value={el} key={x} >{el}</option>                         
+                <option value={el.Id} key={x} id ={el.Id} >{el.Description}</option>                         
             )
         });
-        return (
+         return(
 
-        <AddEmployeeModalTemplate close={this.props.close} store={this.store.bind(this)}>
-            <div className="form-group">
+        <Modal title={'Add new employee'} button={'Add'} close={this.props.close} action={this.store.bind(this)}>
+      
+           <div className="form-group">
                 <label className="col-sm-4 control-label"> Name </label>
                 <div className="col-sm-6">
                     <input  ref="name" className="form-control" placeholder="Name"/>
@@ -146,7 +147,12 @@ export default class Form extends React.Component{
                 </select>
                 </div>
             </div>
-        </AddEmployeeModalTemplate>
+           
+
+            </Modal>
+
+
+        
         )
     }
 }

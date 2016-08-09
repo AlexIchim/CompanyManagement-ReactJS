@@ -16,10 +16,10 @@ export default class  Modal extends React.Component{
     render(){
         
         return(
-            <div ref="modal" className="modal fade"  tabIndex="-1" data-backdrop="static" data-keyboard="false">
+            <div ref="modal" className="modal fade modal-all"  tabIndex="-1" data-backdrop="static" data-keyboard="false">
                 <div className="modal-dialog">
                     <div className="modal-content">
-                        <div className="box info-box">
+                        <div className="box info-box modal-box">
                             <div className="box-header with-border">
                                 <h3 className="box-title">{this.props.title}</h3>
                             </div>
@@ -28,7 +28,7 @@ export default class  Modal extends React.Component{
                                     {this.props.children}
                                 </div>
 
-                                <div className="box-footer">
+                                <div className="box-footer modal-footer">
                                     <button type="button" className="col-sm-2 btn btn-primary" onClick={this.props.action.bind(this, this.cancel.bind(this))} > {this.props.button} </button>
                                     <button type="button" className="col-sm-2 btn btn-default cancel-button" onClick={this.cancel.bind(this)}> Cancel</button>
                                 </div>

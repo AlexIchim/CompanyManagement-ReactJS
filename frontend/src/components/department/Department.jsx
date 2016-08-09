@@ -78,9 +78,6 @@ export default class Department extends React.Component {
     }
 
     back(){
-
-
-
         if (this.state.pageNr>1){
 
             const whereTo=this.state.pageNr-1
@@ -97,6 +94,7 @@ export default class Department extends React.Component {
     next(){
        
         const whereTo=this.state.pageNr+1
+        console.log(3)
 
         this.setNumberOfPages();
 

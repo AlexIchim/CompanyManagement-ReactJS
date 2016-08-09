@@ -18,7 +18,9 @@ export default class Member extends React.Component{
             members: Context.cursor.get("members"),
             assign:false,
             pageNr:1,
-            positionTypes:[]
+            pageSize:3,
+            positionTypes:[],
+            nrOfPages:null
         }
     }
 
@@ -54,6 +56,30 @@ export default class Member extends React.Component{
 
     }
 
+     getAllEmployeeOnProject(pageNr){
+
+        Controller.getEmployeesByProjectId(this.props.routeParams.projectId,pageNr);
+
+        this.setNumberOfPages();
+    }
+
+
+    setNumberOfPages(){
+        $.ajax({
+            method: 'GET',
+            async: false,
+            url: configs.baseUrl + 'api/project/getEmployeesByProjectId?projectId='+ this.props.routeParams.projectId +'&pageSize=nul&pageNr=null',
+            success: function (data) {
+                console.log(data)
+                this.setState(
+                    {
+                        nrOfPages: data.length / this.state.pageSize + 1
+                    }
+                )
+            }.bind(this)
+        })
+    }
+
     showAssignForm(){
         this.setState({
             assign:true
@@ -68,10 +94,10 @@ export default class Member extends React.Component{
 
     back(){
 
-        if (this.state.pageNr!=1){
+        if (this.state.pageNr > 1){
             const whereTo=this.state.pageNr-1
 
-            Controller.getEmployeesByProjectId(this.props.routeParams.projectId,whereTo);
+            this.getAllEmployeeOnProject(whereTo);
             
              this.setState({
                 pageNr:this.state.pageNr-1
@@ -84,11 +110,18 @@ export default class Member extends React.Component{
 
         const whereTo=this.state.pageNr+1
 
-        Controller.getEmployeesByProjectId(this.props.routeParams.projectId,whereTo);
+         this.setNumberOfPages();
 
-        this.setState({
-            pageNr:this.state.pageNr+1
+        if(whereTo < this.state.nrOfPages) {
+            
+            this.getAllEmployeeOnProject(whereTo);
+
+            this.setState({
+                pageNr:this.state.pageNr+1
         })
+        }
+
+       
     }
 
 
@@ -116,6 +149,9 @@ export default class Member extends React.Component{
 
         return(
             <div>
+
+                {assignModal}
+
                 <h1>{this.props.routeParams.projectName + ' Members'}  </h1>
                 <button className="btn btn-xs btn-info" onClick={this.showAssignForm.bind(this)} > <span className="glyphicon glyphicon-plus-sign"></span> Assign employee </button>
 
@@ -139,16 +175,16 @@ export default class Member extends React.Component{
                     </tbody>
                 </table>
 
-                <div>
+                <div className="btn-wrapper">
                     <button className="leftArrow" onClick={this.back.bind(this)}>
-                                <i className="fa fa-arrow-left fa-2x" aria-hidden="true"></i>
+                                <i className="fa fa-arrow-left fa-1x" aria-hidden="true"></i>
                     </button>
                     <button className="rightArrow" onClick={this.next.bind(this)}>
-                                <i className="fa fa-arrow-right fa-2x" aria-hidden="true"></i>
+                                <i className="fa fa-arrow-right fa-1x" aria-hidden="true"></i>
                     </button>              
                 </div>
 
-                {assignModal}
+                
 
             </div>
         )

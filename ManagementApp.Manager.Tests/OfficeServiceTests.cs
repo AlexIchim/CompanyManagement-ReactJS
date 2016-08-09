@@ -31,7 +31,7 @@ namespace ManagementApp.Manager.Tests
             _officeService = new OfficeService(_mapperMock.Object, _officeRepositoryMock.Object, _officeValidatorMock.Object);
         }
 
-        private Office CreateOffice(string name, string address, string phoneNumber, byte[] image, int? id = null)
+        private Office CreateOffice(string name, string address, string phoneNumber, string image, int? id = null)
         {
             var office = new Office
             {
@@ -48,7 +48,7 @@ namespace ManagementApp.Manager.Tests
             return office;
         }
 
-        private OfficeInfo CreateOfficeInfo(int id, string name, string address, string phoneNumber, byte[] image)
+        private OfficeInfo CreateOfficeInfo(int id, string name, string address, string phoneNumber, string image)
         {
             var officeInfo = new OfficeInfo
             {
@@ -71,13 +71,13 @@ namespace ManagementApp.Manager.Tests
             //Arrange
             var offices = new List<Office>
             {
-                CreateOffice("Tokyo","Tokyo","123",new byte[] { 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20 }),
-                CreateOffice("Mumbai","Mumbai","123",new byte[] { 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20 }),
+                CreateOffice("Tokyo","Tokyo","123", "abc"),
+                CreateOffice("Mumbai","Mumbai","123","abcd"),
             };
             var officesInfo = new List<OfficeInfo>
             {
-                CreateOfficeInfo(1,"Tokyo","Tokyo","123",new byte[] { 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20 }),
-                CreateOfficeInfo(2, "Mumbai","Mumbai","123",new byte[] { 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20 })
+                CreateOfficeInfo(1,"Tokyo","Tokyo","123","xyz"),
+                CreateOfficeInfo(2, "Mumbai","Mumbai","123","wxyz")
             };
 
             _officeRepositoryMock.Setup(m => m.GetAll()).Returns(offices);
@@ -96,14 +96,14 @@ namespace ManagementApp.Manager.Tests
 
             var offices = new List<Office>
             {
-                CreateOffice("Tokyo","Tokyo","123",new byte[] { 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20 }),
-                CreateOffice("Mumbai","Mumbai","123",new byte[] { 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20 }),
+                CreateOffice("Tokyo","Tokyo","123","abc"),
+                CreateOffice("Mumbai","Mumbai","123","abc"),
             };
 
             var officesInfo = new List<OfficeInfo>
             {
-                CreateOfficeInfo(1,"Tokyo","Tokyo","123",new byte[] { 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20 }),
-                CreateOfficeInfo(2, "Mumbai","Mumbai","123",new byte[] { 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20 })
+                CreateOfficeInfo(1,"Tokyo","Tokyo","123","abc"),
+                CreateOfficeInfo(2, "Mumbai","Mumbai","123","abc")
             };
 
 
@@ -122,14 +122,14 @@ namespace ManagementApp.Manager.Tests
         public void Add_CallsAddOfficeFromRepository()
         {
             //Arrange
-            var officeInputInfo = new AddOfficeInputInfo { Id = 1, Name = "Zalau", Address = "Str Alexandrescu", PhoneNumber = "0752029547", Image = new byte[] { 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20 } };
+            var officeInputInfo = new AddOfficeInputInfo { Id = 1, Name = "Zalau", Address = "Str Alexandrescu", PhoneNumber = "0752029547", Image = "abc" };
             var office = new Office
             {
                 Id = 1,
                 Name = "Zalau",
                 Address = "Str Alexandrescu",
                 PhoneNumber = "0752029547",
-                Image = new byte[] { 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20 }
+                Image = "abc"
             };
 
             _mapperMock.Setup(m => m.Map<Office>(officeInputInfo)).Returns(office);
@@ -154,11 +154,11 @@ namespace ManagementApp.Manager.Tests
                 Name = "Zalau",
                 Address = "Str Alexandrescu",
                 PhoneNumber = "0752029547",
-                Image = new byte[] { 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20 }
+                Image = "abc"
             };
 
             var office = CreateOffice("Zalau", "Str Alexandrescu", "0752029547",
-                                new byte[] { 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20 }, 1);
+                                "abc" , 1);
 
             _mapperMock.Setup(m => m.Map<Office>(officeInputInfo)).Returns(office);
             _officeValidatorMock.Setup(m => m.ValidateAddOfficeInfo(officeInputInfo)).Returns(true);
@@ -183,7 +183,7 @@ namespace ManagementApp.Manager.Tests
                 Name = "php",
                 Address = "Zalau",
                 PhoneNumber = "0752029547",
-                Image = new byte[] { 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20 }
+                Image = "abc"
             };
             var office = new Office
             {
@@ -191,7 +191,7 @@ namespace ManagementApp.Manager.Tests
                 Name = "Zalau",
                 Address = "Str Alexandrescu",
                 PhoneNumber = "0752029547",
-                Image = new byte[] { 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20 }
+                Image = "abc"
             };
 
             _officeRepositoryMock.Setup(m => m.GetOfficeById(officeInputInfo.Id)).Returns(office);
@@ -213,7 +213,7 @@ namespace ManagementApp.Manager.Tests
                 Name = "php",
                 Address = "Zalau",
                 PhoneNumber = "0752029547",
-                Image = new byte[] { 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20 }
+                Image = "abc"
             }; ;
             var office = new Office
             {
@@ -221,7 +221,7 @@ namespace ManagementApp.Manager.Tests
                 Name = "Zalau",
                 Address = "Str Alexandrescu",
                 PhoneNumber = "0752029547",
-                Image = new byte[] { 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20 }
+                Image = "abc"
             };
 
             _officeRepositoryMock.Setup(m => m.GetOfficeById(officeInputInfo.Id)).Returns(office);
@@ -243,7 +243,7 @@ namespace ManagementApp.Manager.Tests
                 Name = "php",
                 Address = "Zalau",
                 PhoneNumber = "0752029547",
-                Image = new byte[] { 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20 }
+                Image = "abc"
             };
 
             var office = new Office
@@ -252,7 +252,7 @@ namespace ManagementApp.Manager.Tests
                 Name = "Zalau",
                 Address = "Str Alexandrescu",
                 PhoneNumber = "0752029547",
-                Image = new byte[] { 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20 }
+                Image = "abc"
             };
 
             _officeRepositoryMock.Setup(m => m.GetOfficeById(officeInputInfo.Id)).Returns(office);
@@ -274,7 +274,7 @@ namespace ManagementApp.Manager.Tests
                 Name = "php",
                 Address = "Zalau",
                 PhoneNumber = "0752029547",
-                Image = new byte[] { 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20 }
+                Image = "abc"
             };
 
             _officeRepositoryMock.Setup(m => m.GetOfficeById(officeInputInfo.Id)).Returns((Office)null);
@@ -297,7 +297,7 @@ namespace ManagementApp.Manager.Tests
                 Name = "php",
                 Address = "Zalau",
                 PhoneNumber = "0752029547",
-                Image = new byte[] { 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20 }
+                Image = "abc"
             };
 
             _officeRepositoryMock.Setup(m => m.GetOfficeById(officeInputInfo.Id)).Returns((Office)null);

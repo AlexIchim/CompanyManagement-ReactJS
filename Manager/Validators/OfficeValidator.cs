@@ -59,7 +59,7 @@ namespace Manager.Services
             bool validation = ValidateString(addInfo.Name) && ValidateString(addInfo.Address) && ValidateString(addInfo.PhoneNumber);
             //de validat imaginea
             return validation;
-        }
+        } 
 
         public bool ValidateUpdateOfficeInfo(UpdateOfficeInputInfo updateInfo)
         {

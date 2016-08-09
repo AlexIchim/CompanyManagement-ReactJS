@@ -7,6 +7,8 @@ using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using Domain.Enums;
+using Manager.Descriptors;
+using Manager.InfoModels;
 
 namespace DataAccess.Repositories
 {
@@ -69,20 +71,8 @@ namespace DataAccess.Repositories
             _context.SaveChanges();
         }
 
-        public void Delete(Project project, IEnumerable<EmployeeProject> employeeProjects)
+        public void Delete(Project project)
         {
-            if (employeeProjects.Any())
-            {
-                foreach (EmployeeProject employeeProject in employeeProjects)
-                {
-                    var employee = _context.Employees.SingleOrDefault(e => e.Id == employeeProject.EmployeeId);
-                    //////////////////////////////////////////////////
-
-                    _context.EmployeeProjects.Remove(employeeProject);
-
-
-                }
-            }
             if (project != null)
             {
                 _context.Projects.Remove(project);
@@ -95,20 +85,16 @@ namespace DataAccess.Repositories
             return _context.EmployeeProjects.Where(ep => ep.ProjectId == projectId).ToList();
         }
 
-        public IEnumerable<Project> GetAllDepartmentProjects(Department department, int? pageSize, int? pageNr)
+        public IEnumerable<Project> GetAllDepartmentProjects(Department department, ProjectStatus? status, int? pageSize, int? pageNr)
         {
-            return _context.Projects.Where(d => d.DepartmentId == department.Id).OrderBy(d => d.Name).Paginate(pageSize, pageNr).ToArray();
+            string s = status.ToString();
+            return _context.Projects.Where(p => (status==null || p.Status == status) && p.DepartmentId == department.Id).OrderBy(d => d.Name).Paginate(pageSize, pageNr).ToArray();
         }
 
-        public IEnumerable<Project> GetProjectsFilteredByStatus(Department department,string status, int? pageSize, int? pageNr)
-        {
-            return _context.Projects.Where(p => p.Status.ToString() == status && p.DepartmentId==department.Id).OrderBy(d => d.Name).Paginate(pageSize, pageNr).ToArray();
-        }
-
-        public IEnumerable<string> GetProjectStatusDescriptions()
+        /*public IEnumerable<string> GetProjectStatusDescriptions()
         {
             return Enum.GetNames(typeof(ProjectStatus));
-        }
+        }*/
 
         public EmployeeProject GetEmployeeProjectById(int employeeId, int projectId)
         {
@@ -121,5 +107,6 @@ namespace DataAccess.Repositories
             _context.EmployeeProjects.Remove(ep);
             Save();
         }
-    }
+
+       }
 }

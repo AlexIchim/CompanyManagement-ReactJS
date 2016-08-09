@@ -2,6 +2,7 @@
 using Contracts;
 using Domain.Enums;
 using Domain.Models;
+using Manager.Descriptors;
 using Manager.InfoModels;
 using Manager.InputInfoModels;
 using System;
@@ -94,9 +95,12 @@ namespace Manager.Services
             if (_projectValidator.ValidateId(projectId))
             {
                 Project project = _projectRepository.GetProjectById(projectId);
-                IEnumerable<EmployeeProject> employeeProject = _projectRepository.GetEmployeeProjectById(projectId);
-                _projectRepository.Delete(project, employeeProject);
-                return new OperationResult(true, Messages.SuccessfullyDeletedProject);
+                if (project.EmployeeProjects.Count==0)
+                    { 
+                    _projectRepository.Delete(project);
+                    return new OperationResult(true, Messages.SuccessfullyDeletedProject);
+                    }
+                return new OperationResult(false, Messages.ErrorDeletingProject);
             }
             return new OperationResult(false, Messages.ErrorDeletingProject);
         }
@@ -127,51 +131,33 @@ namespace Manager.Services
             return new OperationResult(false, Messages.ErrorWhileUpdatingProject);
         }
 
-        public IEnumerable<ProjectInfo> GetAllDepartmentProjects(int depId, int? pageSize, int? pageNr)
+        public IEnumerable<ProjectInfo> GetAllDepartmentProjects(int departmentId, ProjectStatus? statusInfo, int? pageSize, int? pageNr)
         {
-            if (_projectValidator.ValidateId(depId))
+            //var status = _mapper.Map<ProjectStatus>(statusInfo);
+            if (_projectValidator.ValidateId(departmentId))
             {
-                var department = _departmentRepository.GetDepartmentById(depId);
+                var department = _departmentRepository.GetDepartmentById(departmentId);
                 if (department != null)
                 {
-                    var projects = _projectRepository.GetAllDepartmentProjects(department, pageSize, pageNr);
+                    var projects = _projectRepository.GetAllDepartmentProjects(department, statusInfo, pageSize, pageNr);
                     if (projects != null)
                     {
                         var projectInfos = _mapper.Map<IEnumerable<ProjectInfo>>(projects);
+
                         return projectInfos;
                     }
                 }
             }
+
             return null;
         }
 
-        public IEnumerable<ProjectInfo> GetProjectsFilteredByStatus(int departmentId, string status, int? pageSize, int? pageNr)
-        {
-            if (status != "" && status != null)
-            {
-                //if ((ProjectStatus)Enum.Parse(typeof(ProjectStatus), status) is ProjectStatus)
-                //{
-                var department = _departmentRepository.GetDepartmentById(departmentId);
-                var projects = _projectRepository.GetProjectsFilteredByStatus(department, status, pageSize, pageNr);
-                if (projects != null)
-                {
-                    var projectInfos = _mapper.Map<IEnumerable<ProjectInfo>>(projects);
-
-                    return projectInfos;
-                }
-                //}
-            }
-            return null;
-        }
-
-        public IEnumerable<string> GetProjectStatusDescriptions()
+        /*public IEnumerable<string> GetProjectStatusDescriptions()
         {
             return _projectRepository.GetProjectStatusDescriptions();
-        }
+        }*/
         public OperationResult DeleteEmployeeFromProject(int employeeId, int projectId)
         {
-
-
             if (_projectValidator.ValidateId(employeeId) && _projectValidator.ValidateId(projectId))
             {
                 var employeeProject = _projectRepository.GetEmployeeProjectById(employeeId, projectId);
@@ -182,6 +168,17 @@ namespace Manager.Services
                 }
             }
             return new OperationResult(false, Messages.ErrorDeletingEmployeeProject);
+        }
+
+        public IEnumerable<ProjectStatusInfo> GetProjectStatusDescriptions()
+        {
+            Array values = Enum.GetValues(typeof(ProjectStatus));
+            return (from ProjectStatus jobType in values
+                    select new ProjectStatusInfo
+                    {
+                        Id = (int)jobType,
+                        Description = jobType.GetDescription()
+                    }).ToList();
         }
 
     }

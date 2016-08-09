@@ -114,7 +114,7 @@ namespace ManagementApp.Controllers
             return Json(result);
         }
 
-        [Route("getPoisitionTypes")]
+        [Route("getPositionTypes")]
         [HttpGet]
         public IHttpActionResult GetPositionTypes()
         {

@@ -21,13 +21,25 @@ namespace Manager.Descriptors
 
         public static JobType GetJobTypeEnum(string s)
         {
-            JobType e = (JobType)Enum.Parse(typeof(JobType), s);
-            return e;
+            IEnumerable<string> names = Enum.GetNames(typeof(JobType));
+            foreach (string name in names)
+            {
+                JobType jt = (JobType) Enum.Parse(typeof(JobType), name);
+                if (jt.GetDescription() == s)
+                    return jt;
+            }
+            return 0;
         }
         public static PositionType GetPositionTypeEnum(string s)
         {
-            PositionType e = (PositionType)Enum.Parse(typeof(PositionType), s);
-            return e;
+            IEnumerable<string> names = Enum.GetNames(typeof(PositionType));
+            foreach (string name in names)
+            {
+                PositionType pt = (PositionType)Enum.Parse(typeof(JobType), name);
+                if (pt.GetDescription() == s)
+                    return pt;
+            }
+            return 0;
         }
     }
 }

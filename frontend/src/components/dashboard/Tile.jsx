@@ -24,14 +24,11 @@ class Tile extends React.Component{
             edit: !this.state.edit
         })
     }
-
-    storeEditInfo(){
-        //{this.storeEditInfo.bind(this)}
-    }
+    
 
     render(){
         const props = this.props;
-        const parentClass = classNames("info-box-icon", props['parentClass']);
+        //const parentClass = classNames("info-box-icon", props['parentClass']);
         const icon = classNames("fa", "fa-" + props['icon']);
 
         const modal = this.state.edit ? <Form show = {this.state.edit} element = {props['office']}  close={this.closeEditForm.bind(this)}/> : '';
@@ -44,8 +41,11 @@ class Tile extends React.Component{
                 {modal}
 
                 <div className="col-md-6 col-sm-6 col-xs-12">
-                <div className="info-box">
-                    <span className={parentClass}><i className={icon}></i></span>
+                <div className="info-box info-box-tile">
+
+                    <div className="info-box-icon">
+                        <img src={props['image']}/>
+                    </div>
                     <div className="info-box-content">
                         <span className="info-box-name">
                             {props['name']}

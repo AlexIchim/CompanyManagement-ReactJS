@@ -31,9 +31,6 @@ namespace Contracts
 
         IEnumerable<Employee> GetEmployeesThatAreNotFullyAllocated(int projectId, int? pageSize, int? pageNr);
 
-        IEnumerable<string> GetJobTypesDescriptions();
-
-        IEnumerable <string> GetPositionTypeDescriptions();
 
         void AssignEmployee(EmployeeProject ep);
     }

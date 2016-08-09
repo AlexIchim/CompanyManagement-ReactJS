@@ -1,6 +1,7 @@
 ﻿using Domain.Models;
 using System.Collections.Generic;
 using System.Linq;
+using Domain.Enums;
 
 namespace Contracts
 {
@@ -14,15 +15,14 @@ namespace Contracts
 
         void Add(Project project);
 
-        void Delete(Project project, IEnumerable<EmployeeProject> employeeProject);
+        void Delete(Project project);
 
         IEnumerable<EmployeeProject> GetEmployeeProjectById(int projectId);
 
-        IEnumerable<Project> GetAllDepartmentProjects(Department department, int? pageSize, int? pageNr);
-        IEnumerable<Project> GetProjectsFilteredByStatus(Department department,string status, int? pageSize, int? pageNr);
+        IEnumerable<Project> GetAllDepartmentProjects(Department department,ProjectStatus? status, int? pageSize, int? pageNr);
         int GetEmployeeProjectAllocationById(int projectId, int employeeId);
         string GetEmployeeRoleById(int employeeId);
-        IEnumerable<string> GetProjectStatusDescriptions();
+        //IEnumerable<string> GetProjectStatusDescriptions();
         EmployeeProject GetEmployeeProjectById(int employeeId, int projectId);
 
         void DeleteEmployeeProject(EmployeeProject ep);
