@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Domain.Enums;
 
 namespace Contracts
 {
@@ -29,7 +30,7 @@ namespace Contracts
 
         IEnumerable<Employee> GetAllUnAllocatedEmployeesOnProject();
 
-        IEnumerable<Employee> GetEmployeesThatAreNotFullyAllocated(int projectId, int? pageSize, int? pageNr);
+        IEnumerable<Employee> GetEmployeesThatAreNotFullyAllocated(int projectId,string DepartmentName, int? pageSize, int? pageNr,PositionType? ptype);
 
 
         void AssignEmployee(EmployeeProject ep);

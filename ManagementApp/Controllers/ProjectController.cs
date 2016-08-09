@@ -21,9 +21,9 @@ namespace ManagementApp.Controllers
 
         [Route("getEmployeesByProjectId")]
         [HttpGet]
-        public IHttpActionResult GetEmployeesByProjectId(int projectId, int? pageSize, int? pageNr)
+        public IHttpActionResult GetEmployeesByProjectId(int projectId, int? pageSize, int? pageNr,PositionType? ptype = null)
         {
-            var result = _projectService.GetEmployeesByProjectId(projectId, pageSize, pageNr);
+            var result = _projectService.GetEmployeesByProjectId(projectId,ptype, pageSize, pageNr);
             return Json(result);
         }
 

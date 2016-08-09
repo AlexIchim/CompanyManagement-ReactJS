@@ -26,7 +26,7 @@ export default class FormAssign extends React.Component{
          $.ajax({
             method: 'GET',
             async: false,
-            url: configs.baseUrl + 'api/employee/getPoisitionTypes',
+            url: configs.baseUrl + 'api/employee/getPositionTypes',
             success: function (data) {
                 console.log(data, this);
                 this.setState({
@@ -50,7 +50,7 @@ export default class FormAssign extends React.Component{
         $.ajax({
             method: 'GET',
             async: false,
-          url: configs.baseUrl + 'api/employee/GetEmployeesThatAreNotFullyAllocated?projectId='+ this.props.projectId +'&pageSize=5'+'&pageNr=1',
+          url: configs.baseUrl + 'api/employee/GetEmployeesThatAreNotFullyAllocated?projectId='+ this.props.projectId + '&departmentName=' + "" + '&ptype='+ {} +'&pageSize=5'+'&pageNr=1',
             success: function (data) {
                 console.log(data, this);
                 this.setState({
@@ -79,7 +79,7 @@ export default class FormAssign extends React.Component{
             data:inputInfo,
             success: function (data) {               
                  cb(); 
-                 refresh();
+                 this.refresh();
             }.bind(this)
         })   
               
@@ -97,7 +97,7 @@ export default class FormAssign extends React.Component{
             $.ajax({
             method: 'GET',
             async: false,
-            url: configs.baseUrl + 'api/employee/GetEmployeesThatAreNotFullyAllocated?projectId='+ this.props.projectId +'&pageSize=5'+'&pageNr='+whereTo,
+            url: configs.baseUrl + 'api/employee/GetEmployeesThatAreNotFullyAllocated?projectId='+  this.props.projectId +'&departmentName=' + "" + '&ptype='+ {}+'&pageSize=5'+'&pageNr='+whereTo,
             success: function (data) {
                 console.log(data, this);
                 this.setState({
@@ -120,7 +120,7 @@ export default class FormAssign extends React.Component{
         $.ajax({
             method: 'GET',
             async: false,
-            url: configs.baseUrl + 'api/employee/GetEmployeesThatAreNotFullyAllocated?projectId='+ this.props.projectId +'&pageSize=5'+'&pageNr='+whereTo,
+            url: configs.baseUrl + 'api/employee/GetEmployeesThatAreNotFullyAllocated?projectId='+ this.props.projectId + '&departmentName=' + "" + '&ptype='+ {} +'&pageSize=5'+'&pageNr='+whereTo,
             success: function (data) {
                 console.log(data, this);
                 this.setState({
@@ -148,13 +148,31 @@ export default class FormAssign extends React.Component{
             })
             console.log(employee);
         }
+
+        onDropDownChange(){
+        const ptype=this.refs.positionTypes.options[this.refs.positionTypes.selectedIndex].value;
+        const depName=this.refs.departments.options[this.refs.departments.selectedIndex].text;
+        const pageNr = 1;
+
+         $.ajax({
+            method: 'GET',
+            async: false,
+            url: configs.baseUrl + 'api/employee/GetEmployeesThatAreNotFullyAllocated?projectId='+ this.props.projectId + '&departmentName=' + depName + '&ptype='+ ptype +'&pageSize=5'+'&pageNr=1',
+            success: function (data) {
+                console.log(data, this);
+                this.setState({
+                    availableEmployees: data
+                })
+            }.bind(this)
+        })    
+    }
          
 
        
     render(){
         const positionTypes=this.state.positionTypes.map((el, x) => {
             return (
-                <option value={el} key={x} >{el}</option>                         
+                <option value={el.Id} key={x} >{el.Description}</option>                         
             )
         });
 
@@ -180,11 +198,11 @@ export default class FormAssign extends React.Component{
 
         <Modal title={'Assign employee'} button={'Assign'} close={this.props.close} action={this.assign.bind(this)}>
             <div className="filter">
-                <select className="selectpicker" ref="positionTypes" >
+                <select className="selectpicker" ref="positionTypes" onChange={this.onDropDownChange.bind(this)} >
                     {positionTypes}                    
                 </select>
 
-                <select className="selectpicker" ref="departments" >
+                <select className="selectpicker" ref="departments" onChange={this.onDropDownChange.bind(this)} >
                     {departments}                    
                 </select>
             </div>
