@@ -106,19 +106,50 @@ namespace DataAccess.Repositories
             return unallocatedEmployees;
         }
 
-        public IEnumerable<Employee> GetEmployeesThatAreNotFullyAllocated()
+        public IEnumerable<Employee> GetEmployeesThatAreNotFullyAllocated(int projectId,int? pageSize, int? pageNr)
         {
             var employees = _context.Employees.ToList();
-            List<Employee> fullyAllocatedEmployees = new List<Employee>();
+            List<Employee> notfullyAllocatedEmployees = new List<Employee>();
             foreach (Employee employee in employees)
             {
-                if (ComputeTotalAllocation(employee.Id) < 100)
+                var employeeProject = GetEmployeeProjectCombinationById(projectId, employee.Id);
+                if (ComputeTotalAllocation(employee.Id) < 100 && employeeProject ==null)
                 {
-                    fullyAllocatedEmployees.Add(employee);
+                    notfullyAllocatedEmployees.Add(employee);
                 }
             }
-            return fullyAllocatedEmployees;
+            return notfullyAllocatedEmployees.AsQueryable().Paginate(pageSize, pageNr);
         }
 
+        public IEnumerable<string> GetJobTypesDescriptions()
+        {
+            List<string> descriptions = new List<string>();
+            foreach (JobType jt in Enum.GetValues(typeof(JobType)))
+            {
+                descriptions.Add(jt.GetDescription());
+            }
+            return descriptions;
+        }
+
+        public IEnumerable<string> GetPositionTypeDescriptions()
+        {
+            List<string> descriptions = new List<string>();
+            foreach (PositionType pt in Enum.GetValues(typeof(PositionType)))
+            {
+                descriptions.Add(pt.GetDescription());
+            }
+            return descriptions;
+        }
+
+        public void AssignEmployee(EmployeeProject ep)
+        {
+            _context.EmployeeProjects.Add(ep);
+            Save();
+        }
+
+        public EmployeeProject GetEmployeeProjectCombinationById(int projectId, int employeeId)
+        {
+            return _context.EmployeeProjects.SingleOrDefault(ep => ep.ProjectId == projectId && ep.EmployeeId == employeeId);
+        }
     }
 }

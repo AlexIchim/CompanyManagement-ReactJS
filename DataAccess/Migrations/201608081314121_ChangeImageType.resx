@@ -117,88 +117,10 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="ErrorWhileUpdatingDepartment" xml:space="preserve">
-    <value>'Department could not be modified'</value>
+  <data name="Target" xml:space="preserve">
+    <value>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</value>
   </data>
-  <data name="SuccessfullyAddedDepartment" xml:space="preserve">
-    <value>'Department was added with success'</value>
-  </data>
-  <data name="SuccessfullyAddedOffice" xml:space="preserve">
-    <value>'Office was added with success'</value>
-  </data>
-  <data name="SuccessfullyAddedProject" xml:space="preserve">
-    <value>'Project was successfully added'</value>
-  </data>
-  <data name="SuccessfullyAddedEmployeeToProject" xml:space="preserve">
-    <value>'Employee to project was successfully added'</value>
-  </data>
-  <data name="SuccessfullyAddedEmployee" xml:space="preserve">
-    <value>'Employee was added with success'</value>
-  </data>
-  <data name="SuccessfullyDeletedEmployee" xml:space="preserve">
-    <value>'Employee was successfully deleted'</value>
-  </data>
-  <data name="SuccessfullyDeletedProject" xml:space="preserve">
-    <value>'Project was deleted with success.'</value>
-  </data>
-  <data name="SuccessfullyUpdatedDepartment" xml:space="preserve">
-    <value>'Department was updated with success'</value>
-  </data>
-  <data name="SuccessfullyUpdatedPartialAllocation" xml:space="preserve">
-    <value>Partial allocation of an employee on a project was updated successfully.</value>
-  </data>
-  <data name="ErrorWhileUpdatingPartialAllocation" xml:space="preserve">
-    <value>Partial allocation could not be modified.</value>
-  </data>
-  <data name="ErrorWhileUpdatingOffice" xml:space="preserve">
-    <value>'Error: Office does not exist'</value>
-  </data>
-  <data name="SuccessfullyUpdatedOffice" xml:space="preserve">
-    <value>'Office was successfully updated'</value>
-  </data>
-  <data name="ErrorWhileUpdatingEmployee" xml:space="preserve">
-    <value>'Error: Employee does not exist'</value>
-  </data>
-  <data name="SuccessfullyUpdatedEmployee" xml:space="preserve">
-    <value>'Successfully updated employee'</value>
-  </data>
-  <data name="SuccessfullyUpdatedProject" xml:space="preserve">
-    <value>'Project was updated with success'</value>
-  </data>
-  <data name="ErrorWhileUpdatingProject" xml:space="preserve">
-    <value>'Project could not be updated'</value>
-  </data>
-  <data name="ErrorAddingEmployeeToProject" xml:space="preserve">
-    <value>'Error adding employee to project'</value>
-  </data>
-  <data name="ErrorAddingDepartment" xml:space="preserve">
-    <value>'Error: Could not add department'</value>
-  </data>
-  <data name="ErrorAddingEmployee" xml:space="preserve">
-    <value>'Error adding employee' </value>
-  </data>
-  <data name="ErrorDeletingEmployee" xml:space="preserve">
-    <value>'Error: Employee could not be deleted.'</value>
-  </data>
-  <data name="ErrorWhileAddingProject" xml:space="preserve">
-    <value>'Error adding project.'</value>
-  </data>
-  <data name="ErrorAddingOffice" xml:space="preserve">
-    <value>'Error adding office'</value>
-  </data>
-  <data name="ErrorDeletingProject" xml:space="preserve">
-    <value>'Error deleting project'</value>
-  </data>
-  <data name="ErrorDeletingEmployeeProject" xml:space="preserve">
-    <value>'Error deleting employee project'</value>
-  </data>
-  <data name="SuccessfullyDeletedEmployeeProject" xml:space="preserve">
-    <value>'Employee Project was succesfully deleted'</value>
-  </data>
-  <data name="ErrorAssignEmployee" xml:space="preserve">
-    <value>'Error assigning employee'</value>
-  </data>
-  <data name="SuccessfullyAssignEmployee" xml:space="preserve">
-    <value>'Employee was succesfully assigned'</value>
+  <data name="DefaultSchema" xml:space="preserve">
+    <value>dbo</value>
   </data>
 </root>

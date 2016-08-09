@@ -6,17 +6,19 @@ using System.Threading.Tasks;
 
 namespace Manager.InfoModels
 {
-    public class OfficeInfo
+    public class NotFullyAllocatedEmployeesInfo
     {
+
         public int Id { get; set; }
 
         public string Name { get; set; }
 
-        public string Address { get; set; }
+        public int DepartmentId { get; set; }
 
-        public string PhoneNumber { get; set; }
+        public string DepartmentName { get; set; }
 
-        public string Image { get; set; }
+        public string Role { get; set; }
 
+        public int RemainingAllocation { get; set; }
     }
 }

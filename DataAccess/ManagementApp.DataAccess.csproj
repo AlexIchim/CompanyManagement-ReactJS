@@ -43,6 +43,7 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.Activities" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
     <Reference Include="System.Net.Http.Formatting, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
@@ -100,6 +101,10 @@
     <Compile Include="Migrations\201608041242579_ChangedProjectModelStatusFromStringToEnum.Designer.cs">
       <DependentUpon>201608041242579_ChangedProjectModelStatusFromStringToEnum.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201608081314121_ChangeImageType.cs" />
+    <Compile Include="Migrations\201608081314121_ChangeImageType.Designer.cs">
+      <DependentUpon>201608081314121_ChangeImageType.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositories\DepartmentRepository.cs" />
@@ -149,6 +154,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201608041242579_ChangedProjectModelStatusFromStringToEnum.resx">
       <DependentUpon>201608041242579_ChangedProjectModelStatusFromStringToEnum.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201608081314121_ChangeImageType.resx">
+      <DependentUpon>201608081314121_ChangeImageType.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

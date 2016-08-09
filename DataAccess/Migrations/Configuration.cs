@@ -18,9 +18,9 @@ namespace DataAccess.Migrations
 
             context.Offices.AddOrUpdate(
               o => o.Id,
-              new Office { Id = 1, Name = "Cluj", Address = "Calea Motilor 62", PhoneNumber = "0364 101 203" },
-              new Office { Id = 2, Name = "Bucuresti", Address = "Calea Serban Voda Nr. 133", PhoneNumber = "021 301.33.00" },
-              new Office { Id = 3, Name = "London", Address = "Arundel House, 4 Palace Green,", PhoneNumber = "44 20 7937 9666" }
+              new Office { Id = 1, Name = "Cluj", Address = "Calea Motilor 62", PhoneNumber = "0364 101 203", Image="http://www.acumenintegrat.ro/wp-content/uploads/2014/08/evozone-logo.gif" },
+              new Office { Id = 2, Name = "Bucuresti", Address = "Calea Serban Voda Nr. 133", PhoneNumber = "021 301.33.00", Image= "http://www.acumenintegrat.ro/wp-content/uploads/2014/08/evozone-logo.gif" },
+              new Office { Id = 3, Name = "London", Address = "Arundel House, 4 Palace Green,", PhoneNumber = "44 20 7937 9666", Image= "http://www.acumenintegrat.ro/wp-content/uploads/2014/08/evozone-logo.gif" }
             );
 
             Employee e1 = new Employee

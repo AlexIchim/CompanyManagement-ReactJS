@@ -73,8 +73,8 @@ export default class Dashboard extends React.Component{
                     name={element.get('Name') + ' Office'}
                     phone={element.get('PhoneNumber')}
                     address={element.get('Address')}
+                    image={element.get('Image')}
                     link={"/office/" + element.get('Id') + '/' + element.get('Name') + '/' + 'departments' }
-                    icon={icons[index]}
                     office = {element}
                     
                 />

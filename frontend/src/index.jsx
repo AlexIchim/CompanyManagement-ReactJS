@@ -7,7 +7,7 @@ import Employee from './components/employee/Employee';
 import Project from './components/project/Project';
 import Member from './components/project/Member';
 import './assets/less/index.less';
-import Dashboard from './components/dashboard/Dashboard.jsx';
+import Dashboard from './components/dashboard/Dashboard';
 
 const Routes = () => {
     return (
@@ -16,8 +16,8 @@ const Routes = () => {
                 <IndexRoute component={Dashboard}/>
                 <Route path="office/:officeId/:officeName/departments" component={Department}/>
                 <Route path="department/:departmentId/:departmentName/employees" component={Employee}/>
-                <Route path="department/:departmentId/:departmentName/projects" component={Project}/>
-                <Route path="project/:projectId/:projectName/members" component={Member}/>
+                <Route path="department/:departmentId/:departmentName/:officeId/projects" component={Project}/>
+                <Route path="project/:projectId/:projectName/:officeId/members" component={Member}/>
             </Route>
         </Router>
     )

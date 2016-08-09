@@ -90,9 +90,9 @@ namespace ManagementApp.Controllers
 
         [Route("GetEmployeesThatAreNotFullyAllocated")]
         [HttpGet]
-        public IHttpActionResult GetEmployeesThatAreNotFullyAllocated()
+        public IHttpActionResult GetEmployeesThatAreNotFullyAllocated(int projectId, int? pageSize, int? pageNr)
         {
-            var result = _employeeService.GetEmployeesThatAreNotFullyAllocated();
+            var result = _employeeService.GetEmployeesThatAreNotFullyAllocated(projectId, pageSize,pageNr);
             return Json(result);
         }
 
@@ -121,6 +121,16 @@ namespace ManagementApp.Controllers
             var result = _employeeService.GetPositionTypesDescriptions();
             return Json(result);
         }
+
+        [Route("assignEmployee")]
+        [HttpPost]
+        public IHttpActionResult AssignEmployee([FromBody] AssignEmployeeInputInfo inputInfo)
+        {
+            var result = _employeeService.AssignEmployee(inputInfo);
+            return Json(result);
+        }
+
+
 
 
     }

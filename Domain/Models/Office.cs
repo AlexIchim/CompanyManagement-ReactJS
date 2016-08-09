@@ -13,7 +13,7 @@ namespace Domain.Models
 
         public string PhoneNumber { get; set; }
 
-        public byte[] Image { get; set; }
+        public string Image { get; set; }
 
         public virtual ICollection<Department> Departments { get; set; }
     }

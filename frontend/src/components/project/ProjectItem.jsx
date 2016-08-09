@@ -53,7 +53,7 @@ export default class ProjectItem extends React.Component{
 
 
     render(){
-        const linkMembers = "project/" + this.props.node.get('Id')  + '/' + this.props.node.get('Name') + "/members";
+        const linkMembers = "project/" + this.props.node.get('Id')  + '/' + this.props.node.get('Name') + '/' + this.props.officeId + "/members";
         
         const editModal = this.state.edit ? <EditFormProject departmentId={this.props.departmentId} element={this.props.node} show = {this.state.edit} close={this.closeEditForm.bind(this)} /> : '';
 
