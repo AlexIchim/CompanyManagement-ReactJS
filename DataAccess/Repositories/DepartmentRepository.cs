@@ -32,7 +32,7 @@ namespace DataAccess.Repositories
             return _context.Departments.SingleOrDefault(d => d.Name == name && d.OfficeId == officeId);
         }
 
-        public IEnumerable<Project> GetProjectsByDepartmentId(int id, int? pageSize = null, int? pageNumber = null)
+        public IEnumerable<Project> GetProjectsByDepartmentId(int id, int? pageSize = null, int? pageNumber = null, string searchString = "", string statusFilter = "")
         {
             var dept = _context.Departments.SingleOrDefault(d => d.Id == id);
             if (dept == null)
@@ -41,19 +41,29 @@ namespace DataAccess.Repositories
             }
             else
             {
-                return dept.Projects.Paginate(pageSize, pageNumber).ToArray();
+                string nameString = searchString.ToLower();
+
+                return dept.Projects.Where(
+                    p => p.Name.ToLower().Contains(nameString) &&
+                         (statusFilter == "" || p.Status == statusFilter)
+                ).Paginate(pageSize, pageNumber).ToArray();
             }
         }
 
-        public int GetProjectCountByDepartmentId(int id)
+        public int GetProjectCountByDepartmentId(int id, string searchString = "", string statusFilter = "")
         {
-            var dept = _context.Departments.SingleOrDefault(d => d.Id == id);
+            Department dept = _context.Departments.SingleOrDefault(d => d.Id == id);
             if (dept == null)
             {
                 return 0;
             }
 
-            return dept.Projects.Count();
+            string nameString = searchString.ToLower();
+
+            return dept.Projects.Count(
+                p => p.Name.ToLower().Contains(nameString) &&
+                     (statusFilter == "" || p.Status == statusFilter)
+            );
         }
 
         public IEnumerable<Employee> GetEmployeesByDepartmentId(int id, int? pageSize = null, int? pageNumber = null, string searchString = "", int? positionIdFilter = null)

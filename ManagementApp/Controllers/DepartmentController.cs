@@ -43,17 +43,23 @@ namespace ManagementApp.Controllers
 
         [Route("{id}/projects")]
         [HttpGet]
-        public IHttpActionResult GetProjectsByDepartmentId(int id, int? pageSize = null, int? pageNumber = null)
+        public IHttpActionResult GetProjectsByDepartmentId(int id, int? pageSize = null, int? pageNumber = null, string searchString = "", string statusFilter = "")
         {
-            var result = _departmentService.GetProjectsByDepartmentId(id, pageSize, pageNumber);
+            if (searchString == null) searchString = "";
+            if (statusFilter == null) statusFilter = "";
+
+            var result = _departmentService.GetProjectsByDepartmentId(id, pageSize, pageNumber, searchString, statusFilter);
             return Json(result, _camelCaseJsonSettings);
         }
 
         [Route("{id}/projects/count")]
         [HttpGet]
-        public IHttpActionResult GetProjectCountByDepartmentId(int id)
+        public IHttpActionResult GetProjectCountByDepartmentId(int id, string searchString = "", string statusFilter = "")
         {
-            var result = _departmentService.GetProjectCountByDepartmentId(id);
+            if (searchString == null) searchString = "";
+            if (statusFilter == null) statusFilter = "";
+
+            var result = _departmentService.GetProjectCountByDepartmentId(id, searchString, statusFilter);
             return Json(result, _camelCaseJsonSettings);
         }
 
