@@ -10,14 +10,19 @@ export default class FormAssign extends React.Component{
     
     constructor(){
         super();
+
         this.state={
             positionTypes:[],
             departments:[],
             availableEmployees:[],
             pageNr:1,
+            pageSize:3,
+            nrOfPages:null,
             employeeToAssign:{
 
-            }
+            },
+            filterByPosition:null,
+            filterByDepartment:null
         }
     }
 
@@ -48,20 +53,40 @@ export default class FormAssign extends React.Component{
             }.bind(this)
         })
 
+        this.getEmployeesThatAreNotFullyAllocated(1,null,null);
 
-            $.ajax({
+        this.setNumberOfPages(null,null);
+
+        }
+
+    getEmployeesThatAreNotFullyAllocated(pageNr, position, depId){
+         $.ajax({
                 method: 'GET',
                 async: false,
-                url: configs.baseUrl + 'api/employee/GetEmployeesThatAreNotFullyAllocated?projectId='+ this.props.projectId  +'&pageSize=5' + '&pageNr=1'  + '&departmentId=' + "" + '&ptype=',
+                url: configs.baseUrl + 'api/employee/GetEmployeesThatAreNotFullyAllocated?projectId='+ this.props.projectId  +'&pageSize='+this.state.pageSize + '&pageNr='+ pageNr  + '&departmentId=' + depId + '&ptype='+position,
                 success: function (data) {
                     this.setState({
                         availableEmployees: data
                     })
                 }.bind(this)
             })
-        console.log(this.props.projectId)
-        }
+    }
 
+    setNumberOfPages(position,depId){
+        $.ajax({
+            method: 'GET',
+            async: false,
+            url: configs.baseUrl + 'api/employee/GetEmployeesThatAreNotFullyAllocated?projectId='+ this.props.projectId  +'&pageSize=null' + '&pageNr=null'  + '&departmentId=' + depId + '&ptype='+position,
+            success: function (data) {
+                console.log(data)
+                this.setState(
+                    {
+                        nrOfPages: data.length / this.state.pageSize + 1
+                    }
+                )
+            }.bind(this)
+        })
+    }
 
 
     assign(cb){
@@ -89,25 +114,16 @@ export default class FormAssign extends React.Component{
     }
 
     refresh(){
-        Controller.getEmployeesByProjectId(this.props.projectId,1);
+        this.props.setPageNr();
+        Controller.getEmployeesByProjectId(this.props.projectId,null,1);
     }
 
      back(){
 
-        if (this.state.pageNr!=1){
-            const whereTo=this.state.pageNr-1
+        if (this.state.pageNr > 1){
+             const whereTo=this.state.pageNr-1
 
-            $.ajax({
-            method: 'GET',
-            async: false,
-            url: configs.baseUrl + 'api/employee/GetEmployeesThatAreNotFullyAllocated?projectId='+  this.props.projectId +'&departmentId=' + "" + '&ptype='+ {}+'&pageSize=5'+'&pageNr='+whereTo,
-            success: function (data) {
-                console.log(data, this);
-                this.setState({
-                    availableEmployees: data
-                })
-            }.bind(this)
-        })    
+             this.getEmployeesThatAreNotFullyAllocated(whereTo,this.state.filterByPosition, this.state.filterByDepartment)
             
              this.setState({
                 pageNr:this.state.pageNr-1
@@ -120,21 +136,15 @@ export default class FormAssign extends React.Component{
 
         const whereTo=this.state.pageNr+1
 
-        $.ajax({
-            method: 'GET',
-            async: false,
-            url: configs.baseUrl + 'api/employee/GetEmployeesThatAreNotFullyAllocated?projectId='+ this.props.projectId + '&departmentId=' + "" + '&ptype='+ {} +'&pageSize=5'+'&pageNr='+whereTo,
-            success: function (data) {
-                console.log(data, this);
-                this.setState({
-                    availableEmployees: data
-                })
-            }.bind(this)
-        })    
+        if(whereTo < this.state.nrOfPages) {
 
-        this.setState({
-            pageNr:this.state.pageNr+1
-        })
+            this.getEmployeesThatAreNotFullyAllocated(whereTo,this.state.filterByPosition, this.state.filterByDepartment);
+
+            this.setState({
+                pageNr:this.state.pageNr+1
+            })
+
+        }       
     }
 
     onChange(employeeId){
@@ -152,7 +162,7 @@ export default class FormAssign extends React.Component{
             console.log(employee);
         }
 
-        onDropDownChange(){
+    onDropDownChange(){
         let ptype=this.refs.positionTypes.options[this.refs.positionTypes.selectedIndex].value;
             if(ptype === ""){
                 ptype={};
@@ -161,19 +171,18 @@ export default class FormAssign extends React.Component{
         let depId=this.refs.departments.options[this.refs.departments.selectedIndex].value;
             if (depId=="")
                 depId = null
+
         const pageNr = 1;
 
-         $.ajax({
-            method: 'GET',
-            async: false,
-            url: configs.baseUrl + 'api/employee/GetEmployeesThatAreNotFullyAllocated?projectId='+ this.props.projectId + '&departmentId=' + depId + '&ptype='+ ptype +'&pageSize=5'+'&pageNr=1',
-            success: function (data) {
-                console.log(data, this);
-                this.setState({
-                    availableEmployees: data
-                })
-            }.bind(this)
-        })    
+        this.setState({
+            filterByPosition: ptype,
+            filterByDepartment:depId,
+            pageNr:pageNr
+        })
+
+        this.setNumberOfPages(ptype,depId);
+
+        this.getEmployeesThatAreNotFullyAllocated(pageNr,ptype,depId)
     }
          
 

@@ -4,7 +4,7 @@ import configs from '../helpers/calls'
 import Context from '../../context/Context.js';
 import * as Immutable from 'immutable';
 
-export default (projectId,  departmentId, ptype, pageNr)=>{
+export default (projectId, departmentId, ptype, pageNr)=>{
     $.ajax({
         method: 'GET',
         async: false,

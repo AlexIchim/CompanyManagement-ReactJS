@@ -101,7 +101,7 @@ export default class Project extends React.Component {
 
     back(){
 
-        if (this.state.pageNr!=1){
+        if (this.state.pageNr > 1){
 
             const whereTo=this.state.pageNr-1
 
