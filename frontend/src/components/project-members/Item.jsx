@@ -15,8 +15,8 @@ export default (props) => {
             <td>{employee.positionName}</td>
             <td>{allocation} %</td>
             <td className="btn-toolbar">
-                <button className="btn" onClick={onEdit} >Edit allocation</button>
-                <button className="btn" onClick={onDelete} >Remove </button>
+                <button className="btn btn-md btn-default" onClick={onEdit} >Edit allocation</button>
+                <button className="btn btn-md btn-default" onClick={onDelete} >Remove </button>
             </td>
         </tr>
     )

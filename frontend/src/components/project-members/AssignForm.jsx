@@ -138,6 +138,9 @@ export default class AssignForm extends React.Component {
                 true,
                 this.props.updateFunc
             )
+            this.setState({
+                pageNumber: 1
+            })
         }
         else
         {

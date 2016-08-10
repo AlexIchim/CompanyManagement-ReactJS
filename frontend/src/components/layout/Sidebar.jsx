@@ -50,24 +50,24 @@ class Multilevel extends React.Component {
 
     render() {
         const offices = this.state.offices.map((o) => (
-            <li key={o.id}>
-                <Link to={'/offices/' + o.id + '/departments'}>
-                    <i className="fa fa-circle-o"/> {o.name}
+            <li className="active" key={o.id}>
+                <Link activeClassName="active" to={'/offices/' + o.id + '/departments'}>
+                    <i className="fa fa-building-o"/> {o.name}
                 </Link>
                 { this.state.currentOfficeId == o.id ? 
-                    <ul>{
+                    <ul className="unstyled" >{
                         this.state.currentDepartments.map(d => 
-                            <li key={d.id}><Link to={
-                                '/offices/' + o.id + '/departments/' + d.id + '/projects'
-                            }>{d.name}</Link>
+                            <li key={d.id}><Link activeClassName="active" to={
+                                '/offices/' + o.id + '/departments/' + d.id
+                            }>{d.name} </Link>
                             { this.state.currendDepartmentId == d.id ? 
-                                <ul>
-                                    <li><Link to={
+                                <ul className="unstyled" >
+                                    <li><Link activeClassName="active" to={
                                         '/offices/' + o.id + '/departments/' + d.id + '/projects'
-                                    }>Projects</Link></li>
-                                    <li><Link to={
+                                    }><i className=" fa fa-folder"/> Projects</Link></li>
+                                    <li><Link activeClassName="active"  to={
                                         '/offices/' + o.id + '/departments/' + d.id + '/employees'
-                                    }>Employees</Link></li>
+                                    }><i className="fa fa-users"/> Employees</Link></li>
                                 </ul>
                             : null }
                             </li>

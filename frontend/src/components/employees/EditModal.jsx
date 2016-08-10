@@ -134,10 +134,10 @@ export default class EditModal extends React.Component {
 
                 <div className="box-footer">
                     <div className="btn-toolbar">
-                        <button type="button" className="btn btn-default"
+                        <button type="button" className="btn btn-md btn-info"
                             onClick={this.save.bind(this)}
-                        >Save Changes</button>
-                        <button type="button" className="btn btn-default" onClick={this.props.hideFunc}>Cancel</button>
+                        >Save</button>
+                        <button type="button" className="btn btn-md btn-info" onClick={this.props.hideFunc}>Cancel</button>
                     </div>
                 </div>
             </div>

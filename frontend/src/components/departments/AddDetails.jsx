@@ -40,8 +40,8 @@ export default class AddDetails extends React.Component {
             )
         });
 
-        const addButton = this.state.message[0] === ""  && this.state.message[1] === "" ? (<button className="btn btn-default" onClick={this.save.bind(this)}>Add</button>)
-      :(<button className="btn btn-default" disabled>Add</button>);
+        const addButton = this.state.message[0] === ""  && this.state.message[1] === "" ? (<button className="btn btn-md btn-info" onClick={this.save.bind(this)}>Add</button>)
+      :(<button className="btn btn-md btn-info" disabled>Add</button>);
 
 
         console.log(this.state.departmentManagerList);
@@ -75,7 +75,7 @@ export default class AddDetails extends React.Component {
                         </div>
                     <div className="box-footer">
                         {addButton}
-                        <button type="button" className="btn btn-default" onClick={this.props.hideFunc}> Cancel</button>
+                        <button type="button" className="btn btn-md btn-info" onClick={this.props.hideFunc}> Cancel</button>
                     </div>
             </div>
         );

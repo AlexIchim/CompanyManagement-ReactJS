@@ -70,7 +70,7 @@ export default (props) => {
             </div>
 
             <div className="box-footer">
-                <button type="button" className="btn btn-default" onClick={props.hideFunc}>Cancel</button>
+                <button type="button" className="btn btn-md btn-info" onClick={props.hideFunc}>Cancel</button>
             </div>
         </div>
     );
