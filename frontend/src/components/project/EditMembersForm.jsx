@@ -72,7 +72,7 @@ export default class EditForm extends React.Component{
 
     refresh(projectId){
          this.props.setPageNr();
-         Controller.getEmployeesByProjectId(projectId,1);
+         Controller.getEmployeesByProjectId(projectId,null,1);
     }
 
   
