@@ -125,9 +125,8 @@ export default class Form extends React.Component{
             && this.state.PhoneValidationResult.valid
             && this.state.ImageValidationResult.valid){
             formIsValid=true;
-        
-        }
 
+        }
         return(
             <ModalTemplate onCancelClick={this.props.onCancelClick}
                            onStoreClick={this.onStoreClick.bind(this)}

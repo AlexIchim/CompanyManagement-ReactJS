@@ -9,13 +9,14 @@ export default class ModalTemplate extends React.Component{
         $(formModal).on('hidden.bs.modal', function () {
             this.onCancelClick();
         }.bind(this))
+        this.componentWillReceiveProps({formIsValid: false})
     }
 
     componentWillReceiveProps(props){
-     if(!props.formIsValid){
-            $(this.refs.formIsValid).attr('disabled',true);
+        if(! props.formIsValid){
+            $(this.refs.storeButton).attr('disabled',true);
         }else{
-            $(this.refs.formIsValid).removeAttr('disabled');
+            $(this.refs.storeButton).removeAttr('disabled');
         }
     }
 
@@ -32,10 +33,9 @@ export default class ModalTemplate extends React.Component{
         $(formModal).modal('hide');
         this.props.onCancelClick();
     }
-    onAirClick(){
-        console.log(this.refs.formModal);
-    }
     render(){
+        //
+
 
         const storeLabel="Save";
         // const that=this;
@@ -69,7 +69,7 @@ export default class ModalTemplate extends React.Component{
 
         
         return(
-            
+            <div ref="formModal" className="modal fade " role="dialog"  tabIndex="-1" >
                 <div className="modal-dialog">
                     <div className="modal-content">
                         <div className="box info-box">
@@ -82,17 +82,14 @@ export default class ModalTemplate extends React.Component{
                                 </div>
 
                                 <div className="box-footer">
-
                                     <button type="button" className="btn btn-default" onClick={this.onCancelClick.bind(this)} > Cancel</button>
                                     <button type="button" ref='storeButton' className="storeButton btn btn-default" onClick={this.onStoreClick.bind(this)} > {storeLabel}</button>
-                                
                                 </div>
                             </form>
                         </div>
                     </div>
                 </div>
             </div>
-            
         )
     }
 }
