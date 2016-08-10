@@ -11,6 +11,7 @@ const EmployeeItem = (props) => {
             <td>{props.element['Department']}</td>
             <td>{props.element['Position']}</td>
             <td>{props.element['RemainingAllocation']}</td>
+            <td> <input id={props.element['Id']} type="checkbox" onChange={props.onCheck}/></td>
         </tr>
     )
 
@@ -93,19 +94,37 @@ export default class AssignEmployeeForm extends React.Component{
         this.GetAllAvailableEmployees(departmentIndex, positionIndex)
     }
 
+    onCheck(employee){
+        console.log('projectId:', this.props.ProjectId);
+        console.log('employee id is: ', employee['Id']);
+        $.ajax({
+            method: 'POST',
+            url: config.base + "/project/addAssignment",
+            async: false,
+            data: {
+                EmployeeId: employee['Id'],
+                ProjectId: this.props.ProjectId,
+                Allocation : employee['RemainingAllocation']
+            },
+            success: function(data){
+                console.log('successfully added');
+            }.bind(this)
+        });
+    }
+    onStoreClick(){
+
+    }
     render(){
         const departmentIndex = this.state.departmentIndex;
         const positionIndex = this.state.positionIndex;
-
-        // this.GetAllAvailableEmployees(departmentIndex, positionIndex);
-        console.log('departmentIndex: ', departmentIndex);
-        console.log('positionIndex: ',positionIndex);
 
         const availableEmployees = this.state.availableEmployees.map( (employee, index) =>{
             return (
                 <EmployeeItem
                     element = {employee}
                     key = {index}
+                    onCheck = {this.onCheck.bind(this, employee)}
+
                 />)
         })
 
@@ -120,7 +139,7 @@ export default class AssignEmployeeForm extends React.Component{
         return(
             <ModalTemplate
                 onCancelClick={this.props.onCancelClick}
-               // onStoreClick={this.onStoreClick.bind(this)}
+                onStoreClick={this.onStoreClick.bind(this)}
             >
                 <h3> Assign Employee </h3>
                 <div className="form-group">

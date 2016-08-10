@@ -99,10 +99,12 @@ class ProjectMembers extends React.Component {
             if (Accessors.model(Context.cursor)) {
                 modal = <EditAllocationForm
                                   onCancelClick={this.toggleModal.bind(this)}
-                                      FormAction={Controller.EditAllocation.bind(this, this.state.projectId)}
+                                  FormAction={Controller.EditAllocation.bind(this, this.state.projectId)}
                                   Title="Edit Project Allocation"/>;
             } else {
-                modal = <AssignEmployeeForm onCancelClick={this.toggleModal.bind(this)}
+                modal = <AssignEmployeeForm
+                              onCancelClick={this.toggleModal.bind(this)}
+                              ProjectId = {this.state.projectId}
                               FormAction={Controller.Add}
                               Title="Add Project"/>;
 
