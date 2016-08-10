@@ -90,8 +90,8 @@ export default class EditDetails extends React.Component {
                 </div>
 
                 <div className="box-footer">
-                    <button type="button" className="btn btn-default" onClick={this.save.bind(this)}> Update</button>
-                    <button type="button" className="btn btn-default" onClick={this.props.hideFunc}> Cancel</button>
+                    <button type="button" className="btn btn-md btn-info" onClick={this.save.bind(this)}> Update</button>
+                    <button type="button" className="btn btn-md btn-info" onClick={this.props.hideFunc}> Cancel</button>
                 </div>
             </div>
         );

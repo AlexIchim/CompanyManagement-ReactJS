@@ -5,7 +5,7 @@ export default (props) => {
     const address = props.data.address || ' - ';
 
     const deleteButton = props.data.releaseDate===null || props.data.releaseDate === '' ? 
-        (<button className="btn" onClick={props.onDelete}>Release</button>) :
+        (<button className="btn btn-md btn-default" onClick={props.onDelete}>Release</button>) :
         (<button className="btn btn-disabled" disabled="true">Release</button>);
 
     return(
@@ -19,9 +19,9 @@ export default (props) => {
             <td>{props.data.positionName}</td>
             <td>{props.data.totalAllocation}%</td>
             <td className="btn-toolbar">
-                <button className="btn" onClick={props.onView}>View details</button>
+                <button className="btn btn-md btn-default" onClick={props.onView}>View details</button>
                 {deleteButton}
-                <button className="btn" onClick={props.onEdit}>Edit</button>
+                <button className="btn btn-md btn-default" onClick={props.onEdit}>Edit</button>
             </td>
         </tr>
     )
