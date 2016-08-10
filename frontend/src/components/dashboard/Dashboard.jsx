@@ -72,9 +72,10 @@ export default class Dashboard extends React.Component{
             return (
                 <Tile
                     parentClass="bg-aqua"
+                    name={office.Name}
                     phone={office.Phone}
                     address={office.Address}
-                    link={"Departments/"+office.Id}
+                    link={"office/departments/"+office.Id + "/5/1"}
                     icon={office.Image}
                     key={index}
                     index={index}
@@ -82,7 +83,6 @@ export default class Dashboard extends React.Component{
                 />
             );
         })
-        
 
         return (
             <div>

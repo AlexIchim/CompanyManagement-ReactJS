@@ -45,7 +45,6 @@ const Multilevel = () => {
 
 
 class Sidebar extends React.Component{
-
     render(){
         return (
             <aside className="main-sidebar">
@@ -53,7 +52,7 @@ class Sidebar extends React.Component{
                     <img className="EvozonImage" src="../../src/assets/less/themes/lte/img/full_logo.png" alt="tralala"/>
                     <ul className="sidebar-menu">
                         <p className="header">Firm Offices</p>
-                        <hr></hr>
+                        <hr className="fade-hr"></hr>
                         <li className="treeview">
                             <Link to="#">
                                 <i className="fa fa-dashboard"></i> <span>Dashboard</span>

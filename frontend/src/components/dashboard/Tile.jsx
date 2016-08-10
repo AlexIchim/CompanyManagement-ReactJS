@@ -8,6 +8,7 @@ class Tile extends React.Component<any, any>{
         this.props.onEditButtonClick(this.props.index);
     }
 
+    
     render(){
         const props = this.props;
         const parentClass = classNames("info-box-icon", props['parentClass']);
@@ -16,22 +17,28 @@ class Tile extends React.Component<any, any>{
             <div className="col-md-6 col-sm-6 col-xs-12">
             <div className=" info-box-custom info-box">
                     
-                    <span className={parentClass}><img src={icon}/></span>
+                    <span className={parentClass}><img src={icon} className='small-icon' alt="Img"/></span>
                     <div className="info-box-content">
                     
                     <div className="glyphicon glyphicon-edit custom-edit-icon"
                             onClick={this.submit.bind(this)}>
                     </div>
+                        <span className="info-box-text-name">
+                            {props['name']}
+                        </span>
 
                         <span className="info-box-text">
+                            <span className="glyphicon glyphicon-map-marker"></span>
                             {props['address']}
                         </span>
                         <span className="info-box-number">
+                            <span className="glyphicon glyphicon-earphone"></span>
                             {props['phone']}
                         </span>
                         <Link to={props['link']} className="small-box-footer">
-                            View Departments
-                        <i className="fa fa-arrow-circle-right"></i></Link>
+                            <span className="glyphicon glyphicon-eye-open "></span>
+                             View Departments
+                        </Link>
                     </div>
                 </div>
             </div>

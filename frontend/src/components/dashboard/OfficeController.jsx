@@ -14,6 +14,7 @@ export default new class OfficeController {
             success: function(data){                
                 Context.cursor.set('items',data);
                 Context.cursor.set('formToggle',false);
+                console.log(data)
             }.bind(this)
         });
     }
