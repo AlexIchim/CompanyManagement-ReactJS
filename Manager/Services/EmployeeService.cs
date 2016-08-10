@@ -193,7 +193,6 @@ namespace Manager.Services
             foreach (EmployeeInfo ei in employeeInfos)
             {
                 ei.TotalAllocation = _employeeRepository.ComputeTotalAllocation(ei.Id);
-                ei.Role = _projectRepository.GetEmployeeRoleById(ei.Id);
 
             }
             return employeeInfos;
@@ -206,7 +205,6 @@ namespace Manager.Services
             foreach (NotFullyAllocatedEmployeesInfo ei in employeeInfos)
             {
                 ei.RemainingAllocation = 100-_employeeRepository.ComputeTotalAllocation(ei.Id);
-                ei.Role = _projectRepository.GetEmployeeRoleById(ei.Id);
                 ei.DepartmentName = _departmentRepository.GetDepartmentById(ei.DepartmentId).Name;
             }
             return employeeInfos;

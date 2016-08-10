@@ -211,6 +211,7 @@ export default class FormAssign extends React.Component{
 
             <div className="form-group">
                 <div className="col-sm-4 dropdown-custom-left">
+                    <label className="control-label"> Position </label>
                     <select className="form-control" defaultValue="Position" ref="positionTypes" onChange={this.onDropDownChange.bind(this)}>
                         <option value=""> None </option>
                         {positionTypes}
@@ -218,6 +219,7 @@ export default class FormAssign extends React.Component{
                 </div>
 
                 <div className="col-sm-4 dropdown-custom-right">
+                    <label className="control-label label-center"> Department </label>
                     <select className="form-control"  ref="departments" onChange={this.onDropDownChange.bind(this)}>
                         <option value=""> None </option>
                         {departments}

@@ -163,8 +163,9 @@ export default class Member extends React.Component{
                 <div className="form-group">
                     <button className="btn btn-md btn-info btn-add-custom" onClick={this.showAssignForm.bind(this)} > <span className="glyphicon glyphicon-plus-sign"></span> Assign employee </button>
                     <div className="col-sm-2 dropdown-custom">
-                        <select className="form-control" defaultValue="Position" ref="positionTypes" onChange={this.onDropDownChange.bind(this)}>
-                            <option value=""> Position </option>
+                        <label className="control-label"> Position </label>
+                        <select className="form-control" ref="positionTypes" onChange={this.onDropDownChange.bind(this)}>
+                            <option value=""> None </option>
                             {positionTypes}
                         </select>
                     </div>
