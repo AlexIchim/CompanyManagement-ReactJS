@@ -29,7 +29,11 @@ namespace DataAccess.Repositories
 
         public IEnumerable<ProjectAllocation> GetEmployeesByProjectId(int id, int? pageSize = null, int? pageNumber = null)
         {
-            return _context.ProjectAllocations.Where(a => a.ProjectId == id).Paginate(pageSize, pageNumber).ToArray();
+            return _context.ProjectAllocations.Where(a => a.ProjectId == id).OrderBy(a => a.Id).Paginate(pageSize, pageNumber).ToArray();
+        }
+        public int GetProjectMembersCount(int id)
+        {
+            return _context.ProjectAllocations.Count(a => a.ProjectId == id);
         }
 
         public void Delete(Project project)
@@ -47,5 +51,6 @@ namespace DataAccess.Repositories
         {
             _context.SaveChanges();
         }
+
     }
 }

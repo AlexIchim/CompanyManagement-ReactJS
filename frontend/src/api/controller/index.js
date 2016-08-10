@@ -14,6 +14,7 @@ export {default as getEmployeesByProjectId}        from './getEmployeesByProject
 export {default as getOfficeName}                  from './getOfficeName';
 export {default as getPositions}                   from './getPositions';
 export {default as getProjectName}                 from './getProjectName';
+export {default as getProjectMembersCount}         from './getProjectMembersCount';
 
 export {default as addAllocation}                  from './addAllocation';
 export {default as addDepartment}                  from './addDepartment';

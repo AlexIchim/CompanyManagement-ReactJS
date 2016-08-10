@@ -17,7 +17,6 @@ export default class PaginatedTable extends React.Component {
     }
     
     onButtonClick(button){
-        console.log('some button pressed!!!',button);
         this.setState({
             numberInput: ''
         });

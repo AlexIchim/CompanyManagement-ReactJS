@@ -52,6 +52,11 @@ namespace Manager.Services
             return res;
         }
 
+        public int GetProjectMembersCount(int id)
+        {
+            return  _projectRepository.GetProjectMembersCount(id);
+        }
+
         public OperationResult Delete(int? id)
         {
             if (id == null)
