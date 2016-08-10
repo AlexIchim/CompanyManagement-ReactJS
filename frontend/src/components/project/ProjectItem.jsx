@@ -48,6 +48,7 @@ export default class ProjectItem extends React.Component{
     }
 
      refresh(departmentId){
+         this.props.setPageNr();
          Controller.getAllDepProjects(departmentId,{},1);
      }
 

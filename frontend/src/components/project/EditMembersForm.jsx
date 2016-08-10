@@ -63,8 +63,7 @@ export default class EditForm extends React.Component{
             data:inputInfo,
             success: function (data) { 
                     cb(); 
-                   this.refresh(this.props.projectId);            
-                 
+                   this.refresh(this.props.projectId);                        
             }.bind(this)
         })   
 
@@ -72,7 +71,7 @@ export default class EditForm extends React.Component{
 
     refresh(projectId){
          this.props.setPageNr();
-         Controller.getEmployeesByProjectId(projectId,1);
+         Controller.getEmployeesByProjectId(projectId,null,1);
     }
 
   
