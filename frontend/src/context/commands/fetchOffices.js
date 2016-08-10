@@ -5,13 +5,17 @@ import * as Controller from '../../api/controller';
 import Context from '../Context';
 
 
-const  fetchOffices = () => {
+const  fetchOffices = (callback) => {
     Controller.getAllOffices(
         true,
         (data) => {
             Context.cursor.update(v => 
                 v.set(Access.offices.prop, Immutable.fromJS(data))
             );
+
+            if(callback !== undefined && callback!== null){
+                callback();
+            }
         }
     );
 };
