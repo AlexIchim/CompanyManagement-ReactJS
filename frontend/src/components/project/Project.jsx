@@ -40,6 +40,7 @@ export default class Project extends React.Component {
 
     componentDidMount(){
          this.getAllProjects(this.state.pageNr,null);
+         this.setNumberOfPages(null);
     }
 
     componentWillUnmount () {
@@ -48,16 +49,13 @@ export default class Project extends React.Component {
 
      onContextChange(cursor){
         this.setState({
-            projects: cursor.get("projects")         
+            projects: cursor.get("projects")
         });
     }
 
     getAllProjects(pageNr,status){
 
         Controller.getAllDepProjects(this.props.routeParams.departmentId,status,pageNr);
-
-        this.setNumberOfPages(status);
-
     }
 
     setNumberOfPages(status){
@@ -77,15 +75,15 @@ export default class Project extends React.Component {
     onDropDownChange(){
         
         const status=this.refs.status.options[this.refs.status.selectedIndex].id;
-        console.log(status)
         const pageNr=1;
-
+    
         this.setState({
             filter: status,
             pageNr:pageNr
         })
+
+        this.setNumberOfPages(status);
     
- 
         this.getAllProjects(pageNr,status);
     }
 
@@ -120,8 +118,6 @@ export default class Project extends React.Component {
 
         const whereTo=this.state.pageNr+1
 
-        this.setNumberOfPages();
-
         if (whereTo < this.state.nrOfPages){
 
             this.getAllProjects(whereTo,this.state.filter);
@@ -130,6 +126,16 @@ export default class Project extends React.Component {
                 pageNr:this.state.pageNr+1
             })
         }
+    }
+
+    setPageNr(){
+        
+        this.setState({
+            pageNr:1,
+            filter:null,
+        })
+
+        this.setNumberOfPages(null);
     }
 
 
@@ -153,7 +159,7 @@ export default class Project extends React.Component {
                 />
             )
         });
-        const addModal = this.state.add ? <Form departmentId={this.props.routeParams.departmentId} show = {this.state.add} close={this.closeAddForm.bind(this)} /> : '';
+        const addModal = this.state.add ? <Form setPageNr={this.setPageNr.bind(this)} departmentId={this.props.routeParams.departmentId} show = {this.state.add} close={this.closeAddForm.bind(this)} /> : '';
 
         return (
             <div>

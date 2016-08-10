@@ -51,7 +51,8 @@ export default class Form extends React.Component{
     }
 
     refresh(departmentId){
-        Controller.getAllDepProjects(departmentId,{},1);
+        this.props.setPageNr();
+        Controller.getAllDepProjects(departmentId,{},1);             
     }
 
     render(){
