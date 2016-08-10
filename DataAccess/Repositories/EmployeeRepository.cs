@@ -106,7 +106,7 @@ namespace DataAccess.Repositories
             return unallocatedEmployees;
         }
 
-        public IEnumerable<Employee> GetEmployeesThatAreNotFullyAllocated(int projectId,int? pageSize, int? pageNr)
+        public IEnumerable<Employee> GetEmployeesThatAreNotFullyAllocated(int projectId,string departmentName,int? pageSize, int? pageNr,PositionType? ptype)
         {
             var employees = _context.Employees.ToList();
             List<Employee> notfullyAllocatedEmployees = new List<Employee>();
@@ -118,7 +118,10 @@ namespace DataAccess.Repositories
                     notfullyAllocatedEmployees.Add(employee);
                 }
             }
-            return notfullyAllocatedEmployees.AsQueryable().Paginate(pageSize, pageNr);
+            return notfullyAllocatedEmployees.
+                Where(e =>(string.IsNullOrEmpty(departmentName) || e.Department.Name==departmentName) && (ptype == null || e.PositionType == ptype)).    
+                AsQueryable().
+                Paginate(pageSize, pageNr);
         }
 
         public IEnumerable<string> GetJobTypesDescriptions()

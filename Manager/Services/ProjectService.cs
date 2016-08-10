@@ -43,14 +43,14 @@ namespace Manager.Services
             return null;
         }
 
-        public IEnumerable<EmployeeInfo> GetEmployeesByProjectId(int projectId, int? pageSize, int? pageNr)
+        public IEnumerable<EmployeeInfo> GetEmployeesByProjectId(int projectId, PositionType? ptype, int? pageSize, int? pageNr)
         {
             if (_projectValidator.ValidateId(projectId))
             {
                 var project = _projectRepository.GetProjectById(projectId);
                 if (project != null)
                 {
-                    var employees = _projectRepository.GetEmployeesByProjectId(projectId, pageSize, pageNr);
+                    var employees = _projectRepository.GetEmployeesByProjectId(projectId,ptype, pageSize, pageNr);
 
                     if (employees != null)
                     {

@@ -51,7 +51,6 @@ export default class Project extends React.Component {
     onDropDownChange(){
         const status=this.refs.status.options[this.refs.status.selectedIndex].id;
         const pageNr = 1;
-        console.log("ODDC",status);
         Controller.getAllDepProjects(this.props.routeParams.departmentId,status,pageNr);
     }
 
@@ -66,8 +65,6 @@ export default class Project extends React.Component {
             add: !this.state.add
         })
     }
-
-    
 
     back(){
 
@@ -86,9 +83,7 @@ export default class Project extends React.Component {
     next(){
 
         const whereTo=this.state.pageNr+1
-
         Controller.getAllDepProjects(this.props.routeParams.departmentId,{},whereTo);
-
         this.setState({
             pageNr:this.state.pageNr+1
         })
@@ -99,8 +94,11 @@ export default class Project extends React.Component {
 
         const statusDescriptions=this.state.statusDescriptions.map((el, x) => {
             return (
-                <option value={el} key={x} id={el.Id} >{el.Description}</option>                         
+                    <option value={el} key={x} id={el.Id}>{el.Description}</option>
+
+
             )
+
         });
 
 
@@ -119,9 +117,18 @@ export default class Project extends React.Component {
         return (
             <div>
                 {addModal}
+                
+                <div className="form-group">
+                    <button className="btn btn-md btn-info btn-add-custom" onClick={this.showAddForm.bind(this)} > <span className="glyphicon glyphicon-plus-sign"></span> Add new project </button>
+                        <div className="col-sm-2 dropdown-custom">
+                            <select className="form-control" defaultValue="Status" ref="status" onChange={this.onDropDownChange.bind(this)}>
+                                <option value=""> Status </option>
+                                {statusDescriptions}
+                            </select>
+                        </div>
+                </div>
 
-                <button className="btn btn-xs btn-info" onClick={this.showAddForm.bind(this)} > <span className="glyphicon glyphicon-plus-sign"></span> Add new project </button>
-                <table className="table table-condensed" id="table1">
+                <table className="table table-striped" id="table1">
                     <thead>
                     <tr>
                         <th className="col-md-2">Name</th>
@@ -142,12 +149,10 @@ export default class Project extends React.Component {
                     <button className="rightArrow" onClick={this.next.bind(this)}>
                                 <i className="fa fa-arrow-right fa-1x" aria-hidden="true"></i>
                     </button>
-
-                    
-                    <select className="selectpicker" ref="status" onChange={this.onDropDownChange.bind(this)}>
-                        {statusDescriptions}                    
-                    </select>              
                 </div>
+
+
+
             </div>
         )
     }
