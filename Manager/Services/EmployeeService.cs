@@ -75,7 +75,15 @@ namespace Manager.Services
                         employee.Name = inputInfo.Name;
                         employee.Address = inputInfo.Address;
                         employee.EmploymentDate = inputInfo.EmploymentDate;
-                        employee.ReleaseDate = inputInfo.ReleaseDate;
+                        if (inputInfo.ReleaseDate.Equals(DateTime.MinValue))
+                        {
+                            employee.ReleaseDate = null;
+                        }
+                        else
+                        {
+                            employee.ReleaseDate = inputInfo.ReleaseDate;
+                        }
+                      
                         employee.JobType = inputInfo.JobType;
                         employee.PositionType = inputInfo.PositionType;
 
@@ -249,9 +257,12 @@ namespace Manager.Services
         }
 
         public IEnumerable<MemberInfo> SearchEmployeesByName(int departmentId,string employeeName, int? pageSize, int? pageNr)
+        public MemberInfo GetEmployeeById(int employeeId)
         {
             if (!string.IsNullOrEmpty(employeeName))
             {
+            var employee = _employeeRepository.GetById(employeeId);
+            return _mapper.Map<MemberInfo>(employee);
                 var  employees =_employeeRepository.SearchEmployeesByName(departmentId,employeeName,pageSize,pageNr);
                 var employeesInfo = _mapper.Map<IEnumerable<MemberInfo>>(employees);
                 return employeesInfo;

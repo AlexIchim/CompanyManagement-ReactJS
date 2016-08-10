@@ -59,7 +59,7 @@ export default class EditFormProject extends React.Component{
                  const index= Context.cursor.get('projects').indexOf(this.props.element)
                    Context.cursor.get('projects').update( index,  oldInstance => {
                        oldInstance=np
-                        return oldInstance;
+                       return oldInstance;
                     });              
                  
                  cb(); 

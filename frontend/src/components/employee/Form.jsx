@@ -49,8 +49,8 @@ export default class Form extends React.Component{
 
     store(cb){
 
-        const jobType = this.refs.jobType.options[this.refs.jobType.selectedIndex].id
-        const positionType = this.refs.positionType.options[this.refs.positionType.selectedIndex].id
+        const jobType = this.refs.jobType.options[this.refs.jobType.selectedIndex].value
+        const positionType = this.refs.positionType.options[this.refs.positionType.selectedIndex].value
 
         var inputInfo = {
             DepartmentId: this.props.departmentId,
@@ -61,20 +61,18 @@ export default class Form extends React.Component{
             JobType: jobType,
             PositionType: positionType
         }
+
+        console.log(inputInfo)
          $.ajax({
             method: 'POST',
             url: configs.baseUrl + 'api/employee/addEmployee',
             data:inputInfo,
             success: function (data) {              
-                Context.cursor.update('employees',(oldList) => {      
-                    return oldList.push( Immutable.fromJS(inputInfo) );
-                   
-                });
                  cb(); 
                  this.refresh(this.props.departmentId);
             }.bind(this)
         })   
-        console.log(3)
+        
     }
 
     refresh(departmentId){
@@ -84,12 +82,12 @@ export default class Form extends React.Component{
     render(){
         const jobTypes = this.state.jobTypes.map((el,x)=>{
             return (
-                <option value={el.Description} key={x} id={el.Id}  > {el.Description} </option>                         
+                <option value={el.Id} key={x} id={el.Id}  > {el.Description} </option>                         
             )
         });
         const positionTypes = this.state.positionTypes.map((el,x)=>{
             return (
-                <option value={el.Description} key={x} id ={el.Id} >{el.Description}</option>                         
+                <option value={el.Id} key={x} id ={el.Id} >{el.Description}</option>                         
             )
         });
          return(

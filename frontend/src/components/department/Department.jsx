@@ -94,7 +94,6 @@ export default class Department extends React.Component {
     next(){
        
         const whereTo=this.state.pageNr+1
-        console.log(3)
 
         this.setNumberOfPages();
 
@@ -127,7 +126,11 @@ export default class Department extends React.Component {
             <div>
                 {addModal}
 
-                <button className="btn btn-xs btn-info" onClick={this.showAddForm.bind(this)} > <span className="glyphicon glyphicon-plus-sign"></span> Add new department </button>
+
+                <div className="form-group">
+                    <button className="btn btn-md btn-info btn-add-custom" onClick={this.showAddForm.bind(this)} > <span className="glyphicon glyphicon-plus-sign"></span> Add new department </button>
+                </div>
+                
                 <table className="table table-striped" id="table1">
                     <thead>
                     <tr>

@@ -41,7 +41,7 @@ class Tile extends React.Component{
                 {modal}
 
                 <div className="col-md-6 col-sm-6 col-xs-12">
-                <div className="info-box">
+                <div className="info-box info-box-tile">
 
                     <div className="info-box-icon">
                         <img src={props['image']}/>
