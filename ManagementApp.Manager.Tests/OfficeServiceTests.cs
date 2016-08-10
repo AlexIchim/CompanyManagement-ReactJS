@@ -70,6 +70,46 @@ namespace ManagementApp.Manager.Tests
             //Assert
             _officeRepositoryMock.Verify(x => x.GetAll(), Times.Once);
         }
+        [Test]
+        public void GetPartial_ReturnsListOfOffices()
+        {
+            //Arrange
+            var demoImg = new byte[]
+            {
+                0, 0, 0
+            };
+            var offices = new List<Office>
+            {
+                CreateOffice(0, "TestName1", "TestAddress1", "0700000000", demoImg),
+                CreateOffice(0, "TestName2", "TestAddress2", "0800000000", demoImg)
+            };
+            var officePartialInfos = new List<OfficePartialInfo>
+            {
+                CreateOfficePartialInfo(0, "TestName1"),
+                CreateOfficePartialInfo(0, "TestName2")
+            };
+
+            _officeRepositoryMock.Setup(m => m.GetAll()).Returns(offices);
+            _mapperMock.Setup(m => m.Map<IEnumerable<OfficePartialInfo>>(offices)).Returns(officePartialInfos);
+
+            //Act
+            var result = _officeService.GetPartial();
+
+            //Assert
+            Assert.AreEqual(2, result.Count());
+        }
+
+        [Test]
+        public void GetPartial_CallsGetAllFromRepository()
+        {
+            //Arrange
+
+            //Act
+            _officeService.GetPartial();
+
+            //Assert
+            _officeRepositoryMock.Verify(x => x.GetAll(), Times.Once);
+        }
 
         [Test]
         public void GetAllDepartmentsOfAnOffice_ReturnsDepartments(){
@@ -375,6 +415,15 @@ namespace ManagementApp.Manager.Tests
                 Image = GetString(image)
             };
             return officeInfo;
+        }
+        private OfficePartialInfo CreateOfficePartialInfo(int id, string name)
+        {
+            var officePartialInfo = new OfficePartialInfo()
+            {
+                Id = id,
+                Name = name
+            };
+            return officePartialInfo;
         }
         private AddOfficeInputInfo CreateOfficeAddInputInfo(string name, string address, string phone, byte[] image)
         {

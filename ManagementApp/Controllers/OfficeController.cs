@@ -30,6 +30,13 @@ namespace ManagementApp.Controllers
             var result = _officeService.GetAll();
             return Json(result);
         }
+        [Route("getPartialOffices")]
+        [HttpGet]
+        public IHttpActionResult GetPartial()
+        {
+            var result = _officeService.GetPartial();
+            return Json(result);
+        }
 
         [Route("departments/{officeId}/{pageSize}/{pageNumber}")]
         [HttpGet]

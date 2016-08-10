@@ -18,6 +18,17 @@ export default new class OfficeController {
         });
     }
 
+    GetPartial(){
+        console.log("Refreshing");
+        $.ajax({
+            method:'GET',
+            url: config.base+'office/getPartialOffices',
+            async:false,
+            success: function(data){                
+                Context.cursor.set('sidebarOffices',data);
+            }.bind(this)
+        });
+    }
 
     Add(){
         console.log("Add called");

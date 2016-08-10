@@ -5,6 +5,7 @@ import * as Rx from 'rx';
 
 const initialState = {
     user : mock,
+    sidebarOffices: null,
     items: null,
     model:null,
     dropdownItems: null
