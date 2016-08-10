@@ -14,6 +14,7 @@ export default class OfficeForm extends React.Component{
         let model=Context.cursor.get('model');
 
         var initialValidation=true;
+        
         if(!model){
             model={};
             model.Image="";

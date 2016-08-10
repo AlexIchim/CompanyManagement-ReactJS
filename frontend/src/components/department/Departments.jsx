@@ -12,7 +12,7 @@ export default class Departments extends React.Component{
     }
 
     componentWillMount(){
-
+        console.log('here dep')
         const officeId = this.props.routeParams['officeId'];
 
         this.setState({
@@ -28,6 +28,7 @@ export default class Departments extends React.Component{
     }
 
     componentWillUnmount(){
+        console.log('unmount dep')
         this.subscription.dispose();
     }
 

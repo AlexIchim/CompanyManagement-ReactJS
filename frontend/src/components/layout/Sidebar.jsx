@@ -4,6 +4,7 @@ import * as $ from 'jquery';
 import config from '../helper';
 import '../../assets/less/index.less';
 import Context from '../../context/Context';
+import SidebarOffices  from '../dashboard/OfficesList'
 
 const Multilevel = () => {
     return (
@@ -53,11 +54,10 @@ class Sidebar extends React.Component{
                     <ul className="sidebar-menu">
                         <p className="header">Firm Offices</p>
                         <hr className="fade-hr"></hr>
-                        <li className="treeview">
-                            <Link to="#">
-                                <i className="fa fa-dashboard"></i> <span>Dashboard</span>
-                            </Link>
-                        </li>
+                        
+                        <SidebarOffices
+                        />
+
                         <Multilevel/>
                     </ul>
                 </section>
