@@ -68,9 +68,9 @@ namespace ManagementApp.Controllers
 
         [Route("getAllDepartmentEmployees")]
         [HttpGet]
-        public IHttpActionResult GetAllDepartmentEmployees(int departmentId, int? pageSize, int? pageNr,int? allocation=null, PositionType? ptype = null,JobType? jtype = null)
+        public IHttpActionResult GetAllDepartmentEmployees(int departmentId, string employeeName, int? pageSize, int? pageNr,int? allocation=null, PositionType? ptype = null,JobType? jtype = null)
         {
-            var result = _employeeService.GetAllDepartmentEmployees(departmentId, pageSize, pageNr,allocation,ptype,jtype);
+            var result = _employeeService.GetAllDepartmentEmployees(departmentId, employeeName, pageSize, pageNr,allocation,ptype,jtype);
             return Json(result);
         }
 
@@ -92,9 +92,9 @@ namespace ManagementApp.Controllers
 
         [Route("GetEmployeesThatAreNotFullyAllocated")]
         [HttpGet]
-        public IHttpActionResult GetEmployeesThatAreNotFullyAllocated(int projectId,string departmentName, int? pageSize, int? pageNr, PositionType? ptype = null)
+        public IHttpActionResult GetEmployeesThatAreNotFullyAllocated(int projectId,int? pageSize, int? pageNr, int? departmentId=null, PositionType? ptype = null)
         {
-            var result = _employeeService.GetEmployeesThatAreNotFullyAllocated(projectId,departmentName,pageSize,pageNr,ptype);
+            var result = _employeeService.GetEmployeesThatAreNotFullyAllocated(projectId,departmentId,pageSize,pageNr,ptype);
             return Json(result);
         }
 
@@ -138,8 +138,8 @@ namespace ManagementApp.Controllers
         {
             var result = _employeeService.SearchEmployeesByName(departmentId, employeeName, pageSize, pageNr);
             return Json(result);
-
         }
+
 
         [Route("getEmployeeById")]
         [HttpPost]

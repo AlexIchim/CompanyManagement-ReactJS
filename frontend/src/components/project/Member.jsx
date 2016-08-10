@@ -159,11 +159,19 @@ export default class Member extends React.Component{
                 {assignModal}
 
                 <h1>{this.props.routeParams.projectName + ' Members'}  </h1>
-                <button className="btn btn-xs btn-info" onClick={this.showAssignForm.bind(this)} > <span className="glyphicon glyphicon-plus-sign"></span> Assign employee </button>
 
-                <select className="selectpicker" ref="positionTypes" onChange={this.onDropDownChange.bind(this)}>
-                    {positionTypes}                    
-                </select>
+                <div className="form-group">
+                    <button className="btn btn-md btn-info btn-add-custom" onClick={this.showAssignForm.bind(this)} > <span className="glyphicon glyphicon-plus-sign"></span> Assign employee </button>
+                    <div className="col-sm-2 dropdown-custom">
+                        <label className="control-label"> Position </label>
+                        <select className="form-control" ref="positionTypes" onChange={this.onDropDownChange.bind(this)}>
+                            <option value=""> None </option>
+                            {positionTypes}
+                        </select>
+                    </div>
+                </div>
+
+
 
                 <table className="table table-condensed" id="table1">
                     <thead>

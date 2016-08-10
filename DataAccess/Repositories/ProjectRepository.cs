@@ -27,13 +27,6 @@ namespace DataAccess.Repositories
             return employeeProject.Allocation;
         }
 
-        public string GetEmployeeRoleById(int employeeId)
-        {
-            var employee = _context.Employees.SingleOrDefault(e => e.Id == employeeId);
-            string role = employee.PositionType.ToString();
-            return role;
-        }
-
         public IEnumerable<Employee> GetEmployeesByProjectId(int projectid,PositionType? ptype, int? pageSize, int? pageNr)
         {
             var employees = _context.EmployeeProjects.

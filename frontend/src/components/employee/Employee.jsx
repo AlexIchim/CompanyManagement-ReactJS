@@ -48,12 +48,12 @@ export default class Employee extends React.Component{
             }.bind(this)
         })        
 
-        Controller.getAllEmployeesByDepartmentId(this.props.routeParams.departmentId,null,{},{},this.state.pageNr);
+        Controller.getAllEmployeesByDepartmentId(this.props.routeParams.departmentId,"",null,{},{},this.state.pageNr);
        this.subscription = Context.subscribe(this.onContextChange.bind(this));
     }
 
       componentDidMount(){
-          Controller.getAllEmployeesByDepartmentId(this.props.routeParams.departmentId,null,{},{},this.state.pageNr);
+          Controller.getAllEmployeesByDepartmentId(this.props.routeParams.departmentId,"",null,{},{},this.state.pageNr);
      }
 
     componentWillUnmount () {
@@ -83,7 +83,7 @@ export default class Employee extends React.Component{
         if (this.state.pageNr!=1){
             const whereTo=this.state.pageNr-1
 
-            Controller.getAllEmployeesByDepartmentId(this.props.routeParams.departmentId,null,{},{},whereTo)
+            Controller.getAllEmployeesByDepartmentId(this.props.routeParams.departmentId,"",null,{},{},whereTo)
             
              this.setState({
                 pageNr:this.state.pageNr-1
@@ -96,7 +96,7 @@ export default class Employee extends React.Component{
 
         const whereTo=this.state.pageNr+1
 
-        Controller.getAllEmployeesByDepartmentId(this.props.routeParams.departmentId,null,{},{},whereTo)
+        Controller.getAllEmployeesByDepartmentId(this.props.routeParams.departmentId,"",null,{},{},whereTo)
 
         this.setState({
             pageNr:this.state.pageNr+1
@@ -114,29 +114,25 @@ export default class Employee extends React.Component{
         let allocation = this.refs.allocation.options[this.refs.allocation.selectedIndex].value;
         if (allocation == 'None')
             allocation = null
+        let employeeName = this.refs.search.value;
         const pageNr = 1;
 
-        Controller.getAllEmployeesByDepartmentId(this.props.routeParams.departmentId,allocation,ptype,jtype,this.state.pageNr)
+        Controller.getAllEmployeesByDepartmentId(this.props.routeParams.departmentId,employeeName,allocation,ptype,jtype,this.state.pageNr)
     }
 
     onSearchChange(){
+        let ptype=this.refs.positionTypes.options[this.refs.positionTypes.selectedIndex].value;
+        if (ptype == 'None')
+            ptype = {}
+        let jtype=this.refs.jobTypes.options[this.refs.jobTypes.selectedIndex].value;
+        if (jtype == 'None')
+            jtype={}
+        let allocation = this.refs.allocation.options[this.refs.allocation.selectedIndex].value;
+        if (allocation == 'None')
+            allocation = null
         const pageNr = 1;
         const employeeName = this.refs.search.value;      
-        $.ajax({
-            method: 'GET',
-            async: false,
-            url: configs.baseUrl + 'api/employee/searchEmployeesByName?departmentId=' + this.props.routeParams.departmentId+ '&employeeName=' + employeeName + '&pageSize=3&pageNr='+pageNr,
-            success: function (data) {
-                if (!data){
-                    data=[]
-                }
-                Context.cursor.set("employees",Immutable.fromJS(data));
-            }.bind(this)
-        })
-
-        if (employeeName==""){
-            Controller.getAllEmployeesByDepartmentId(this.props.routeParams.departmentId,null,{},{},pageNr);
-        }
+        Controller.getAllEmployeesByDepartmentId(this.props.routeParams.departmentId,employeeName,allocation,ptype,jtype,this.state.pageNr)
     }
 
 render(){

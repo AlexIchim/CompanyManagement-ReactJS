@@ -152,16 +152,16 @@ export default class EditForm extends React.Component{
                 
               </div>
             <div className="form-group">
-                <label className="col-sm-4">Release Date:</label>
+            <label className="col-sm-4">Release Date:</label>
 
-                <div className="input-group date col-sm-6">
-                  <div className="input-group-addon">
+            <div className="input-group date col-sm-6">
+                <div className="input-group-addon">
                     <i className="fa fa-calendar"></i>
-                  </div>
-                  <input type="text" ref ="releaseDate"className="form-control pull-right" id="datepicker2"value={this.state.employee.get('ReleaseDate')}onChange={this.changeData.bind(this)}/>
                 </div>
-                
-              </div>
+                <input type="text" ref ="releaseDate"className="form-control pull-right" id="datepicker2"value={this.state.employee.get('ReleaseDate')}onChange={this.changeData.bind(this)}/>
+            </div>
+
+        </div>
 
            <div className="form-group">
              <label className="col-sm-4 control-label"> Job Type </label>

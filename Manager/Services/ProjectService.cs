@@ -59,8 +59,7 @@ namespace Manager.Services
                         {
                             int allocation = _projectRepository.GetEmployeeProjectAllocationById(projectId, e.Id);
                             e.Allocation = allocation;
-                            string role = _projectRepository.GetEmployeeRoleById(e.Id);
-                            e.Role = role;
+                            
                         }
                         return employeeInfos;
                     }
