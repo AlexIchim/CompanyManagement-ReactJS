@@ -47,7 +47,7 @@ export default class Form extends React.Component{
             &&  this.state.AddressValidationResult.valid
             &&  this.state.PhoneValidationResult.valid  )
         {
-            let model=Context.cursor.get("model");
+            let model = Context.cursor.get("model");
 
             if(!model){
                 model={};
@@ -148,7 +148,7 @@ export default class Form extends React.Component{
                     </div>
 
                     <div className="form-group">
-                        <label htmlFor="inputAddress" className="col-sm-2 control-label"> Address</label>
+                        <label htmlFor="inputAddress" className="col-sm-2 control-label"> Address </label>
                         <div className="col-sm-10">
                             <input  type="text" 
                                     className="form-control" 
