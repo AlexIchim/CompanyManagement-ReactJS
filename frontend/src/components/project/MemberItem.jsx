@@ -56,7 +56,7 @@ export default class DepartmentItem extends React.Component{
             <td>{this.props.node.get('Role')}</td>
             <td>{this.props.node.get('Allocation')}</td> 
             <td><button className="linkButton" onClick={this.showEditForm.bind(this)} >Edit Allocation | </button>
-                <button className="linkButton" onClick={this.deleteEmployeeFromProject.bind(this)} >Delete | </button>
+                <button className="linkButton" onClick={this.deleteEmployeeFromProject.bind(this)} > Delete </button>
                 {editForm}
             </td>
         </tr>

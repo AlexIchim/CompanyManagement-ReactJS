@@ -21,6 +21,7 @@ export default class FormAssign extends React.Component{
         }
     }
 
+
     componentWillMount(){
 
          $.ajax({
@@ -45,20 +46,22 @@ export default class FormAssign extends React.Component{
                     departments: data
                 })
             }.bind(this)
-        })   
+        })
 
-        $.ajax({
-            method: 'GET',
-            async: false,
-          url: configs.baseUrl + 'api/employee/GetEmployeesThatAreNotFullyAllocated?projectId='+ this.props.projectId + '&departmentName=' + "" + '&ptype='+ {} +'&pageSize=5'+'&pageNr=1',
-            success: function (data) {
-                console.log(data, this);
-                this.setState({
-                    availableEmployees: data
-                })
-            }.bind(this)
-        })                   
-    }
+
+            $.ajax({
+                method: 'GET',
+                async: false,
+                url: configs.baseUrl + 'api/employee/GetEmployeesThatAreNotFullyAllocated?projectId='+ this.props.projectId  +'&pageSize=5' + '&pageNr=1'  + '&departmentId=' + "" + '&ptype=',
+                success: function (data) {
+                    this.setState({
+                        availableEmployees: data
+                    })
+                }.bind(this)
+            })
+        console.log(this.props.projectId)
+        }
+
 
 
     assign(cb){
@@ -97,7 +100,7 @@ export default class FormAssign extends React.Component{
             $.ajax({
             method: 'GET',
             async: false,
-            url: configs.baseUrl + 'api/employee/GetEmployeesThatAreNotFullyAllocated?projectId='+  this.props.projectId +'&departmentName=' + "" + '&ptype='+ {}+'&pageSize=5'+'&pageNr='+whereTo,
+            url: configs.baseUrl + 'api/employee/GetEmployeesThatAreNotFullyAllocated?projectId='+  this.props.projectId +'&departmentId=' + "" + '&ptype='+ {}+'&pageSize=5'+'&pageNr='+whereTo,
             success: function (data) {
                 console.log(data, this);
                 this.setState({
@@ -120,7 +123,7 @@ export default class FormAssign extends React.Component{
         $.ajax({
             method: 'GET',
             async: false,
-            url: configs.baseUrl + 'api/employee/GetEmployeesThatAreNotFullyAllocated?projectId='+ this.props.projectId + '&departmentName=' + "" + '&ptype='+ {} +'&pageSize=5'+'&pageNr='+whereTo,
+            url: configs.baseUrl + 'api/employee/GetEmployeesThatAreNotFullyAllocated?projectId='+ this.props.projectId + '&departmentId=' + "" + '&ptype='+ {} +'&pageSize=5'+'&pageNr='+whereTo,
             success: function (data) {
                 console.log(data, this);
                 this.setState({
@@ -150,14 +153,20 @@ export default class FormAssign extends React.Component{
         }
 
         onDropDownChange(){
-        const ptype=this.refs.positionTypes.options[this.refs.positionTypes.selectedIndex].value;
-        const depName=this.refs.departments.options[this.refs.departments.selectedIndex].text;
+        let ptype=this.refs.positionTypes.options[this.refs.positionTypes.selectedIndex].value;
+            if(ptype === ""){
+                ptype={};
+            }
+
+        let depId=this.refs.departments.options[this.refs.departments.selectedIndex].value;
+            if (depId=="")
+                depId = null
         const pageNr = 1;
 
          $.ajax({
             method: 'GET',
             async: false,
-            url: configs.baseUrl + 'api/employee/GetEmployeesThatAreNotFullyAllocated?projectId='+ this.props.projectId + '&departmentName=' + depName + '&ptype='+ ptype +'&pageSize=5'+'&pageNr=1',
+            url: configs.baseUrl + 'api/employee/GetEmployeesThatAreNotFullyAllocated?projectId='+ this.props.projectId + '&departmentId=' + depId + '&ptype='+ ptype +'&pageSize=5'+'&pageNr=1',
             success: function (data) {
                 console.log(data, this);
                 this.setState({
@@ -197,15 +206,28 @@ export default class FormAssign extends React.Component{
         return(
 
         <Modal title={'Assign employee'} button={'Assign'} close={this.props.close} action={this.assign.bind(this)}>
-            <div className="filter">
-                <select className="selectpicker" ref="positionTypes" onChange={this.onDropDownChange.bind(this)} >
-                    {positionTypes}                    
-                </select>
 
-                <select className="selectpicker" ref="departments" onChange={this.onDropDownChange.bind(this)} >
-                    {departments}                    
-                </select>
+
+
+            <div className="form-group">
+                <div className="col-sm-4 dropdown-custom-left">
+                    <select className="form-control" defaultValue="Position" ref="positionTypes" onChange={this.onDropDownChange.bind(this)}>
+                        <option value=""> None </option>
+                        {positionTypes}
+                    </select>
+                </div>
+
+                <div className="col-sm-4 dropdown-custom-right">
+                    <select className="form-control"  ref="departments" onChange={this.onDropDownChange.bind(this)}>
+                        <option value=""> None </option>
+                        {departments}
+                    </select>
+                </div>
             </div>
+
+            
+            
+
 
             <table className="table table-striped" id="table1">
                     <thead>
@@ -224,12 +246,12 @@ export default class FormAssign extends React.Component{
                     </tbody>
             </table>
 
-                  <div>
+                  <div className="btn-wrapper">
                     <button className="leftArrow" onClick={this.back.bind(this)}>
-                                <i className="fa fa-arrow-left fa-2x" aria-hidden="true"></i>
+                                <i className="fa fa-arrow-left fa-1x" aria-hidden="true"></i>
                     </button>
                     <button className="rightArrow" onClick={this.next.bind(this)}>
-                                <i className="fa fa-arrow-right fa-2x" aria-hidden="true"></i>
+                                <i className="fa fa-arrow-right fa-1x" aria-hidden="true"></i>
                     </button>              
                 </div>
         

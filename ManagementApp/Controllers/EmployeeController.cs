@@ -92,9 +92,9 @@ namespace ManagementApp.Controllers
 
         [Route("GetEmployeesThatAreNotFullyAllocated")]
         [HttpGet]
-        public IHttpActionResult GetEmployeesThatAreNotFullyAllocated(int projectId,string departmentName, int? pageSize, int? pageNr, PositionType? ptype = null)
+        public IHttpActionResult GetEmployeesThatAreNotFullyAllocated(int projectId,int? pageSize, int? pageNr, int? departmentId=null, PositionType? ptype = null)
         {
-            var result = _employeeService.GetEmployeesThatAreNotFullyAllocated(projectId,departmentName,pageSize,pageNr,ptype);
+            var result = _employeeService.GetEmployeesThatAreNotFullyAllocated(projectId,departmentId,pageSize,pageNr,ptype);
             return Json(result);
         }
 

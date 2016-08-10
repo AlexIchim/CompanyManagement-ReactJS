@@ -199,9 +199,9 @@ namespace Manager.Services
             return employeeInfos;
         }
 
-        public IEnumerable<NotFullyAllocatedEmployeesInfo> GetEmployeesThatAreNotFullyAllocated(int projectId,string departmentName, int? pageSize, int? pageNr,PositionType? ptype)
+        public IEnumerable<NotFullyAllocatedEmployeesInfo> GetEmployeesThatAreNotFullyAllocated(int projectId, int? departmentId, int? pageSize, int? pageNr,PositionType? ptype)
         {
-            var employees = _employeeRepository.GetEmployeesThatAreNotFullyAllocated(projectId,departmentName, pageSize,pageNr,ptype);
+            var employees = _employeeRepository.GetEmployeesThatAreNotFullyAllocated(projectId,departmentId, pageSize,pageNr,ptype);
             var employeeInfos = _mapper.Map<IEnumerable<NotFullyAllocatedEmployeesInfo>>(employees);
             foreach (NotFullyAllocatedEmployeesInfo ei in employeeInfos)
             {

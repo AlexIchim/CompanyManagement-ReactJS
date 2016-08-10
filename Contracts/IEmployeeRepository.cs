@@ -30,7 +30,7 @@ namespace Contracts
 
         IEnumerable<Employee> GetAllUnAllocatedEmployeesOnProject();
 
-        IEnumerable<Employee> GetEmployeesThatAreNotFullyAllocated(int projectId,string DepartmentName, int? pageSize, int? pageNr,PositionType? ptype);
+        IEnumerable<Employee> GetEmployeesThatAreNotFullyAllocated(int projectId,int? DepartmentId, int? pageSize, int? pageNr,PositionType? ptype);
 
 
         void AssignEmployee(EmployeeProject ep);
