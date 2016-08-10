@@ -30,7 +30,7 @@ export default class Member extends React.Component{
         $.ajax({
             method: 'GET',
             async: false,
-            url: configs.baseUrl + 'api/employee/getPoisitionTypes',
+            url: configs.baseUrl + 'api/employee/getPositionTypes',
             success: function (data) {
                 console.log(data, this);
                 this.setState({
@@ -42,7 +42,7 @@ export default class Member extends React.Component{
 
      componentDidMount(){
          console.log(this.props.routeParams.projectId);
-         Controller.getEmployeesByProjectId(this.props.routeParams.projectId,this.state.pageNr);
+         Controller.getEmployeesByProjectId(this.props.routeParams.projectId,{},this.state.pageNr);
     }
 
     componentWillUnmount () {
@@ -58,7 +58,7 @@ export default class Member extends React.Component{
 
      getAllEmployeeOnProject(pageNr){
 
-        Controller.getEmployeesByProjectId(this.props.routeParams.projectId,pageNr);
+        Controller.getEmployeesByProjectId(this.props.routeParams.projectId,{},pageNr);
 
         this.setNumberOfPages();
     }
@@ -124,6 +124,12 @@ export default class Member extends React.Component{
        
     }
 
+    onDropDownChange(){
+        const positionTypes=this.refs.positionTypes.options[this.refs.positionTypes.selectedIndex].id;
+        const pageNr = 1;
+        console.log("ODDC",positionTypes);
+        Controller.getEmployeesByProjectId(this.props.routeParams.projectId,positionTypes,pageNr);
+    }
 
     render(){
 
@@ -140,7 +146,7 @@ export default class Member extends React.Component{
 
           const positionTypes=this.state.positionTypes.map((el, x) => {
             return (
-                <option value={el} key={x} >{el}</option>                         
+                <option value={el} key={x} id={el.Id} >{el.Description}</option>                         
             )
         });
 
@@ -155,7 +161,7 @@ export default class Member extends React.Component{
                 <h1>{this.props.routeParams.projectName + ' Members'}  </h1>
                 <button className="btn btn-xs btn-info" onClick={this.showAssignForm.bind(this)} > <span className="glyphicon glyphicon-plus-sign"></span> Assign employee </button>
 
-                <select className="selectpicker" ref="positionTypes" >
+                <select className="selectpicker" ref="positionTypes" onChange={this.onDropDownChange.bind(this)}>
                     {positionTypes}                    
                 </select>
 

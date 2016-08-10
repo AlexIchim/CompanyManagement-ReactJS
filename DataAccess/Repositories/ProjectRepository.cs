@@ -9,13 +9,14 @@ using System.Linq;
 using Domain.Enums;
 using Manager.Descriptors;
 using Manager.InfoModels;
+using System.Data.Entity;
 
 namespace DataAccess.Repositories
 {
     public class ProjectRepository : IProjectRepository
     {
-        private readonly DbContext _context;
-        public ProjectRepository(DbContext context)
+        private readonly Context.DbContext _context;
+        public ProjectRepository(Context.DbContext context)
         {
             _context = context;
         }
@@ -33,20 +34,17 @@ namespace DataAccess.Repositories
             return role;
         }
 
-        public IEnumerable<Employee> GetEmployeesByProjectId(int projectid, int? pageSize, int? pageNr)
+        public IEnumerable<Employee> GetEmployeesByProjectId(int projectid,PositionType? ptype, int? pageSize, int? pageNr)
         {
-            List<Employee> employees = new List<Employee>();
-            var proj = _context.EmployeeProjects.Where(ep => ep.ProjectId == projectid);
-
-            foreach (EmployeeProject ep in proj)
-            {
-                Employee emp = new Employee();
-                emp = _context.Employees.SingleOrDefault(e => e.Id == ep.EmployeeId);
-                employees.Add(emp);
-            }
-            var queryableEmployees = employees.AsQueryable();
-            return queryableEmployees.OrderBy(d => d.Name).Paginate(pageSize, pageNr).ToArray();
-
+            var employees = _context.EmployeeProjects.
+                Where(ep => ep.ProjectId == projectid).
+                Select(ep => ep.Employee).
+                Where(e=> ptype==null || e.PositionType==ptype).
+                OrderBy(d => d.Name).
+                Paginate(pageSize, pageNr).
+                ToArray();
+            
+            return employees;
         }
 
         public IQueryable<EmployeeProject> GetEmployeesAllocation(int projectId)

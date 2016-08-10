@@ -7,7 +7,7 @@ namespace Contracts
 {
     public interface IProjectRepository
     {
-        IEnumerable<Employee> GetEmployeesByProjectId(int projectId, int? pageSize, int? pageNr);
+        IEnumerable<Employee> GetEmployeesByProjectId(int projectId,PositionType? ptype, int? pageSize, int? pageNr);
         IQueryable<EmployeeProject> GetEmployeesAllocation(int projectId);
 
         void Save();

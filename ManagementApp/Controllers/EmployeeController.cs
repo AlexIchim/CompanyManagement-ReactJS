@@ -2,6 +2,8 @@
 using Manager.Services;
 using System.Web.Http;
 using System.Web.Http.Cors;
+using Domain.Enums;
+
 namespace ManagementApp.Controllers
 {
     [RoutePrefix("api/employee")]
@@ -90,9 +92,9 @@ namespace ManagementApp.Controllers
 
         [Route("GetEmployeesThatAreNotFullyAllocated")]
         [HttpGet]
-        public IHttpActionResult GetEmployeesThatAreNotFullyAllocated(int projectId, int? pageSize, int? pageNr)
+        public IHttpActionResult GetEmployeesThatAreNotFullyAllocated(int projectId,string departmentName, int? pageSize, int? pageNr, PositionType? ptype = null)
         {
-            var result = _employeeService.GetEmployeesThatAreNotFullyAllocated(projectId, pageSize,pageNr);
+            var result = _employeeService.GetEmployeesThatAreNotFullyAllocated(projectId,departmentName,pageSize,pageNr,ptype);
             return Json(result);
         }
 
