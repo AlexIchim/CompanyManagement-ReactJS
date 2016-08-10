@@ -39,7 +39,7 @@ namespace DataAccess.Repositories
                     .ToArray();
         }
 
-        public IEnumerable<Employee> GetAllAvailableEmployeesOfAnOffice(int officeId, int pageSize, int pageNumber, int? department = null, int? position = null)
+        public IEnumerable<Employee> GetAllAvailableEmployeesOfAnOffice(int projectId, int officeId, int pageSize, int pageNumber, int? department = null, int? position = null)
         {
             return _context.Employees
                 .Where(e => 
@@ -54,6 +54,7 @@ namespace DataAccess.Repositories
                         assignment
                     }
                 )
+                //.Where(e => e.assignment.ProjectId != projectId)
                 .GroupBy(x => x.employee)
                 .Select(g => new {
                     Employee = g.Key,

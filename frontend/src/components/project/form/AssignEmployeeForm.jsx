@@ -14,7 +14,6 @@ const EmployeeItem = (props) => {
             <td> <input id={props.element['Id']} type="checkbox" onChange={props.onCheck}/></td>
         </tr>
     )
-
 }
 
 export default class AssignEmployeeForm extends React.Component{
@@ -49,7 +48,8 @@ export default class AssignEmployeeForm extends React.Component{
     GetAllAvailableEmployees(indexDepartment, indexPosition){
         $.ajax({
             method: 'GET',
-            url: config.base + "office/availableEmployees/1/5/1" + "?department=" + indexDepartment +"&position="+ indexPosition,
+            url: config.base + "office/availableEmployees/"+ this.props.ProjectId + "/1/5/1" + "?department=" + indexDepartment +"&position="+ indexPosition,
+
             async: false,
             success: function(data){
                 this.setState({
@@ -165,8 +165,6 @@ export default class AssignEmployeeForm extends React.Component{
                         <td> Position </td>
                         <td> Remaining Allocation</td>
                     </tr>
-
-
                         {availableEmployees}
                       </tbody>
                         </table>

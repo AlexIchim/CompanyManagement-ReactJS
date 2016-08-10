@@ -31,7 +31,7 @@ export default class EditAllocationForm extends React.Component{
             model = {}
         }
         let allocation = this.refs.inputAllocation.value;
-        if(allocation < 100){
+        if(allocation <= 100){
             model.Allocation = (allocation) ? allocation : model.Allocation;
 
             Context.cursor.set("model", model);
