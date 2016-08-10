@@ -42,6 +42,7 @@ export default class AddProject extends React.Component{
     onInputChange(){
         const newProjectName = this.refs.name.value;
         const newProjectDuration = parseInt(this.refs.duration.value);
+        
         if(newProjectName === "")
         {
             this.setState({

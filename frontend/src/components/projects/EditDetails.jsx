@@ -69,22 +69,28 @@ export default class EditDetails extends React.Component {
                 message : ""
             });
         }
-        console.log(newProjectName, ' ', newProjectDuration);
+ 
         this.refs.name.value = newProjectName;
-        newProject.name = this.refs.name.value;
-        newProject.duration = newProjectDuration;
         
+        if(this.state.message !== "Error!!! A project cannot last more than 120 months."){
+            newProject.duration = newProjectDuration;
+        }
+
+        if(this.state.message !== "Error!!! Project name cannot contain more than 100 characters."){
+            newProject.name = newProjectName;
+        }
+
         this.setState({
             project : newProject
-        });
+        }); 
     }
 
     render(){
         let project = this.state.project;
         const onEdit = this.props.onEdit;
-        const projectName = this.state.project.name;
+        const projectName = this.props.project.name;
 
-        const saveButton = this.state.message === "" ? (
+        const saveButton = (this.state.message === "") && (this.state.project.name.length <= 100) && (this.state.project.duration <= 120) ? (
             <button type="button" className="btn btn-info" onClick={this.updateProject.bind(this)}>Save</button>
         ) : (<button type="button" className="btn btn-info" disabled>Save</button>);
 

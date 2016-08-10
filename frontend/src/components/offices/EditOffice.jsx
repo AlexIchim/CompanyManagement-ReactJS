@@ -5,11 +5,26 @@ export default class EditOffice extends React.Component {
 
     constructor(){
         super();
+        this.state = {
+            office : {},
+            nameMessage : "",
+            phoneMessage : "",
+            addressMessage : ""
+        }
     }
 
     componentWillMount(){
+        const office = this.props.office;
+
+        let copy = {};
+        for(let key in office){
+            if(office.hasOwnProperty(key)){
+                copy[key] = office[key];
+            }
+        }
+
         this.setState({
-            office: this.props.office
+            office: copy
         })
     }
 
@@ -58,13 +73,23 @@ export default class EditOffice extends React.Component {
         )
     }
 
-    onChangeHandler(e){
+    /*onChangeHandler(e){
         let officeObject = this.state.office;
         officeObject[e.target.name] = e.target.value;
 
         this.setState({
             office: officeObject
         })
+    }*/
+
+    isCorrectPhoneNumber(phoneNumber){
+        const str="+-()0123456789 ";
+        for(let i = 0; i < phoneNumber.length; i++){
+            if(str.indexOf(phoneNumber.substr(i, 1)) === -1){
+                return false;
+            }
+        }
+        return true;
     }
 
     componentDidMount(){
@@ -100,12 +125,107 @@ export default class EditOffice extends React.Component {
         }
     }
 
+    onTextInputChangeName(){
+     
+        const newOfficeName = this.refs.name && this.refs.name.value || '';
+        let newOffice = this.state.office;
+
+        if(newOfficeName === ""){
+            this.setState({
+                nameMessage : "Error!!! Office name cannot be empty."
+            });
+        } else if(newOfficeName.length > 100){
+            this.setState({
+                nameMessage : "Error!!! Office name cannot contain more than 100 characters."
+            });
+        } else {
+            this.setState({
+                nameMessage : "",
+                correctName : newOfficeName
+            });
+        }
+        this.refs.name.value = newOfficeName.substr(0, 99);
+        newOffice.name = this.refs.name.value;
+
+        this.setState({
+            office : newOffice
+        });
+        
+    }
+
+    onTextInputChangeAddress(){
+        
+        const newOfficeAddress = this.refs.address && this.refs.address.value || '';
+        const newOffice = this.props.office; 
+
+        if(newOfficeAddress === ""){
+            this.setState({
+                addressMessage : "Error!!! Office address cannot be empty." 
+            });
+        } else if(newOfficeAddress.length > 300) {
+            this.setState({
+                addressMessage : "Error!!! Office address cannot contain more than 300 characters."
+            });
+        } else {
+            this.setState({
+                addressMessage : "",
+                correctAddress : newOfficeAddress
+            });
+        }
+        
+        this.refs.address.value = newOfficeAddress.substr(0, 299);
+        newOffice.address = this.refs.address.value;
+
+        this.setState({
+            office : newOffice
+        });
+
+    }
+
+    onTextInputChangePhone(){
+        
+        const newOfficePhone = this.refs.phone && this.refs.phone.value || '';
+        const length = newOfficePhone.length;
+        const newOffice = this.props.office;
+
+        if(newOfficePhone === ""){
+            this.setState({
+                phoneMessage : "Error!!! Office phone number cannot be empty."
+            });
+            this.refs.phone.value = newOfficePhone.substring(0, length - 1);
+        } else if(newOfficePhone.length > 20){
+            this.setState({
+                phoneMessage : "Error!!! Office phone number cannot contain more than 20 characters."
+            });
+            this.refs.phone.value = newOfficePhone.substring(0, length - 1);
+        } else if(this.isCorrectPhoneNumber(this.refs.phone.value) === false){
+            this.setState({
+                phoneMessage : "Error!!! Invalid format for office phone number."
+            });
+            this.refs.phone.value = newOfficePhone.substring(0, length - 1);
+        } else {
+            this.setState({
+                phoneMessage : "",
+            });
+            this.refs.phone.value = newOfficePhone;
+        }
+
+        newOffice.phone = this.refs.phone.value;
+
+        this.setState({
+            office : newOffice
+        });
+        
+    }
 
     render() {
         let name = this.state.office.name;
         let address = this.state.office.address;
         let phone = this.state.office.phone;
         let image = this.state.office.image;
+        const saveButton = ((name !== "") && (name.length <= 100) && (address !== "") && (address.length <= 300) && (phone !== "") && (phone.length <= 20) && (this.isCorrectPhoneNumber(phone))) ?
+                            (<button type="button" className="btn btn-md btn-info" onClick={this.onSave.bind(this)}>Save</button>) :
+                            (<button type="button" className="btn btn-md btn-info" disabled>Save</button>);
 
         return (
             <div className="box info-box">
@@ -118,28 +238,28 @@ export default class EditOffice extends React.Component {
                     <div className="formBody">
                         <div className="form-group">
                             <div className="col-md-2 leftColoumn">
-                                <label className="rightAligned" htmlFor="name">Name:</label>
+                                <label className="rightAligned">Name:</label>
                             </div>
                             <div className="col-md-8 rightColoumn">
-                                <input type="text" className="leftAligned form-control" name="name" value={name} onChange={this.onChangeHandler.bind(this)}/>
+                                <input type="text" ref="name" className="leftAligned form-control"  value={name} onChange={this.onTextInputChangeName.bind(this)}/>
                             </div>
                         </div>
 
                         <div className="form-group">
                             <div className="col-md-2" id="leftColoumn">
-                                <label className="rightAligned" htmlFor="address">Address:</label>
+                                <label className="rightAligned">Address:</label>
                             </div>
                             <div className="col-md-8" id="rightColoumn">
-                                <input type="text" className="leftAligned form-control" name="address" value={address} onChange={this.onChangeHandler.bind(this)}/>
+                                <input type="text" ref="address" className="leftAligned form-control"  value={address} onChange={this.onTextInputChangeAddress.bind(this)}/>
                             </div>
                         </div>
 
                         <div className="form-group">
                             <div className="col-md-2" id="leftColoumn">
-                                <label className="rightAligned" htmlFor="phone">Phone:</label>
+                                <label className="rightAligned">Phone:</label>
                             </div>
                             <div className="col-md-8" id="rightColoumn">
-                                <input type="text" className="leftAligned form-control" name="phone" value={phone} onChange={this.onChangeHandler.bind(this)}  />
+                                <input type="text" ref="phone" className="leftAligned form-control"  value={phone} onChange={this.onTextInputChangePhone.bind(this)}  />
                             </div>
                         </div>
 
@@ -157,9 +277,9 @@ export default class EditOffice extends React.Component {
                             </div>
                         </div>
                     </div>
-
+                    <div><b><font color="red">{this.state.nameMessage}<br/>{this.state.addressMessage}<br/>{this.state.phoneMessage}</font></b></div>
                     <div className="box-footer">
-                        <button type="button" className="btn btn-md btn-info" onClick={this.onSave.bind(this)}> Save</button>
+                        {saveButton}
                         <button type="button" className="btn btn-md btn-info" onClick={this.props.hideFunc}> Cancel</button>
                     </div>
                 </form>
