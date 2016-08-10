@@ -68,9 +68,9 @@ namespace ManagementApp.Controllers
 
         [Route("getAllDepartmentEmployees")]
         [HttpGet]
-        public IHttpActionResult GetAllDepartmentEmployees(int departmentId, int? pageSize, int? pageNr,int? allocation=null, PositionType? ptype = null,JobType? jtype = null)
+        public IHttpActionResult GetAllDepartmentEmployees(int departmentId, string employeeName, int? pageSize, int? pageNr,int? allocation=null, PositionType? ptype = null,JobType? jtype = null)
         {
-            var result = _employeeService.GetAllDepartmentEmployees(departmentId, pageSize, pageNr,allocation,ptype,jtype);
+            var result = _employeeService.GetAllDepartmentEmployees(departmentId, employeeName, pageSize, pageNr,allocation,ptype,jtype);
             return Json(result);
         }
 
@@ -94,7 +94,7 @@ namespace ManagementApp.Controllers
         [HttpGet]
         public IHttpActionResult GetEmployeesThatAreNotFullyAllocated(int projectId,string departmentName, int? pageSize, int? pageNr, PositionType? ptype = null)
         {
-            var result = _employeeService.GetEmployeesThatAreNotFullyAllocated(projectId,departmentName,pageSize,pageNr,ptype);
+            var result = _employeeService.GetEmployeesThatAreNotFullyAllocated(projectId,departmentName, pageSize,pageNr,ptype);
             return Json(result);
         }
 
@@ -134,13 +134,17 @@ namespace ManagementApp.Controllers
 
         [Route("searchEmployeesByName")]
         [HttpGet]
-        public IHttpActionResult SearchEmployeesByName(int departmentId,string employeeName, int? pageSize, int? pageNr)
+        public IHttpActionResult SearchEmployeesByName(int departmentId, string employeeName, int? pageSize, int? pageNr)
+        {
+            var result = _employeeService.SearchEmployeesByName(departmentId, employeeName, pageSize, pageNr);
+            return Json(result);
+        }
+
         [Route("getEmployeeById")]
         [HttpPost]
         public IHttpActionResult GetEmployeeById(int employeeId)
         {
             var result = _employeeService.GetEmployeeById(employeeId);
-            var result=_employeeService.SearchEmployeesByName(departmentId,employeeName,pageSize,pageNr);
             return Json(result);
         }
 
