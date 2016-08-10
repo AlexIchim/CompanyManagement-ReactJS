@@ -30,7 +30,16 @@ export default new class ProjectValidator{
         if(allocation > 100){
             return new ValidationResult(false, "Allocation should be less than 100")
         }
+        if(!this.isNumeric(allocation) ){
+            console.log('huh')
+            return new ValidationResult(false, "Only numbers accepted")
+        }
         return new ValidationResult(true, "Valid")
     }
+
+    isNumeric(n) {
+        return !isNaN(parseFloat(n)) && isFinite(n);
+    }
+
 
 }
