@@ -143,7 +143,7 @@ namespace Manager.Services
             return new OperationResult(false, Messages.ErrorWhileUpdatingPartialAllocation);
         }
 
-        public IEnumerable<MemberInfo> GetAllDepartmentEmployees(int departmentId, int? pageSize, int? pageNr)
+        public IEnumerable<MemberInfo> GetAllDepartmentEmployees(int departmentId, int? pageSize, int? pageNr,int? allocation, PositionType? ptype = null, JobType? jtype = null)
         {
             if (_employeeValidator.ValidateId(departmentId))
             {
@@ -152,7 +152,7 @@ namespace Manager.Services
 
                 if (department != null)
                 {
-                    var members = _employeeRepository.GetAllDepartmentEmployees(department, pageSize, pageNr);
+                    var members = _employeeRepository.GetAllDepartmentEmployees(department, pageSize, pageNr,allocation,ptype,jtype);
 
 
                     if (members.Any())
@@ -256,10 +256,18 @@ namespace Manager.Services
             return new OperationResult(false, Messages.ErrorAssignEmployee);
         }
 
+        public IEnumerable<MemberInfo> SearchEmployeesByName(int departmentId,string employeeName, int? pageSize, int? pageNr)
         public MemberInfo GetEmployeeById(int employeeId)
         {
+            if (!string.IsNullOrEmpty(employeeName))
+            {
             var employee = _employeeRepository.GetById(employeeId);
             return _mapper.Map<MemberInfo>(employee);
+                var  employees =_employeeRepository.SearchEmployeesByName(departmentId,employeeName,pageSize,pageNr);
+                var employeesInfo = _mapper.Map<IEnumerable<MemberInfo>>(employees);
+                return employeesInfo;
+            }
+            return null;
         }
     }
 }
