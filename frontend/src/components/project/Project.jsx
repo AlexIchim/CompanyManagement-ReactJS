@@ -15,7 +15,10 @@ export default class Project extends React.Component {
         this.state = {
             add: false,
             projects: Context.cursor.get("projects"),
-            pageNr:1
+            pageNr:1,
+            pageSize:3,
+            nrOfPages:null,
+            filter:null
         }
     }
 
@@ -27,15 +30,16 @@ export default class Project extends React.Component {
             success: function (data) {
                 console.log("status",data, this);
                 this.setState({
-                    statusDescriptions: data
+                    statusDescriptions: data                    
                 })
             }.bind(this)
         })     
+
         this.subscription = Context.subscribe(this.onContextChange.bind(this));
     }
 
     componentDidMount(){
-         Controller.getAllDepProjects(this.props.routeParams.departmentId,{},this.state.pageNr);
+         this.getAllProjects(this.state.pageNr,null);
     }
 
     componentWillUnmount () {
@@ -48,10 +52,41 @@ export default class Project extends React.Component {
         });
     }
 
-    onDropDownChange(){
-        const status=this.refs.status.options[this.refs.status.selectedIndex].id;
-        const pageNr = 1;
+    getAllProjects(pageNr,status){
+
         Controller.getAllDepProjects(this.props.routeParams.departmentId,status,pageNr);
+
+        this.setNumberOfPages(status);
+
+    }
+
+    setNumberOfPages(status){
+        $.ajax({
+            method: 'GET',
+            async: false,
+            url: configs.baseUrl + 'api/project/getAllDepartmentProjects?depId='+this.props.routeParams.departmentId+'&status='+status+'&pageSize=null' +
+            '&pageNr=null',
+            success: function (data) {
+                this.setState({
+                    nrOfPages: data.length / this.state.pageSize + 1
+                });                
+            }.bind(this)
+        })
+    }
+
+    onDropDownChange(){
+        
+        const status=this.refs.status.options[this.refs.status.selectedIndex].id;
+        console.log(status)
+        const pageNr=1;
+
+        this.setState({
+            filter: status,
+            pageNr:pageNr
+        })
+    
+ 
+        this.getAllProjects(pageNr,status);
     }
 
     showAddForm(){
@@ -69,9 +104,10 @@ export default class Project extends React.Component {
     back(){
 
         if (this.state.pageNr!=1){
+
             const whereTo=this.state.pageNr-1
 
-            Controller.getAllDepProjects(this.props.routeParams.departmentId,{},whereTo);
+            this.getAllProjects(whereTo,this.state.filter);
             
              this.setState({
                 pageNr:this.state.pageNr-1
@@ -83,10 +119,17 @@ export default class Project extends React.Component {
     next(){
 
         const whereTo=this.state.pageNr+1
-        Controller.getAllDepProjects(this.props.routeParams.departmentId,{},whereTo);
-        this.setState({
-            pageNr:this.state.pageNr+1
-        })
+
+        this.setNumberOfPages();
+
+        if (whereTo < this.state.nrOfPages){
+
+            this.getAllProjects(whereTo,this.state.filter);
+
+            this.setState({
+                pageNr:this.state.pageNr+1
+            })
+        }
     }
 
 
@@ -95,8 +138,6 @@ export default class Project extends React.Component {
         const statusDescriptions=this.state.statusDescriptions.map((el, x) => {
             return (
                     <option value={el} key={x} id={el.Id}>{el.Description}</option>
-
-
             )
 
         });
