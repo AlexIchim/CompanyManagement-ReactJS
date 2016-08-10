@@ -146,7 +146,11 @@ export default class Member extends React.Component{
 
           const positionTypes=this.state.positionTypes.map((el, x) => {
             return (
+<<<<<<< HEAD
                 <option value={el} key={x} id={el.Id} >{el.Description}</option>                         
+=======
+                <option value={el} key={x} >{el.Description}</option>
+>>>>>>> capac-cami-fronted
             )
         });
 

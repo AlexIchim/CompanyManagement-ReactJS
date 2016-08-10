@@ -199,9 +199,9 @@ namespace Manager.Services
             return employeeInfos;
         }
 
-        public IEnumerable<NotFullyAllocatedEmployeesInfo> GetEmployeesThatAreNotFullyAllocated(int projectId, int? pageSize, int? pageNr)
+        public IEnumerable<NotFullyAllocatedEmployeesInfo> GetEmployeesThatAreNotFullyAllocated(int projectId,string departmentName, int? pageSize, int? pageNr,PositionType? ptype)
         {
-            var employees = _employeeRepository.GetEmployeesThatAreNotFullyAllocated(projectId, pageSize,pageNr);
+            var employees = _employeeRepository.GetEmployeesThatAreNotFullyAllocated(projectId,departmentName, pageSize,pageNr,ptype);
             var employeeInfos = _mapper.Map<IEnumerable<NotFullyAllocatedEmployeesInfo>>(employees);
             foreach (NotFullyAllocatedEmployeesInfo ei in employeeInfos)
             {
@@ -254,6 +254,12 @@ namespace Manager.Services
                 return new OperationResult(true, Messages.SuccessfullyAssignEmployee);
             }
             return new OperationResult(false, Messages.ErrorAssignEmployee);
+        }
+
+        public MemberInfo GetEmployeeById(int employeeId)
+        {
+            var employee = _employeeRepository.GetById(employeeId);
+            return _mapper.Map<MemberInfo>(employee);
         }
     }
 }

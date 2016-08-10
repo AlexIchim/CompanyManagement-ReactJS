@@ -172,7 +172,11 @@ export default class FormAssign extends React.Component{
     render(){
         const positionTypes=this.state.positionTypes.map((el, x) => {
             return (
+<<<<<<< HEAD
                 <option value={el.Id} key={x} >{el.Description}</option>                         
+=======
+                <option value={el} key={x} >{el.Description}</option>
+>>>>>>> capac-cami-fronted
             )
         });
 
