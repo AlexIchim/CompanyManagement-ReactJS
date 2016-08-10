@@ -16,14 +16,19 @@ export default class EditDetails extends React.Component {
 
     componentDidMount(){
         let department = this.props.department;
+        let copy = {};
+
         for (var prop in department) {
-            if (department.hasOwnProperty(prop) && department[prop] === null) {
-                department[prop] = '';
+            if (department.hasOwnProperty(prop)){
+                copy[prop] = department[prop];
+                if(copy[prop] === null) {
+                    copy[prop] = '';
+                }
             }
         }
 
         this.setState({
-            department: department
+            department: copy
         });
 
         Controller.getDepartmentsManagers(

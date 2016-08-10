@@ -21,15 +21,18 @@ export default class EditModal extends React.Component {
     
     componentDidMount(){
         let employee = this.props.employee;
+        let copy = {};
         for (var prop in employee) {
-            if (employee.hasOwnProperty(prop) && employee[prop] === null) {
-                employee[prop] = '';
+            if (employee.hasOwnProperty(prop)) {
+                copy[prop] = employee[prop];
+                if(copy[prop] === null) {
+                    copy[prop] = '';
+                }
             }
         }
 
-
         this.setState({
-            employee: employee
+            employee: copy
         });
 
         Controller.getPositions(
