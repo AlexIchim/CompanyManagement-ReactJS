@@ -8,7 +8,7 @@ export default class AddDetails extends React.Component {
             name: '',
             departmentManagerId: -1,
             departmentManagerList: [],
-            message: ["Name can not be empty!", "Choose department manager!!"]
+            message: ["Department name cannot be empty.","Choose department manager!!"]
         };
     }
 
@@ -33,16 +33,15 @@ export default class AddDetails extends React.Component {
     }
 
     render () {
-
+        console.log(this.state.message)
         const departmentManagers = this.state.departmentManagerList.map((element, index) => {
             return (
                 <option key={element.id} value={element.id}>{element.name}</option>
             )
         });
 
-        const addButton = this.state.message[0] === "" && this.state.message[1] === "" ? (
-            <button className="btn btn-default" onClick={this.save.bind(this)}>Add</button>
-        ) : (<button className="btn btn-default" disabled>Add</button>);
+        const addButton = this.state.message[0] === ""  && this.state.message[1] === "" ? (<button className="btn btn-default" onClick={this.save.bind(this)}>Add</button>)
+      :(<button className="btn btn-default" disabled>Add</button>);
 
 
         console.log(this.state.departmentManagerList);
@@ -54,7 +53,7 @@ export default class AddDetails extends React.Component {
                     <div className="box-body">
                         <div className="form-group">
                             <label>Name:</label>
-                            <input className="form-control" type="text"
+                            <input className="form-control" type="text" ref="name"
                                value={this.state.name}
                                onChange={this.onNameChange.bind(this)}/>
                         </div>
@@ -68,13 +67,12 @@ export default class AddDetails extends React.Component {
                             </select>
                         </div>
                         <div>
-                           {this.state.message[0]}
+                            <font color="red"><b>{this.state.message[0]}</b></font>
                         </div>
                         <div>
-                           {this.state.message[1]}
+                            <font color="red"><b>{this.state.message[1]}</b></font>
                         </div>
-                    </div>
-
+                        </div>
                     <div className="box-footer">
                         {addButton}
                         <button type="button" className="btn btn-default" onClick={this.props.hideFunc}> Cancel</button>
@@ -83,26 +81,24 @@ export default class AddDetails extends React.Component {
         );
     }
 
-    onNameChange(e){
-        const val = e.target.value;
-        if (val === "") {
-            this.state.message[0] = "Name can not be empty!";
+    onNameChange() {
+        const newDepartmentName = this.refs.name.value;
+        if (newDepartmentName === "")
+        {
+            this.state.message[0] = "Department name cannot be empty.";
             this.setState({
-                name: val
+                name: newDepartmentName
+            })
+        } else if (newDepartmentName.length > 100) {
+            this.state.message[0] = "Department name cannot be longer than 100 characters.";
+            this.setState({
+                name: newDepartmentName
             });
         } else {
-            if (val.length > 100) {
-                this.setState({
-                    name:val
-                });
-                this.state.message[0] = "Name too long!";
-            }
-            else {
-                this.state.message[0] = ""
-                this.setState({
-                    name: val
-                });
-            }
+            this.state.message[0] = "";
+            this.setState({
+                name: newDepartmentName
+            });
         }
     }
 

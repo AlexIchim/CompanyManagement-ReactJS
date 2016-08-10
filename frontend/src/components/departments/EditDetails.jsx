@@ -45,36 +45,29 @@ export default class EditDetails extends React.Component {
         })
     }
 
-    onNameChange(e){
-        const val = e.target.value;
+    onNameChange(d) {
+        let department = this.state.department;
+        const val = d.target.value;
         if (val === "") {
             this.state.message[0] = "Name can not be empty!";
+            department[d.target.name] = val;
             this.setState({
-                department: {
-                    name : val
-                }
-            });
+                department: department
+            })
+        } else if (val.length > 100) {
+            this.state.message[0] = "Name too long!";
+            department[d.target.name] = val;
+            this.setState({
+                department: department
+            })
         } else {
-            if (val.length > 100) {
-                this.state.message[0] = "Name too long!";
-                this.setState({
-                    department: {
-                        name : val
-                    }
-                });
-            }
-            else {
-                this.state.message[0] = ""
-                this.setState({
-                    department: {
-                        name : val
-                    }
-                });
-            }
+            this.state.message[0] = "";
+            department[d.target.name] = val;
+            this.setState({
+                department: department
+            })
         }
-        console.log(this.state.department.name);
     }
-
 
     save() {
         let department = this.state.department;
@@ -116,6 +109,12 @@ export default class EditDetails extends React.Component {
                         >
                             {departmentManagers}
                         </select>
+                    </div>
+                    <div>
+                        <font color="red"><b>{this.state.message[0]}</b></font>
+                    </div>
+                    <div>
+                        <font color="red"><b>{this.state.message[1]}</b></font>
                     </div>
                 </div>
 
