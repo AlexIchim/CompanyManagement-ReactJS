@@ -107,42 +107,45 @@ export default class Form extends React.Component{
                 </div>
             </div>
             <div className="form-group">
-                <label className="col-sm-4">Employment Date:</label>
-
-                <div className="input-group date col-sm-6">
-                  <div className="input-group-addon">
-                    <i className="fa fa-calendar"></i>
-                  </div>
-                  <input type="text" ref ="employmentDate"className="form-control pull-right" id="datepicker1"/>
+                <label className="col-sm-4 control-label">Employment Date</label>
+                <div className="col-sm-6">
+                    <div className="input-group date">
+                      <div className="input-group-addon">
+                        <i className="fa fa-calendar"></i>
+                      </div>
+                      <input type="text" ref ="employmentDate"className="form-control pull-right" id="datepicker1"/>
+                    </div>
                 </div>
                 
               </div>
             <div className="form-group">
-                <label className="col-sm-4">Release Date:</label>
-
-                <div className="input-group date col-sm-6">
-                  <div className="input-group-addon">
-                    <i className="fa fa-calendar"></i>
-                  </div>
-                  <input type="text" ref ="releaseDate"className="form-control pull-right" id="datepicker2"/>
+                <label className="col-sm-4 control-label">Release Date</label>
+                <div className="col-sm-6">
+                    <div className="input-group date">
+                      <div className="input-group-addon">
+                        <i className="fa fa-calendar"></i>
+                      </div>
+                      <input type="text" ref ="releaseDate"className="form-control pull-right" id="datepicker2"/>
+                    </div>
                 </div>
-                
               </div>
             
             <div className="form-group">
              <label className="col-sm-4 control-label"> Job Type </label>
-                 <div className="col-sm-6">
-            <select ref="jobType" className="selectpicker form-group">
-                {jobTypes}        
-                              
-            </select>
+                <div className="col-sm-6">
+                    <select ref="jobType" className="selectpicker form-control">
+                        {jobTypes}
+                    </select>
+                </div>
             </div>
-            </div>
+
+
+
 
             <div className="form-group">
                 <label className="col-sm-4 control-label"> Position Type </label>
                  <div className="col-sm-6">
-                <select ref="positionType" className="selectpicker form-group">
+                <select ref="positionType" className="selectpicker form-control">
                           {positionTypes}           
                 </select>
                 </div>

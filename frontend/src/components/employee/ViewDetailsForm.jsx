@@ -48,37 +48,36 @@ export default class ViewDetailsForm extends React.Component{
              <div>
                 <ViewDetailsModal title={this.props.element.get('Name')} close={this.props.close}>
                  <div className="form-group">
-                <label className="col-sm-4 control-label"> Name </label>
-                <label className="col-sm-4 control-label"> {this.props.element.get('Name')} </label>
-                
-            </div>
-            <div className="form-group">
-                <label className="col-sm-4 control-label"> Address </label>
-                 <label className="col-sm-4 control-label"> {this.props.element.get('Address')} </label>
-              
-            </div>
+                    <label className="col-sm-4 control-label"> Name: </label>
+                    <label className="col-sm-4 control-label"> {this.props.element.get('Name')} </label>
+                </div>
+
+                <div className="form-group">
+                    <label className="col-sm-4 control-label"> Address: </label>
+                     <label className="col-sm-4 control-label"> {this.props.element.get('Address')} </label>
+                </div>
            
-             <div className="form-group">
-                <label className="col-sm-4">Employment Date:</label>
-                 <label className="col-sm-4 control-label"> {this.props.element.get('EmploymentDate')} </label>
-            </div>
-                
-            <div className="form-group">
-                <label className="col-sm-4">Release Date:</label>
-                 <label className="col-sm-4 control-label"> {this.props.element.get('ReleaseDate')} </label>
-              </div>
                 <div className="form-group">
-                <label className="col-sm-4">Job type: </label>
-                 <label className="col-sm-4 control-label"> {this.props.element.get('JobType')} </label>
-              </div>
+                     <label className="col-sm-4 control-label"> Employment Date: </label>
+                     <label className="col-sm-4 control-label"> {this.props.element.get('EmploymentDate')} </label>
+                </div>
+
                 <div className="form-group">
-                <label className="col-sm-4">Position type:</label>
-                 <label className="col-sm-4 control-label"> {this.props.element.get('PositionType')} </label>
-              </div>
+                    <label className="col-sm-4 control-label"> Release Date: </label>
+                     <label className="col-sm-4 control-label"> {this.props.element.get('ReleaseDate')} </label>
+                </div>
 
-      
+                <div className="form-group">
+                    <label className="col-sm-4 control-label"> Job type: </label>
+                     <label className="col-sm-4 control-label"> {this.props.element.get('JobType')} </label>
+                </div>
 
-            <table className="table table-condensed" id="table1">
+                <div className="form-group">
+                    <label className="col-sm-4 control-label"> Position type: </label>
+                     <label className="col-sm-4 control-label"> {this.props.element.get('PositionType')} </label>
+                </div>
+
+            <table className="table table-striped" id="table1">
                 <thead>
                 <tr>
                     <th className="col-md-2">Project Name</th>

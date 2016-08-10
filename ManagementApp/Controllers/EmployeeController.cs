@@ -3,6 +3,8 @@ using Manager.Services;
 using System.Web.Http;
 using System.Web.Http.Cors;
 using Domain.Enums;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Serialization;
 
 namespace ManagementApp.Controllers
 {
@@ -11,10 +13,15 @@ namespace ManagementApp.Controllers
     public class EmployeeController : ApiController
     {
         private readonly EmployeeService _employeeService;
+        private readonly JsonSerializerSettings _dateJsonSettings;
 
         public EmployeeController(EmployeeService employeeService)
         {
             _employeeService = employeeService;
+            _dateJsonSettings = new JsonSerializerSettings()
+            {
+                DateFormatString = "MM'/'dd'/'yyyy"
+            };
         }
 
 
@@ -71,7 +78,7 @@ namespace ManagementApp.Controllers
         public IHttpActionResult GetAllDepartmentEmployees(int departmentId, string employeeName, int? pageSize, int? pageNr,int? allocation=null, PositionType? ptype = null,JobType? jtype = null)
         {
             var result = _employeeService.GetAllDepartmentEmployees(departmentId, employeeName, pageSize, pageNr,allocation,ptype,jtype);
-            return Json(result);
+            return Json(result, _dateJsonSettings);
         }
 
         [Route("addEmployee")]

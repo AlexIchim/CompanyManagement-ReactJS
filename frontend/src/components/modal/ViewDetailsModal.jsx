@@ -1,4 +1,6 @@
 import React from 'react';
+import "./../../assets/less/index.less";
+
 export default class  ViewDetailsModal extends React.Component{
 
 
@@ -29,7 +31,7 @@ export default class  ViewDetailsModal extends React.Component{
                                 </div>
 
                                 <div className="box-footer modal-footer">
-                                    <button type="button" className="col-sm-2 btn btn-default cancel-button" onClick={this.cancel.bind(this)}> Cancel</button>
+                                    <button className="exit-details"  onClick={this.cancel.bind(this)}>Close</button>
                                 </div>
                             </form>
                         </div>
