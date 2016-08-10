@@ -15,9 +15,14 @@ export default new class OfficeValidator{
         if(!phone){
             return new ValidationResult(false, "Phone is mandatory.");
         }
+        var isnum = /^\d+$/.test(phone);
+        if(!isnum){
+            return new ValidationResult(false, "Phone should only contain digits.");
+        }
         if(phone.length<10||phone.length>14){
             return new ValidationResult(false, "Phone must have between 10 and 14 digits.");
         }
+        
 
         return new ValidationResult(true, "Valid.");
     }

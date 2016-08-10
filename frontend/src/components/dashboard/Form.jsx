@@ -28,8 +28,10 @@ export default class Form extends React.Component{
         var that = this;
         reader.onload=function(event){
             image=this.result;
-            that.setState({ Image: image });
-            
+
+            var result=Validator.ValidateImage(image); 
+
+            that.updateState(image, null, null, null, result);
             console.log("Finished Loading Image");
         }
 
@@ -63,47 +65,33 @@ export default class Form extends React.Component{
             Context.cursor.set("model", model);
 
             this.props.FormAction();
-        }else{
-            this.setState({
-            Image:this.state.Image,
-                NameValidationResult:this.state.NameValidationResult,
-                PhoneValidationResult:this.state.PhoneValidationResult,
-                AddressValidationResult:this.state.AddressValidationResult,
-                ImageValidationResult:this.state.ImageValidationResult,
-                ValidationSummary:"No idea what message to add here"
-            })
         }
     }
 
     onChangeName(){
         var result=Validator.ValidateName(this.refs.inputName.value);
-        this.setState({
-            Image:this.state.Image,
-            NameValidationResult:result,
-            PhoneValidationResult:this.state.PhoneValidationResult,
-            AddressValidationResult:this.state.AddressValidationResult,
-            ImageValidationResult:this.state.ImageValidationResult
-        })
+
+        this.updateState(null, result, null, null, null);
     }
     onChangeAddress(){
         var result=Validator.ValidateAddress(this.refs.inputAddress.value);
-        this.setState({
-            Image:this.state.Image,
-            NameValidationResult:this.state.NameValidationResult,
-            PhoneValidationResult:this.state.PhoneValidationResult,
-            AddressValidationResult:result,
-            ImageValidationResult:this.state.ImageValidationResult
-        })
+
+        this.updateState(null, null, result, null, null);
     }
     onChangePhone(){
         var result=Validator.ValidatePhone(this.refs.inputPhone.value);
+
+        this.updateState(null, null, null, result, null);
+    }
+
+    updateState(img, nameVR, phoneVR, addrVR, imgVR){
         this.setState({
-            Image:this.state.Image,
-            NameValidationResult:this.state.NameValidationResult,
-            PhoneValidationResult:result,
-            AddressValidationResult:this.state.AddressValidationResult,
-            ImageValidationResult:this.state.ImageValidationResult
-        })
+            Image:                      (img)?      img:        this.state.Image,
+            NameValidationResult:       (nameVR)?   nameVR:     this.state.NameValidationResult,
+            PhoneValidationResult:      (phoneVR)?  phoneVR:    this.state.PhoneValidationResult,
+            AddressValidationResult:    (addrVR)?   addrVR:     this.state.AddressValidationResult,
+            ImageValidationResult:      (imgVR)?    imgVR:      this.state.ImageValidationResult
+        });
     }
 
     render(){
@@ -117,41 +105,39 @@ export default class Form extends React.Component{
         let addrValidationResult="";
         let phoneValidationResult="";
         let imgValidationResult="";
-        let summary=""
         
 
-        if(this.state.NameValidationResult.valid){
-            nameValidationResult=<a>{this.state.NameValidationResult.message}</a>;
-        }else{
-            nameValidationResult=<a>{this.state.NameValidationResult.message}</a>;
+        if(!this.state.NameValidationResult.valid){
+            nameValidationResult=<span>{this.state.NameValidationResult.message}</span>;
         }
 
-        if(this.state.AddressValidationResult.valid){
-            addrValidationResult=<a>{this.state.AddressValidationResult.message}</a>;
-        }else{
-            addrValidationResult=<a>{this.state.AddressValidationResult.message}</a>;
+        if(!this.state.AddressValidationResult.valid){
+            addrValidationResult=<span>{this.state.AddressValidationResult.message}</span>;
         }
-        if(this.state.PhoneValidationResult.valid){
-            phoneValidationResult=<a>{this.state.PhoneValidationResult.message}</a>;
-        }else{
-            phoneValidationResult=<a>{this.state.PhoneValidationResult.message}</a>;
+        if(!this.state.PhoneValidationResult.valid){
+            phoneValidationResult=<span>{this.state.PhoneValidationResult.message}</span>;
         }
+        if(!this.state.ImageValidationResult.valid){
+            imgValidationResult=<span>{this.state.ImageValidationResult.message}</span>;
+        }
+
+        var formIsValid=false;
+        if(    this.state.NameValidationResult.valid 
+            && this.state.AddressValidationResult.valid
+            && this.state.PhoneValidationResult.valid
+            && this.state.ImageValidationResult.valid){
+            formIsValid=true;
         
-        if(this.state.ImageValidationResult.valid){
-            imgValidationResult=<a>{this.state.ImageValidationResult.message}</a>;
-        }else{
-            imgValidationResult=<a>{this.state.ImageValidationResult.message}</a>;
-        }
-
-        if(this.state.ValidationSummary){
-            summary=<a>{this.state.ValidationSummary}</a>
         }
 
         return(
 
             <ModalTemplate onCancelClick={this.props.onCancelClick}
                            onStoreClick={this.onStoreClick.bind(this)}
-                           Title={this.props.Title}>
+                           Title={this.props.Title}
+                           formIsValid={formIsValid}  
+                           >
+
                     <div className="form-group">
                         <label htmlFor="inputName" className="col-sm-2 control-label"> Name</label>
                         <div className="col-sm-10">
@@ -197,11 +183,12 @@ export default class Form extends React.Component{
                             <input
                                 type="file" 
                                 ref="inputImage" 
+                                accept="image/*" data-type='image'
                                 onChange={this.onImageLoad.bind(this)}/>
                         </div>
                         {imgValidationResult}
                     </div>
-                    {summary}
+                    
             </ModalTemplate>
         )
     }
