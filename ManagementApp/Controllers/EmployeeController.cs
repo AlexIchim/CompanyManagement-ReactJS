@@ -27,7 +27,8 @@ namespace ManagementApp.Controllers
 
         [Route("departmentManagers")]
         [HttpGet]
-        public IHttpActionResult GetDepartmentManagers() {
+        public IHttpActionResult GetDepartmentManagers()
+        {
             var result = _employeeService.GetDepartmentManagers();
             return Json(result);
         }
@@ -67,11 +68,8 @@ namespace ManagementApp.Controllers
         [Route("getPositions")]
         [HttpGet]
         public IHttpActionResult GetPositions()
-        [Route("projects/{employeeId}")]
-        [HttpDelete]
-        public IHttpActionResult GetProjectsOfEmployee(int employeeId)
         {
-            var result = _employeeService.GetProjectsOfEmployee(employeeId);
+            var result = _employeeService.GetPositions();
             return Json(result);
         }
 

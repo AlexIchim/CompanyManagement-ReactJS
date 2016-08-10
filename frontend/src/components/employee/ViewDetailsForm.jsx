@@ -1,6 +1,5 @@
 import React from 'react';
 import ViewDetailsModalTemplate from '../ViewDetailsModalTemplate';
-import Controller from '../Command';
 import config from '../helper';
 import MyController from './Controller/Controller.js';
 import Accessors from '../../context/Accessors';
@@ -10,8 +9,24 @@ export default class EditForm extends React.Component {
     constructor(){
         super();
     }
+
+    componentWillMount(){
+        this.subscription=Context.subscribe(this.onContextChange.bind(this));
+    }
+
+    componentWillUnmount(){
+        this.subscription.dispose();
+    }
+
+    onContextChange(cursor){
+        //console.log("Context has changed!");
+        this.setState({
+           model: cursor.get('model')
+        });
+    }
+
     render(){
-        const model = Accessors.model(Context.cursor);
+        const model = this.state.model;
         const projects = model.Projects;
         const name = model.Name;
         const address = model.Address;
@@ -24,9 +39,7 @@ export default class EditForm extends React.Component {
         return(
 
             <ViewDetailsModalTemplate onCancelClick={this.props.onCancelClick}
-                           onStoreClick={MyController.Edit.bind(this)}
-                           Title={this.props.Title}
-                           Model={this.props.Model}>
+                           Title={this.props.Title}>
 
                 <div className="col-md-4 col-md-4-custom">
                     <div className="box box-widget widget-user-2">

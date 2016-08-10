@@ -74,7 +74,7 @@ export default class Dashboard extends React.Component{
                     parentClass="bg-aqua"
                     phone={office.Phone}
                     address={office.Address}
-                    link={"Departments/"+office.Id}
+                    link={"office/departments/"+office.Id}
                     icon={office.Image}
                     key={index}
                     index={index}

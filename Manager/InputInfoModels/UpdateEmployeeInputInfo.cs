@@ -11,5 +11,6 @@ namespace Manager.InputInfoModels
         public DateTime EmploymentDate { get; set; }
         public string JobType { get; set; }
         public string Position { get; set; }
+        public int DepartmentId { get; set; }
     }
 }

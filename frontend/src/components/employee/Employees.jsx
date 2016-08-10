@@ -5,7 +5,6 @@ import EmployeeItem from './EmployeeItem.jsx'
 import Form from './Form.jsx';
 import Accessors from '../../context/Accessors';
 import Context from '../../context/Context';
-import Command from '../Command';
 import MyController from './Controller/Controller'
 import ViewDetailsForm from './ViewDetailsForm'
 import '../../assets/less/index.less'
@@ -13,54 +12,53 @@ import '../../assets/less/index.less'
 export default class Employees extends React.Component{
     constructor(){
         super();
-        this.setState({
-            form: false
-        })
     }
     componentWillMount(){
-        Context.subscribe(this.onContextChange.bind(this));
-        //const employeeId = this.props.routeParams['employeeId'];
 
+        this.setState({
+            formToggle:false,
+        });
+
+        this.subscription = Context.subscribe(this.onContextChange.bind(this));
+        //const employeeId = this.props.routeParams['employeeId'];
         MyController.getAllEmployees();
+    }
+
+    componentWillUnmount(){
+        this.subscription.dispose();
     }
 
     onContextChange(cursor){
         console.log('employees:', cursor.get('items'));
         this.setState({
+            formToggle: false,
             employees: cursor.get('items')
         });
     }
 
-    closeForm(){
-        this.setState({
-            form: !this.state.form
-        });
-    }
-    showForm(){
-        this.setState({
-            form: !this.state.form
-        });
-    }
-
     onAddButtonClick(){
-        Context.cursor.set('formToggle',true);
+        Context.cursor.set('model',null);
+        this.setState({
+            formToggle: true
+        });
     }
 
     onViewDetailsButtonClick(employee){
-        console.log("View details clicked!");
-        Context.cursor.set('formToggle', true);
-        Context.cursor.set('model', employee)
+        console.log("View details clicked! ", employee);
+        Context.cursor.set('model', employee);
 
         this.setState({
+            formToggle: true,
             buttonClicked: "viewDetails"
         })
     }
 
     onEditButtonClick(employee){
         console.log("Edit clicked!");
-        Context.cursor.set('formToggle', true);
+        //MyController.Edit(employee);
         Context.cursor.set('model', employee)
         this.setState({
+            formToggle: true,
             buttonClicked: "edit"
         })
     }
@@ -69,26 +67,25 @@ export default class Employees extends React.Component{
         MyController.Delete(element);
     }
 
-    onModalSaveClick(){
-        console.log("STORING!");
-        Command.hideModal();
+    toggleModal(){
+        this.setState({
+            formToggle: false
+        })
     }
 
     render(){
-        console.log('model is:', Accessors.model(Context.cursor));
+        console.log('In Employees@!@@');
         let modal = "";
         let modal1 = "";
-        console.log('store?', Accessors.formToggle(Context.cursor));
-        if(Accessors.formToggle(Context.cursor)){
+        if(this.state.formToggle){
             if(Accessors.model(Context.cursor)){
                 if (this.state.buttonClicked === "viewDetails") {
-                    modal = <ViewDetailsForm onCancelClick={Command.hideModal.bind(this)}
-                                             onStoreClick={this.onModalSaveClick.bind(this)}
-                                             Title="Edit Employee"/>;
+                    modal = <ViewDetailsForm onCancelClick={this.toggleModal.bind(this)}
+                                             Title="View Details"/>;
                 } else {
                     if (this.state.buttonClicked === "edit") {
-                        modal = <Form onCancelClick={Command.hideModal.bind(this)}
-                                      onStoreClick={this.onModalSaveClick.bind(this)}
+                        modal = <Form onCancelClick={this.toggleModal.bind(this)}
+                                      FormAction={MyController.Edit.bind(this)}
                                       Title="Edit Employee"/>;
                     }
                 }
@@ -96,8 +93,8 @@ export default class Employees extends React.Component{
                             onStoreClick={this.onModalSaveClick.bind(this)}
                             Title="Edit Employee"/>;*/
             }else{
-                modal=<Form onCancelClick={Command.hideModal.bind(this)}
-                           onStoreClick={this.onModalSaveClick.bind(this)}
+                modal=<Form onCancelClick={this.toggleModal.bind(this)}
+                            FormAction={MyController.Add.bind(this)}
                            Title="Add Employee"/>;
             }
         }

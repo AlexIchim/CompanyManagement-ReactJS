@@ -29,8 +29,12 @@ namespace DataAccess.Repositories
         }
 
         public IEnumerable<Employee> GetMembersOfDepartment(int departmentId, int pageSize, int pageNumber, string name = "", int? jobType = null, int? position = null, int? allocation = null)
-        {   
-            return _context.Employees.
+        {
+            var department = GetDepartmentById(departmentId);
+            var employees = department.Employees;
+
+            return employees.OrderBy(x => x.Id);
+            /*return _context.Employees.
                 Join(_context.Assignments,
                     employee => employee.Id, assignment => assignment.EmployeeId,
                     (employee, assignment) => new
@@ -54,7 +58,7 @@ namespace DataAccess.Repositories
                          ((allocation.HasValue && (int) x.Allocation == allocation) || !allocation.HasValue)))
                 .OrderBy(x => x.Employee.Id)
                 .Paginate(pageSize, pageNumber)
-                .ToArray().Select(x => x.Employee);
+                .ToArray().Select(x => x.Employee);*/
         }
 
         public IEnumerable<Project> GetProjectsOfDepartment(int departmentId, int pageSize, int pageNumber, int? status = null) {

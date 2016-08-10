@@ -32,12 +32,12 @@ namespace Domain.Models {
         public int Id { get; set; }
         public string Name { get; set; }
         public string Address { get; set; }
-        public virtual Department Department { get; set; }
         public virtual ICollection<Assignment> Assignments { get; set; }
         public DateTime EmploymentDate { get; set; }
         public DateTime? ReleasedDate { get; set; }
         public JobTypes JobType { get; set; }
         public Position Position { get; set; }
+        public virtual Department Department { get; set; }
 
         public int GetRemainingAllocation() {
             return 100 - GetAllocation();

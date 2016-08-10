@@ -1,8 +1,8 @@
 import * as React from 'react'
 import * as $ from 'jquery'
 import {Link} from 'react-router';
-import Command from '../Command';
 import '../../assets/less/index.less'
+import classnames from 'classnames';
 
 
 const EmployeeItem = (props) => {
@@ -14,7 +14,13 @@ const EmployeeItem = (props) => {
     const link = props.Link;
     const edit = props.onEdit;
     const viewDetails = props.onViewDetails;
-    const deleteF = props.onDelete;
+    const deleteEmployee = props.onDelete;
+
+    const releasedDate = props.node.ReleasedDate;
+
+    if (releasedDate == null){
+        console.log("II nUULLLL");
+    }
 
     return (
         <tr>
@@ -28,24 +34,20 @@ const EmployeeItem = (props) => {
                 {allocation}
             </td>
             <td>
-                <tr>
-                    <td>
-                        {/*<Link to={link} className="btn btn-success margin-top" onClick={edit}>
-                            View Details
-                        </Link>*/}
-                        <button className="btn btn-success margin-top" onClick={viewDetails}>
-                            View Details
-                        </button>
-                        &nbsp;
-                        <button id="store" className="btn btn-success margin-top" onClick={edit}>
-                            Edit
-                        </button>
-                                &nbsp;
-                        <button className="btn btn-danger margin-top" onClick={deleteF}><i className="fa fa-trash" ></i>
-                            Delete
-                        </button>
-                    </td>
-                </tr>
+                    {/*<Link to={link} className="btn btn-success margin-top" onClick={edit}>
+                        View Details
+                    </Link>*/}
+                    <button className="btn btn-success margin-top" onClick={viewDetails}>
+                        View Details
+                    </button>
+                    &nbsp;
+                    <button id="store" className="btn btn-success margin-top" onClick={edit}>
+                        Edit
+                    </button>
+                    &nbsp;
+                    <button id="deleteButton" className="btn btn-danger margin-top" onClick={deleteEmployee}><i className="fa fa-trash" ></i>
+                        Delete
+                    </button>
             </td>
 
         </tr>

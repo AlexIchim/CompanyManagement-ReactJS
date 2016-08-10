@@ -99,22 +99,26 @@ export default class Form extends React.Component{
                            Title={this.props.Title}>
 
                 <div className="form-group">
-                    <label htmlFor="inputName" className="col-sm-4 control-label">Name</label>
-                    <div className="col-sm-8">
-                        <input type="text"
-                               className="form-control"
-                               ref="departmentNameInput"
-                               onChange={this.onModelChange.bind(this)}
-                               value={departmentName}
-                               placeholder="Name">
-                        </input>
+                    <div className="departmentNameInput">
+                        <label htmlFor="inputName" className="col-sm-4 control-label">Name</label>
+                        <div className="col-sm-8">
+                            <input type="text"
+                                   className="form-control"
+                                   ref="departmentNameInput"
+                                   onChange={this.onModelChange.bind(this)}
+                                   value={departmentName}
+                                   placeholder="Name">
+                            </input>
+                        </div>
                     </div>
 
-                    <label htmlFor="inputName" className="col-sm-4 control-label">Department Manager</label>
-                    <div className="col-sm-8">
-                        <select id='dropdown' className="selectpicker" defaultValue={selectedDepartmentManager}>
-                            {departmentManagers}
-                        </select>
+                    <div className="departmentManagerInput">
+                        <label htmlFor="inputName" className="col-sm-4 control-label">Department Manager</label>
+                        <div className="col-sm-8">
+                            <select id='dropdown' className="selectpicker" defaultValue={selectedDepartmentManager}>
+                                {departmentManagers}
+                            </select>
+                        </div>
                     </div>
 
                 </div>

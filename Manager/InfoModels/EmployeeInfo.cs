@@ -9,7 +9,7 @@ namespace Manager.InfoModels
         public string Name { get; set; }
         public string Address { get; set; }
         public DateTime EmploymentDate { get; set; }
-        public DateTime TerminationDate { get; set; }
+        public DateTime ReleasedDate { get; set; }
         public string JobType { get; set; }
         public string Position { get; set; }
         public int Allocation { get; set; }
