@@ -251,19 +251,19 @@ export default class Employees extends Component {
                 </button>
                 <br/><br/>
                 <div>
-                    <div className="col-md-6">
-                        <label>Search:&nbsp;&nbsp;</label>
-                        <input type="text" value={this.state.searchText} onChange={this.onSearchTextChange.bind(this)} />
+                    <div className="col-md-2 input-group pull-left">
+                        <input type="text" value={this.state.searchText} placeholder="Search by name" className="form-control" onChange={this.onSearchTextChange.bind(this)} />
+                        <span className="input-group-addon"><i className="fa fa-search"></i></span>
                     </div>
-                    <div className="col-md-6">
-                        <select className="pull-right" value={this.state.selectedPosition} onChange={this.onPositionFilterChange.bind(this)}>
+                    <div className="col-md-2 pull-right">
+                        <select className="pull-right form-control" value={this.state.selectedPosition} onChange={this.onPositionFilterChange.bind(this)}>
                             <option value="" key={''}>All Positions</option>
                             {positionOptions}
                         </select>
                     </div>
                 </div>
                 
-                <br/>
+                <br/><br/><br/>
                 <PaginatedTable 
                     header={header} 
                     listOfItems={items}

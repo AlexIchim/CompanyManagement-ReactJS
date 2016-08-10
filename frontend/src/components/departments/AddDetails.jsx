@@ -50,21 +50,30 @@ export default class AddDetails extends React.Component {
                 <div className="box-header with-border">
                     <h3 className="box-title">Add Department</h3>
                 </div>
+                <form className="form-horizontal">
                     <div className="box-body">
                         <div className="form-group">
-                            <label>Name:</label>
-                            <input className="form-control" type="text" ref="name"
-                               value={this.state.name}
-                               onChange={this.onNameChange.bind(this)}/>
+                            <div className="col-md-4">
+                                <label>Name:</label>
+                            </div>
+                            <div className="col-md-8">
+                                <input className="form-control" type="text" ref="name"
+                                   value={this.state.name}
+                                   onChange={this.onNameChange.bind(this)}/>
+                             </div>
                         </div>
                         <div className="form-group">
-                            <label>Department Manager:</label>
-                            <select className="form-control"
-                                    onChange={this.onDepartmentManagerChange.bind(this)}
-                            >
-                                <option value="" disabled selected>Select your option</option>
-                                {departmentManagers}
-                            </select>
+                            <div className="col-md-4">
+                                <label>Department Manager:</label>
+                            </div>
+                            <div className="col-md-8">
+                                <select className="form-control"
+                                        onChange={this.onDepartmentManagerChange.bind(this)}
+                                >
+                                    <option value="" disabled selected>Select your option</option>
+                                    {departmentManagers}
+                                </select>
+                            </div>
                         </div>
                         <div>
                             <font color="red"><b>{this.state.message[0]}</b></font>
@@ -77,6 +86,7 @@ export default class AddDetails extends React.Component {
                         {addButton}
                         <button type="button" className="btn btn-md btn-info" onClick={this.props.hideFunc}> Cancel</button>
                     </div>
+                </form>
             </div>
         );
     }
