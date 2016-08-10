@@ -53,7 +53,7 @@ class Sidebar extends React.Component{
                     <ul className="sidebar-menu">
                         <li className="header">MAIN NAVIGATION</li>
                         <li className="treeview">
-                            <Link to="#">
+                            <Link to="project">
                                 <i className="fa fa-dashboard"></i> <span>Dashboard</span>
                             </Link>
                         </li>

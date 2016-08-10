@@ -36,7 +36,7 @@ export default class ModalTemplate extends React.Component{
 
                                 <div className="box-footer">
                                     <button type="button" className="btn btn-default" onClick={this.onCancelClick.bind(this)} > Cancel</button>
-                                    <button type="submit" className="btn btn-default" onClick={this.onStoreClick.bind(this)} > {storeLabel}</button>
+                                    <button type="button" className="btn btn-default" onClick={this.onStoreClick.bind(this)} > {storeLabel}</button>
                                 </div>
                             </form>
                         </div>
