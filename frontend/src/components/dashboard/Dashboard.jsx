@@ -1,7 +1,9 @@
 import * as React from 'react';
 import Tile from './Tile';
+import config from '../helper';
 import Context from '../../context/Context';
 import Accessors from '../../context/Accessors';
+import '../../assets/less/index.less';
 import Controller from './OfficeController';
 
 import Form from './Form';
@@ -10,22 +12,22 @@ export default class Dashboard extends React.Component{
     constructor(){
         super();
     }
-
     componentWillMount(){
         this.setState({
             formToggle:false
         });
-
-        this.subscription = Context.subscribe(this.onContextChange.bind(this));
+        
+        Context.subscribe(this.onContextChange.bind(this));
 
         Context.cursor.set("items",[]);
         Controller.GetAll();
+        
     }
 
     componentWillUnmount(){
         this.subscription.dispose();
     }
-
+    
     onContextChange(cursor){
         this.setState({
             formToggle: false
@@ -57,11 +59,11 @@ export default class Dashboard extends React.Component{
         if(this.state.formToggle){
             if(Accessors.model(Context.cursor)){
                 form=<Form onCancelClick={this.toggleModal.bind(this)}
-                           FormAction={Controller.Update}
+                           FormAction={() => { Controller.Update() }}
                            Title="Edit Office"/>;
             }else{
                 form=<Form onCancelClick={this.toggleModal.bind(this)}
-                           FormAction={Controller.Add}
+                           FormAction={() => { Controller.Add() }}
                            Title="Add Office"/>;
             }
         }
@@ -72,7 +74,7 @@ export default class Dashboard extends React.Component{
                     parentClass="bg-aqua"
                     phone={office.Phone}
                     address={office.Address}
-                    link={"office/departments/"+office.Id + "/5/1"}
+                    link={"Departments/"+office.Id}
                     icon={office.Image}
                     key={index}
                     index={index}
@@ -80,17 +82,26 @@ export default class Dashboard extends React.Component{
                 />
             );
         })
+        
 
         return (
+            <div>
+                <div className=" rectangle ">
+                     <div className="glyphicon glyphicon-plus-sign custom-add-icon"
+                        onClick={this.onAddButtonClick.bind(this)}>
+                     <span className="add-span" onClick={this.onAddButtonClick.bind(this)}>Add Office</span>
+                     </div>
+
+                </div>
+
             <div className="row">
                 {form}
                 {items}
-                <button className="btn btn-success"
-                        onClick={this.onAddButtonClick.bind(this)}>
-                    Add
-                </button>
-            </div>
 
+                
+            </div>
+                </div>
+            
         )
     }
 }
