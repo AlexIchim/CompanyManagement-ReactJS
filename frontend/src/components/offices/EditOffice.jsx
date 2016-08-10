@@ -8,8 +8,17 @@ export default class EditOffice extends React.Component {
     }
 
     componentWillMount(){
+        const office = this.props.office;
+        let copy = {};
+
+        for (var prop in office) {
+            if (office.hasOwnProperty(prop)){
+                copy[prop] = office[prop];
+            }
+        }
+
         this.setState({
-            office: this.props.office
+            office: copy
         })
     }
 
