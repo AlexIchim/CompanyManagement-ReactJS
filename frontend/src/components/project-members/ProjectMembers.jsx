@@ -8,6 +8,7 @@ import AssignForm from './AssignForm';
 import * as Controller from '../../api/controller';
 import ModalTemplate from '../layout/ModalTemplate';
 import EditAllocation from './EditAllocation';
+import PaginatedTable from '../layout/PaginatedTable';
 
 export default class ProjectMembers extends Component {
     constructor() {
@@ -16,7 +17,10 @@ export default class ProjectMembers extends Component {
             projectName: 'Project', 
             memberList: [],
             showModalTemplate: null,
-            employeeAllocation: []
+            employeeAllocation: [],
+            totalProjectMembers: 0,
+            pageSize: 5,
+            pageNumber: 1
         };
     }
 
@@ -34,10 +38,24 @@ export default class ProjectMembers extends Component {
         this.fetchData();
     }
 
-    fetchData(){
+    getProjectMembersCount(){
         const projectId = this.props.params.projectId;
+        Controller.getProjectMembersCount(
+            projectId,
+            true,
+            (data) => {
+                this.setState({
+                    totalProjectMembers: data
+                })
+            }
+        )
+    }
+
+    getEmployeesByProjectId(projectId, pageSize, pageNumber){
         Controller.getEmployeesByProjectId(
             projectId,
+            pageSize,
+            pageNumber,
             true,
             (data) => {
                 this.setState({
@@ -47,7 +65,16 @@ export default class ProjectMembers extends Component {
         )
     }
 
+    fetchData(){
+        const projectId = this.props.params.projectId;
+        this.getEmployeesByProjectId(projectId, this.state.pageSize, this.state.pageNumber);
+        this.getProjectMembersCount();
+    }
+
     deleteAllocation(allocationId){
+        this.setState({
+            pageNumber: 1
+        })
         Controller.deleteAllocation(
             allocationId,
             true,
@@ -74,6 +101,23 @@ export default class ProjectMembers extends Component {
             showModalTemplate: null,
             modalAllocation: {}
         });
+    }
+
+    paginationChangeHandler(pageSize, pageNumber){
+        Controller.getEmployeesByProjectId(
+            this.props.params.projectId,
+            pageSize,
+            pageNumber,
+            true,
+            (data) => {
+                this.setState({
+                    memberList: data,
+                    pageSize: pageSize,
+                    pageNumber: pageNumber
+                });
+            }
+        );
+
     }
 
     render() {
@@ -112,6 +156,18 @@ export default class ProjectMembers extends Component {
         ) : null;
 
 
+        const header = (
+            <thead>
+            <tr>
+                <th>Name</th>
+                <th>Department</th>
+                <th>Role</th>
+                <th>Allocation</th>
+                <th>Actions</th>
+            </tr>
+            </thead>
+        )
+
         return (
             <div>
                 <h1>{this.state.projectName} Members:</h1>
@@ -120,20 +176,14 @@ export default class ProjectMembers extends Component {
                 <br/>
                 <br/>
                 {modalTemplate}
-                <table className="table table-hover table-bordered">
-                    <thead>
-                        <tr>
-                            <th>Name</th>
-                            <th>Department</th>
-                            <th>Role</th>
-                            <th>Allocation</th>
-                            <th>Actions</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {items}
-                    </tbody>
-                </table>
+                <PaginatedTable
+                    header={header}
+                    listOfItems={items}
+                    totalCount={this.state.totalProjectMembers}
+                    pageSize={this.state.pageSize}
+                    selectedPage={this.state.pageNumber}
+                    changeHandler={this.paginationChangeHandler.bind(this)}
+                />
 
             </div>
         );

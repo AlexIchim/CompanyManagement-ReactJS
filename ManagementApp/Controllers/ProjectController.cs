@@ -52,6 +52,14 @@ namespace ManagementApp.Controllers
             return Json(result, _camelCaseJsonSettings);
         }
 
+
+        [Route("{id}/employees/count")]
+        [HttpGet]
+        public int GetProjectMembersCount(int id)
+        {
+            return _projectService.GetProjectMembersCount(id);
+        }
+
         [Route("add")]
         [HttpPost]
         public IHttpActionResult Add([FromBody] AddProjectInputInfo inputInfo)
