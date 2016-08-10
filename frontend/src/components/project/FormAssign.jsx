@@ -22,7 +22,8 @@ export default class FormAssign extends React.Component{
 
             },
             filterByPosition:null,
-            filterByDepartment:null
+            filterByDepartment:null,
+            inputAllocation:10,
         }
     }
 
@@ -90,12 +91,11 @@ export default class FormAssign extends React.Component{
 
 
     assign(cb){
-
+        
         const inputInfo = {
              projectId:this.state.employeeToAssign.projectId,
              employeeId:this.state.employeeToAssign.employeeId,
-             allocation:this.state.employeeToAssign.allocation
-
+             allocation:this.state.inputAllocation,
         }
 
         console.log(inputInfo);
@@ -162,6 +162,14 @@ export default class FormAssign extends React.Component{
             console.log(employee);
         }
 
+    onNumbericInputChange(id){     
+        this.setState({
+            inputAllocation: $("#"+id).val()
+        })
+    }
+
+    
+
     onDropDownChange(){
         let ptype=this.refs.positionTypes.options[this.refs.positionTypes.selectedIndex].value;
             if(ptype === ""){
@@ -207,6 +215,7 @@ export default class FormAssign extends React.Component{
                     <td>{el.DepartmentName}</td>
                     <td>{el.Role}</td>
                     <td>{el.RemainingAllocation}</td>
+                    <td><input ref="allocation" id={el.Id} onChange={this.onNumbericInputChange.bind(this,el.Id)}type="number"min="10" max={el.RemainingAllocation} step="10" placeholder="10"/></td>
                     <td><input id={el.Id} data-allocation={el.RemainingAllocation} ref="radio" type="radio" name="radio" onChange={this.onChange.bind(this,el.Id)} /></td>
                 </tr>
             )
@@ -247,13 +256,14 @@ export default class FormAssign extends React.Component{
                         <th className="col-md-2">Department</th>
                         <th className="col-md-2">Position</th>
                         <th className="col-md-2">Remaining Allocation</th>
+                        <th className="col-md-2">Allocation</th>
                         <th className="col-md-2"></th>
                     </tr>
                     </thead>
                     <tbody>
 
                     {items}
-                  
+
                     </tbody>
             </table>
 
@@ -263,7 +273,10 @@ export default class FormAssign extends React.Component{
                     </button>
                     <button className="rightArrow" onClick={this.next.bind(this)}>
                                 <i className="fa fa-arrow-right fa-1x" aria-hidden="true"></i>
-                    </button>              
+                    </button>     
+                    
+                    
+                             
                 </div>
         
        
