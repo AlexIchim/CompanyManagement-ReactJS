@@ -63,8 +63,7 @@ export default class EditForm extends React.Component{
             data:inputInfo,
             success: function (data) { 
                     cb(); 
-                   this.refresh(this.props.projectId);            
-                 
+                   this.refresh(this.props.projectId);                        
             }.bind(this)
         })   
 
