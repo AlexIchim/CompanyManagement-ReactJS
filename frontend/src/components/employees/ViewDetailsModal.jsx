@@ -8,7 +8,7 @@ export default (props) => {
 
     const allocationList = props.allocationList.length>0 ? 
         props.allocationList.map(
-            (el,index) => <tr key={index}><td>{el.projectName}</td><td>{el.allocationPercentage}</td></tr> 
+            (el,index) => <tr key={index}><td>{el.projectName}</td><td>{el.allocationPercentage} %</td></tr>
         ) : (
         <tr><td>(none)</td><td></td></tr>
     );

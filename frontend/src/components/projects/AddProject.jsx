@@ -79,19 +79,35 @@ export default class AddProject extends React.Component{
                 </div>
             <form className="form-horizontal">
                 <div className="box-body">
-                    <label>Name</label>
-                    <input type="text" className="form-control" ref="name" placeholder="Project name" autoComplete="off" onChange={this.onInputChange.bind(this)}></input>
-                    <label>Status</label>
-                    <div>
-                        <select className="form-control" id="choice" onChange={this.changeOption.bind(this)}>
-                            <option value="Not started">Not started</option>
-                            <option value="In progress">In progress</option>
-                            <option value="On hold">On hold</option>
-                            <option value="Done">Done</option>
-                        </select>
+                    <div className="form-group">
+                        <div className="col-md-2">
+                            <label>Name</label>
+                        </div>
+                        <div className="col-md-10">
+                            <input type="text" className="form-control" ref="name" placeholder="Project name" autoComplete="off" onChange={this.onInputChange.bind(this)}></input>
+                         </div>
                     </div>
-                    <label>Duration</label>
-                    <input type="text" autoComplete="off" className="form-control" ref="duration" placeholder="Duration" onChange={this.onInputChange.bind(this)}></input>
+                    <div className="form-group">
+                        <div className="col-md-2">
+                            <label>Status</label>
+                        </div>
+                        <div className="col-md-10">
+                            <select className="form-control" id="choice" onChange={this.changeOption.bind(this)}>
+                                <option value="Not started">Not started</option>
+                                <option value="In progress">In progress</option>
+                                <option value="On hold">On hold</option>
+                                <option value="Done">Done</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div className="form-group">
+                        <div className="col-md-2">
+                            <label>Duration</label>
+                        </div>
+                        <div className="col-md-10">
+                            <input type="text" autoComplete="off" className="form-control" ref="duration" placeholder="Duration" onChange={this.onInputChange.bind(this)}></input>
+                        </div>
+                    </div>
                     <div><font color="red"><b>{this.state.message}</b></font></div>
                 </div>
 

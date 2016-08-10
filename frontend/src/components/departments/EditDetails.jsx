@@ -99,34 +99,44 @@ export default class EditDetails extends React.Component {
                 <div className="box-header with-border">
                     <h3 className="box-title">Edit Department</h3>
                 </div>
-                <div className="box-body">
-                    <div className="form-group">
-                        <label>Name:</label>
-                        <input name="name" className="form-control" type="text"
-                               value={this.state.department.name}
-                               onChange={this.onNameChange.bind(this)}/>
+                <form className="form-horizontal">
+                    <div className="box-body">
+                        <div className="form-group">
+                            <div className="col-md-4">
+                                <label>Name:</label>
+                            </div>
+                            <div className="col-md-8">
+                                <input name="name" className="form-control" type="text"
+                                       value={this.state.department.name}
+                                       onChange={this.onNameChange.bind(this)}/>
+                            </div>
+                        </div>
+                        <div className="form-group">
+                            <div className="col-md-4">
+                                <label>Department Manager:</label>
+                             </div>
+                            <div className="col-md-8">
+                                <select name="departmentManagerId" className="form-control"
+                                        value={this.state.department.departmentManagerId}
+                                        onChange={this.onChangeFunc.bind(this)}
+                                >
+                                    {departmentManagers}
+                                </select>
+                            </div>
+                        </div>
+                        <div>
+                            <font color="red"><b>{this.state.message[0]}</b></font>
+                        </div>
+                        <div>
+                            <font color="red"><b>{this.state.message[1]}</b></font>
+                        </div>
                     </div>
-                    <div className="form-group">
-                        <label>Department Manager:</label>
-                        <select name="departmentManagerId" className="form-control"
-                                value={this.state.department.departmentManagerId}
-                                onChange={this.onChangeFunc.bind(this)}
-                        >
-                            {departmentManagers}
-                        </select>
-                    </div>
-                    <div>
-                        <font color="red"><b>{this.state.message[0]}</b></font>
-                    </div>
-                    <div>
-                        <font color="red"><b>{this.state.message[1]}</b></font>
-                    </div>
-                </div>
 
-                <div className="box-footer">
-                    {editButton}
-                    <button type="button" className="btn btn-md btn-info" onClick={this.props.hideFunc}> Cancel</button>
-                </div>
+                    <div className="box-footer">
+                        {editButton}
+                        <button type="button" className="btn btn-md btn-info" onClick={this.props.hideFunc}> Cancel</button>
+                    </div>
+                </form>
             </div>
         );
     }
