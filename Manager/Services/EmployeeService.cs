@@ -256,18 +256,22 @@ namespace Manager.Services
             return new OperationResult(false, Messages.ErrorAssignEmployee);
         }
 
-        public IEnumerable<MemberInfo> SearchEmployeesByName(int departmentId,string employeeName, int? pageSize, int? pageNr)
-        public MemberInfo GetEmployeeById(int employeeId)
+        public IEnumerable<MemberInfo> SearchEmployeesByName(int departmentId, string employeeName, int? pageSize,
+            int? pageNr)
         {
             if (!string.IsNullOrEmpty(employeeName))
             {
-            var employee = _employeeRepository.GetById(employeeId);
-            return _mapper.Map<MemberInfo>(employee);
-                var  employees =_employeeRepository.SearchEmployeesByName(departmentId,employeeName,pageSize,pageNr);
+                var employees = _employeeRepository.SearchEmployeesByName(departmentId, employeeName, pageSize, pageNr);
                 var employeesInfo = _mapper.Map<IEnumerable<MemberInfo>>(employees);
                 return employeesInfo;
             }
             return null;
+        }
+        public MemberInfo GetEmployeeById(int employeeId)
+        {
+            
+            var employee = _employeeRepository.GetById(employeeId);
+            return _mapper.Map<MemberInfo>(employee);    
         }
     }
 }

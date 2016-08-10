@@ -134,14 +134,20 @@ namespace ManagementApp.Controllers
 
         [Route("searchEmployeesByName")]
         [HttpGet]
-        public IHttpActionResult SearchEmployeesByName(int departmentId,string employeeName, int? pageSize, int? pageNr)
+        public IHttpActionResult SearchEmployeesByName(int departmentId, string employeeName, int? pageSize, int? pageNr)
+        {
+            var result = _employeeService.SearchEmployeesByName(departmentId, employeeName, pageSize, pageNr);
+            return Json(result);
+
+        }
+
         [Route("getEmployeeById")]
         [HttpPost]
         public IHttpActionResult GetEmployeeById(int employeeId)
         {
             var result = _employeeService.GetEmployeeById(employeeId);
-            var result=_employeeService.SearchEmployeesByName(departmentId,employeeName,pageSize,pageNr);
             return Json(result);
+
         }
 
 
