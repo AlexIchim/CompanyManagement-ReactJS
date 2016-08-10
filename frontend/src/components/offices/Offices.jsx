@@ -9,6 +9,9 @@ import EditOffice from './EditOffice';
 import * as Controller from '../../api/controller';
 
 import * as Command from '../../context/commands';
+import * as Access from '../../context/accessors';
+import Context from '../../context/Context';
+
 
 export default class Offices extends React.Component{
     constructor(){
@@ -22,19 +25,17 @@ export default class Offices extends React.Component{
     }
 
     componentWillMount(){
+        Command.fetchOffices(this.fetchData.bind(this));
         Command.setCurrentOffice(null);
         this.fetchData();
     }
 
     fetchData(){
-        Controller.getAllOffices(
-            true,
-            (data) => {
-                this.setState({
-                    offices: data
-                });
-            }
-        )
+
+        this.setState({
+            offices: Access.offices(Context.cursor).toJS()
+        })
+
      }
 
     editOffice(office){
@@ -58,6 +59,7 @@ export default class Offices extends React.Component{
     }
 
     render(){
+
         const offices = this.state.offices.map ((office, index) => {
             return <Tile
                 parentClass="bg-aqua"
@@ -72,6 +74,8 @@ export default class Offices extends React.Component{
             />
         })
 
+        console.log(this.state.offices);
+
         const modalTemplate = this.state.showModalTemplate !== null ? (
             <ModalTemplate
                 getComponent={
@@ -80,12 +84,12 @@ export default class Offices extends React.Component{
                             case 'edit':
                                 return <EditOffice office={this.state.modalOffice} updateFunc={function(){
                                     hideFunc();
-                                    this.fetchData();
+                                    Command.fetchOffices(this.fetchData.bind(this));
                                 }.bind(this)} hideFunc={hideFunc}/>;
                             case 'add':
                                 return <AddOffice saveFunc={function(){
                                     hideFunc();
-                                    this.fetchData();
+                                    Command.fetchOffices(this.fetchData.bind(this));
                                 }.bind(this)} hideFunc={hideFunc}/>;
                         }
                     }

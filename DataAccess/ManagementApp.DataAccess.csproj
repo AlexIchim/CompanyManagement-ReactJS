@@ -73,6 +73,10 @@
     <Compile Include="Migrations\201608081406454_ImageBase64.Designer.cs">
       <DependentUpon>201608081406454_ImageBase64.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201608101329197_DepartmentManagerId.cs" />
+    <Compile Include="Migrations\201608101329197_DepartmentManagerId.Designer.cs">
+      <DependentUpon>201608101329197_DepartmentManagerId.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositories\EmployeeRepository.cs" />
@@ -108,6 +112,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201608081406454_ImageBase64.resx">
       <DependentUpon>201608081406454_ImageBase64.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201608101329197_DepartmentManagerId.resx">
+      <DependentUpon>201608101329197_DepartmentManagerId.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

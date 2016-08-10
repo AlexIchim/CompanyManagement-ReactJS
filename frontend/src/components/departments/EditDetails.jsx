@@ -8,7 +8,7 @@ export default class EditDetails extends React.Component {
                 department: {
                     id: '-1',
                     name: '',
-                    departmentManagerId: 1
+                    departmentManagerId: -1
                 },
                 departmentManagerList: [],
                 message: ["", ""]
