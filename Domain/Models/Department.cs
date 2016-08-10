@@ -7,6 +7,7 @@ namespace Domain.Models
         public int Id { get; set; }
         public string Name { get; set; }
 
+        public int? DepartmentManagerId { get; set; }
         public virtual Employee DepartmentManager { get; set; }
 
         public int OfficeId { get; set; }

@@ -8,6 +8,8 @@ import EditDetails from './EditDetails';
 import * as Controller from '../../api/controller';
 import AddDetails from './AddDetails';
 
+import Context from '../../context/Context'
+import * as Access from '../../context/accessors'
 import * as Command from '../../context/commands';
 
 
@@ -35,7 +37,7 @@ export default class Departments extends Component {
     }
 
     reinit(props){
-        Command.setCurrentOffice(props.params.officeId);
+        Command.setCurrentOffice(props.params.officeId, this.fetchData.bind(this,props));
         Command.setCurrentDepartment(null);
 
         Controller.getOfficeName(
@@ -46,33 +48,22 @@ export default class Departments extends Component {
                     officeName: data.name
                 });
             });
-        this.fetchData(props);
     }
 
     fetchData(props) {
         if(!props) props = this.props;
 
-        Controller.getDepartmentCountByOffice(
-            props.params.officeId,
-            true,
-            (data) => {
-                this.setState({
-                    totalDepartmentCount: data
-                });
-            }
-        );
+        this.setState({
+            totalDepartmentCount: Access.currentDepartments(Context.cursor).size,
+            pageSize: 5,
+            pageNumber: 1
+        });
 
-        Controller.getDepartmentsByOffice(
-            props.params.officeId,
-            this.state.pageSize,
-            this.state.pageNumber,
-            true,
-            (data) => {
-                this.setState({
-                    departmentList: data
-                });
-            }
-        );
+        this.setState({
+            departmentList: Access.currentDepartments(Context.cursor).skip(
+                                (this.state.pageNumber - 1) * this.state.pageSize
+                            ).take(this.state.pageSize).toJS()
+        });
     }
 
     editDetails(department) {
@@ -122,23 +113,18 @@ export default class Departments extends Component {
 
 
     paginationChangeHandler(pageSize, pageNumber){
-        Controller.getDepartmentsByOffice(
-            this.props.params.officeId,
-            pageSize,
-            pageNumber,
-            true,
-            (data) => {
-                this.setState({
-                    departmentList: data,
-                    pageSize: pageSize,
-                    pageNumber: pageNumber
-                });
-            }
-        );
+        this.setState({
+            pageSize: pageSize,
+            pageNumber: pageNumber,
+            departmentList: Access.currentDepartments(Context.cursor).skip(
+                (pageNumber - 1) * pageSize
+            ).take(this.state.pageSize).toJS()
+        });
     }
 
     render() {
 
+        console.log(this.state.modalDepartment);
         const items = this.state.departmentList.map((element, index) => {
             return (
                 <DepartmentRow
@@ -161,14 +147,19 @@ export default class Departments extends Component {
                                                     officeId={this.props.params.officeId}
                                                     hideFunc={hideFunc}
                                                     managers={this.state.managerList}
-                                                    saveFunc={function(){hideFunc(); this.fetchData();}.bind(this)}
+                                                    saveFunc={function(){
+                                                        hideFunc();
+                                                        Command.fetchOfficeDepartmentList(this.fetchData.bind(this));
+                                                    }.bind(this)}
                                 />
                             case 'add':
                                 return <AddDetails officeId={this.props.params.officeId}
                                                     hideFunc={hideFunc}
                                                     managers={this.state.managerList}
-                                                    saveFunc={function(){hideFunc(); this.fetchData();}.bind(this)}/>
-
+                                                    saveFunc={function(){
+                                                        hideFunc();
+                                                        Command.fetchOfficeDepartmentList(this.fetchData.bind(this));
+                                                    }.bind(this)}/>
                         }
                     }
                 }
