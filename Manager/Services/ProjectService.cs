@@ -38,9 +38,9 @@ namespace Manager.Services
             return projectInfo;
         }
 
-        public IEnumerable<ProjectEmployeeInfo> GetEmployeesByProjectId(int id, int? pageSize = null, int? pageNumber = null)
+        public IEnumerable<ProjectEmployeeInfo> GetEmployeesByProjectId(int id, int? pageSize = null, int? pageNumber = null, string searchString = "", int? positionIdFilter = null)
         {
-            var allocations = _projectRepository.GetEmployeesByProjectId(id, pageSize, pageNumber);
+            var allocations = _projectRepository.GetEmployeesByProjectId(id, pageSize, pageNumber, searchString, positionIdFilter);
 
             var res = allocations.Select(a => new ProjectEmployeeInfo()
             {
@@ -52,9 +52,9 @@ namespace Manager.Services
             return res;
         }
 
-        public int GetProjectMembersCount(int id)
+        public int GetProjectMembersCount(int id, string searchString = "", int? positionIdFilter = null)
         {
-            return  _projectRepository.GetProjectMembersCount(id);
+            return _projectRepository.GetProjectMembersCount(id, searchString, positionIdFilter);
         }
 
         public OperationResult Delete(int? id)

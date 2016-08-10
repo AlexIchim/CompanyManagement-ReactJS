@@ -41,9 +41,10 @@ namespace ManagementApp.Controllers
 
         [Route("{id}/employees")]
         [HttpGet]
-        public IHttpActionResult GetEmployeesByProjectId(int id, int? pageSize = null, int? pageNumber = null)
+        public IHttpActionResult GetEmployeesByProjectId(int id, int? pageSize = null, int? pageNumber = null, string searchString = "", int? positionIdFilter = null)
         {
-            var result = _projectService.GetEmployeesByProjectId(id, pageSize, pageNumber);
+            if (searchString == null) searchString = "";
+            var result = _projectService.GetEmployeesByProjectId(id, pageSize, pageNumber, searchString, positionIdFilter);
 
             var settings = new JsonSerializerSettings()
             {
@@ -55,9 +56,10 @@ namespace ManagementApp.Controllers
 
         [Route("{id}/employees/count")]
         [HttpGet]
-        public int GetProjectMembersCount(int id)
+        public int GetProjectMembersCount(int id, string searchString = "", int? positionIdFilter = null)
         {
-            return _projectService.GetProjectMembersCount(id);
+            if (searchString == null) searchString = "";
+            return _projectService.GetProjectMembersCount(id, searchString, positionIdFilter);
         }
 
         [Route("add")]

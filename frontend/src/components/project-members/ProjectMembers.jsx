@@ -20,7 +20,12 @@ export default class ProjectMembers extends Component {
             employeeAllocation: [],
             totalProjectMembers: 0,
             pageSize: 5,
-            pageNumber: 1
+            pageNumber: 1,
+            searchText: '',
+
+            posFilter: null,
+            positionList: [],
+            selectedPosition: ''
         };
     }
 
@@ -35,13 +40,31 @@ export default class ProjectMembers extends Component {
                 });
             }
         );
+        Controller.getPositions(
+            true,
+            (data) => {
+                this.setState({
+                    positionList: data
+                });
+            }
+        );
         this.fetchData();
     }
 
-    getProjectMembersCount(){
+    getProjectMembersCount(newSearchText, newPosFilter){
         const projectId = this.props.params.projectId;
+
+        let stext = (newSearchText === null || newSearchText === undefined) ? this.state.searchText : newSearchText;
+        let pfilter = (newPosFilter === null || newPosFilter === undefined) ? this.state.selectedPosition : newPosFilter;
+
+        if(pfilter === ''){ 
+            pfilter = null;
+        }
+
         Controller.getProjectMembersCount(
             projectId,
+            stext, 
+            pfilter,
             true,
             (data) => {
                 this.setState({
@@ -51,11 +74,20 @@ export default class ProjectMembers extends Component {
         )
     }
 
-    getEmployeesByProjectId(projectId, pageSize, pageNumber){
+    getEmployeesByProjectId(projectId, pageSize, pageNumber, newSearchText, newPosFilter){
+        let stext = (newSearchText === null || newSearchText === undefined) ? this.state.searchText : newSearchText;
+        let pfilter = (newPosFilter === null || newPosFilter === undefined) ? this.state.selectedPosition : newPosFilter;
+
+        if(pfilter === ''){ 
+            pfilter = null;
+        }
+
         Controller.getEmployeesByProjectId(
             projectId,
             pageSize,
             pageNumber,
+            stext, 
+            pfilter,
             true,
             (data) => {
                 this.setState({
@@ -65,10 +97,10 @@ export default class ProjectMembers extends Component {
         )
     }
 
-    fetchData(){
+    fetchData(newSearchText, newPosFilter){
         const projectId = this.props.params.projectId;
-        this.getEmployeesByProjectId(projectId, this.state.pageSize, this.state.pageNumber);
-        this.getProjectMembersCount();
+        this.getEmployeesByProjectId(projectId, this.state.pageSize, this.state.pageNumber, newSearchText, newPosFilter);
+        this.getProjectMembersCount(newSearchText, newPosFilter);
     }
 
     deleteAllocation(allocationId){
@@ -120,6 +152,21 @@ export default class ProjectMembers extends Component {
 
     }
 
+    onSearchTextChange(e){
+        this.setState({
+            searchText: e.target.value
+        });
+        this.fetchData(e.target.value,null);
+    }
+
+    onPositionFilterChange(e){
+         this.setState({
+            selectedPosition: e.target.value
+        });
+        this.fetchData(null, e.target.value);
+    }
+
+
     render() {
         const items = this.state.memberList.map(
             (e) => <Item
@@ -168,12 +215,30 @@ export default class ProjectMembers extends Component {
             </thead>
         )
 
+        const positionOptions = this.state.positionList.map(
+            e => <option value={e.id} key={e.id}>{e.name}</option>
+        );
+
         return (
             <div>
                 <h1>{this.state.projectName} Members:</h1>
                 <br/>
                 <button className="btn btn-md btn-info" onClick={this.assignEmployee.bind(this)}>Assign Employee</button>
                 <br/>
+                <br/>
+                <div>
+                    <div className="col-md-6">
+                        <label>Search:&nbsp;&nbsp;</label>
+                        <input type="text" value={this.state.searchText} onChange={this.onSearchTextChange.bind(this)} />
+                    </div>
+                    <div className="col-md-6">
+                        <select className="pull-right" value={this.state.selectedPosition} onChange={this.onPositionFilterChange.bind(this)}>
+                            <option value="" key={''}>All Positions</option>
+                            {positionOptions}
+                        </select>
+                    </div>
+                </div>
+                
                 <br/>
                 {modalTemplate}
                 <PaginatedTable

@@ -27,13 +27,25 @@ namespace DataAccess.Repositories
             return _context.Projects.SingleOrDefault(d => d.Id == id);
         }
 
-        public IEnumerable<ProjectAllocation> GetEmployeesByProjectId(int id, int? pageSize = null, int? pageNumber = null)
+        public IEnumerable<ProjectAllocation> GetEmployeesByProjectId(int id, int? pageSize = null, int? pageNumber = null, string searchString = "", int? positionIdFilter = null)
         {
-            return _context.ProjectAllocations.Where(a => a.ProjectId == id).OrderBy(a => a.Id).Paginate(pageSize, pageNumber).ToArray();
+            string str = searchString.ToLower();
+
+            return _context.ProjectAllocations.Where(
+                a => a.ProjectId == id &&
+                     a.Employee.Name.ToLower().Contains(str) &&
+                     (positionIdFilter == null || a.Employee.PositionId == positionIdFilter)
+            ).OrderBy(a => a.Id).Paginate(pageSize, pageNumber).ToArray();
         }
-        public int GetProjectMembersCount(int id)
+        public int GetProjectMembersCount(int id, string searchString = "", int? positionIdFilter = null)
         {
-            return _context.ProjectAllocations.Count(a => a.ProjectId == id);
+            string str = searchString.ToLower();
+
+            return _context.ProjectAllocations.Count(
+                a => a.ProjectId == id &&
+                     a.Employee.Name.ToLower().Contains(str) &&
+                     (positionIdFilter == null || a.Employee.PositionId == positionIdFilter)
+            );
         }
 
         public void Delete(Project project)
