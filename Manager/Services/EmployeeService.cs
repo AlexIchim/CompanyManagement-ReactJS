@@ -247,5 +247,16 @@ namespace Manager.Services
             }
             return new OperationResult(false, Messages.ErrorAssignEmployee);
         }
+
+        public IEnumerable<MemberInfo> SearchEmployeesByName(int departmentId,string employeeName, int? pageSize, int? pageNr)
+        {
+            if (!string.IsNullOrEmpty(employeeName))
+            {
+                var  employees =_employeeRepository.SearchEmployeesByName(departmentId,employeeName,pageSize,pageNr);
+                var employeesInfo = _mapper.Map<IEnumerable<MemberInfo>>(employees);
+                return employeesInfo;
+            }
+            return null;
+        }
     }
 }

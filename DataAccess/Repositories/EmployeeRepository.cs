@@ -155,5 +155,10 @@ namespace DataAccess.Repositories
         {
             return _context.EmployeeProjects.SingleOrDefault(ep => ep.ProjectId == projectId && ep.EmployeeId == employeeId);
         }
+
+        public IEnumerable<Employee> SearchEmployeesByName(int departmentId,string employeeName, int? pageSize, int? pageNr)
+        {
+            return _context.Employees.Where(e =>(e.Department.Id==departmentId) && e.Name.Contains(employeeName)).ToArray();
+        }
     }
 }

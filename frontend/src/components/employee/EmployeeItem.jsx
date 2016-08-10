@@ -44,11 +44,8 @@ export default class EmployeeItem extends React.Component{
                 <td>{this.props.node.get('JobType')}</td>
                 <td>{this.props.node.get('PositionType')}</td>
                 <td>{this.props.node.get('TotalAllocation')}</td>
-               
-                </tr>
-           
-
-                
+                <td><button className="linkButton"  >Edit Info </button> </td>
+                </tr>            
         )
     }
 }

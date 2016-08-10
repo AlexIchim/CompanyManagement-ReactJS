@@ -119,6 +119,26 @@ export default class Employee extends React.Component{
         Controller.getAllEmployeesByDepartmentId(this.props.routeParams.departmentId,allocation,ptype,jtype,this.state.pageNr)
     }
 
+    onSearchChange(){
+        const pageNr = 1;
+        const employeeName = this.refs.search.value;      
+        $.ajax({
+            method: 'GET',
+            async: false,
+            url: configs.baseUrl + 'api/employee/searchEmployeesByName?departmentId=' + this.props.routeParams.departmentId+ '&employeeName=' + employeeName + '&pageSize=3&pageNr='+pageNr,
+            success: function (data) {
+                if (!data){
+                    data=[]
+                }
+                Context.cursor.set("employees",Immutable.fromJS(data));
+            }.bind(this)
+        })
+
+        if (employeeName==""){
+            Controller.getAllEmployeesByDepartmentId(this.props.routeParams.departmentId,null,{},{},pageNr);
+        }
+    }
+
 render(){
     let positionTypes=this.state.positionTypes.map((el, x) => {
             return (
@@ -176,6 +196,11 @@ render(){
                 </select>
             </div>
 
+            <div>
+                <input type="search" ref="search" placeholder="Cauta angajat" onChange={this.onSearchChange.bind(this)}/>
+            </div>
+
+
             {addModal}
             
             
@@ -190,7 +215,7 @@ render(){
                     <th className="col-md-2">Job Type</th>
                     <th className="col-md-2">Position</th>
                     <th className="col-md-2">Allocation</th>
-                    <th className="col-md-2">Actions</th>
+                    <th className="col-md-2">Actions </th>          
                 </tr>
                 </thead>
                 <tbody>
@@ -205,6 +230,7 @@ render(){
                                 <i className="fa fa-arrow-right fa-1x" aria-hidden="true"></i>
                     </button>              
                 </div>
+            
         </div>
     )
 }

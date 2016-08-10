@@ -132,6 +132,13 @@ namespace ManagementApp.Controllers
             return Json(result);
         }
 
+        [Route("searchEmployeesByName")]
+        [HttpGet]
+        public IHttpActionResult SearchEmployeesByName(int departmentId,string employeeName, int? pageSize, int? pageNr)
+        {
+            var result=_employeeService.SearchEmployeesByName(departmentId,employeeName,pageSize,pageNr);
+            return Json(result);
+        }
 
 
 

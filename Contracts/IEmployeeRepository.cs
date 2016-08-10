@@ -34,5 +34,7 @@ namespace Contracts
 
 
         void AssignEmployee(EmployeeProject ep);
+
+        IEnumerable<Employee> SearchEmployeesByName(int departmentId,string employeeName, int? pageSize, int? pageNr);
     }
 }
