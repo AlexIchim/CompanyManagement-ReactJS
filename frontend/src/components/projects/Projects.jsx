@@ -26,13 +26,15 @@ export default class Projects extends React.Component{
 
             projectCount: 0,
             pageSize: 5,
-            pageNumber: 1
+            pageNumber: 1,
+            selectedStatus: '',
+            searchText: ''
         }
     }
 
     componentWillMount(){
         const departmentId = this.props.params.departmentId;
-        callApi();
+        fetchData();
     }
 
     deleteProject(id){
@@ -40,7 +42,7 @@ export default class Projects extends React.Component{
            id,
            true,
            (data) => {
-               this.callApi();
+               this.fetchData();
            }
        );
     }
@@ -66,15 +68,22 @@ export default class Projects extends React.Component{
     }
 
     componentWillMount(){
-        this.callApi();
+        this.fetchData();
     }
 
     componentWillReceiveProps(newProps){
         this.props = newProps;
-        this.callApi();
+        this.fetchData();
     }
 
-    callApi(){
+    fetchData(newSearchText, newStatusFilter){
+        let stext = (newSearchText === null || newSearchText === undefined) ? this.state.searchText : newSearchText;
+        let stfilter = (newStatusFilter === null || newStatusFilter === undefined) ? this.state.selectedStatus : newStatusFilter;
+
+        if(!stfilter){ 
+            stfilter = '';
+        }
+
         Command.setCurrentOffice(this.props.params.officeId);
         Command.setCurrentDepartment(this.props.params.departmentId);
 
@@ -82,6 +91,8 @@ export default class Projects extends React.Component{
             this.props.params.departmentId,
             this.state.pageSize,
             this.state.pageNumber,
+            stext,
+            stfilter,
             true,
             (data) => {
                 this.setState({
@@ -91,6 +102,8 @@ export default class Projects extends React.Component{
 
         Controller.getProjectCountByDepartmentId(
             this.props.params.departmentId,
+            stext,
+            stfilter,
             true,
             (data) => {
                 this.setState({
@@ -115,6 +128,8 @@ export default class Projects extends React.Component{
             this.props.params.departmentId,
             pageSize,
             pageNumber,
+            this.state.searchText,
+            this.state.selectedStatus,
             true,
             (data) => {
                 this.setState({
@@ -125,6 +140,22 @@ export default class Projects extends React.Component{
             }
         );
     }
+
+    onSearchTextChange(e){
+        this.setState({
+            searchText: e.target.value
+        });
+        this.fetchData(e.target.value,null);
+    }
+
+    onStatusFilterChange(e){
+         this.setState({
+            selectedStatus: e.target.value
+        });
+        this.fetchData(null, e.target.value);
+    }
+
+
 
     render() {
         
@@ -149,7 +180,7 @@ export default class Projects extends React.Component{
                                             hideFunc={hideFunc} 
                                             updateFunc={function(){
                                                 hideFunc();
-                                                this.callApi();
+                                                this.fetchData();
                                             }.bind(this)}
                                             departmentId={this.props.params['departmentId']}
                                             projectId={this.props.params['projectId']}
@@ -159,7 +190,7 @@ export default class Projects extends React.Component{
                                             hideFunc={hideFunc}
                                             saveFunc={function(){
                                                 hideFunc();
-                                                this.callApi();
+                                                this.fetchData();
                                             }.bind(this)}
                                             departmentId={this.props.params['departmentId']}
                                         />;
@@ -191,7 +222,25 @@ export default class Projects extends React.Component{
                         <span className="glyphicon glyphicon-plus-sign"></span>
                         &nbsp;Add new project
                     </button>
+                    <br/><br/>
 
+                    <div>
+                        <div className="col-md-6">
+                            <label>Search:&nbsp;&nbsp;</label>
+                            <input type="text" value={this.state.searchText} onChange={this.onSearchTextChange.bind(this)} />
+                        </div>
+                        <div className="col-md-6">
+                            <select className="pull-right" value={this.state.selectedStatus} onChange={this.onStatusFilterChange.bind(this)}>
+                                <option value="" key={''}>Any Status</option>
+                                <option value="Not started">Not started</option>
+                                <option value="In progress">In progress</option>
+                                <option value="On hold">On hold</option>
+                                <option value="Done">Done</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <br/>
                     <PaginatedTable 
                         header={header} 
                         listOfItems={items}
