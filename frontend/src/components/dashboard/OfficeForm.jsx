@@ -5,14 +5,20 @@ import Accessors from '../../context/Accessors';
 import config from '../helper';
 import Validator from '../validator/OfficeValidator';
 
-export default class Form extends React.Component{
+export default class OfficeForm extends React.Component{
     constructor(){
         super();
     }
     
     componentWillMount(){
+        let model=Context.cursor.get('model');
+        if(!model){
+            model={};
+            model.Image="";
+        }
+
         this.setState({
-            Image:null,
+            Model:model,
             NameValidationResult:{valid: false, message: ""},
             PhoneValidationResult:{valid: false, message: ""},
             AddressValidationResult:{valid: false, message: ""},
@@ -31,7 +37,10 @@ export default class Form extends React.Component{
 
             var result=Validator.ValidateImage(image); 
 
-            that.updateState(image, null, null, null, result);
+            var model=that.state.Model;
+            model.Image=image;
+            
+            that.updateState(model, null, null, null, result);
             console.log("Finished Loading Image");
         }
 
@@ -47,23 +56,7 @@ export default class Form extends React.Component{
             &&  this.state.AddressValidationResult.valid
             &&  this.state.PhoneValidationResult.valid  )
         {
-            let model=Context.cursor.get("model");
-
-            if(!model){
-                model={};
-            }
-            let name=this.refs.inputName.value;
-            let addr=this.refs.inputAddress.value;
-            let phone=this.refs.inputPhone.value;
-            let image=this.state.Image;
-
-            model.Name=(name)?name:model.Name;
-            model.Address=(addr)?addr:model.Address;
-            model.Phone=(phone)?phone:model.Phone;
-            model.Image=(image)?image:model.Image;
-
-            Context.cursor.set("model", model);
-
+            Context.cursor.set('model', this.state.Model);
             this.props.FormAction();
         }
     }
@@ -83,9 +76,29 @@ export default class Form extends React.Component{
 
         this.updateState(null, null, null, result, null);
     }
-    updateState(img, nameVR, phoneVR, addrVR, imgVR){
+
+    updateModel(){
+        let name=this.refs.inputName.value;
+        let addr=this.refs.inputAddress.value;
+        let phone=this.refs.inputPhone.value;
+        let image=this.state.Image;
+
+        let model={
+            Id:this.state.Model.Id,
+            Name:name,
+            Address:addr,
+            Phone:phone,
+            Image:image
+        }
+
+        // console.log("Old ", oldModel)
+        // console.log("New ", model)
+
+        this.updateState(model, null, null, null, null);
+    }
+    updateState(model, nameVR, phoneVR, addrVR, imgVR){
         this.setState({
-            Image:                      (img)?      img:        this.state.Image,
+            Model:                      (model)?    model:        this.state.Model,
             NameValidationResult:       (nameVR)?   nameVR:     this.state.NameValidationResult,
             PhoneValidationResult:      (phoneVR)?  phoneVR:    this.state.PhoneValidationResult,
             AddressValidationResult:    (addrVR)?   addrVR:     this.state.AddressValidationResult,
@@ -94,10 +107,17 @@ export default class Form extends React.Component{
     }
 
     render(){
-        const model=Context.cursor.get('model');
-        const name=(model)? model.Name : "Name";
-        const addr=(model)? model.Address : "Address";
-        const phone=(model)? model.Phone : "Phone";
+
+        //console.log("RENDERING");
+        
+        const model=this.state.Model;
+        //console.log("MODEL: ", model);
+
+
+        let name=(model.Name)? model.Name : "";
+        let addr=(model.Address)? model.Address : "";
+        let phone=(model.Phone)? model.Phone : "";
+        let img=(model.Image)? model.Image: null;
 
         let nameValidationResult="";
         let addrValidationResult="";
@@ -140,7 +160,8 @@ export default class Form extends React.Component{
                             <input type="text" 
                                 className="form-control" 
                                 ref="inputName" 
-                                placeholder={name}
+                                value={name}
+                                onChange={this.updateModel.bind(this)}
                                 onKeyUp={this.onChangeName.bind(this)}>
                             </input>
                             {nameValidationResult}
@@ -153,8 +174,9 @@ export default class Form extends React.Component{
                             <input  type="text" 
                                     className="form-control" 
                                     ref="inputAddress" 
-                                    placeholder={addr}
-                                    onChange={this.onChangeAddress.bind(this)}>
+                                    value={addr}
+                                    onChange={this.updateModel.bind(this)}
+                                    onKeyUp={this.onChangeAddress.bind(this)}>
                             </input>
                             {addrValidationResult}
                         </div>
@@ -166,7 +188,8 @@ export default class Form extends React.Component{
                             <input type="text" 
                                 className="form-control" 
                                 ref="inputPhone" 
-                                placeholder={phone}
+                                value={phone}
+                                onChange={this.updateModel.bind(this)}
                                 onKeyUp={this.onChangePhone.bind(this)}>
                             </input>
                             {phoneValidationResult}

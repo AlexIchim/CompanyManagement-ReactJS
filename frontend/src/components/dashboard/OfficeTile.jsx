@@ -2,7 +2,7 @@ import * as React from 'react';
 import classNames from 'classnames';
 import {Link} from 'react-router';
 import '../../assets/less/index.less';
-class Tile extends React.Component<any, any>{
+class OfficeTile extends React.Component<any, any>{
 
     submit(){
         this.props.onEditButtonClick(this.props.index);
@@ -39,4 +39,4 @@ class Tile extends React.Component<any, any>{
         )
     }
 }
-export default Tile;
+export default OfficeTile;

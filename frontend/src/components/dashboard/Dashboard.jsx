@@ -1,12 +1,12 @@
 import * as React from 'react';
-import Tile from './Tile';
+import Tile from './OfficeTile';
 import config from '../helper';
 import Context from '../../context/Context';
 import Accessors from '../../context/Accessors';
 import '../../assets/less/index.less';
 import Controller from './OfficeController';
 
-import Form from './Form';
+import Form from './OfficeForm';
 
 export default class Dashboard extends React.Component{
     constructor(){
