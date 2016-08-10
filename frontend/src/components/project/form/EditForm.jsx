@@ -18,8 +18,8 @@ export default class EditForm extends React.Component {
             success: function(data){
                 this.setState({
                  dropdownItems: data,
-                    NameVR: {valid: false, message:""},
-                    DurationVR: {valid: false, message:""}
+                    NameVR: {valid: true, message:""},
+                    DurationVR: {valid: true, message:""}
                 })
             }.bind(this)
         });
@@ -75,7 +75,7 @@ export default class EditForm extends React.Component {
     }
     onDurationChange(){
         var result = Validator.ValidateDuration(this.refs.inputDuration.value);
-        this.updateState(result, null);
+        this.updateState(null, result);
         console.log('duration validation: ', result);
         if(result.valid) {
             this.setState({
@@ -92,13 +92,13 @@ export default class EditForm extends React.Component {
         })
     }
     render(){
-        let formIsValid = false;
+        let formIsValid = true;
         let nameVR = "";
         let durationVR = "";
 
         console.log('form name is valid?', this.state.NameVR.valid)
         console.log('form duration is valid: ', this.state.DurationVR.valid);
-        if(this.state.DurationVR.valid && this.state.NameVR){
+        if(this.state.DurationVR.valid && this.state.NameVR.valid){
             formIsValid = true;
             console.log('is valid:', formIsValid);
         }
