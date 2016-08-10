@@ -59,17 +59,19 @@ namespace ManagementApp.Controllers
 
         [Route("{id}/employees")]
         [HttpGet]
-        public IHttpActionResult GetEmployeesByDepartmentId(int id, int? pageSize = null, int? pageNumber = null)
+        public IHttpActionResult GetEmployeesByDepartmentId(int id, int? pageSize = null, int? pageNumber = null, string searchString = "", int? positionIdFilter = null)
         {
-            var result = _departmentService.GetEmployeesByDepartmentId(id, pageSize, pageNumber);
+            if (searchString == null) searchString = "";
+            var result = _departmentService.GetEmployeesByDepartmentId(id, pageSize, pageNumber, searchString, positionIdFilter);
             return Json(result, _camelCaseJsonSettings);
         }
 
         [Route("{id}/employees/count")]
         [HttpGet]
-        public IHttpActionResult GetEmployeeCountByDepartmentId(int id)
+        public IHttpActionResult GetEmployeeCountByDepartmentId(int id, string searchString = "", int? positionIdFilter = null)
         {
-            var result = _departmentService.GetEmployeeCountByDepartmentId(id);
+            if (searchString == null) searchString = "";
+            var result = _departmentService.GetEmployeeCountByDepartmentId(id, searchString, positionIdFilter);
             return Json(result, _camelCaseJsonSettings);
         }
 

@@ -50,17 +50,17 @@ namespace Manager.Services
             return _departmentRepository.GetProjectCountByDepartmentId(id);
         }
 
-        public IEnumerable<EmployeeInfo> GetEmployeesByDepartmentId(int id, int? pageSize = null, int? pageNumber = null)
+        public IEnumerable<EmployeeInfo> GetEmployeesByDepartmentId(int id, int? pageSize = null, int? pageNumber = null, string searchString = "", int? positionIdFilter = null)
         {
-            var employees = _departmentRepository.GetEmployeesByDepartmentId(id, pageSize, pageNumber);
+            var employees = _departmentRepository.GetEmployeesByDepartmentId(id, pageSize, pageNumber, searchString, positionIdFilter);
             var employeeInfos = _mapper.Map<IEnumerable<EmployeeInfo>>(employees);
 
             return employeeInfos;
         }
 
-        public int GetEmployeeCountByDepartmentId(int id)
+        public int GetEmployeeCountByDepartmentId(int id, string searchString = "", int? positionIdFilter = null)
         {
-            int count = _departmentRepository.GetEmployeeCountByDepartmentId(id);
+            int count = _departmentRepository.GetEmployeeCountByDepartmentId(id, searchString, positionIdFilter);
 
             return count;
         }

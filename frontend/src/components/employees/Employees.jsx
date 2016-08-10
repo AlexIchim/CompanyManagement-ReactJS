@@ -25,7 +25,11 @@ export default class Employees extends Component {
             pageNumber: 1,
             totalEmployeeCount: 0,
             showModalTemplate: null,
-            modalEmployee: {}
+            modalEmployee: {},
+            searchText: '',
+            posFilter: null,
+            positionList: [],
+            selectedPosition: ''
         };
     }
 
@@ -50,12 +54,29 @@ export default class Employees extends Component {
                 });
             } 
         );
+        Controller.getPositions(
+            true,
+            (data) => {
+                this.setState({
+                    positionList: data
+                });
+            }
+        );
         this.fetchData();
     }
 
-    fetchData() {
+    fetchData(newSearchText, newPosFilter) {
+        let stext = (newSearchText === null || newSearchText === undefined) ? this.state.searchText : newSearchText;
+        let pfilter = (newPosFilter === null || newPosFilter === undefined) ? this.state.selectedPosition : newPosFilter;
+
+        if(pfilter === ''){ 
+            pfilter = null;
+        }
+
         Controller.getEmployeeCountByDepartmentId(
             this.props.params.departmentId,
+            stext,
+            pfilter,
             true,
             (data) => {
                 this.setState({
@@ -69,6 +90,8 @@ export default class Employees extends Component {
             this.props.params.departmentId,
             this.state.pageSize,
             this.state.pageNumber,
+            stext,
+            pfilter,
             true,
             (data) => {
                 this.setState({
@@ -130,16 +153,33 @@ export default class Employees extends Component {
             this.props.params.departmentId,
             pageSize,
             pageNumber,
+            this.state.searchText,
+            this.state.selectedPosition,
             true,
             (data) => {
                 this.setState({
                     employeeList: data,
                     pageSize: pageSize,
-                    pageNumber: pageNumber
+                    pageNumber: pageNumber,
                 });
             }
         );
     }
+
+    onSearchTextChange(e){
+        this.setState({
+            searchText: e.target.value
+        });
+        this.fetchData(e.target.value,null);
+    }
+
+    onPositionFilterChange(e){
+         this.setState({
+            selectedPosition: e.target.value
+        });
+        this.fetchData(null, e.target.value);
+    }
+
 
     render() {
 
@@ -196,6 +236,10 @@ export default class Employees extends Component {
             />
         ) : null;
 
+        const positionOptions = this.state.positionList.map(
+            e => <option value={e.id} key={e.id}>{e.name}</option>
+        );
+
         return (
             <div>
                 <h1>{this.state.departmentName} Employees:</h1>
@@ -205,7 +249,20 @@ export default class Employees extends Component {
                         <span className="glyphicon glyphicon-plus-sign"></span> 
                         &nbsp;Add new employee 
                 </button>
-                <br/>
+                <br/><br/>
+                <div>
+                    <div className="col-md-6">
+                        <label>Search:&nbsp;&nbsp;</label>
+                        <input type="text" value={this.state.searchText} onChange={this.onSearchTextChange.bind(this)} />
+                    </div>
+                    <div className="col-md-6">
+                        <select className="pull-right" value={this.state.selectedPosition} onChange={this.onPositionFilterChange.bind(this)}>
+                            <option value="" key={''}>All Positions</option>
+                            {positionOptions}
+                        </select>
+                    </div>
+                </div>
+                
                 <br/>
                 <PaginatedTable 
                     header={header} 
