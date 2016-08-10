@@ -17,10 +17,11 @@ export default class Member extends React.Component{
         this.state ={
             members: Context.cursor.get("members"),
             assign:false,
+            positionTypes:[],
             pageNr:1,
             pageSize:3,
-            positionTypes:[],
-            nrOfPages:null
+            nrOfPages:null,
+            filter:null
         }
     }
 
@@ -41,8 +42,8 @@ export default class Member extends React.Component{
     }
 
      componentDidMount(){
-         console.log(this.props.routeParams.projectId);
-         Controller.getEmployeesByProjectId(this.props.routeParams.projectId,{},this.state.pageNr);
+         this.getAllEmployeeOnProject(this.state.pageNr,null);
+         this.setNumberOfPages(null);
     }
 
     componentWillUnmount () {
@@ -56,19 +57,18 @@ export default class Member extends React.Component{
 
     }
 
-     getAllEmployeeOnProject(pageNr){
+     getAllEmployeeOnProject(pageNr,position){
 
-        Controller.getEmployeesByProjectId(this.props.routeParams.projectId,{},pageNr);
-
-        this.setNumberOfPages();
+        Controller.getEmployeesByProjectId(this.props.routeParams.projectId,position,pageNr);
+    
     }
 
 
-    setNumberOfPages(){
+    setNumberOfPages(position){
         $.ajax({
             method: 'GET',
             async: false,
-            url: configs.baseUrl + 'api/project/getEmployeesByProjectId?projectId='+ this.props.routeParams.projectId +'&pageSize=nul&pageNr=null',
+            url: configs.baseUrl + 'api/project/getEmployeesByProjectId?projectId='+ this.props.routeParams.projectId+'&ptype=' + position +'&pageSize=nul&pageNr=null',
             success: function (data) {
                 console.log(data)
                 this.setState(
@@ -97,7 +97,7 @@ export default class Member extends React.Component{
         if (this.state.pageNr > 1){
             const whereTo=this.state.pageNr-1
 
-            this.getAllEmployeeOnProject(whereTo);
+            this.getAllEmployeeOnProject(whereTo,this.state.filter);
             
              this.setState({
                 pageNr:this.state.pageNr-1
@@ -110,11 +110,9 @@ export default class Member extends React.Component{
 
         const whereTo=this.state.pageNr+1
 
-         this.setNumberOfPages();
-
         if(whereTo < this.state.nrOfPages) {
             
-            this.getAllEmployeeOnProject(whereTo);
+            this.getAllEmployeeOnProject(whereTo, this.state.filter);
 
             this.setState({
                 pageNr:this.state.pageNr+1
@@ -127,8 +125,25 @@ export default class Member extends React.Component{
     onDropDownChange(){
         const positionTypes=this.refs.positionTypes.options[this.refs.positionTypes.selectedIndex].id;
         const pageNr = 1;
-        console.log("ODDC",positionTypes);
-        Controller.getEmployeesByProjectId(this.props.routeParams.projectId,positionTypes,pageNr);
+       
+        this.setState({
+            filter: positionTypes,
+            pageNr:pageNr
+        })
+
+        this.setNumberOfPages(positionTypes);
+        
+        this.getAllEmployeeOnProject(pageNr,positionTypes);
+    }
+
+    setPageNr(){
+        
+        this.setState({
+            pageNr:1,
+            filter:null,
+        })
+
+        this.setNumberOfPages(null);
     }
 
     render(){
@@ -139,6 +154,7 @@ export default class Member extends React.Component{
                     node = {element}
                     key = {index}
                     projectId = {this.props.routeParams.projectId}
+                    setPageNr= {this.setPageNr.bind(this)}
                 />
             )
 
@@ -151,7 +167,7 @@ export default class Member extends React.Component{
         });
 
 
-        const assignModal = this.state.assign ? <FormAssign projectId={this.props.routeParams.projectId} officeId={this.props.routeParams.officeId} show = {this.state.assign} close={this.closeAssignForm.bind(this)} /> : '';
+        const assignModal = this.state.assign ? <FormAssign setPageNr={this.setPageNr.bind(this)} projectId={this.props.routeParams.projectId} officeId={this.props.routeParams.officeId} show = {this.state.assign} close={this.closeAssignForm.bind(this)} /> : '';
 
         return(
             <div>

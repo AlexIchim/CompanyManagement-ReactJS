@@ -41,14 +41,14 @@ export default class DepartmentItem extends React.Component{
   
     }
     refresh(projectId){
-        Controller.getEmployeesByProjectId(projectId,1);
+        this.props.setPageNr();
+        Controller.getEmployeesByProjectId(projectId,null,1);
     }
-
 
 
     render(){
 
-        const editForm =  this.state.edit ? <EditMembersForm projectId = {this.props.projectId} element={this.props.node} show = {this.state.edit} close={this.closeEditForm.bind(this)} /> : ''; 
+        const editForm =  this.state.edit ? <EditMembersForm setPageNr={this.props.setPageNr} projectId = {this.props.projectId} element={this.props.node} show = {this.state.edit} close={this.closeEditForm.bind(this)} /> : ''; 
 
          return(
         <tr>
