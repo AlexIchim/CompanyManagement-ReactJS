@@ -32,3 +32,4 @@ packages
 frontend/node_modules
 *.dll
 .idea
+ManagementApp/Web.config

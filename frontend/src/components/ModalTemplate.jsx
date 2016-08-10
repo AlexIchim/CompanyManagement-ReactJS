@@ -9,7 +9,17 @@ export default class ModalTemplate extends React.Component{
         $(formModal).on('hidden.bs.modal', function () {
             this.onCancelClick();
         }.bind(this))
+        this.componentWillReceiveProps({formIsValid: false})
     }
+
+    componentWillReceiveProps(props){
+        if(! props.formIsValid){
+            $(this.refs.storeButton).attr('disabled',true);
+        }else{
+            $(this.refs.storeButton).removeAttr('disabled');
+        }
+    }
+
 
     onStoreClick(){
         const formModal=this.refs.formModal;
@@ -23,10 +33,9 @@ export default class ModalTemplate extends React.Component{
         $(formModal).modal('hide');
         this.props.onCancelClick();
     }
-    onAirClick(){
-        console.log(this.refs.formModal);
-    }
     render(){
+        //
+
 
         const storeLabel="Save";
         // const that=this;
@@ -74,7 +83,7 @@ export default class ModalTemplate extends React.Component{
 
                                 <div className="box-footer">
                                     <button type="button" className="btn btn-default" onClick={this.onCancelClick.bind(this)} > Cancel</button>
-                                    <button type="submit" className="btn btn-default" onClick={this.onStoreClick.bind(this)} > {storeLabel}</button>
+                                    <button type="button" ref='storeButton' className="storeButton btn btn-default" onClick={this.onStoreClick.bind(this)} > {storeLabel}</button>
                                 </div>
                             </form>
                         </div>
