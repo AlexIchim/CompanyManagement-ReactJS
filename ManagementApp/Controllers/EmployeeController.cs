@@ -68,9 +68,9 @@ namespace ManagementApp.Controllers
 
         [Route("getAllDepartmentEmployees")]
         [HttpGet]
-        public IHttpActionResult GetAllDepartmentEmployees(int departmentId, int? pageSize, int? pageNr)
+        public IHttpActionResult GetAllDepartmentEmployees(int departmentId, int? pageSize, int? pageNr,int? allocation=null, PositionType? ptype = null,JobType? jtype = null)
         {
-            var result = _employeeService.GetAllDepartmentEmployees(departmentId, pageSize, pageNr);
+            var result = _employeeService.GetAllDepartmentEmployees(departmentId, pageSize, pageNr,allocation,ptype,jtype);
             return Json(result);
         }
 

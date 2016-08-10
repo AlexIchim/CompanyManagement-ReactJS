@@ -78,10 +78,11 @@ namespace DataAccess.Repositories
             return _context.EmployeeProjects.Where(ep => ep.ProjectId == projectId).ToList();
         }
 
-        public IEnumerable<Employee> GetAllDepartmentEmployees(Department department, int? pageSize, int? pageNr)
-        {
+        public IEnumerable<Employee> GetAllDepartmentEmployees(Department department, int? pageSize, int? pageNr, int? allocation, PositionType? ptype = null, JobType? jtype = null)
+        {//(allocation==null || ComputeTotalAllocation(e.Id)==allocation) 
             return
                 _context.Employees.Where(e => e.DepartmentId == department.Id)
+                    .Where(e =>(allocation ==null|| e.EmployeeProjects.Sum(ep=>ep.Allocation)==allocation) && (ptype == null || e.PositionType == ptype) && (jtype == null || e.JobType == jtype))
                     .OrderBy(e => e.Name)
                     .Paginate(pageSize, pageNr)
                     .ToArray();    

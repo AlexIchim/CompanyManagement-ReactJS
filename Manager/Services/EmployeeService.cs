@@ -135,7 +135,7 @@ namespace Manager.Services
             return new OperationResult(false, Messages.ErrorWhileUpdatingPartialAllocation);
         }
 
-        public IEnumerable<MemberInfo> GetAllDepartmentEmployees(int departmentId, int? pageSize, int? pageNr)
+        public IEnumerable<MemberInfo> GetAllDepartmentEmployees(int departmentId, int? pageSize, int? pageNr,int? allocation, PositionType? ptype = null, JobType? jtype = null)
         {
             if (_employeeValidator.ValidateId(departmentId))
             {
@@ -144,7 +144,7 @@ namespace Manager.Services
 
                 if (department != null)
                 {
-                    var members = _employeeRepository.GetAllDepartmentEmployees(department, pageSize, pageNr);
+                    var members = _employeeRepository.GetAllDepartmentEmployees(department, pageSize, pageNr,allocation,ptype,jtype);
 
 
                     if (members.Any())

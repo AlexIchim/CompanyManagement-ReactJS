@@ -24,7 +24,7 @@ namespace Contracts
 
         IEnumerable<EmployeeProject> GetEmployeeProjectById(int projectId);
 
-        IEnumerable<Employee> GetAllDepartmentEmployees(Department department,int? pageSize,int? pageNr);
+        IEnumerable<Employee> GetAllDepartmentEmployees(Department department,int? pageSize,int? pageNr,int? allocation, PositionType? ptype = null, JobType? jtype = null);
 
         void AddEmployee(Employee employee);
 
