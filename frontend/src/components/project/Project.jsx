@@ -169,7 +169,7 @@ export default class Project extends React.Component {
                     <button className="btn btn-md btn-info btn-add-custom" onClick={this.showAddForm.bind(this)} > <span className="glyphicon glyphicon-plus-sign"></span> Add new project </button>
                         <div className="col-sm-2 dropdown-custom">
                             <select className="form-control" defaultValue="Status" ref="status" onChange={this.onDropDownChange.bind(this)}>
-                                <option value=""> Status </option>
+                                <option value=""> None </option>
                                 {statusDescriptions}
                             </select>
                         </div>
