@@ -83,7 +83,6 @@ export default class Form extends React.Component{
 
         this.updateState(null, null, null, result, null);
     }
-
     updateState(img, nameVR, phoneVR, addrVR, imgVR){
         this.setState({
             Image:                      (img)?      img:        this.state.Image,
@@ -96,7 +95,6 @@ export default class Form extends React.Component{
 
     render(){
         const model=Context.cursor.get('model');
-
         const name=(model)? model.Name : "Name";
         const addr=(model)? model.Address : "Address";
         const phone=(model)? model.Phone : "Phone";
@@ -131,7 +129,6 @@ export default class Form extends React.Component{
         }
 
         return(
-
             <ModalTemplate onCancelClick={this.props.onCancelClick}
                            onStoreClick={this.onStoreClick.bind(this)}
                            Title={this.props.Title}

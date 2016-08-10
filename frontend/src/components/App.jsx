@@ -2,8 +2,7 @@ import React, { Component } from 'react';
 import Header from './layout/Header.jsx';
 import Sidebar from './layout/Sidebar.jsx';
 import Context from '../context/Context';
-
-
+import '../assets/less/index.less';
 class App extends Component {
 
     componentWillMount() {
@@ -12,7 +11,7 @@ class App extends Component {
 
     render() {
         const margin = {
-            marginLeft: "250px"
+            marginLeft: "230px"
         };
         return (
             <div  className="wrapper">

@@ -18,6 +18,7 @@ export default new class OfficeController {
         });
     }
 
+
     Add(){
         console.log("Add called");
         let model= Context.cursor.get("model");
@@ -39,7 +40,8 @@ export default new class OfficeController {
         });             
         this.GetAll();
     }
-        
+
+
     Update(){
         console.log("Update called");
         let model= Context.cursor.get("model");
@@ -60,5 +62,4 @@ export default new class OfficeController {
         });
         this.GetAll();
     }
-
 }

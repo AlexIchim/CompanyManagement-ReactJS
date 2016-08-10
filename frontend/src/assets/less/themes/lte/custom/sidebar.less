@@ -1,9 +1,27 @@
 .main-sidebar{
   position: fixed;
 }
-
+.content{
+  position: relative;
+  background-color: white !important;
+}
 .info-box-custom{
+  box-shadow: 3px 3px 7px #888888;;
+}
+.rectangle{
+    height: 36px;
+    width: 36px;
+    overflow: hidden;
+    display: block;
+    border-radius: 100px;
+    transition: All 0.5s ease;
+    line-height: 36px;
+  margin-bottom: 15px;
+}
 
+.rectangle:hover{
+  width: 165px;
+  background-color: #5bb9f7;
 }
 
 .custom-edit-icon{
@@ -18,8 +36,9 @@
 
 }
 .custom-edit-icon:hover {
-  color: #1d70ff;;
+  color: #1269d3;;
 }
+
 .sidebar-menu{
   margin-top: 20px;
 }
@@ -29,48 +48,49 @@
   font-size: 30px;
   font-style: inherit;
 }
-
+.custom-add-icon:hover{
+  color: #4fdb45;
+}
 .custom-add-icon{
   font-size: 36px;
-  color: #54dd4b;
-  //transition: width 2s;
+  color: #3fc3f2;
+  margin-bottom: 10px;
 
   clear: both;
 }
 
-.add-span{
-  display: none;
-  word-spacing: -20px;
-  font-size: 30px;
-  //transition: width 1s;
+.custom-add-icon span{
+  text-align: left;
 }
 
-.custom-add-icon .add-span{
-
-  max-width: 0px;
-  //overflow: hidden;
-  //transition: 1s linear;
-}
-.custom-add-icon:hover{
-  color: #5bb9f7;
-}
 .add-span{
+  vertical-align: top;
+  color: black;
   border-radius: 38px;
   display: inline;
   max-width: 110px;
+  line-height: 35px;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  text-space: -20px;
+  font-size: 25px;
 }
-
 
 .main-header-custom{
   background-color: #3fc3f2 !important;
 }
 
 li:hover{
-  border-left: 3px solid #5bb9f7;
-  background-color: #5bb9f7 !important;
+  border-left: 3px solid #3fc3f2;
+  background-color: #3fc3f2 !important;
 }
 
 .EvozonImage{
   width: 230px;
 }
-
+//.logo{
+//  color: white;
+//}
+//.navbar-custom{
+//  background-color: #3fc3f2;
+//  color: white;
+//}
