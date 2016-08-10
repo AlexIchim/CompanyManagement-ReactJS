@@ -12,17 +12,20 @@ export default class OfficeForm extends React.Component{
     
     componentWillMount(){
         let model=Context.cursor.get('model');
+
+        var initialValidation=true;
         if(!model){
             model={};
             model.Image="";
+            initialValidation=false;
         }
 
         this.setState({
             Model:model,
-            NameValidationResult:{valid: false, message: ""},
-            PhoneValidationResult:{valid: false, message: ""},
-            AddressValidationResult:{valid: false, message: ""},
-            ImageValidationResult:{valid: false, message: ""}
+            NameValidationResult:{valid: initialValidation, message: ""},
+            PhoneValidationResult:{valid: initialValidation, message: ""},
+            AddressValidationResult:{valid: initialValidation, message: ""},
+            ImageValidationResult:{valid: initialValidation, message: ""}
         })
     }
 
@@ -47,10 +50,13 @@ export default class OfficeForm extends React.Component{
         reader.readAsDataURL(value);
     }
 
-    onStoreClick(){
+    checkAll(){
         this.onChangeName();
         this.onChangeAddress();
         this.onChangePhone();
+    }
+    onStoreClick(){
+        this.checkAll();
 
         if(     this.state.NameValidationResult.valid
             &&  this.state.AddressValidationResult.valid
