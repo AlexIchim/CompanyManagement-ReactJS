@@ -130,13 +130,18 @@ namespace Manager.Services
                         int totalAllocation = _employeeRepository.ComputeTotalAllocation(ep.EmployeeId);
 
                         int newTotalAllocation = totalAllocation - ep.Allocation + inputInfo.Allocation;
-
+                        if (inputInfo.Allocation == 0)
+                        {
+                            _employeeRepository.ReleaseEmployee(ep.EmployeeId);
+                            return new OperationResult(true, Messages.SuccessfullyDeletedEmployee);
+                        }
                         if (newTotalAllocation <= 100)
                         {
                             ep.Allocation = inputInfo.Allocation;
                             _employeeRepository.Save();
                             return new OperationResult(true, Messages.SuccessfullyUpdatedPartialAllocation);
                         }
+                        
                     }
                 }
             }

@@ -53,7 +53,7 @@ namespace Manager.Validators
 
         public bool ValidateUpdateAllocationInfo(UpdateAllocationInputInfo updateInfo)
         {
-            bool validation = ValidateId(updateInfo.EmployeeId) && ValidateId(updateInfo.ProjectId) && ValidateId(updateInfo.Allocation);
+            bool validation = ValidateId(updateInfo.EmployeeId) && ValidateId(updateInfo.ProjectId);
             return validation;
         }
     }
