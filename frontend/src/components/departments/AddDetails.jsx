@@ -6,8 +6,9 @@ export default class AddDetails extends React.Component {
         super();
         this.state = {
             name: '',
-            departmentManagerId:-1,
-            departmentManagerList: []
+            departmentManagerId: -1,
+            departmentManagerList: [],
+            message: ["Department name cannot be empty.","Choose department manager!!"]
         };
     }
 
@@ -24,7 +25,7 @@ export default class AddDetails extends React.Component {
     }
 
     save() {
-        Controller.addDepartment({
+            Controller.addDepartment({
                 name: this.state.name,
                 officeId: this.props.officeId,
                 departmentManagerId: this.state.departmentManagerId
@@ -32,12 +33,16 @@ export default class AddDetails extends React.Component {
     }
 
     render () {
-
+        console.log(this.state.message)
         const departmentManagers = this.state.departmentManagerList.map((element, index) => {
             return (
                 <option key={element.id} value={element.id}>{element.name}</option>
             )
         });
+
+        const addButton = this.state.message[0] === ""  && this.state.message[1] === "" ? (<button className="btn btn-default" onClick={this.save.bind(this)}>Add</button>)
+      :(<button className="btn btn-default" disabled>Add</button>);
+
 
         console.log(this.state.departmentManagerList);
         return (
@@ -48,38 +53,68 @@ export default class AddDetails extends React.Component {
                     <div className="box-body">
                         <div className="form-group">
                             <label>Name:</label>
-                            <input className="form-control" type="text"
+                            <input className="form-control" type="text" ref="name"
                                value={this.state.name}
                                onChange={this.onNameChange.bind(this)}/>
                         </div>
                         <div className="form-group">
                             <label>Department Manager:</label>
                             <select className="form-control"
-                                    value={this.state.departmentManagerId}
                                     onChange={this.onDepartmentManagerChange.bind(this)}
                             >
+                                <option value="" disabled selected>Select your option</option>
                                 {departmentManagers}
                             </select>
                         </div>
-                    </div>
-
+                        <div>
+                            <font color="red"><b>{this.state.message[0]}</b></font>
+                        </div>
+                        <div>
+                            <font color="red"><b>{this.state.message[1]}</b></font>
+                        </div>
+                        </div>
                     <div className="box-footer">
-                        <button type="button" className="btn btn-default" onClick={this.save.bind(this)}> Add</button>
+                        {addButton}
                         <button type="button" className="btn btn-default" onClick={this.props.hideFunc}> Cancel</button>
                     </div>
             </div>
         );
     }
 
-    onNameChange(e){
-        this.setState({
-            name: e.target.value
-        });
+    onNameChange() {
+        const newDepartmentName = this.refs.name.value;
+        if (newDepartmentName === "")
+        {
+            this.state.message[0] = "Department name cannot be empty.";
+            this.setState({
+                name: newDepartmentName
+            })
+        } else if (newDepartmentName.length > 100) {
+            this.state.message[0] = "Department name cannot be longer than 100 characters.";
+            this.setState({
+                name: newDepartmentName
+            });
+        } else {
+            this.state.message[0] = "";
+            this.setState({
+                name: newDepartmentName
+            });
+        }
     }
 
     onDepartmentManagerChange(e){
-        this.setState({
-            departmentManagerId: e.target.value
-        });
+
+        const val = e.target.value;
+        if (this.state.departmentManagerId == -1) {
+            this.state.message[1] = "Choose department manager!!";
+            this.setState({
+                departmentManagerId: val
+            });
+        } else {
+            this.state.message[1] = "";
+            this.setState({
+                departmentManagerId: e.target.value
+            });
+        }
     }
 }
