@@ -64,8 +64,8 @@ export default class ProjectItem extends React.Component{
                 <td>{this.props.node.get('Status')}</td>
                 <td>{this.props.node.get('Duration')}</td>
                 <td><Link to={linkMembers}> View members | </Link>
-                    <button className="linkButton" onClick={this.showEditForm.bind(this)}> Edit |</button>
-                    <button className="linkButton" onClick={this.deleteProject.bind(this)}> Delete Project</button>
+                    <button className="linkButton" onClick={this.showEditForm.bind(this)}> Edit | </button>
+                    <button className="linkButton" onClick={this.deleteProject.bind(this)}> Delete</button>
                     {editModal}
                 </td>
                
