@@ -120,8 +120,8 @@ namespace DataAccess.Migrations
             Employee e9 = new Employee
             {
                 Id = 9,
-                Name = "Anna",
-                Address = "Lunacul",
+                Name = "Anna Dragomir",
+                Address = "Sttr. Luna",
                 EmploymentDate = new DateTime(2011, 6, 10),
                 ReleaseDate = new DateTime(2011, 6, 10),
                 JobType = JobType.FullTime,
@@ -131,8 +131,8 @@ namespace DataAccess.Migrations
             Employee e10 = new Employee
             {
                 Id = 10,
-                Name = "Sorinel",
-                Address = "Breaza",
+                Name = "Claudiu Cretu",
+                Address = "Str. Breaza",
                 EmploymentDate = new DateTime(2011, 6, 10),
                 ReleaseDate = new DateTime(2011, 6, 10),
                 JobType = JobType.PartTime6,
@@ -256,6 +256,8 @@ namespace DataAccess.Migrations
                 context.Employees.Single(t => t.Id == 7);
             context.Departments.Single(t => t.Id == 3).DepartmentManager =
                 context.Employees.Single(t => t.Id == 6);
+            context.Departments.Single(t => t.Id == 4).DepartmentManager =
+                context.Employees.Single(t => t.Id == 13);
 
             context.SaveChanges();
         }

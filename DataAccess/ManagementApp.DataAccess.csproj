@@ -113,9 +113,9 @@
     <Compile Include="Migrations\201608101427405_ChangeReleaseDate.Designer.cs">
       <DependentUpon>201608101427405_ChangeReleaseDate.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201608110736042_SeedV1.cs" />
-    <Compile Include="Migrations\201608110736042_SeedV1.Designer.cs">
-      <DependentUpon>201608110736042_SeedV1.cs</DependentUpon>
+    <Compile Include="Migrations\201608110911125_SeedV1.cs" />
+    <Compile Include="Migrations\201608110911125_SeedV1.Designer.cs">
+      <DependentUpon>201608110911125_SeedV1.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -176,8 +176,8 @@
     <EmbeddedResource Include="Migrations\201608101427405_ChangeReleaseDate.resx">
       <DependentUpon>201608101427405_ChangeReleaseDate.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201608110736042_SeedV1.resx">
-      <DependentUpon>201608110736042_SeedV1.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201608110911125_SeedV1.resx">
+      <DependentUpon>201608110911125_SeedV1.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
