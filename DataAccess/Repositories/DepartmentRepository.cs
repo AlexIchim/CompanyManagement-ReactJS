@@ -66,7 +66,9 @@ namespace DataAccess.Repositories
             );
         }
 
-        public IEnumerable<Employee> GetEmployeesByDepartmentId(int id, int? pageSize = null, int? pageNumber = null, string searchString = "", int? positionIdFilter = null)
+        public IEnumerable<Employee> GetEmployeesByDepartmentId(int id, int? pageSize = null, int? pageNumber = null, string searchString = "",
+                                                                int? positionIdFilter = null, int? employmentFilter = null,
+                                                                int? allocationFromFilter = null, int? allocationToFilter = null)
         {
             var dept = _context.Departments.SingleOrDefault(d => d.Id == id);
             if (dept == null)
@@ -77,12 +79,23 @@ namespace DataAccess.Repositories
             {
                 return dept.Employees.Where(
                     e => e.Name.ToLower().Contains(searchString.ToLower()) &&
-                         (positionIdFilter == null || e.PositionId == positionIdFilter)
+                         (positionIdFilter == null || e.PositionId == positionIdFilter) &&
+                         (employmentFilter == null || e.EmploymentHours == employmentFilter.Value) &&
+                         (
+                            allocationFromFilter == null ||
+                            e.ProjectAllocations.Select(a => a.AllocationPercentage).Sum() >= allocationFromFilter.Value
+                         ) &&
+                         (
+                            allocationToFilter == null ||
+                            e.ProjectAllocations.Select(a => a.AllocationPercentage).Sum() <= allocationToFilter.Value
+                         )
                 ).Paginate(pageSize, pageNumber).ToArray();
             }
         }
 
-        public int GetEmployeeCountByDepartmentId(int id, string searchString = "", int? positionIdFilter = null)
+        public int GetEmployeeCountByDepartmentId(int id, string searchString = "",
+                                                  int? positionIdFilter = null, int? employmentFilter = null,
+                                                  int? allocationFromFilter = null, int? allocationToFilter = null)
         {
             var dept = _context.Departments.SingleOrDefault(d => d.Id == id);
             if (dept == null)
@@ -93,7 +106,16 @@ namespace DataAccess.Repositories
             {
                 return dept.Employees.Count(
                     e => e.Name.ToLower().Contains(searchString.ToLower()) &&
-                         (positionIdFilter == null || e.PositionId == positionIdFilter.Value)
+                         (positionIdFilter == null || e.PositionId == positionIdFilter.Value) &&
+                         (employmentFilter == null || e.EmploymentHours == employmentFilter.Value) &&
+                         (
+                            allocationFromFilter == null ||
+                            e.ProjectAllocations.Select(a => a.AllocationPercentage).Sum() >= allocationFromFilter.Value
+                         ) &&
+                         (
+                            allocationToFilter == null ||
+                            e.ProjectAllocations.Select(a => a.AllocationPercentage).Sum() <= allocationToFilter.Value
+                         )
                 );
             }
         }
