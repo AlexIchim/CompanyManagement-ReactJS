@@ -19,7 +19,7 @@ export default class DepartmentItem extends React.Component<any, any> {
         return (
             <tr className="table-tr">
                 <td>
-                    <div id="editDepartment" className="glyphicon glyphicon-edit custom-edit-icon" style={lft} onClick={this.submit.bind(this)}></div>
+                    <div id="editDepartment" className="glyphicon glyphicon-edit custom-edit-icon" style={lft} onClick={this.onEditButtonClick.bind(this)}></div>
                 </td>
 
                 <td>{props.element['Name']}</td>
@@ -35,9 +35,6 @@ export default class DepartmentItem extends React.Component<any, any> {
                         <Link to={"project"} className="btn btn-info">
                             View Projects
                         </Link>
-
-                        <button id="editDepartment" className="btn btn-danger" onClick={this.onEditButtonClick.bind(this)}>
-                        </button>
                     </div>
                 </td>
             </tr>
