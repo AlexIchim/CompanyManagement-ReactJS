@@ -31,6 +31,14 @@ namespace ManagementApp.Controllers
             return Json(result);
         }
 
+        [Route("membersCount/{departmentId}")]
+        [HttpGet]
+        public IHttpActionResult CountAllMembersOfADepartment(int departmentId, string name = "",
+            int? jobType = null, int? position = null, int? allocation = null) {
+            return Json(_departmentService.CountAllMembersOfADepartment(departmentId, name, jobType,
+                position, allocation));
+        }
+
         [Route("members/{departmentId}/{pageSize}/{pageNumber}")]
         [HttpGet]
         public IHttpActionResult GetMembersOfDepartment(int departmentId, int pageSize, int pageNumber, string name = "", int? jobType = null, int? position = null, int? allocation = null) {

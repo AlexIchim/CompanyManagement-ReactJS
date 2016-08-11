@@ -1,5 +1,6 @@
 import config from '../../helper';
 import Context from '../../../context/Context'
+import $ from 'jquery';
 
 export default new class Controller{
 
@@ -46,6 +47,7 @@ export default new class Controller{
             url: config.base + 'department/totalNumberOfProjectsFromDepartment/' + departmentId,
             async: false,
             success: function(data){
+                console.log("Number of items: ", data);
                 Context.cursor.set('totalNumberOfItems', data)
             }.bind(this)
         })

@@ -28,12 +28,24 @@ namespace DataAccess.Repositories
             return _context.Departments.SingleOrDefault(d=>d.Id == departmentId);
         }
 
+        public int CountAllMembersOfADepartment(int departmentId, string name = "", int? jobType = null, int? position = null, int? allocation = null) {
+            var department = GetDepartmentById(departmentId);
+            return department.Employees.AsQueryable()
+
+                .Where(
+                    x =>
+                        (((!name.Equals("") && x.Name.Contains(name)) || name.Equals("")) &&
+                         ((jobType.HasValue && (int)x.JobType == jobType) || !jobType.HasValue) &&
+                         ((position.HasValue && (int)x.Position == position) || !position.HasValue) &&
+                         ((allocation.HasValue && x.GetAllocation() == allocation) || !allocation.HasValue)))
+                .OrderBy(x => x.Id).Count();
+        }
+
         public IEnumerable<Employee> GetMembersOfDepartment(int departmentId, int pageSize, int pageNumber, string name = "", int? jobType = null, int? position = null, int? allocation = null)
         {
             var department = GetDepartmentById(departmentId);
             return department.Employees.AsQueryable()
 
-            
                 .Where(
                     x =>
                         (((!name.Equals("") && x.Name.Contains(name)) || name.Equals("")) &&
