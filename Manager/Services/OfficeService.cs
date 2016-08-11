@@ -35,6 +35,18 @@ namespace Manager.Services
 
             return officeInfos;
         }
+        public IEnumerable<OfficePartialInfo> GetPartial()
+        {
+            var offices = _officeRepository.GetAll();
+            var officeInfos = _mapper.Map<IEnumerable<OfficePartialInfo>>(offices);
+
+            return officeInfos;
+        }
+
+        public int CountAllDepartmentsOfAnOffice(int officeId)
+        {
+            return _officeRepository.CountAllDepartmentsOfAnOffice(officeId);
+        }
 
         public IEnumerable<DepartmentInfo> GetAllDepartmentsOfAnOffice(int officeId, int pageSize, int pageNumber) {
             var departments = _officeRepository.GetAllDepartmentsOfAnOffice(officeId, pageSize, pageNumber);
@@ -43,8 +55,8 @@ namespace Manager.Services
             return departmentsInfos;
         }
 
-        public IEnumerable<EmployeeInfo> GetAllAvailableEmployeesOfAnOffice(int officeId, int pageSize, int pageNumber, int? department = null, int? position = null) {
-            var employees = _officeRepository.GetAllAvailableEmployeesOfAnOffice(officeId, pageSize, pageNumber, department, position);
+        public IEnumerable<EmployeeInfo> GetAllAvailableEmployeesOfAnOffice(int projectId, int officeId, int pageSize, int pageNumber, int? department = null, int? position = null) {
+            var employees = _officeRepository.GetAllAvailableEmployeesOfAnOffice(projectId, officeId, pageSize, pageNumber, department, position);
             var employeesInfos = _mapper.Map<IEnumerable<EmployeeInfo>>(employees);
 
             return employeesInfos;

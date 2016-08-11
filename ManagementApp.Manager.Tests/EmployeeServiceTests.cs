@@ -18,14 +18,16 @@ namespace ManagementApp.Manager.Tests
     {
         private EmployeeService _employeeService;
         private Mock<IEmployeeRepository> _employeeRepositoryMock;
+        private Mock<IDepartmentRepository> _departmentRepositoryMock;
         private Mock<IMapper> _mapperMock;
 
         [SetUp]
         public void PerTestSetup()
         {
             _employeeRepositoryMock = new Mock<IEmployeeRepository>();
+            _departmentRepositoryMock = new Mock<IDepartmentRepository>();
             _mapperMock = new Mock<IMapper>();
-            _employeeService = new EmployeeService(_mapperMock.Object, _employeeRepositoryMock.Object);
+            _employeeService = new EmployeeService(_mapperMock.Object, _employeeRepositoryMock.Object, _departmentRepositoryMock.Object);
         }
 
         [Test]

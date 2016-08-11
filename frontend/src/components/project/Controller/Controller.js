@@ -37,6 +37,21 @@ export default new class Controller{
         Controller.GetAllProjectMembers(projectId);
     }
 
+
+
+    SetDepartmentDropdownItems(){
+        $.ajax({
+            method: 'GET',
+            url: config.base + "/department/GetAll",
+            async: false,
+            success: function(data){
+                this.setState({
+                    dropdownItemsDepartments: data
+                })
+            }.bind(this)
+        });
+    }
+
     Add() {
         console.log('name:', Context.cursor.get('model').Name);
         $.ajax({

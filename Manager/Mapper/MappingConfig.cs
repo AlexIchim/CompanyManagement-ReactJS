@@ -1,4 +1,5 @@
-﻿using AutoMapper;
+﻿using System.Linq;
+using AutoMapper;
 using Domain.Models;
 using Manager.InfoModels;
 using Manager.InputInfoModels;
@@ -26,6 +27,7 @@ namespace Manager.Mapper
             );
             CreateMap<AddDepartmentInputInfo, Department>();
 
+            CreateMap<Office, OfficePartialInfo>();
             CreateMap<Office, OfficeInfo>()
                 .ForMember(m => m.Image, n => n.MapFrom(src => GetString(src.Image)));
             CreateMap<AddOfficeInputInfo, Office>()

@@ -25,11 +25,14 @@ export default class Form extends React.Component{
 
         this.subscription=Context.subscribe(this.onContextChange.bind(this));
 
+
+
         $.ajax({
             method: 'GET',
             url: config.base + 'employee/departmentManagers',
             async: false,
             success: function (data) {
+                console.log("Aici!");
                 this.setState({
                     departmentManagers: data
                 })
@@ -91,6 +94,8 @@ export default class Form extends React.Component{
                 )
             }
         );
+
+        console.log("Dept: ", departmentManagers);
 
         return(
 

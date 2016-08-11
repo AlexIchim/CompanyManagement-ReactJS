@@ -6,7 +6,7 @@ import Accessors from '../../context/Accessors';
 
 export default new class DepartmentController{
 
-    static ajaxCall(officeId, pageNumber){
+    static getDepartmentsAjaxCall(officeId, pageNumber){
         $.ajax({
             method: 'GET',
             url: config.base + 'office/departments/' + officeId + '/5/' + pageNumber,
@@ -17,7 +17,7 @@ export default new class DepartmentController{
         })
     }
 
-    getTotalNumberOfDepartments(officeId){
+    static getTotalNumberOfDepartmentsAjaxCall(officeId){
         $.ajax({
             method: 'GET',
             url: config.base + 'office/departmentsCount/' + officeId,
@@ -28,23 +28,28 @@ export default new class DepartmentController{
         })
     }
 
+    getTotalNumberOfDepartments(officeId){
+        DepartmentController.getTotalNumberOfDepartmentsAjaxCall(officeId);
+    }
+
     getDepartments(officeId, pageNumber){
-        //console.log("Getting departments");
-        DepartmentController.ajaxCall(officeId, pageNumber);
+         //console.log("Getting departments");
+         DepartmentController.getDepartmentsAjaxCall(officeId, pageNumber);
     }
 
     Add(officeId, currentPage){
         $.ajax({
-            method: 'POST',
-            url: config.base + 'department/add',
-            async: false,
-            data: Accessors.model(Context.cursor),
-            success: function(data){
-                Context.cursor.set('totalNumberOfItems', Accessors.totalNumberOfItems(Context.cursor) + 1);
-                //this.getTotalNumberOfDepartments(officeId);
-                DepartmentController.ajaxCall(officeId, currentPage);
-            }.bind(this)
-        });
+           method: 'POST',
+           url: config.base + 'department/add',
+           async: false,
+           data: Accessors.model(Context.cursor),
+           success: function(data){
+               //Context.cursor.set('totalNumberOfItems', Accessors.totalNumberOfItems(Context.cursor) + 1);
+               //this.getTotalNumberOfDepartments(officeId);
+               DepartmentController.getTotalNumberOfDepartmentsAjaxCall(officeId);
+               DepartmentController.getDepartmentsAjaxCall(officeId, currentPage);
+           }.bind(this)
+       });
     }
 
     Update(officeId, currentPage){
@@ -54,7 +59,7 @@ export default new class DepartmentController{
             async: false,
             data: Accessors.model(Context.cursor),
             success: function(){
-                DepartmentController.ajaxCall(officeId, currentPage);
+                DepartmentController.getDepartmentsAjaxCall(officeId, currentPage);
             }
         });
     }
