@@ -8,7 +8,7 @@ import DepartmentItem from './DepartmentItem.jsx'
 import Context from '../../context/Context.js';
 import * as Immutable from 'immutable';
 import * as Controller from '../controller';
-import * as Validator from '../validators';
+
 
 
 export default class Department extends React.Component {
