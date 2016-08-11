@@ -39,8 +39,8 @@ export default class AddDetails extends React.Component {
             )
         });
 
-        const addButton = this.state.message[0] === ""  && this.state.message[1] === "" ? (<button className="btn btn-md btn-info" onClick={this.save.bind(this)}>Add</button>)
-      :(<button className="btn btn-md btn-info" disabled>Add</button>);
+        const addButton = this.state.message[0] === ""  && this.state.message[1] === "" ? (<button type="button" className="btn btn-md btn-info" onClick={this.save.bind(this)}>Add</button>)
+      :(<button type="button" className="btn  btn-md btn-info" disabled>Add</button>);
 
         return (
             <div className="box">

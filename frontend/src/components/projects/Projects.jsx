@@ -232,7 +232,7 @@ export default class Projects extends React.Component{
                         <div className="col-md-6">
                             <select className="pull-right" value={this.state.selectedStatus} onChange={this.onStatusFilterChange.bind(this)}>
                                 <option value="" key={''}>Any Status</option>
-                                <option value="Not started">Not started</option>
+                                <option value="Not Started">Not started</option>
                                 <option value="In progress">In progress</option>
                                 <option value="On hold">On hold</option>
                                 <option value="Done">Done</option>
