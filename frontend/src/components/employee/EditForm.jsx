@@ -73,8 +73,16 @@ export default class EditForm extends React.Component{
       
     }
 
+    checkErrors()
+    {
+        if (this.state.errors.NameErrors.length == 0)
+            return true
+        return false
+    }
+
     edit(cb){
-   
+        if (this.checkErrors() == true)
+        {
         const jobTypeDescription=this.refs.jobType.options[this.refs.jobType.selectedIndex].value;
         const positionTypeDescription=this.refs.positionType.options[this.refs.positionType.selectedIndex].value
         const employmentDate=this.refs.employmentDate.value;
@@ -106,15 +114,21 @@ export default class EditForm extends React.Component{
             data:newEmployee,
             success: function (data) { 
                 //const index= Context.cursor.get('employees').indexOf(this.props.node)
+                if (data.Success == true)
+                {
                    Context.cursor.get('employees').update( this.props.index,  oldInstance => {
                         oldInstance=np4
                         return oldInstance;
                     });              
                  
-                 cb(); 
+                 cb(); }
+                 else
+                    alert ("Invalid input!")
                  
             }.bind(this)
-        })                
+        })}
+        else
+            alert ("Invalid input!")                
     }
 
     onChangeName()
@@ -159,14 +173,18 @@ export default class EditForm extends React.Component{
             <div className="form-group">
                 <label className="col-sm-4 control-label"> Name </label>
                 <div className="col-sm-6">
+                <div className="col-sm-10 red">
                     {this.state.errors.NameErrors}
+                </div>
                     <input  ref="name" className="form-control" placeholder="Name" value={this.state.employee.get('Name')} onChange={this.changeData.bind(this)} onKeyUp={this.onChangeName.bind(this)}/>
                 </div>
             </div>
             <div className="form-group">
                 <label className="col-sm-4 control-label"> Address </label>
                 <div className="col-sm-6">
-                    {this.state.errors.AddressErrors}
+                    <div className="col-sm-10 red">
+                         {this.state.errors.AddressErrors}
+                    </div>
                     <input  ref="address" className="form-control" placeholder="Address" value={this.state.employee.get('Address')} onChange={this.changeData.bind(this)} onKeyUp={this.onChangeAddress.bind(this)}/>
                 </div>
             </div>
@@ -184,7 +202,10 @@ export default class EditForm extends React.Component{
                 
               </div>
             <div className="form-group">
-                <label className="col-sm-4 control-label">Release Date</label>
+                <label className="col-sm-4 control-label">Release Date <div className="col-sm-16 darkred">
+                        *Release date must be set after employment date!
+                        </div></label>
+                
                 <div className="col-sm-6">
                     <div className="input-group date">
                         <div className="input-group-addon">

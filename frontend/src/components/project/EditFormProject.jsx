@@ -54,9 +54,17 @@ export default class EditFormProject extends React.Component{
         })         
     }
 
-    
+    checkErrors()
+    {   console.log(2)
+        if (this.state.errors.NameErrors.length == 0 && this.state.errors.DurationErrors.length == 0)
+        {console.log("good input")
+            return true}
+        return false
+    }
 
     edit(cb){
+        if (this.checkErrors() == true)
+        {
         const status=this.refs.status.options[this.refs.status.selectedIndex].id;
 
         const newProject={
@@ -84,15 +92,19 @@ export default class EditFormProject extends React.Component{
                  cb(); 
                  
             }.bind(this)
-        })   
-
+        }) }  
+        else {
+            alert ("Invalid input!")
+        }
               
     }
 
     onChangeName()
     {   
         const errors = ValidateProject.validateName(this.refs.name.value)
+        
         this.state.errors.NameErrors = errors
+        
        
          this.setState({
              errors: this.state.errors
@@ -122,14 +134,18 @@ export default class EditFormProject extends React.Component{
             <div className="form-group">
                 <label className="col-sm-4 control-label"> Name </label>
                 <div className="col-sm-6">
-                    {this.state.errors.NameErrors}
+                    <div className="col-sm-10 red">
+                        {this.state.errors.NameErrors}
+                    </div>
                     <input  ref="name" className="form-control" placeholder="Name" value={this.state.project.get('Name')} onChange={this.changeData.bind(this)} onKeyUp={this.onChangeName.bind(this)}/>
                 </div>
             </div>
             <div className="form-group">
                 <label className="col-sm-4 control-label"> Duration </label>
                 <div className="col-sm-6">
-                    {this.state.errors.DurationErrors}
+                    <div className="col-sm-10 red">
+                        {this.state.errors.DurationErrors}
+                    </div>
                     <input  ref="duration" className="form-control" placeholder="Duration" value={this.state.project.get('Duration')} onChange={this.changeData.bind(this)} onKeyUp={this.onChangeDuration.bind(this)}/>
                 </div>
             </div>

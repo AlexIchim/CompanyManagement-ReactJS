@@ -7,11 +7,12 @@ function isAlpha(s){
       {
         var char1 = s.charAt(i);
             
-        if (!((char1 >='a' && char1 <= 'z') || (char1 >= 'A' && char1 <= 'Z') || char1 == ' '))
+        if (!((char1 >='a' && char1 <= 'z') || (char1 >= 'A' && char1 <= 'Z') || char1 == ' ' || char1 == '.'))
             {
                 return false
             }
       }
+    return true
 }
 
 export default new class ValidatorDepartment{
@@ -21,7 +22,7 @@ export default new class ValidatorDepartment{
         if (name=="" || name== null)
             errors.push("Name should not be empty!\n")
         if (!isAlpha(name))
-            errors.push("Name should only contain letters or whitespaces!")
+            errors.push("Name should only contain letters, '.' or whitespaces!")
         return errors
     }
 }

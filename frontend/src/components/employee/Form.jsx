@@ -15,8 +15,7 @@ export default class Form extends React.Component{
             positionTypes:[],
             errors:{
                 NameErrors:[],
-                AddressErrors:[],
-                DateErrors:[]
+                AddressErrors:[]
             }
         }
     }
@@ -53,8 +52,19 @@ export default class Form extends React.Component{
         $('#datepicker2').datepicker({});
     }
 
+        checkErrors()
+    {
+        console.log(this.state.errors.AddressErrors)
+        if (this.state.errors.NameErrors.length == 0 && this.state.errors.AddressErrors.length == 0)
+            return true
+        return false
+    }
+
+
     store(cb){
 
+        if (this.checkErrors() == true)
+        {
         const jobType = this.refs.jobType.options[this.refs.jobType.selectedIndex].value
         const positionType = this.refs.positionType.options[this.refs.positionType.selectedIndex].value
 
@@ -73,22 +83,20 @@ export default class Form extends React.Component{
             method: 'POST',
             url: configs.baseUrl + 'api/employee/addEmployee',
             data:inputInfo,
-            success: function (data) {              
-                
-                
-                 if (data.Success == false)
-                {
-                    alert("Release date must be set after employment date!")
-                    
-                }else{
+            success: function (data) { 
+                    if (data.Success == true){             
                      cb(); 
-                     this.refresh(this.props.departmentId);
-                }
-  
+                     this.refresh(this.props.departmentId);}
+                     else
+                        alert("Invalid input!")
             }.bind(this)
-         })
-      
-        
+         }
+         )
+        }
+        else
+        {
+            alert("Invalid input!")
+        }
     }
 
     refresh(departmentId){
@@ -134,14 +142,18 @@ export default class Form extends React.Component{
            <div className="form-group">
                 <label className="col-sm-4 control-label"> Name </label>
                 <div className="col-sm-6">
-                    {this.state.errors.NameErrors}
+                    <div className="col-sm-10 red">
+                        {this.state.errors.NameErrors}
+                    </div>
                     <input  ref="name" className="form-control" placeholder="Name" onKeyUp={this.onChangeName.bind(this)}/>
                 </div>
             </div>
             <div className="form-group">
                 <label className="col-sm-4 control-label"> Address </label>
                 <div className="col-sm-6">
-                    {this.state.errors.AddressErrors}
+                    <div className="col-sm-10 red">
+                        {this.state.errors.AddressErrors}
+                    </div>
                     <input  ref="address" className="form-control" placeholder="Address" onKeyUp={this.onChangeAddress.bind(this)}/>
                 </div>
             </div>
@@ -158,13 +170,14 @@ export default class Form extends React.Component{
                 
               </div>
             <div className="form-group">
-                <label className="col-sm-4 control-label">Release Date</label>
+                <label className="col-sm-4 control-label">Release Date <div className="col-sm-16 darkred">
+                        *Release date must be set after employment date!
+                        </div></label>
                 <div className="col-sm-6">
                     <div className="input-group date">
                       <div className="input-group-addon">
                         <i className="fa fa-calendar"></i>
                       </div>
-                        {this.state.DateErrors}
                       <input type="text" ref ="releaseDate"className="form-control pull-right" id="datepicker2"/>
                     </div>
                 </div>

@@ -32,7 +32,16 @@ export default class Form extends React.Component{
         })     
     }
 
+    checkErrors()
+    {
+        if (this.state.errors.NameErrors.length == 0 && this.state.errors.DurationErrors.length == 0)
+            return true
+        return false
+    }
+
     store(cb){
+        if (this.checkErrors() == true)
+        {
         const status=this.refs.status.options[this.refs.status.selectedIndex].id;
 
         var inputInfo={
@@ -48,10 +57,18 @@ export default class Form extends React.Component{
             url: configs.baseUrl + 'api/project/add',
             data:inputInfo,
             success: function (data) {
-                cb();
-                this.refresh(this.props.departmentId);
+                if (data.Success == true)
+                {
+                    cb();
+                     this.refresh(this.props.departmentId);
+                }
+                else
+                    alert("Invalid input!")
             }.bind(this)
-        })
+        })}
+        else{
+            alert("Invalid input!")
+        }
     }
 
     refresh(departmentId){
@@ -92,14 +109,18 @@ export default class Form extends React.Component{
             <div className="form-group">
                 <label className="col-sm-4 control-label"> Name </label>
                 <div className="col-sm-6">
-                    {this.state.errors.NameErrors}
+                    <div className="col-sm-10 red">
+                        {this.state.errors.NameErrors}'
+                    </div>'
                     <input  ref="name" className="form-control" placeholder="Name" onKeyUp={this.onChangeName.bind(this)}/>
                 </div>
             </div>
                <div className="form-group">
                 <label className="col-sm-4 control-label"> Duration </label>
                 <div className="col-sm-6">
+                    <div className="col-sm-10 red">
                         {this.state.errors.DurationErrors}
+                    </div>
                         <input  ref="duration" className="form-control" placeholder="Project Duration" onKeyUp={this.onChangeDuration.bind(this)}/>
                 </div>
             </div>

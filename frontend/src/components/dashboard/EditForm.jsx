@@ -50,9 +50,19 @@ export default class Form extends React.Component{
         })
                
     }
+
+    checkErrors()
+    {
+        if (this.state.errors.NameErrors.length==0 && this.state.errors.AddressErrors.length == 0 && this.state.errors.PhoneNumberErrors.length == 0){
+             return true
+        }
+           
+        return false
+    }
     
     edit(cb){
-
+        if (this.checkErrors() == true)
+        {
         $.ajax({
             method: 'PUT',
             url: configs.baseUrl + 'api/office/updateOffice',
@@ -67,6 +77,9 @@ export default class Form extends React.Component{
                    cb();
             }.bind(this)
         })
+        }
+        else
+            alert("Invalid input!")
     }
 
     onChangeName()
@@ -107,7 +120,9 @@ export default class Form extends React.Component{
             <div className="form-group">
                 <label htmlFor="inputName" className="col-sm-2 control-label"> Name</label>
                 <div className="col-sm-10">
-                    {this.state.errors.NameErrors}
+                    <div className="col-sm-10 red">
+                        {this.state.errors.NameErrors}
+                    </div>
                     <input type="text" className="form-control" ref="inputName" placeholder="Name" value={this.state.office.get('Name') || ''} onChange={this.changeData.bind(this)} onKeyUp={this.onChangeName.bind(this)}>
                     </input>
                 </div>
@@ -116,7 +131,9 @@ export default class Form extends React.Component{
             <div className="form-group">
                 <label htmlFor="inputAddress" className="col-sm-2 control-label"> Address</label>
                 <div className="col-sm-10">
-                    {this.state.errors.AddressErrors}
+                    <div className="col-sm-10 red">
+                        {this.state.errors.AddressErrors}
+                    </div>
                     <input type="text" className="form-control" ref="inputAddress" placeholder="Address" value={this.state.office.get('Address') || ''} onChange={this.changeData.bind(this)} onKeyUp={this.onChangeAddress.bind(this)}>
                     </input>
                 </div>
@@ -125,7 +142,9 @@ export default class Form extends React.Component{
             <div className="form-group">
                 <label htmlFor="inputPhone" className="col-sm-2 control-label"> Phone </label>
                 <div className="col-sm-10">
-                    {this.state.errors.PhoneNumberErrors}
+                    <div className="col-sm-10 red">
+                        {this.state.errors.PhoneNumberErrors}
+                    </div>
                     <input type="text" className="form-control" ref="inputPhone" placeholder="Phone" value={this.state.office.get('PhoneNumber') || ''} onChange={this.changeData.bind(this)} onKeyUp={this.onChangePhoneNumber.bind(this)}>
                     </input>
                 </div>

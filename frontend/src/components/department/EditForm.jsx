@@ -52,8 +52,16 @@ export default class EditForm extends React.Component{
         })         
     }
 
+    checkErrors()
+    {
+        if (this.state.errors.NameErrors.length == 0)
+            return true
+        return false
+    }
+
     edit(cb){
-   
+        if (this.checkErrors() == true)
+        {
         const depManagerId=this.refs.managersDropdown.options[this.refs.managersDropdown.selectedIndex].value;
         const depManagerName=this.refs.managersDropdown.options[this.refs.managersDropdown.selectedIndex].text;
 
@@ -85,7 +93,9 @@ export default class EditForm extends React.Component{
                  
             }.bind(this)
         })   
-
+        }
+        else
+            alert("Invalid input!")
               
     }
 
@@ -113,7 +123,9 @@ export default class EditForm extends React.Component{
             <div className="form-group">
                 <label className="col-sm-4 control-label"> Name </label>
                 <div className="col-sm-6">
-                    {this.state.errors.NameErrors}
+                    <div className="col-sm-10 red">
+                        {this.state.errors.NameErrors}
+                    </div>
                     <input  ref="name" className="form-control" placeholder="Name" value={this.state.department.get('Name')} onChange={this.changeData.bind(this)} onKeyUp={this.onChangeName.bind(this)}/>
                 </div>
             </div>
