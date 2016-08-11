@@ -24,7 +24,6 @@ export default class Departments extends Component {
             totalDepartmentCount: 0,
             showModalTemplate: null,
             modalDepartment: {},
-            managerList: []
         }
     }
 
@@ -67,39 +66,16 @@ export default class Departments extends Component {
     }
 
     editDetails(department) {
-        let managers = [];
-
-        Controller.getDepartmentsManagers(
-            true,
-            (data) => {
-                this.setState({
-                    managerList: data
-                });
-            }
-        );
         this.setState({
             showModalTemplate: 'edit',
             modalDepartment: department,
-            managerList: managers
         });
     }
 
     addDetails(department) {
-        let managers = [];
-
-        Controller.getDepartmentsManagers(null,
-            true,
-            (data) => {
-                this.setState({
-                    managerList: data
-                });
-            }
-        );
-
         this.setState({
             showModalTemplate: 'add',
             modalDepartment: department,
-            managerList: managers
         });
     }
 
@@ -135,7 +111,6 @@ export default class Departments extends Component {
             )
         });
 
-
         const modalTemplate = this.state.showModalTemplate !== null ? (
             <ModalTemplate
                 getComponent={
@@ -145,7 +120,6 @@ export default class Departments extends Component {
                                 return <EditDetails department={this.state.modalDepartment}
                                                     officeId={this.props.params.officeId}
                                                     hideFunc={hideFunc}
-                                                    managers={this.state.managerList}
                                                     saveFunc={function(){
                                                         hideFunc();
                                                         Command.fetchOfficeDepartmentList(this.fetchData.bind(this));
@@ -154,7 +128,6 @@ export default class Departments extends Component {
                             case 'add':
                                 return <AddDetails officeId={this.props.params.officeId}
                                                     hideFunc={hideFunc}
-                                                    managers={this.state.managerList}
                                                     saveFunc={function(){
                                                         hideFunc();
                                                         Command.fetchOfficeDepartmentList(this.fetchData.bind(this));

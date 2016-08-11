@@ -42,9 +42,13 @@ export default class EditDetails extends React.Component {
         );
     }
 
-    onChangeFunc(d) {
+
+    onChangeDepartmentManagerName(d) {
         let department = this.state.department;
         department[d.target.name] = d.target.value;
+
+        console.log(department);
+
         this.setState({
             department: department
         })
@@ -79,6 +83,9 @@ export default class EditDetails extends React.Component {
         department.officeId = this.props.officeId;
 
 
+        if (department.departmentManagerId === "") {
+            department.departmentManagerId = null;
+        }
         Controller.updateDepartment(department, true, this.props.saveFunc);
     }
 
@@ -118,8 +125,9 @@ export default class EditDetails extends React.Component {
                             <div className="col-md-8">
                                 <select name="departmentManagerId" className="form-control"
                                         value={this.state.department.departmentManagerId}
-                                        onChange={this.onChangeFunc.bind(this)}
+                                        onChange={this.onChangeDepartmentManagerName.bind(this)}
                                 >
+                                    <option value=""  selected>Not allocated</option>
                                     {departmentManagers}
                                 </select>
                             </div>

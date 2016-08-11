@@ -105,6 +105,10 @@ namespace DataAccess.Repositories
                 Employee departmentManager = _context.Employees.First(e => e.Id == departmentManagerId);
                 department.DepartmentManager = departmentManager;
             }
+            else
+            {
+                department.DepartmentManagerId = null;
+            }
             _context.Departments.Add(department);
             Save();
         }
@@ -115,6 +119,10 @@ namespace DataAccess.Repositories
                 Employee departmentManager = _context.Employees.First(e => e.Id == departmentManagerId);
                 department.DepartmentManager = departmentManager;
                 _context.Departments.First(d => d.Id == department.Id).DepartmentManager = departmentManager;
+            }
+            else
+            {
+                department.DepartmentManagerId = null;
             }
             Save();
         }
