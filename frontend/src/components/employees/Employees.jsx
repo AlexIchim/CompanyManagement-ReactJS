@@ -318,7 +318,7 @@ export default class Employees extends Component {
                             {positionOptions}
                         </select>
                     </div>
-                    <div className="col-md-3 pull-right">
+                    <div className="col-md-2 pull-right">
                         <select className="pull-right form-control" value={this.state.selectedEmploymentType} onChange={this.onEmploymentFilterChange.bind(this)}>
                             <option value="" key={''}>Any Employment Hours Types</option>
                             <option value="8" key={8}>8</option>
@@ -327,21 +327,20 @@ export default class Employees extends Component {
                         </select>
                     </div>
                     <br/><br/>
-                    <div className="col-md-6 pull-right text-right">
-                        Total Allocation:<br/>  
-                        
-                        from:&nbsp;  
-                        <input className="text-right" type="text" size="1" placeholder="0"
-                            value={this.state.allocationFrom}
-                            onChange={this.onAllocationFromChange.bind(this)}
-                        />
-                        &nbsp;&nbsp;&nbsp;
-                        to:&nbsp;
-                        <input className="text-right" type="text" size="1" placeholder="100"
+                    <div className="col-md-1 pull-right">
+                        <input className="text-right form-control" type="text" size="1" placeholder="to 100"
                             value={this.state.allocationTo}
                             onChange={this.onAllocationToChange.bind(this)}
                         />
-                                                      
+                     </div>
+                    <div className="col-md-1 pull-right">
+                        <input className="text-right form-control" type="text" size="1" placeholder="from 0"
+                               value={this.state.allocationFrom}
+                               onChange={this.onAllocationFromChange.bind(this)}
+                        />
+                    </div>
+                    <div className="col-md-2 pull-right text-right">
+                        <label> Total allocation: </label>
                     </div>
                 </div>
                 
