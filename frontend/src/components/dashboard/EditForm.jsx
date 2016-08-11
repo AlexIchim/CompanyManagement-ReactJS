@@ -4,6 +4,7 @@ import configs from '../helpers/calls';
 import * as Immutable from 'immutable';
 import Context from '../../context/Context.js';
 import * as $ from 'jquery';
+import ValidateOffice from '../validators/ValidateOffice.js';
 
 export default class Form extends React.Component{
     
@@ -11,6 +12,11 @@ export default class Form extends React.Component{
         super();
         this.state={
             office: {    
+            },
+            errors:{
+                NameErrors:[],
+                AddressErrors:[],
+                PhoneNumberErrors:[]
             }
         }
     }
@@ -61,8 +67,35 @@ export default class Form extends React.Component{
         })
     }
 
-    
-    
+    onChangeName()
+    {
+        const errors = ValidateOffice.validateName(this.refs.inputName.value)
+        this.state.errors.NameErrors = errors
+       
+         this.setState({
+             errors: this.state.errors
+         })
+    }
+
+    onChangeAddress()
+    {
+        const errors = ValidateOffice.validateAddress(this.refs.inputAddress.value)
+        this.state.errors.AddressErrors = errors
+       
+         this.setState({
+             errors: this.state.errors
+         })
+    }
+
+    onChangePhoneNumber()
+    {
+        const errors = ValidateOffice.validatePhoneNumber(this.refs.inputPhone.value)
+        this.state.errors.PhoneNumberErrors = errors
+       
+         this.setState({
+             errors: this.state.errors
+         })
+    }
     
     render(){
         return(
@@ -72,7 +105,8 @@ export default class Form extends React.Component{
             <div className="form-group">
                 <label htmlFor="inputName" className="col-sm-2 control-label"> Name</label>
                 <div className="col-sm-10">
-                    <input type="text" className="form-control" ref="inputName" placeholder="Name" value={this.state.office.get('Name') || ''} onChange={this.changeData.bind(this)}>
+                    {this.state.errors.NameErrors}
+                    <input type="text" className="form-control" ref="inputName" placeholder="Name" value={this.state.office.get('Name') || ''} onChange={this.changeData.bind(this)} onKeyUp={this.onChangeName.bind(this)}>
                     </input>
                 </div>
             </div>
@@ -80,7 +114,8 @@ export default class Form extends React.Component{
             <div className="form-group">
                 <label htmlFor="inputAddress" className="col-sm-2 control-label"> Address</label>
                 <div className="col-sm-10">
-                    <input type="text" className="form-control" ref="inputAddress" placeholder="Address" value={this.state.office.get('Address') || ''} onChange={this.changeData.bind(this)}>
+                    {this.state.errors.AddressErrors}
+                    <input type="text" className="form-control" ref="inputAddress" placeholder="Address" value={this.state.office.get('Address') || ''} onChange={this.changeData.bind(this)} onKeyUp={this.onChangeAddress.bind(this)}>
                     </input>
                 </div>
             </div>
@@ -88,7 +123,8 @@ export default class Form extends React.Component{
             <div className="form-group">
                 <label htmlFor="inputPhone" className="col-sm-2 control-label"> Phone </label>
                 <div className="col-sm-10">
-                    <input type="text" className="form-control" ref="inputPhone" placeholder="Phone" value={this.state.office.get('PhoneNumber') || ''} onChange={this.changeData.bind(this)}>
+                    {this.state.errors.PhoneNumberErrors}
+                    <input type="text" className="form-control" ref="inputPhone" placeholder="Phone" value={this.state.office.get('PhoneNumber') || ''} onChange={this.changeData.bind(this)} onKeyUp={this.onChangePhoneNumber.bind(this)}>
                     </input>
                 </div>
             </div>
