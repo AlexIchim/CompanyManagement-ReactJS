@@ -89,7 +89,7 @@ export default class EditModal extends React.Component {
         return (
             <div className="box info-box">
                 <div className="box-header with-border">
-                    <h3 className="box-title">Add new employee</h3>
+                    <h3 className="box-title">Edit employee</h3>
                 </div>
                 <form className="form-horizontal">
                 <div className="box-body">
