@@ -18,7 +18,7 @@ const Routes = () => {
                 <Route path="ConcertsList" component={ConcertsList}></Route>
                 <Route path="project/members/:projectId" component={ProjectMembers}></Route>
                 <Route path="project" component={Project}></Route>
-                <Route path="office/departments/:officeId/:pageSize/:pageNumber" component={Departments}></Route>
+                <Route path="office/departments/:officeId" component={Departments}></Route>
 
             </Route>
         </Router>

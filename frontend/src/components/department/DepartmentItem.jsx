@@ -3,7 +3,7 @@ import {Link} from 'react-router';
 
 export default class DepartmentItem extends React.Component<any, any> {
 
-    submit(){
+    onEditButtonClick(){
         this.props.onEditButtonClick(this.props.index);
     }
 
@@ -19,13 +19,15 @@ export default class DepartmentItem extends React.Component<any, any> {
                 <td>{props.element['NumberOfProjects']}</td>
                 <td>
                     <div className="btn-toolbar">
-                        <button id="editDepartment" className="btn btn-info" onClick={this.submit.bind(this)}>
+                        <Link to={""} className="btn btn-info">
                             View Members
-                        </button>
-                        <button id="editDepartment" className="btn btn-info" onClick={this.submit.bind(this)}>
+                        </Link>
+
+                        <Link to={"project"} className="btn btn-info">
                             View Projects
-                        </button>
-                        <button id="editDepartment" className="btn btn-danger" onClick={this.submit.bind(this)}>
+                        </Link>
+
+                        <button id="editDepartment" className="btn btn-danger" onClick={this.onEditButtonClick.bind(this)}>
                             Edit
                         </button>
                     </div>
