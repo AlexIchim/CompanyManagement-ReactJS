@@ -43,10 +43,10 @@ namespace ManagementApp.Controllers
             return Json(result);
         }
 
-        [Route("availableEmployees/{officeId}/{pageSize}/{pageNumber}")]
+        [Route("availableEmployees/{projectId}/{officeId}/{pageSize}/{pageNumber}")]
         [HttpGet]
-        public IHttpActionResult GetAllAvailableEmployeesOfAnOffice(int officeId, int pageSize, int pageNumber, int? department = null, int? position = null) {
-            var result = _officeService.GetAllAvailableEmployeesOfAnOffice(officeId, pageSize, pageNumber, department, position);
+        public IHttpActionResult GetAllAvailableEmployeesOfAnOffice(int projectId, int officeId, int pageSize, int pageNumber, int? department = null, int? position = null) {
+            var result = _officeService.GetAllAvailableEmployeesOfAnOffice(projectId, officeId, pageSize, pageNumber, department, position);
             return Json(result);
         }
 

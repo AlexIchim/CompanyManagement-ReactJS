@@ -134,10 +134,10 @@ namespace ManagementApp.Manager.Tests
             };
 
             _mapperMock.Setup(m => m.Map<IEnumerable<EmployeeInfo>>(employees)).Returns(employeesInfo);
-            _officeRepositoryMock.Setup(m => m.GetAllAvailableEmployeesOfAnOffice(1, 5, 1, 1, 0)).Returns(employees);
+            _officeRepositoryMock.Setup(m => m.GetAllAvailableEmployeesOfAnOffice(1, 1, 5, 1, 1, 0)).Returns(employees);
 
             //Act
-            var result = _officeService.GetAllAvailableEmployeesOfAnOffice(1, 5, 1, department:1, position:0);
+            var result = _officeService.GetAllAvailableEmployeesOfAnOffice(1, 1, 5, 1, department:1, position:0);
 
             //Assert
             Assert.AreEqual(2, result.Count());
@@ -148,10 +148,10 @@ namespace ManagementApp.Manager.Tests
             //Arrange
 
             //Act
-            _officeService.GetAllAvailableEmployeesOfAnOffice(1, 5, 1, 1, 0);
+            _officeService.GetAllAvailableEmployeesOfAnOffice(1, 1, 5, 1, 1, 0);
 
             //Assert
-            _officeRepositoryMock.Verify(x => x.GetAllAvailableEmployeesOfAnOffice(1, 5, 1, 1, 0), Times.Once);
+            _officeRepositoryMock.Verify(x => x.GetAllAvailableEmployeesOfAnOffice(1, 1, 5, 1, 1, 0), Times.Once);
         }
 
         [Test]
