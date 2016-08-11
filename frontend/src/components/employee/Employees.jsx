@@ -21,7 +21,7 @@ export default class Employees extends React.Component{
         this.setState({
             formToggle:false,
             departmentId: departmentId,
-            currentPage: 1
+            currentPage: 1,
             jobTypeIndex: null,
             positionIndex: null,
             allocationIndex: null,
@@ -29,10 +29,7 @@ export default class Employees extends React.Component{
         });
         this.subscription = Context.subscribe(this.onContextChange.bind(this));
 
-        MyController.getAllEmployees(null,  null, null, null);
-        this.setJobTypeDropdownItems();
-        this.setPositionDropdownItems();
-	Context.cursor.set("items",[]);
+	    Context.cursor.set("items",[]);
         Context.cursor.set("totalNumberOfItems", -1);
         this.setJobTypeDropdownItems();
         this.setPositionDropdownItems();
@@ -235,7 +232,6 @@ export default class Employees extends React.Component{
 
         console.log('In Employees@!@@');
         let modal = "";
-        let modal1 = "";
         if(this.state.formToggle){
             if(Accessors.model(Context.cursor)){
                 if (this.state.buttonClicked === "viewDetails") {

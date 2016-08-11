@@ -7,22 +7,9 @@ import Form from './Form';
 import '../../assets/less/index.less';
 import classnames from 'classnames';
 
-const PageButton = (props) => {
-    const nameClass = classnames({"active" : props.isActive, "btn btn-success btn-xs" : true});
-    return (
-        <button id={props.index} className = {nameClass} onClick={props.onPageButtonClick}>
-            {props.index}
-        </button>
-    );
-}
-
 export default class Departments extends React.Component{
     constructor(){
         super();
-    }
-
-    componentWillReceiveProps(props){
-        this.mountComponent(props);
     }
 
     mountComponent(props){
@@ -46,17 +33,16 @@ export default class Departments extends React.Component{
 
     componentWillMount(){
         this.mountComponent(this.props);
+    }
 
+    componentWillReceiveProps(props){
         const officeId = props.routeParams['officeId'];
         Context.cursor.set("items",[]);
         Context.cursor.set("totalNumberOfItems", -1);
 
         Controller.getDepartments(officeId, 1);
         Controller.getTotalNumberOfDepartments(officeId);
-        //this.mountingComponent(props);
     }
-
-
 
     componentWillUnmount(){
         console.log('unmount dep')
@@ -177,18 +163,6 @@ export default class Departments extends React.Component{
                 />
             )
         })
-
-        /*const buttons = [];
-        for (var i=1; i <= numberOfPages; i++) {
-            buttons.push(
-                <PageButton
-                    index = {i}
-                    key = {i}
-                    onPageButtonClick = {this.onPageButtonClick.bind(this, i)}
-                    isActive = {i === currentPage}
-                />
-            );
-        }*/
 
         const label = currentPage + "/" + numberOfPages;
 
