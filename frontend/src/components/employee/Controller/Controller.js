@@ -4,49 +4,56 @@ import Accessors from '../../../context/Accessors';
 import $ from 'jquery';
 export default new class Controller{
 
-    getAllEmployees(){
+    getAllEmployees(departmentId, pageNumber){
         $.ajax({
             method: 'GET',
-            url: config.base + 'department/members/1/5/1',
+            url: config.base + "department/members/" + departmentId + "/5/" + pageNumber,
             async: false,
             success: function(data){
-                console.log("DATA: ", data);
                 Context.cursor.set('items', data);
             }.bind(this)
         })
     }
 
-    Add(){
-        //console.log("Add employee!");
-        console.log("ModeL: ", Context.cursor.get('model'));
+    getTotalNumberOfEmployees(departmentId){
+        $.ajax({
+            method: 'GET',
+            url: config.base + 'department/membersCount/' + departmentId,
+            async: false,
+            success: function (data) {
+                Context.cursor.set('totalNumberOfItems', data);
+            }.bind(this)
+        })
+    }
 
+    Add(departmentId, currentPage){
         $.ajax({
             method: 'POST',
             url: config.base + 'employee/add',
             data: Accessors.model(Context.cursor),
             async: false,
             success: function(data){
-                console.log('success');
+                console.log("Successfully added!");
             }.bind(this)
         });
-        //this.getAllEmployees();
-
+        this.getTotalNumberOfEmployees(departmentId);
+        this.getAllEmployees(departmentId, currentPage);
     }
 
-    Edit(){
+    Edit(departmentId, currentPage){
         $.ajax({
             method: 'PUT',
             url: config.base + 'employee/update',
             data: Accessors.model(Context.cursor),
             async: false,
             success: function(data){
-                console.log('success');
-            }.bind(this)
+                console.log("Successfully updated!");
+            }
         });
+        this.getAllEmployees(departmentId, currentPage);
     }
 
     Delete(element){
-        console.log('we are in delete method, yey');
         const id = element.Id;
 
         $.ajax({
@@ -54,10 +61,9 @@ export default new class Controller{
             url: config.base + 'employee/delete/' + id,
             async: false,
             success: function(data){
-                console.log('success');
+                console.log("Successfully deleted!");
             }.bind(this)
         });
-        //this.getAllEmployees();
     }
 
 }

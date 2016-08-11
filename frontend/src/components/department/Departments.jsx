@@ -45,7 +45,13 @@ export default class Departments extends React.Component{
     }
 
     componentWillReceiveProps(props){
-        this.mountingComponent(props);
+        const officeId = props.routeParams['officeId'];
+        Context.cursor.set("items",[]);
+        Context.cursor.set("totalNumberOfItems", -1);
+
+        Controller.getDepartments(officeId, 1);
+        Controller.getTotalNumberOfDepartments(officeId);
+        //this.mountingComponent(props);
     }
 
     componentWillUnmount(){
@@ -132,7 +138,7 @@ export default class Departments extends React.Component{
         const totalNumberOfDepartments = this.state.totalNumberOfItems;
 
         const numberOfPages = (totalNumberOfDepartments == 0) ? 1 : Math.ceil(totalNumberOfDepartments/5);
-        console.log('nrOfPages', totalNumberOfDepartments);
+        //console.log('nrOfPages', totalNumberOfDepartments);
 
         const currentPage = this.state.currentPage;
 
@@ -144,12 +150,12 @@ export default class Departments extends React.Component{
         if(this.state.formToggle){
             if(Accessors.model(Context.cursor)){
                 form=<Form onCancelClick={this.toggleModal.bind(this)}
-                           FormAction={Controller.Update.bind(this, this.state.officeId, currentPage)}
+                           FormAction={() => {Controller.Update(this.state.officeId, currentPage)}}
                            Title="Edit Department"
                            officeId={this.state.officeId}/>;
             }else{
                 form=<Form onCancelClick={this.toggleModal.bind(this)}
-                           FormAction={Controller.Add.bind(this, this.state.officeId, currentPage)}
+                           FormAction={() => {Controller.Add(this.state.officeId, currentPage)}}
                            Title="Add Department"
                            officeId={this.state.officeId}/>;
             }
@@ -159,7 +165,7 @@ export default class Departments extends React.Component{
             return (
                 <Department
                     element={department}
-                    departmentId= {department.Id}
+                    //departmentId= {department.Id}
                     //linkToEmployees={"department/members/" + department.Id}
                     //linkToProjects={"department/projects/" + department.Id}
                     key={index}

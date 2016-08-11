@@ -13,15 +13,36 @@ export default class Employees extends React.Component{
     constructor(){
         super();
     }
-    componentWillMount(){
+
+    mountingComponent(props){
+        const departmentId = props.routeParams['departmentId'];
 
         this.setState({
             formToggle:false,
+            departmentId: departmentId,
+            currentPage: 1
         });
 
         this.subscription = Context.subscribe(this.onContextChange.bind(this));
-        //const employeeId = this.props.routeParams['employeeId'];
-        MyController.getAllEmployees();
+
+        Context.cursor.set("items",[]);
+        Context.cursor.set("totalNumberOfItems", -1);
+
+        MyController.getAllEmployees(departmentId, 1);
+        MyController.getTotalNumberOfEmployees(departmentId);
+    }
+
+    componentWillMount(){
+        this.mountingComponent(this.props);
+    }
+
+    componentWillReceiveProps(props){
+        const departmentId = props.routeParams['departmentId'];
+        Context.cursor.set("items",[]);
+        Context.cursor.set("totalNumberOfItems", -1);
+
+        MyController.getAllEmployees(departmentId, 1);
+        MyController.getTotalNumberOfEmployees(departmentId);
     }
 
     componentWillUnmount(){
@@ -32,7 +53,8 @@ export default class Employees extends React.Component{
         console.log('employees:', cursor.get('items'));
         this.setState({
             formToggle: false,
-            employees: cursor.get('items')
+            employees: cursor.get('items'),
+            totalNumberOfItems: cursor.get('totalNumberOfItems')
         });
     }
 
@@ -73,7 +95,51 @@ export default class Employees extends React.Component{
         })
     }
 
+    onPreviousButtonClick(){
+        let currentPage = this.state.currentPage;
+        let newCurrentpage = currentPage - 1;
+        if (currentPage > 1){
+            this.setState({
+                currentPage: newCurrentpage
+            })
+            MyController.getAllEmployees(this.state.departmentId, newCurrentpage);
+        }
+    }
+
+    onNextButtonClick(){
+        let currentPage = this.state.currentPage;
+        let newCurrentpage = currentPage + 1;
+        let numberOfPages = Math.ceil((this.state.totalNumberOfItems)/5);
+        if (currentPage < numberOfPages){
+            this.setState({
+                currentPage: newCurrentpage
+            })
+            MyController.getAllEmployees(this.state.departmentId, newCurrentpage);
+        }
+    }
+
+    onGoToFirstPageButtonClick(){
+        this.setState({
+            currentPage: 1
+        })
+        MyController.getAllEmployees(this.state.departmentId, 1);
+    }
+
+    onGoToLastPageButtonClick(){
+        let numberOfPages = Math.ceil((this.state.totalNumberOfItems)/5);
+        this.setState({
+            currentPage: numberOfPages
+        });
+        MyController.getAllEmployees(this.state.departmentId, numberOfPages);
+    }
+
     render(){
+
+        const totalNumberOfDepartments = this.state.totalNumberOfItems;
+        const numberOfPages = (totalNumberOfDepartments == 0) ? 1 : Math.ceil(totalNumberOfDepartments/5);
+        const currentPage = this.state.currentPage;
+        const label = currentPage + "/" + numberOfPages;
+
         console.log('In Employees@!@@');
         let modal = "";
         let modal1 = "";
@@ -85,17 +151,14 @@ export default class Employees extends React.Component{
                 } else {
                     if (this.state.buttonClicked === "edit") {
                         modal = <Form onCancelClick={this.toggleModal.bind(this)}
-                                      FormAction={MyController.Edit.bind(this)}
+                                      FormAction={() => {MyController.Edit(this.state.departmentId, currentPage)}}
                                       Title="Edit Employee"/>;
                     }
                 }
-                /*modal1=<ViewDetailsForm onCancelClick={Command.hideModal.bind(this)}
-                            onStoreClick={this.onModalSaveClick.bind(this)}
-                            Title="Edit Employee"/>;*/
             }else{
                 modal=<Form onCancelClick={this.toggleModal.bind(this)}
-                            FormAction={MyController.Add.bind(this)}
-                           Title="Add Employee"/>;
+                            FormAction={() => {MyController.Add(this.state.departmentId, currentPage)}}
+                            Title="Add Employee"/>;
             }
         }
         const items = this.state.employees.map( (employee, index) => {
@@ -124,11 +187,18 @@ export default class Employees extends React.Component{
                         <input type="text"  ref="inputName" className="form-control" placeholder="Search..." >
                         </input>
                     </div>
-                <p></p>
-                <div><button id="store" className="btn btn-success margin-top" onClick={this.onAddButtonClick.bind(this)}>
-                    Add New Employee
-                </button>
+                <p>
+
+                </p>
+
+                <div>
+
+                    <button id="store" className="btn btn-success margin-top" onClick={this.onAddButtonClick.bind(this)}>
+                        Add New Employee
+                    </button>
+
                     &nbsp;
+
                     <div className="btn-group">
                         <button type="button" className="btn btn-info">Job Type</button>
                         <button type="button" className="btn btn-info dropdown-toggle" data-toggle="dropdown">
@@ -141,7 +211,9 @@ export default class Employees extends React.Component{
                             <li><a href="#">Full Time</a></li>
                         </ul>
                     </div>
+
                     &nbsp;
+
                     <div className="btn-group">
                         <button type="button" className="btn btn-info">Position</button>
                         <button type="button" className="btn btn-info dropdown-toggle" data-toggle="dropdown">
@@ -155,7 +227,9 @@ export default class Employees extends React.Component{
                             <li><a href="#">Department Manager</a></li>
                         </ul>
                     </div>
+
                     &nbsp;
+
                     <div className="btn-group">
                         <button type="button" className="btn btn-info">Allocation</button>
                         <button type="button" className="btn btn-info dropdown-toggle" data-toggle="dropdown">
@@ -167,21 +241,41 @@ export default class Employees extends React.Component{
                             <li><a href="#">Available</a></li>
                         </ul>
                     </div>
+
                 </div>
+
                 <table className="table table-hover">
-                <thead>
-                <tr>
-                    <td><h3> Name </h3></td>
-                    <td><h3> Position </h3></td>
-                    <td><h3> Allocation </h3></td>
-                    <td><h3> Actions </h3></td>
-                </tr>
-                </thead>
-                <tbody>
-                    {items}
-                </tbody>
-            </table>
+                    <thead>
+                    <tr>
+                        <td><h3> Name </h3></td>
+                        <td><h3> Position </h3></td>
+                        <td><h3> Allocation </h3></td>
+                        <td><h3> Actions </h3></td>
+                    </tr>
+                    </thead>
+
+                    <tbody>
+                        {items}
+                    </tbody>
+                </table>
+
+                <div className="btn-group">
+                    <button className="btn btn-info" onClick={this.onGoToFirstPageButtonClick.bind(this)}>
+                        Go to first page
+                    </button>
+                    <button className="btn btn-warning" onClick={this.onPreviousButtonClick.bind(this)}>
+                        Prev
+                    </button>
+                    <button className="btn btn-warning">{label}</button>
+                    <button className="btn btn-warning" onClick={this.onNextButtonClick.bind(this)}>
+                        Next
+                    </button>
+                    <button className="btn btn-info" onClick={this.onGoToLastPageButtonClick.bind(this)}>
+                        Go to last page
+                    </button>
                 </div>
+
+            </div>
         )
     }
 }

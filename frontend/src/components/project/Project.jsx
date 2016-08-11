@@ -104,7 +104,7 @@ export default class Project extends React.Component{
         console.log('total numberrr: ', this.state.totalNumberOfItems);
 
         const numberOfPages = (totalNumberOfItems == 0) ? 1 : Math.ceil(totalNumberOfItems/5);
-        console.log('nrOfPages', totalNumberOfItems);
+        console.log('nrOfPages', numberOfPages);
 
         const currentPage = this.state.currentPage;
         let modal = "";

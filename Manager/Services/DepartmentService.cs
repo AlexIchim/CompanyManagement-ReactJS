@@ -51,6 +51,13 @@ namespace Manager.Services
             return projectsInfos;
         }
 
+        public int CountAllMembersOfADepartment(int departmentId, string name = "",
+            int? jobType = null, int? position = null, int? allocation = null)
+        {
+            return _departmentRepository.CountAllMembersOfADepartment(departmentId, name, jobType,
+                position, allocation);
+        }
+
         public IEnumerable<EmployeeInfo> GetMembersOfDepartment(int departmentId, int pageSize, int pageNumber, string name = "", int? jobType = null, int? position = null, int? allocation = null)
         {
             var employees = _departmentRepository.GetMembersOfDepartment(departmentId, pageSize, pageNumber, name, jobType, position, allocation);
