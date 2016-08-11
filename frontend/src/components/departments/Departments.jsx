@@ -124,7 +124,6 @@ export default class Departments extends Component {
 
     render() {
 
-        console.log(this.state.modalDepartment);
         const items = this.state.departmentList.map((element, index) => {
             return (
                 <DepartmentRow

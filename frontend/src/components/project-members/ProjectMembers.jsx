@@ -99,8 +99,8 @@ export default class ProjectMembers extends Component {
 
     fetchData(newSearchText, newPosFilter){
         const projectId = this.props.params.projectId;
-        this.getEmployeesByProjectId(projectId, this.state.pageSize, this.state.pageNumber, newSearchText, newPosFilter);
         this.getProjectMembersCount(newSearchText, newPosFilter);
+        this.getEmployeesByProjectId(projectId, this.state.pageSize, this.state.pageNumber, newSearchText, newPosFilter);
     }
 
     deleteAllocation(allocationId){
@@ -110,8 +110,8 @@ export default class ProjectMembers extends Component {
         Controller.deleteAllocation(
             allocationId,
             true,
-            this.fetchData.bind(this)
-        )
+            this.fetchData.bind(this,null,null)
+        );
     }
 
     editAllocation(employeeAllocation){
@@ -140,6 +140,8 @@ export default class ProjectMembers extends Component {
             this.props.params.projectId,
             pageSize,
             pageNumber,
+            this.state.searchText,
+            this.state.posFilter,
             true,
             (data) => {
                 this.setState({

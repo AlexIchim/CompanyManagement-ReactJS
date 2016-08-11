@@ -72,9 +72,7 @@ export default class Offices extends React.Component{
                 key={index}
                 onEdit={this.editOffice.bind(this, office)}
             />
-        })
-
-        console.log(this.state.offices);
+        });
 
         const modalTemplate = this.state.showModalTemplate !== null ? (
             <ModalTemplate
