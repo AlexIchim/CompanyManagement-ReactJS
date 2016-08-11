@@ -59,9 +59,6 @@ export default class Project extends React.Component{
         console.log('toggle modal?', this.state.formToggle);
     }
 
-    onGoToFirstPageButtonClick(){
-
-    }
     onPreviousButtonClick(){
         let currentPage = this.state.currentPage;
         let newCurrentpage = currentPage - 1;

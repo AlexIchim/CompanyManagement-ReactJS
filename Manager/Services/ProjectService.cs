@@ -177,6 +177,6 @@ namespace Manager.Services
             return _projectRepository.GetTotalNumberOfProjectsFromDepartment(departmentId);
         }
 
-
+      
     }
 }
