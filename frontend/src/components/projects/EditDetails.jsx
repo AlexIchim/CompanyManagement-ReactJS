@@ -126,7 +126,7 @@ export default class EditDetails extends React.Component {
                             <label>New status</label>
                          </div>
                         <div className="col-md-9">
-                            <select className="form-control" id="choice" onChange={this.changeOption.bind(this)}>
+                            <select value={this.state.project.status} className="form-control" id="choice" onChange={this.changeOption.bind(this)}>
                                 <option value="Not started">Not started</option>
                                 <option value="In progress">In progress</option>
                                 <option value="On hold">On hold</option>
