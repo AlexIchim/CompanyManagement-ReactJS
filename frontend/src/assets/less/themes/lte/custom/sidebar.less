@@ -1,15 +1,50 @@
+@custom-blue: #3fc3f2;;
+
 .main-sidebar{
   position: fixed;
 }
 thead{
   background-color: rgba(91, 185, 247, 0.43);
+  font-weight: bold;
+}
+.table-name{
+  width: 100%;
+  text-align: center;
+  font-weight: bold;
+  font-size: 30px;
+  color: @custom-blue;
+}
+//actions TD(ala din fata) projects
+.td-actions{
+  width: 120px;
 }
 
+
+//PAGINAREA LA DEPARTMENTS
+.pagination{
+  //padding-top: 10px;
+  //border-top: groove;
+  margin-top: 0px;
+  //border-color: rgba(91, 185, 247, 0.43);
+  width: 100%;
+  text-align: center;
+}
+.pagination span{
+  color: #3fc3f2;
+  font-size: 20px;
+  font-weight: 400;
+  margin: 5px;
+}
+
+.pagination .glyphicon:hover{
+  color: #1269d3;;
+}
+
+//---------------------------------
 .office-sidebar-tile{
   text-align: center;
   padding: 5px 0px 5px 0px;
   margin-bottom: 0px;
-
 }
 
 .office-sidebar-tile:hover{
@@ -29,7 +64,10 @@ thead{
   border-radius: 6px;
 }
 
-
+//.info-box-custom{
+//  overflow:hidden;
+//
+//}
 
 .small-icon{
   width: 100px;
@@ -41,7 +79,7 @@ thead{
 .glyphicon{
   margin-right: 5px;
 }
-
+//RECTANGLE----------------------
 .rectangle{
     height: 36px;
     width: 36px;
@@ -51,28 +89,45 @@ thead{
     transition: All 0.5s ease;
     line-height: 36px;
   margin-bottom: 15px;
+  margin-right: 10px;
 }
 
-.info-box-custom{
-  overflow:hidden;
-  
-}
 .rectangle:hover{
   width: 165px;
   background-color: #5bb9f7;
 }
-
-
+.custom-rectangle-department:hover{
+  width: 233px;
+}
+.custom-rectangle-project:hover{
+  width: 180px;
+}
+.custom-rectangle-project-member:hover{
+  width: 242px;
+}
+//edit bootstrap icon-------------------------
 .custom-edit-icon{
   float: right;
   font-size: 25px;
   color: #5bb9f7;
+}
 
+.custom-edit-icon:hover {
+  color: #1269d3;
+}
+
+//delete bootstrap icon
+.custom-delete-icon{
+  float: left;
+  font-size: 24px;
+  color: #5bb9f7;
 }
 
 
-
-
+.custom-delete-icon:hover {
+  color: #ed2126;
+}
+//---------------------
 
 .table-tr:hover{
   background-color: rgba(91, 185, 247, 0.14);
@@ -82,9 +137,6 @@ thead{
 .header-evozon-image{
   width: 65px;
 
-}
-.custom-edit-icon:hover {
-  color: #1269d3;;
 }
 
 .sidebar-menu{

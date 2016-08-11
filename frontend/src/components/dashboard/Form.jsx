@@ -118,15 +118,6 @@ export default class Form extends React.Component{
                         </div>
                     </div>
 
-                    <div className="form-group">
-                        <label htmlFor="inputImage" className="col-sm-2 control-label"> Image </label>
-                        <div className="col-sm-10">
-                            <input
-                                type="file" 
-                                ref="inputImage" 
-                                onChange={this.onImageLoad.bind(this)}/>
-                        </div>
-                    </div>
             </ModalTemplate>
         )
     }
