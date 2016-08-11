@@ -56,6 +56,8 @@ export default class EmployeeItem extends React.Component{
 
         const editModal = this.state.edit ? <EditForm setPageNr={this.props.setPageNr} index={this.props.index} departmentId={this.props.departmentId} element={this.props.node} show = {this.state.edit} close={this.closeEditForm.bind(this)} /> : '';
         const viewDetailsModal = this.state.viewDetails ? <ViewDetailsForm element={this.props.node} show = {this.state.viewDetails} close={this.closeViewDetailsForm.bind(this)} /> : '';
+        const relDate = this.props.node.get('ReleaseDate') ? new Date(this.props.node.get('ReleaseDate')).toLocaleDateString() : " - ";
+       
         return(
 
          
@@ -63,7 +65,7 @@ export default class EmployeeItem extends React.Component{
                     <td>{this.props.node.get('Name')}</td>
                     <td>{this.props.node.get('Address')}</td>
                     <td>{this.props.node.get('EmploymentDate')}</td>
-                    <td>{this.props.node.get('ReleaseDate')}</td>
+                    <td>{relDate}</td>
                     <td>{this.props.node.get('JobType')}</td>
                     <td>{this.props.node.get('PositionType')}</td>
                     <td>{this.props.node.get('TotalAllocation')}</td>
