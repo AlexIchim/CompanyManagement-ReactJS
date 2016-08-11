@@ -4,13 +4,17 @@ import configs from '../helpers/calls';
 import Context from '../../context/Context.js';
 import * as Immutable from 'immutable';
 import * as Controller from '../controller';
+import ValidateDepartment from '../validators/ValidateDepartment.js';
 
 export default class Form extends React.Component{
     
     constructor(){
         super();
         this.state={
-            departmentManagers:[]
+            departmentManagers:[],
+            errors:{
+                NameErrors:[]
+            }
         }
     }
 
@@ -37,7 +41,6 @@ export default class Form extends React.Component{
             OfficeId: this.props.officeId,
             DepartmentManagerId: depManager
         }
-         
 
         $.ajax({
             method: 'POST',
@@ -56,6 +59,20 @@ export default class Form extends React.Component{
     refresh(officeId){
          Controller.getAllDepOffice(officeId,1);
     }
+
+    onChangeName()
+    {
+        const inputInfo = {
+            Name: this
+        } 
+        console.log("nume", this.refs.name.value)
+        const errors = ValidateDepartment.validateName(this.refs.name.value)
+        this.state.errors.NameErrors = errors
+       
+         this.setState({
+             errors: this.state.errors
+         })
+    }
     
     render(){
         
@@ -71,7 +88,9 @@ export default class Form extends React.Component{
             <div className="form-group">
                 <label className="col-sm-4 control-label"> Name </label>
                 <div className="col-sm-6">
-                    <input  ref="name" className="form-control" placeholder="Name"/>
+                {this.state.errors.NameErrors}
+                    <input  ref="name" className="form-control" placeholder="Name" onKeyUp={this.onChangeName.bind(this)}/>
+                    
                 </div>
             </div>
 
