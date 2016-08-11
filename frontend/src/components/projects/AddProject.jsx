@@ -91,7 +91,9 @@ export default class AddProject extends React.Component{
         this.refs.name.value = newProjectName.substr(0, 99);
         this.setState({
             numberOfErrors : this.getNumberOfErrors()
-        })
+        });
+
+
     }
 
     render(){
@@ -135,7 +137,7 @@ export default class AddProject extends React.Component{
                     <div>
                         <font color="red">
                             <b>{this.state.nameMessage}<br/>
-                                {this.state.duratioMessage}
+                                {this.state.durationMessage}
                             </b>
                         </font>
                     </div>

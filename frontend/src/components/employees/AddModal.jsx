@@ -50,7 +50,7 @@ export default class AddModal extends React.Component {
     changeHandler(e){
         
         let employee = this.state.employee;
-        let count = (e.target.name === "name") ? 99 : ((e.target.name === "email") ? 199 : ((e.target.name === "address") ? 299 : 0));
+        let count = (e.target.name === "name") ? 100 : ((e.target.name === "email") ? 200 : ((e.target.name === "address") ? 300 : 0));
         employee[e.target.name] = (count > 0) ? e.target.value.substr(0, count) : e.target.value;
         const attributeName = e.target.name;
         const attributeValue = e.target.value;
@@ -231,7 +231,7 @@ export default class AddModal extends React.Component {
                 nameMessage : "Error!!! Employee name cannot be empty."
             });
             return false;
-        } else if(name.length > 100){
+        } else if(name.length > 99){
             this.setState({
                 nameMessage : "Error! Employee name cannot contain more than 100 characters."
             });
@@ -250,7 +250,7 @@ export default class AddModal extends React.Component {
                 emailMessage : "Error!!! Employee e-mail cannot be empty."
             });
             return false;
-        } else if(email.length > 200) {
+        } else if(email.length > 199) {
             this.setState({
                 emailMessage : "Error!!! Employee e-mail cannot contain more than 200 characters."
             });
@@ -264,7 +264,7 @@ export default class AddModal extends React.Component {
     }
 
     validateAddress(address){
-        if(address.length > 300){
+        if(address.length > 299){
             this.setState({
                 addressMessage : "Error!!! Employee address cannot contain more than 300 characters."
             });

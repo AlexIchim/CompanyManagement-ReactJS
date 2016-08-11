@@ -7,9 +7,9 @@ export default class AddOffice extends React.Component{
     constructor(){
         super();
         this.state = {
-            nameMessage : "",
-            adressMessage : "",
-            phoneMessage : ""
+            nameMessage : "Error!!! Office name cannot be empty.",
+            addressMessage : "Error!!! Office address cannot be empty.",
+            phoneMessage : "Error!!! Office phone number cannot be empty."
         }
     }
 

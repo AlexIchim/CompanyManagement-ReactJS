@@ -38,6 +38,9 @@ export default class Projects extends React.Component{
     }
 
     deleteProject(id){
+        this.setState({
+            pageNumber: 1
+        })
        Controller.deleteProject(
            id,
            true,
