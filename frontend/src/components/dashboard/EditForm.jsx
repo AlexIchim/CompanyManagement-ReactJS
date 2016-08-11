@@ -27,13 +27,15 @@ export default class Form extends React.Component{
         const name = this.refs.inputName.value;
         const address = this.refs.inputAddress.value;
         const phone = this.refs.inputPhone.value;
+        const image = this.refs.inputImage.value;
 
 
         const newO = {
             Id: this.state.office.get('Id'),
             Name:name,
             Address:address,
-            PhoneNumber:phone
+            PhoneNumber:phone,
+            Image:image
         }
 
 
@@ -92,6 +94,15 @@ export default class Form extends React.Component{
                     </input>
                 </div>
             </div>
+
+            <div className="form-group">
+                <label htmlFor="inputImage" className="col-sm-2 control-label"> New Image </label>
+                <div className="col-sm-10">
+                    <input type="text" className="form-control" ref="inputImage" name="Image" placeholder="http://..." onChange={this.changeData.bind(this)}>
+                    </input>
+                </div>
+            </div>
+
 
         </Modal>
         )
