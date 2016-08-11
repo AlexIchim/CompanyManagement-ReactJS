@@ -4,10 +4,11 @@ import Accessors from '../../../context/Accessors';
 import $ from 'jquery';
 export default new class Controller{
 
-    getAllEmployees(){
+    getAllEmployees( jobType, position, allocation){
+        console.log('name: ', name);
         $.ajax({
             method: 'GET',
-            url: config.base + 'department/members/1/5/1',
+            url: config.base + 'department/members/1/5/1' + "?jobType=" + jobType + "&position=" + position +"&allocation=" + allocation,
             async: false,
             success: function(data){
                 console.log("DATA: ", data);
