@@ -91,8 +91,8 @@ export default class EditDetails extends React.Component {
         });
 
         const editButton = this.state.message[0] === "" && this.state.message[1] === "" ? (
-            <button className="btn btn-md btn-info" onClick={this.save.bind(this)}>Save</button>
-        ) : (<button className="btn btn-md btn-info" disabled>Save</button>);
+            <button type="button" className="btn btn-md btn-info" onClick={this.save.bind(this)}>Save</button>
+        ) : (<button type="button" className="btn btn-md btn-info" disabled>Save</button>);
 
         return (
             <div className="box">

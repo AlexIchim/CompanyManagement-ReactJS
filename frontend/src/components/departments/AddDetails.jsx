@@ -33,18 +33,16 @@ export default class AddDetails extends React.Component {
     }
 
     render () {
-        console.log(this.state.message)
         const departmentManagers = this.state.departmentManagerList.map((element, index) => {
             return (
                 <option key={element.id} value={element.id}>{element.name}</option>
             )
         });
 
-        const addButton = this.state.message[0] === ""  && this.state.message[1] === "" ? (<button className="btn btn-md btn-info" onClick={this.save.bind(this)}>Add</button>)
-      :(<button className="btn btn-md btn-info" disabled>Add</button>);
+        const addButton = this.state.message[0] === ""  && this.state.message[1] === "" ? (<button type="button" className="btn btn-md btn-info" onClick={this.save.bind(this)}>Add</button>)
+      :(<button type="button" className="btn        btn-md btn-info" disabled>Add</button>);
 
 
-        console.log(this.state.departmentManagerList);
         return (
             <div className="box">
                 <div className="box-header with-border">

@@ -124,7 +124,6 @@ export default class Departments extends Component {
 
     render() {
 
-        console.log(this.state.modalDepartment);
         const items = this.state.departmentList.map((element, index) => {
             return (
                 <DepartmentRow
@@ -185,7 +184,7 @@ export default class Departments extends Component {
                 <h1>{this.state.officeName}</h1>
                 {modalTemplate}
                 <br/>
-                <button className="btn btn-md btn-info"  onClick={this.addDetails.bind(this)}>
+                <button type="button" className="btn btn-md btn-info"  onClick={this.addDetails.bind(this)}>
                     <span className="glyphicon glyphicon-plus-sign"></span>
                     &nbsp;Add new department
                 </button>
