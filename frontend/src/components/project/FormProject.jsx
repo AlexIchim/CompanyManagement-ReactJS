@@ -4,7 +4,7 @@ import Context from '../../context/Context.js';
 import * as Immutable from 'immutable';
 import Modal from '../modal/Modal.jsx';
 import * as Controller from '../controller';
-import * as Validator from '../validators';
+import ValidateProject from '../validators/ValidateProject.js';
 
 export default class Form extends React.Component{
 
@@ -37,8 +37,8 @@ export default class Form extends React.Component{
             Duration: this.refs.duration.value,
             DepartmentId: this.props.departmentId,
         }
-        Validator.validateProject(inputInfo)
-        /*$.ajax({
+        ValidateProject(inputInfo)
+        $.ajax({
             method: 'POST',
             async: false,
             url: configs.baseUrl + 'api/project/add',
@@ -47,7 +47,7 @@ export default class Form extends React.Component{
                 cb();
                 this.refresh(this.props.departmentId);
             }.bind(this)
-        })*/
+        })
     }
 
     refresh(departmentId){
