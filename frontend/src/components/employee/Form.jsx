@@ -10,14 +10,69 @@ export default class Form extends React.Component {
     constructor() {
         super();
     }
-
     componentWillMount() {
         this.subscription = Context.subscribe(this.onContextChange.bind(this));
 
         this.setState({
+            formToggle:false,
+            jobTypeIndex: null,
+            positionIndex: null,
             NameValidationResult:{valid: false, message: ""},
             AddressValidationResult:{valid: false, message: ""},
         })
+        this.setJobTypeDropdownItems();
+        this.setPositionDropdownItems();
+    }
+
+
+    setJobTypeDropdownItems(){
+        $.ajax({
+            method: 'GET',
+            url: config.base + "/employee/getJobTypes",
+            async: false,
+            success: function(data){
+                console.log('here');
+                this.setState({
+                    jobTypeDropdownItems: data
+                })
+            }.bind(this)
+        });
+    }
+    setPositionDropdownItems(){
+        $.ajax({
+            method:'GET',
+            url: config.base + "/employee/getPositions",
+            async: false,
+            success: function(data){
+                this.setState({
+                    positionDropdownItems: data
+                })
+            }.bind(this)
+        })
+    }
+    filterByJobType(){
+        var select = document.getElementById('jobTypeDropdown');
+        var jobTypeIndex = select.options[select.selectedIndex].value;
+        var positionIndex = this.state.positionIndex;
+        this.setState({
+            jobTypeIndex: jobTypeIndex,
+            positionIndex: positionIndex,
+            allocationIndex: this.state.allocationIndex,
+            search: this.state.search
+        })
+        MyController.getAllEmployees(this.state.search, jobTypeIndex, positionIndex, this.state.allocationIndex)
+    }
+    filterByPosition(){
+        var select = document.getElementById('positionDropdown');
+        var positionIndex = select.options[select.selectedIndex].value;
+        var jobTypeIndex = this.state.jobTypeIndex;
+        this.setState({
+            jobTypeIndex: jobTypeIndex,
+            positionIndex: positionIndex,
+            allocationIndex: this.state.allocationIndex,
+            search: this.state.search
+        })
+        MyController.getAllEmployees(this.state.search, jobTypeIndex, positionIndex, this.state.allocationIndex)
 
     }
 
@@ -95,6 +150,13 @@ export default class Form extends React.Component {
 
         render(){
 
+            let jobTypeDropdownItems = this.state.jobTypeDropdownItems.map( (element, index) => {
+                return (<option value={element.Index} key = {element.Index} > {element.Description} </option>)
+            });
+            let positionDropdownItems = this.state.positionDropdownItems.map( (element, index) => {
+                return (<option value={element.Index} key = {element.Index} > {element.Description} </option>)
+            });
+
             let nameValidationResult="";
             let addressValidationResult="";
 
@@ -127,30 +189,43 @@ export default class Form extends React.Component {
                                Model={this.props.Model}
                                formIsValid={formIsValid} >
 
-                    <div className="btn-group">
-                        <button type="button" className="btn btn-info">Job Type</button>
-                        <button type="button" className="btn btn-info dropdown-toggle" data-toggle="dropdown">
-                            <span className="caret"></span>
-                            <span className="sr-only">Toggle Dropdown</span>
-                        </button>
-                        <ul className="dropdown-menu" role="menu">
-                            <li><a href="#">Part Time 4</a></li>
-                            <li><a href="#">Part Time 6</a></li>
-                            <li><a href="#">Full Time</a></li>
-                        </ul>
+                    {/*<div className="btn-group">
+                     <button type="button" className="btn btn-info">Job Type</button>
+                     <button type="button" className="btn btn-info dropdown-toggle" data-toggle="dropdown">
+                     <span className="caret"></span>
+                     <span className="sr-only">Toggle Dropdown</span>
+                     </button>
+                     <ul className="dropdown-menu" role="menu">
+                     <li><a href="#">Part Time 4</a></li>
+                     <li><a href="#">Part Time 6</a></li>
+                     <li><a href="#">Full Time</a></li>
+                     </ul>
 
-                        <button type="button" className="btn btn-info">Position</button>
-                        <button type="button" className="btn btn-info dropdown-toggle" data-toggle="dropdown">
-                            <span className="caret"></span>
-                            <span className="sr-only">Toggle Dropdown</span>
-                        </button>
-                        <ul className="dropdown-menu" role="menu">
-                            <li><a href="#">Developer</a></li>
-                            <li><a href="#">Project Manager</a></li>
-                            <li><a href="#">QA</a></li>
-                            <li><a href="#">Department Manager</a></li>
-                        </ul>
-                    </div>
+                     <button type="button" className="btn btn-info">Position</button>
+                     <button type="button" className="btn btn-info dropdown-toggle" data-toggle="dropdown">
+                     <span className="caret"></span>
+                     <span className="sr-only">Toggle Dropdown</span>
+                     </button>
+                     <ul className="dropdown-menu" role="menu">
+                     <li><a href="#">Developer</a></li>
+                     <li><a href="#">Project Manager</a></li>
+                     <li><a href="#">QA</a></li>
+                     <li><a href="#">Department Manager</a></li>
+                     </ul>
+                     </div>*/}
+
+                    <select id='jobTypeDropdown' className="selectpicker" onChange={this.filterByJobType.bind(this)}>
+                        <option selected>-- Job Type --</option>
+
+                        {jobTypeDropdownItems}
+
+                    </select>
+                    <select id='positionDropdown' className="selectpicker" onChange={this.filterByPosition.bind(this)}>
+                        <option selected>-- Position --</option>
+
+                        {positionDropdownItems}
+
+                    </select>
                     <p></p>
                     <div className="form-group">
                         <label htmlFor="inputName" className="col-sm-2 control-label"> Name</label>
