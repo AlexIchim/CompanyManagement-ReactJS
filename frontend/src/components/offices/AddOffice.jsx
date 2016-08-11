@@ -101,11 +101,10 @@ export default class AddOffice extends React.Component{
             });
         } else {
             this.setState({
-                nameMessage : "",
-                correctName : newOfficeName
+                nameMessage : ""
             });
         }
-        this.refs.name.value = newOfficeName.substr(0, 99);
+        this.refs.name.value = newOfficeName.substr(0, 99); 
     }
 
     onTextInputChangeAddress(){
@@ -121,8 +120,7 @@ export default class AddOffice extends React.Component{
             });
         } else {
             this.setState({
-                addressMessage : "",
-                correctAddress : newOfficeAddress
+                addressMessage : ""
             });
         }
         this.refs.address.value = newOfficeAddress.substr(0, 299);
