@@ -5,16 +5,23 @@ export default class AvailableEmployee extends React.Component {
     constructor(){
         super();
         this.state = {
-            isTrue: true
+            isTrue: true,
+            wrongAllocation: false
         }
     }
 
-    onChangeInput(id, event){
+    onChangeInput(id, remainingAllocation, event){
         let data = {
             employeeId : id,
             allocation: event.target.value
         }
-        this.props.onChangeAllocation(data, true);
+        const val = data.allocation;
+        if(Number.isInteger(+val) && val >= 0 && val <= remainingAllocation){
+            this.props.onChangeAllocation(data, true);
+        }
+        else {
+            this.props.onChangeAllocation(data, false);
+        }
     }
 
     onChangeRadio(id){
@@ -32,9 +39,6 @@ export default class AvailableEmployee extends React.Component {
             allocation: this.refs.allocationInput.value
         }
         this.props.onChangeAllocation(data, true);
-
-
-
     }
 
     render(){
@@ -47,7 +51,7 @@ export default class AvailableEmployee extends React.Component {
                 <td> {employee.departmentName} </td>
                 <td>{employee.positionName}</td>
                 <td>
-                    <input type="text" className="allocationInput" ref="allocationInput" defaultValue={remainingAllocation} disabled={this.state.isTrue} onChange={this.onChangeInput.bind(this,  employee.id)}/> / {remainingAllocation} %
+                    <input type="text" className="allocationInput" ref="allocationInput" defaultValue={remainingAllocation} disabled={this.state.isTrue || this.state.wrongAllocation } onChange={this.onChangeInput.bind(this,  employee.id, remainingAllocation )}/> / {remainingAllocation} %
                 </td>
                 <td className="btn-toolbar">
                     <input type="radio" ref="employee_id" name="checked" onChange={this.onChangeRadio.bind(this, employee.id)}></input>

@@ -120,6 +120,12 @@ export default class AssignForm extends React.Component {
     }
 
     onChangeAllocation(data, readyToSave){
+        if (!readyToSave){
+            this.refs.message.innerHTML = 'Invalid allocation.';
+        }
+        else{
+            this.hideError();
+        }
         let newAllocation = {
             projectId : this.props.projectId,
             employeeId: data.employeeId,
@@ -187,7 +193,7 @@ export default class AssignForm extends React.Component {
         );
 
         const positionOptions = this.state.positions.map(
-            (pos,ind) => <option key={pos.id} value={pos.id}>{pos.name}</option>
+            (pos,ind) => pos.id == 1 ? null : <option key={pos.id} value={pos.id}>{pos.name}</option>
         );
 
         const header = (
@@ -242,7 +248,7 @@ export default class AssignForm extends React.Component {
                             <br/><br/>
                             <span type="text" ref="message"/>
                             <br/><br/>
-                            <button type="button" className="btn btn-md btn-info" onClick={this.onSave.bind(this)}> Save</button>
+                            <button type="button" className="btn btn-md btn-info" onClick={this.onSave.bind(this)} disabled={!this.state.readyToSave}> Save</button>
                             <button type="button" className="btn btn-md btn-info" onClick={this.props.hideFunc}> Cancel</button>
                         </div>
                     </form>
