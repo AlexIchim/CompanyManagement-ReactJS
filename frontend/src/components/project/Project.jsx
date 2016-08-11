@@ -12,14 +12,18 @@ export default class Project extends React.Component{
         super();
     }
     componentWillMount(){
+        const departmentId = this.props.routeParams['departmentId'];
         this.setState({
-            formToggle:false
+            formToggle:false,
+            currentPage: 1,
+            departmentId: departmentId
         });
         this.subscription = Context.subscribe(this.onContextChange.bind(this));
-        //const projectId = this.props.routeParams['projectId'];
-        Context.cursor.set("items",[]);
-        MyController.GetAllProjects();
 
+        console.log('dep ID: ', departmentId);
+        Context.cursor.set("items",[]);
+        MyController.GetAllProjects(departmentId, 1);
+        MyController.GetNumberOfProjects(departmentId);
     }
 
     componentWillUnmount(){
@@ -29,7 +33,8 @@ export default class Project extends React.Component{
     onContextChange(cursor){
         this.setState({
             items: Accessors.items(Context.cursor),
-            formToggle: false
+            formToggle: false,
+            totalNumberOfItems: Accessors.totalNumberOfItems(Context.cursor)
         });
     }
 
@@ -54,17 +59,62 @@ export default class Project extends React.Component{
         console.log('toggle modal?', this.state.formToggle);
     }
 
+    onPreviousButtonClick(){
+        let currentPage = this.state.currentPage;
+        let newCurrentpage = currentPage - 1;
+        if (currentPage > 1){
+            this.setState({
+                currentPage: newCurrentpage
+            })
+            MyController.GetAllProjects(this.state.departmentId, newCurrentpage);
+        }
+    }
+    onNextButtonClick(){
+        let currentPage = this.state.currentPage;
+        let newCurrentpage = currentPage + 1;
+        let numberOfPages = Math.ceil((this.state.totalNumberOfItems)/5);
+        if (currentPage < numberOfPages){
+            this.setState({
+                currentPage: newCurrentpage
+            })
+            MyController.GetAllProjects(this.state.departmentId, newCurrentpage);
+        }
+    }
+    onGoToFirstPageButtonClick(){
+        this.setState({
+            currentPage: 1
+        })
+        MyController.GetAllProjects(this.state.departmentId, 1);
+    }
+
+    onGoToLastPageButtonClick(){
+        let numberOfPages = Math.ceil((this.state.totalNumberOfItems)/5);
+        this.setState({
+            currentPage: numberOfPages
+        });
+        MyController.GetAllProjects(this.state.departmentId, numberOfPages);
+    }
     render(){
+
+
+        const totalNumberOfItems = this.state.totalNumberOfItems;
+        console.log('total numberrr: ', this.state.totalNumberOfItems);
+
+        const numberOfPages = (totalNumberOfItems == 0) ? 1 : Math.ceil(totalNumberOfItems/5);
+        console.log('nrOfPages', totalNumberOfItems);
+
+        const currentPage = this.state.currentPage;
         let modal = "";
+        const label = currentPage + "/" + numberOfPages;
         if(this.state.formToggle) {
             if (Accessors.model(Context.cursor)) {
                 modal = <EditForm onCancelClick={this.toggleModal.bind(this)}
-                                  FormAction={MyController.Update}
+                                  FormAction={MyController.Update.bind(this, this.state.departmentId, currentPage)}
                                   Title="Edit Project"/>;
             }
             else {
                 modal = <Form onCancelClick={this.toggleModal.bind(this)}
-                              FormAction={MyController.Add}
+                              FormAction={MyController.Add.bind(this, this.state.departmentId, currentPage)}
                               Title="Add Project"/>;
             }
         }
@@ -75,7 +125,7 @@ export default class Project extends React.Component{
                     key = {index}
                     Link = {"project/members/" + project.Id}
                     onEdit = {this.onEditButtonClick.bind(this, project)}
-                    onDelete = {MyController.Delete.bind(this, project)}
+                    onDelete = {MyController.Delete.bind(this, project, this.state.departmentId, currentPage)}
                     />
             )
         });
@@ -102,6 +152,23 @@ export default class Project extends React.Component{
                 {items}
                 </tbody>
             </table>
+
+                <div className="btn-group">
+                    <button className="btn btn-info" onClick={this.onGoToFirstPageButtonClick.bind(this)}>
+                        Go to first page
+                    </button>
+                    <button className="btn btn-warning" onClick={this.onPreviousButtonClick.bind(this)}>
+                        Prev
+                    </button>
+                    <button className="btn btn-warning">{label}</button>
+                    <button className="btn btn-warning" onClick={this.onNextButtonClick.bind(this)}>
+                        Next
+                    </button>
+                    <button className="btn btn-info" onClick={this.onGoToLastPageButtonClick.bind(this)}>
+                        Go to last page
+                    </button>
+                </div>
+
                 </div>
         )
     }

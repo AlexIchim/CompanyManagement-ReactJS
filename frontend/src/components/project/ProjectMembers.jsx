@@ -33,23 +33,22 @@ class ProjectMembers extends React.Component {
         super();
     }
     componentWillMount(){
-        this.setState({
-            formToggle: false
-        });
         const projectId = this.props.routeParams['projectId'];
-        Controller.GetProjectMembers(projectId);
+        Controller.GetProjectMembers(projectId, 1);
+        Controller.GetNrMembers(projectId);
         $.ajax({
             method: 'GET',
             url: config.base + 'project/getById/' +projectId,
             async: false,
             success: function(data){
                 this.setState({
+                    formToggle: false,
+                    currentPage: 1,
                     projectId: data.Id,
                     projectName: data.Name
                 })
             }.bind(this)
         });
-
 
         this.subscription = Context.subscribe(this.onContextChange.bind(this));
 
@@ -60,7 +59,8 @@ class ProjectMembers extends React.Component {
     onContextChange(cursor){
         this.setState({
             projectMembers: Accessors.items(Context.cursor),
-            formToggle: false
+            formToggle: false,
+            totalNumberOfItems: Accessors.totalNumberOfItems(Context.cursor)
         });
     }
 
@@ -81,8 +81,52 @@ class ProjectMembers extends React.Component {
     toggleModal(){
         this.setState({formToggle: false})
     }
+
+    onPreviousButtonClick(){
+        let currentPage = this.state.currentPage;
+        let newCurrentpage = currentPage - 1;
+        if (currentPage > 1){
+            this.setState({
+                currentPage: newCurrentpage
+            })
+            Controller.GetProjectMembers(this.state.projectId, newCurrentpage);
+        }
+    }
+    onNextButtonClick(){
+        let currentPage = this.state.currentPage;
+        let newCurrentpage = currentPage + 1;
+        let numberOfPages = Math.ceil((this.state.totalNumberOfItems)/5);
+        if (currentPage < numberOfPages){
+            this.setState({
+                currentPage: newCurrentpage
+            })
+            Controller.GetProjectMembers(this.state.projectId, newCurrentpage);
+        }
+    }
+    onGoToFirstPageButtonClick(){
+        this.setState({
+            currentPage: 1
+        })
+        Controller.GetProjectMembers(this.state.projectId, 1);
+    }
+
+    onGoToLastPageButtonClick(){
+        let numberOfPages = Math.ceil((this.state.totalNumberOfItems)/5);
+        this.setState({
+            currentPage: numberOfPages
+        });
+        Controller.GetProjectMembers(this.state.projectId, numberOfPages);
+    }
     render(){
+        const totalNumberOfItems = this.state.totalNumberOfItems;
+        console.log('total numberrr: ', this.state.totalNumberOfItems);
+
+        const numberOfPages = (totalNumberOfItems == 0) ? 1 : Math.ceil(totalNumberOfItems/5);
+        console.log('nrOfPages', totalNumberOfItems);
+
+        const currentPage = this.state.currentPage;
         let modal = "";
+        let label =  currentPage + "/" + numberOfPages;
 
         const items = this.state.projectMembers.map ( (projectMember, index) => {
             return (
@@ -131,6 +175,22 @@ class ProjectMembers extends React.Component {
                     {items}
                 </tbody>
             </table>
+
+                <div className="btn-group">
+                    <button className="btn btn-info" onClick={this.onGoToFirstPageButtonClick.bind(this)}>
+                        Go to first page
+                    </button>
+                    <button className="btn btn-warning" onClick={this.onPreviousButtonClick.bind(this)}>
+                        Prev
+                    </button>
+                    <button className="btn btn-warning">{label}</button>
+                    <button className="btn btn-warning" onClick={this.onNextButtonClick.bind(this)}>
+                        Next
+                    </button>
+                    <button className="btn btn-info" onClick={this.onGoToLastPageButtonClick.bind(this)}>
+                        Go to last page
+                    </button>
+                </div>
                 </div>
         )
     }

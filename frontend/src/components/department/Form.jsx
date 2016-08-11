@@ -3,6 +3,7 @@ import ModalTemplate from '../ModalTemplate';
 import Context from '../../context/Context';
 import $ from 'jquery';
 import config from '../helper';
+import Validator from '../validator/DepartmentValidator.jsx';
 
 const DropdownItem = (props) => {
     return (
@@ -20,11 +21,11 @@ export default class Form extends React.Component{
     componentWillMount(){
 
         this.setState({
-            departmentManagers: null
+            departmentManagers: null,
+            NameValidationResult:{valid: false, message: ""},
         });
 
         this.subscription=Context.subscribe(this.onContextChange.bind(this));
-
 
 
         $.ajax({
@@ -51,6 +52,22 @@ export default class Form extends React.Component{
         })
     }
 
+    onChangeName(){
+        let departmentNameInput = this.refs.departmentNameInput.value;
+        if (!departmentNameInput.replace(/\s/g, '').length) {
+            departmentNameInput = '';
+        }
+
+        var result = Validator.ValidateName(departmentNameInput);
+        this.updateState(result);
+    }
+
+    updateState(nameValidationResult){
+        this.setState({
+            NameValidationResult : (nameValidationResult)?   nameValidationResult:     this.state.NameValidationResult
+        });
+    }
+
     onModelChange(){
         this.setState({
             model: this.state.model,
@@ -59,25 +76,39 @@ export default class Form extends React.Component{
     }
 
     onStoreClick(){
-        let currentModel = this.state.model;
-        let modelToStore = {};
 
-        if (currentModel){
-            modelToStore.Id = currentModel.Id;
+        if(this.state.NameValidationResult.valid) {
+
+            let currentModel = this.state.model;
+            let modelToStore = {};
+
+            if (currentModel) {
+                modelToStore.Id = currentModel.Id;
+            }
+
+            modelToStore.Name = this.refs.departmentNameInput.value;
+            var select = document.getElementById('dropdown');
+            var departmentManagerId = select.options[select.selectedIndex].value;
+
+            modelToStore.DepartmentManagerId = departmentManagerId;
+            modelToStore.OfficeId = this.props.officeId;
+
+            Context.cursor.set("model", modelToStore);
+            this.props.FormAction();
         }
-
-        modelToStore.Name = this.refs.departmentNameInput.value;
-        var select = document.getElementById('dropdown');
-        var departmentManagerId = select.options[select.selectedIndex].value;
-
-        modelToStore.DepartmentManagerId = departmentManagerId;
-        modelToStore.OfficeId = this.props.officeId;
-
-        Context.cursor.set("model", modelToStore);
-        this.props.FormAction();
     }
 
     render(){
+        let nameValidationResult="";
+        if(!this.state.NameValidationResult.valid){
+            nameValidationResult = <span>{this.state.NameValidationResult.message}</span>;
+        }
+        var formIsValid=false;
+        if(this.state.NameValidationResult.valid){
+            formIsValid=true;
+        }
+
+
         let selectedDepartmentManager = -1;
         if (this.state.model){
             selectedDepartmentManager =  this.state.model.DepartmentManagerId;
@@ -95,37 +126,37 @@ export default class Form extends React.Component{
             }
         );
 
-        console.log("Dept: ", departmentManagers);
+        //console.log("Dept: ", departmentManagers);
 
         return(
 
             <ModalTemplate onCancelClick={this.props.onCancelClick}
                            onStoreClick={this.onStoreClick.bind(this)}
-                           Title={this.props.Title}>
+                           Title={this.props.Title}
+                           formIsValid={formIsValid}>
 
                 <div className="form-group">
-                    <div className="departmentNameInput">
-                        <label htmlFor="inputName" className="col-sm-4 control-label">Name</label>
-                        <div className="col-sm-8">
-                            <input type="text"
-                                   className="form-control"
-                                   ref="departmentNameInput"
-                                   onChange={this.onModelChange.bind(this)}
-                                   value={departmentName}
-                                   placeholder="Name">
-                            </input>
-                        </div>
+                    <label htmlFor="inputName" className="col-sm-4 control-label">Name</label>
+                    <div className="col-sm-8">
+                        <input type="text"
+                               className="form-control"
+                               ref="departmentNameInput"
+                               onChange={this.onModelChange.bind(this)}
+                               onKeyUp={this.onChangeName.bind(this)}
+                               value={departmentName}
+                               placeholder="Name">
+                        </input>
+                        {nameValidationResult}
                     </div>
+                </div>
 
-                    <div className="departmentManagerInput">
-                        <label htmlFor="inputName" className="col-sm-4 control-label">Department Manager</label>
-                        <div className="col-sm-8">
-                            <select id='dropdown' className="selectpicker" defaultValue={selectedDepartmentManager}>
-                                {departmentManagers}
-                            </select>
-                        </div>
+                <div className="form-group">
+                    <label htmlFor="inputName" className="col-sm-4 control-label">Department Manager</label>
+                    <div className="col-sm-8">
+                        <select id='dropdown' className="selectpicker" defaultValue={selectedDepartmentManager}>
+                            {departmentManagers}
+                        </select>
                     </div>
-
                 </div>
 
             </ModalTemplate>

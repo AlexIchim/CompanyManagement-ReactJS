@@ -2,6 +2,7 @@
 using System.Runtime.InteropServices;
 using System.Web.Http;
 using System.Web.Http.Cors;
+using System.Xml;
 using Manager.InputInfoModels;
 using Manager.Services;
 
@@ -110,6 +111,15 @@ namespace ManagementApp.Controllers
             return Json(result);
         }
 
+        [Route("totalNumberOfProjectsFromDepartment/{departmentId}")]
+        [HttpGet]
+        public IHttpActionResult GetTotalNumberProjects(int departmentId)
+        {
+            var result = _projectService.GetTotalNumberOfProjectsFromDepartment(departmentId);
+            return Json(result);
+        }
+
+      
 
     }
 }

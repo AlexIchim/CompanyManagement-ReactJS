@@ -16,8 +16,8 @@ export default class Dashboard extends React.Component{
         this.setState({
             formToggle:false
         });
-        
-        Context.subscribe(this.onContextChange.bind(this));
+
+        this.subscription=Context.subscribe(this.onContextChange.bind(this));
 
         Context.cursor.set("items",[]);
         Controller.GetAll();
