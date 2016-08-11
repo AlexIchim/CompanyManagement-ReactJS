@@ -85,7 +85,7 @@ export default class Employees extends React.Component{
                 } else {
                     if (this.state.buttonClicked === "edit") {
                         modal = <Form onCancelClick={this.toggleModal.bind(this)}
-                                      FormAction={MyController.Edit.bind(this)}
+                                      FormAction={()=>{MyController.Edit()} }
                                       Title="Edit Employee"/>;
                     }
                 }
@@ -94,7 +94,7 @@ export default class Employees extends React.Component{
                             Title="Edit Employee"/>;*/
             }else{
                 modal=<Form onCancelClick={this.toggleModal.bind(this)}
-                            FormAction={MyController.Add.bind(this)}
+                            FormAction={()=>{MyController.Add()} }
                            Title="Add Employee"/>;
             }
         }

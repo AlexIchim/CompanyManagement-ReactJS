@@ -29,7 +29,7 @@ export default new class Controller{
                 console.log('success');
             }.bind(this)
         });
-        //this.getAllEmployees();
+        this.getAllEmployees();
 
     }
 
@@ -43,6 +43,7 @@ export default new class Controller{
                 console.log('success');
             }.bind(this)
         });
+        this.getAllEmployees();
     }
 
     Delete(element){
