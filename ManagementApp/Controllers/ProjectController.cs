@@ -110,6 +110,13 @@ namespace ManagementApp.Controllers
             return Json(result);
         }
 
+        [Route("totalNumberOfProjectsFromDepartment/{departmentId}")]
+        [HttpGet]
+        public IHttpActionResult GetTotalNumber(int departmentId)
+        {
+            var result = _projectService.GetTotalNumberOfProjectsFromDepartment(departmentId);
+            return Json(result);
+        }
 
     }
 }
