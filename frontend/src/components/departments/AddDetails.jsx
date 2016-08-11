@@ -67,7 +67,7 @@ export default class AddDetails extends React.Component {
                                 <select className="form-control"
                                         onChange={this.onDepartmentManagerChange.bind(this)}
                                 >
-                                    <option value="" disabled>Select your option</option>
+                                    <option value="-1">Select your option</option>
                                     {departmentManagers}
                                 </select>
                             </div>
@@ -90,38 +90,27 @@ export default class AddDetails extends React.Component {
 
     onNameChange() {
         const newDepartmentName = this.refs.name.value;
-        if (newDepartmentName === "")
-        {
+        if (newDepartmentName === "") {
             this.state.message[0] = "Department name cannot be empty.";
-            this.setState({
-                name: newDepartmentName
-            })
-        } else if (newDepartmentName.length > 100) {
-            this.state.message[0] = "Department name cannot be longer than 100 characters.";
-            this.setState({
-                name: newDepartmentName
-            });
-        } else {
-            this.state.message[0] = "";
-            this.setState({
-                name: newDepartmentName
-            });
         }
+        else if (newDepartmentName.length > 100) {
+            this.state.message[0] = "Department name cannot be longer than 100 characters.";
+        }
+        else {
+            this.state.message[0] = "";
+        }
+
+        this.setState({
+            name: newDepartmentName
+        });
     }
 
     onDepartmentManagerChange(e){
-
         const val = e.target.value;
-        if (this.state.departmentManagerId == -1) {
-            this.state.message[1] = "Choose department manager!!";
-            this.setState({
-                departmentManagerId: val
-            });
-        } else {
-            this.state.message[1] = "";
-            this.setState({
-                departmentManagerId: e.target.value
-            });
-        }
+        this.state.message[1] =  val == -1 ? "Choose department manager!!" : "";
+
+        this.setState({
+            departmentManagerId: val
+        });
     }
 }
