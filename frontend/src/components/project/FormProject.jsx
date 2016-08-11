@@ -38,8 +38,8 @@ export default class Form extends React.Component{
             Duration: this.refs.duration.value,
             DepartmentId: this.props.departmentId,
         }
-        Validator.validateProject(inputInfo)
-        /*$.ajax({
+        Validator.ValidateProject(inputInfo)
+        $.ajax({
             method: 'POST',
             async: false,
             url: configs.baseUrl + 'api/project/add',
@@ -48,7 +48,7 @@ export default class Form extends React.Component{
                 cb();
                 this.refresh(this.props.departmentId);
             }.bind(this)
-        })*/
+        })
     }
 
     refresh(departmentId){

@@ -72,8 +72,7 @@ export default class EditFormProject extends React.Component{
             url: configs.baseUrl + 'api/project/updateProject',
             data:newProject,
             success: function (data) { 
-                 const index= Context.cursor.get('projects').indexOf(this.props.element)
-                   Context.cursor.get('projects').update( index,  oldInstance => {
+                   Context.cursor.get('projects').update( this.props.index,  oldInstance => {
                        oldInstance=np
                        return oldInstance;
                     });              

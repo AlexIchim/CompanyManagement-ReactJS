@@ -154,6 +154,7 @@ export default class Project extends React.Component {
                 <ProjectItem
                     node = {el}
                     key= {x}
+                    index={x}
                     departmentId={this.props.routeParams.departmentId}   
                     officeId={this.props.routeParams.officeId}
                     setPageNr={this.setPageNr.bind(this)}
