@@ -18,30 +18,30 @@ namespace DataAccess.Migrations
 
             context.Offices.AddOrUpdate(
               o => o.Id,
-              new Office { Id = 1, Name = "Cluj", Address = "Calea Motilor 62", PhoneNumber = "0364 101 203", Image="http://www.acumenintegrat.ro/wp-content/uploads/2014/08/evozone-logo.gif" },
-              new Office { Id = 2, Name = "Bucuresti", Address = "Calea Serban Voda Nr. 133", PhoneNumber = "021 301.33.00", Image= "http://www.acumenintegrat.ro/wp-content/uploads/2014/08/evozone-logo.gif" },
-              new Office { Id = 3, Name = "London", Address = "Arundel House, 4 Palace Green,", PhoneNumber = "44 20 7937 9666", Image= "http://www.acumenintegrat.ro/wp-content/uploads/2014/08/evozone-logo.gif" }
+              new Office { Id = 1, Name = "Cluj", Address = "Calea Motilor 62", PhoneNumber = "0364 101 203", Image = "http://www.acumenintegrat.ro/wp-content/uploads/2014/08/evozone-logo.gif" },
+              new Office { Id = 2, Name = "Bucuresti", Address = "Calea Serban Voda Nr. 133", PhoneNumber = "021 301.33.00", Image = "http://www.acumenintegrat.ro/wp-content/uploads/2014/08/evozone-logo.gif" },
+              new Office { Id = 3, Name = "London", Address = "Arundel House, 4 Palace Green,", PhoneNumber = "44 20 7937 9666", Image = "http://www.acumenintegrat.ro/wp-content/uploads/2014/08/evozone-logo.gif" }
             );
 
             Employee e1 = new Employee
             {
                 Id = 1,
-                Name = "Patricia",
-                Address = "Luna",
-                EmploymentDate = new DateTime(2011, 6, 10),
-                ReleaseDate = new DateTime(2011, 6, 12),
+                Name = "Patricia Mazere",
+                Address = "Str. Alexandru Vlahuta, Nr. 22 ",
+                EmploymentDate = new DateTime(2016, 7, 4),
+                ReleaseDate = new DateTime(2020, 6, 12),
                 JobType = JobType.FullTime,
-                PositionType = PositionType.Developer,
+                PositionType = PositionType.TeamLead,
                 DepartmentId = 1
             };
 
             Employee e2 = new Employee
             {
                 Id = 2,
-                Name = "Cristina",
-                Address = "Fagaras",
-                EmploymentDate = new DateTime(2010, 6, 21),
-                ReleaseDate = new DateTime(2011, 6, 10),
+                Name = "Cristina Morarescu",
+                Address = "Str. Izlazului, Nr. 6 ",
+                EmploymentDate = new DateTime(2016, 7, 4),
+                ReleaseDate = new DateTime(2018, 6, 10),
                 JobType = JobType.PartTime4,
                 PositionType = PositionType.Developer,
                 DepartmentId = 1
@@ -50,20 +50,20 @@ namespace DataAccess.Migrations
             Employee e3 = new Employee
             {
                 Id = 3,
-                Name = "Camelia",
-                Address = "Gheorgheni",
-                EmploymentDate = new DateTime(2011, 6, 10),
-                ReleaseDate = new DateTime(2011, 6, 11),
+                Name = "Camelia Bodnar",
+                Address = "Str. Horea, Nr. 2, Et. 2 ",
+                EmploymentDate = new DateTime(2016, 7, 4),
+                ReleaseDate = new DateTime(2019, 3, 4),
                 JobType = JobType.FullTime,
-                PositionType = PositionType.Developer,
-                DepartmentId = 3
+                PositionType = PositionType.ProjectManager,
+                DepartmentId = 2
             };
 
             Employee e4 = new Employee
             {
                 Id = 4,
-                Name = "Adi",
-                Address = "Manastur",
+                Name = "Adrian Ardelean",
+                Address = "Str. Eroilor, Nr. 122, Bl.C1",
                 EmploymentDate = new DateTime(2009, 6, 10),
                 ReleaseDate = new DateTime(2012, 6, 10),
                 JobType = JobType.FullTime,
@@ -74,33 +74,33 @@ namespace DataAccess.Migrations
             Employee e5 = new Employee
             {
                 Id = 5,
-                Name = "Andrei",
+                Name = "Andrei Muresan",
                 Address = "Cluj-Napoca",
                 EmploymentDate = new DateTime(2007, 6, 10),
                 ReleaseDate = new DateTime(2015, 6, 10),
                 JobType = JobType.PartTime6,
                 PositionType = PositionType.Developer,
-                DepartmentId = 3
+                DepartmentId = 1
             };
 
             Employee e6 = new Employee
             {
                 Id = 6,
-                Name = "Aleona",
-                Address = "Orastie",
+                Name = "Aleona Popescu",
+                Address = "Calea Victoriei, Nr.13",
                 EmploymentDate = new DateTime(2012, 6, 10),
                 ReleaseDate = new DateTime(2014, 6, 10),
                 JobType = JobType.FullTime,
                 PositionType = PositionType.DepartmentManager,
-                DepartmentId = 2
+                DepartmentId = 1
             };
             Employee e7 = new Employee
             {
                 Id = 7,
-                Name = "Radu",
+                Name = "Radu Crisan",
                 Address = "str. Macelarului",
                 EmploymentDate = new DateTime(2011, 6, 10),
-                ReleaseDate = new DateTime(2011, 6, 10),
+                ReleaseDate = new DateTime(2013, 6, 10),
                 JobType = JobType.FullTime,
                 PositionType = PositionType.DepartmentManager,
                 DepartmentId = 4
@@ -109,10 +109,10 @@ namespace DataAccess.Migrations
             Employee e8 = new Employee
             {
                 Id = 8,
-                Name = "Razvan",
-                Address = "Alba-Iulia",
+                Name = "Razvan Stetcu",
+                Address = "Str I.C. Bratianu",
                 EmploymentDate = new DateTime(2011, 6, 10),
-                ReleaseDate = new DateTime(2011, 6, 10),
+                ReleaseDate = new DateTime(2014, 6, 10),
                 JobType = JobType.PartTime4,
                 PositionType = PositionType.QA,
                 DepartmentId = 4
@@ -142,10 +142,10 @@ namespace DataAccess.Migrations
             Employee e11 = new Employee
             {
                 Id = 11,
-                Name = "Lucian",
-                Address = "str. Devei",
+                Name = "Lucian Braescu",
+                Address = "str. Plevnei",
                 EmploymentDate = new DateTime(2011, 6, 10),
-                ReleaseDate = new DateTime(2011, 6, 10),
+                ReleaseDate = new DateTime(2030, 6, 10),
                 JobType = JobType.PartTime6,
                 PositionType = PositionType.DepartmentManager,
                 DepartmentId = 6
@@ -153,10 +153,10 @@ namespace DataAccess.Migrations
             Employee e12 = new Employee
             {
                 Id = 12,
-                Name = "Gheorghe",
-                Address = "Luncani",
+                Name = "Gheorghe Enachescu",
+                Address = "	Piata Blaga Lucian nr.1",
                 EmploymentDate = new DateTime(2011, 6, 10),
-                ReleaseDate = new DateTime(2011, 6, 10),
+                ReleaseDate = new DateTime(2016, 6, 10),
                 JobType = JobType.FullTime,
                 PositionType = PositionType.Developer,
                 DepartmentId = 6
@@ -164,13 +164,25 @@ namespace DataAccess.Migrations
             Employee e13 = new Employee
             {
                 Id = 13,
-                Name = "Armin",
-                Address = "Hochland",
+                Name = "Armin van Burren",
+                Address = "Emil Racovita 27",
                 EmploymentDate = new DateTime(2011, 6, 10),
                 ReleaseDate = new DateTime(2011, 6, 10),
                 JobType = JobType.FullTime,
                 PositionType = PositionType.DepartmentManager,
                 DepartmentId = 6
+            };
+
+            Employee e14 = new Employee
+            {
+                Id = 14,
+                Name = "Mihai Popa",
+                Address = "Strada Napoca nr.2",
+                EmploymentDate = new DateTime(2011, 6, 10),
+                ReleaseDate = new DateTime(2017, 6, 10),
+                JobType = JobType.FullTime,
+                PositionType = PositionType.DepartmentManager,
+                DepartmentId = 4
             };
 
             context.Departments.AddOrUpdate(
@@ -197,15 +209,19 @@ namespace DataAccess.Migrations
                 e10,
                 e11,
                 e12,
-                e13
+                e13,
+                e14
             );
 
             context.Projects.AddOrUpdate(
                 p => p.Id,
-                new Project { Id = 1, Name = "A", Status = ProjectStatus.Done, DepartmentId = 1 },
-                new Project { Id = 2, Name = "B", Status = ProjectStatus.Done, DepartmentId = 1 },
-                new Project { Id = 3, Name = "C", Status = ProjectStatus.Done, DepartmentId = 2 },
-                new Project { Id = 4, Name = "D", Status = ProjectStatus.Done, DepartmentId = 1 }
+                new Project { Id = 1, Name = "Northern Safety", Status = ProjectStatus.InProgress, DepartmentId = 1 },
+                new Project { Id = 2, Name = "Street Remote", Status = ProjectStatus.Done, DepartmentId = 1 },
+                new Project { Id = 3, Name = "Liquid Alarm", Status = ProjectStatus.OnHold, DepartmentId = 2 },
+                new Project { Id = 4, Name = "Supersonic Mars", Status = ProjectStatus.Done, DepartmentId = 1 },
+                new Project { Id = 5, Name = "Massive Donut", Status = ProjectStatus.InProgress, DepartmentId = 1 },
+                new Project { Id = 6, Name = "Bulldozer Grim", Status = ProjectStatus.OnHold, DepartmentId = 1 }
+
             );
 
             context.EmployeeProjects.AddOrUpdate(
