@@ -130,33 +130,6 @@ export default class Employees extends React.Component{
                 </button>
                     &nbsp;
                     <div className="btn-group">
-                        <button type="button" className="btn btn-info">Job Type</button>
-                        <button type="button" className="btn btn-info dropdown-toggle" data-toggle="dropdown">
-                            <span className="caret"></span>
-                            <span className="sr-only">Toggle Dropdown</span>
-                        </button>
-                        <ul className="dropdown-menu" role="menu">
-                            <li><a href="#">Part Time 4</a></li>
-                            <li><a href="#">Part Time 6</a></li>
-                            <li><a href="#">Full Time</a></li>
-                        </ul>
-                    </div>
-                    &nbsp;
-                    <div className="btn-group">
-                        <button type="button" className="btn btn-info">Position</button>
-                        <button type="button" className="btn btn-info dropdown-toggle" data-toggle="dropdown">
-                            <span className="caret"></span>
-                            <span className="sr-only">Toggle Dropdown</span>
-                        </button>
-                        <ul className="dropdown-menu" role="menu">
-                            <li><a href="#">Developer</a></li>
-                            <li><a href="#">Project Manager</a></li>
-                            <li><a href="#">QA</a></li>
-                            <li><a href="#">Department Manager</a></li>
-                        </ul>
-                    </div>
-                    &nbsp;
-                    <div className="btn-group">
                         <button type="button" className="btn btn-info">Allocation</button>
                         <button type="button" className="btn btn-info dropdown-toggle" data-toggle="dropdown">
                             <span className="caret"></span>
