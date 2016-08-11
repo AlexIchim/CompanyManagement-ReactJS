@@ -6,13 +6,14 @@ import Context from '../../context/Context';
 import MyController from './controller/Controller'
 import EditForm from './form/EditForm';
 
-
+import '../../assets/less/index.less';
 export default class Project extends React.Component{
     constructor(){
         super();
     }
     componentWillMount(){
         const departmentId = this.props.routeParams['departmentId'];
+
         this.setState({
             formToggle:false,
             currentPage: 1,
@@ -20,7 +21,6 @@ export default class Project extends React.Component{
         });
         this.subscription = Context.subscribe(this.onContextChange.bind(this));
 
-        console.log('dep ID: ', departmentId);
         Context.cursor.set("items",[]);
         MyController.GetAllProjects(departmentId, 1);
         MyController.GetNumberOfProjects(departmentId);
@@ -96,16 +96,12 @@ export default class Project extends React.Component{
     }
     render(){
 
-
         const totalNumberOfItems = this.state.totalNumberOfItems;
-        console.log('total numberrr: ', this.state.totalNumberOfItems);
-
         const numberOfPages = (totalNumberOfItems == 0) ? 1 : Math.ceil(totalNumberOfItems/5);
-        console.log('nrOfPages', totalNumberOfItems);
-
         const currentPage = this.state.currentPage;
         let modal = "";
         const label = currentPage + "/" + numberOfPages;
+
         if(this.state.formToggle) {
             if (Accessors.model(Context.cursor)) {
                 modal = <EditForm onCancelClick={this.toggleModal.bind(this)}
@@ -118,7 +114,7 @@ export default class Project extends React.Component{
                               Title="Add Project"/>;
             }
         }
-        const items =this.state.items.map( (project, index) => {
+        const items = this.state.items.map( (project, index) => {
             return (
                 <ProjectItem
                     node = {project}
@@ -133,20 +129,24 @@ export default class Project extends React.Component{
         return (
             <div>
                 {modal}
-
-            <table className="table table-stripped">
-                <thead>
-                <h1> Projects <button id="store" className="btn btn-success margin-top" onClick={this.onAddButtonClick.bind(this)}>
-                    Add New Project
-                </button></h1>
-
+                <p className="table-name">Projects</p>
+                <div className=" rectangle custom-rectangle-project">
+                    <div className="glyphicon glyphicon-plus-sign custom-add-icon"
+                         onClick={this.onAddButtonClick.bind(this)}>
+                        <span className="add-span" onClick={this.onAddButtonClick.bind(this)}>Add Project</span>
+                    </div>
+                </div>
+                
+                <table className="table table-stripped">
+                    <thead>
                 <tr>
-                    <td><h3> Project Name </h3></td>
-                    <td><h3> Team members </h3></td>
-                    <td><h3> Duration</h3></td>
-                    <td><h3> Status</h3></td>
-
+                    <td> </td>
+                    <td> Project Name </td>
+                    <td> Team members </td>
+                    <td> Duration </td>
+                    <td> Wiews</td>
                 </tr>
+
                 </thead>
                 <tbody>
                 {items}

@@ -18,7 +18,7 @@ export default new class ProjectValidator{
             return new ValidationResult(false, "Duration is mandatory")
         }
         if(duration <=0){
-            return new ValidationResult(false, "Duration must be a positive number")
+            return new ValidationResult(false, "Duration must be > 0")
         }
         return new ValidationResult(true, "Valid")
     }

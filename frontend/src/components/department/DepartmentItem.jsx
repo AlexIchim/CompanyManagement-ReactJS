@@ -17,10 +17,10 @@ export default class DepartmentItem extends React.Component<any, any> {
         const lft = {
             float: "left"
         };
-
+        
         return (
             <tr className="table-tr">
-                <td>
+                <td className="td-actions">
                     <div id="editDepartment" className="glyphicon glyphicon-edit custom-edit-icon" style={lft} onClick={this.onEditButtonClick.bind(this)}></div>
                 </td>
 

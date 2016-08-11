@@ -21,7 +21,11 @@ export default class Departments extends React.Component{
         super();
     }
 
-    mountingComponent(props){
+    componentWillReceiveProps(props){
+        this.mountComponent(props);
+    }
+
+    mountComponent(props){
         console.log('here dep')
         const officeId = props.routeParams['officeId'];
 
@@ -41,12 +45,11 @@ export default class Departments extends React.Component{
     }
 
     componentWillMount(){
-        this.mountingComponent(this.props);
+        this.mountComponent(this.props);
+
     }
 
-    componentWillReceiveProps(props){
-        this.mountingComponent(props);
-    }
+
 
     componentWillUnmount(){
         console.log('unmount dep')
@@ -184,17 +187,16 @@ export default class Departments extends React.Component{
 
         return (
             <div>
-
                 {form}
 
-
-
-                <div className=" rectangle ">
+                <p className="table-name">Departments</p>
+                <div className=" rectangle custom-rectangle-department">
                     <div className="glyphicon glyphicon-plus-sign custom-add-icon"
                          onClick={this.onAddButtonClick.bind(this)}>
                         <span className="add-span" onClick={this.onAddButtonClick.bind(this)}>Add Department</span>
                     </div>
                 </div>
+
 
                 <table className="table table-stripped ">
                     <thead>
@@ -204,29 +206,28 @@ export default class Departments extends React.Component{
                         <td>Department Manager</td>
                         <td>Employees</td>
                         <td>Projects</td>
-                        <td>Actions</td>
+                        <td>Views</td>
                     </tr>
                     </thead>
                     <tbody>
                     {items}
                     </tbody>
                 </table>
-
-                <div className="btn-group">
-                    <button className="btn btn-info" onClick={this.onGoToFirstPageButtonClick.bind(this)}>
-                        Go to first page
-                    </button>
-                    <button className="btn btn-warning" onClick={this.onPreviousButtonClick.bind(this)}>
-                        Prev
-                    </button>
-                    <button className="btn btn-warning">{label}</button>
-                    <button className="btn btn-warning" onClick={this.onNextButtonClick.bind(this)}>
-                        Next
-                    </button>
-                    <button className="btn btn-info" onClick={this.onGoToLastPageButtonClick.bind(this)}>
-                        Go to last page
-                    </button>
-                </div>
+                <hr className="fade-hr"></hr>
+                <p className="pagination">
+                    <span  onClick={this.onGoToFirstPageButtonClick.bind(this)}>
+                        First
+                    </span>
+                    <span className=" glyphicon glyphicon-circle-arrow-left" onClick={this.onPreviousButtonClick.bind(this)}>
+                    </span>
+                    <span><b>{label}</b></span>
+                    <span className=" glyphicon glyphicon-circle-arrow-right" onClick={this.onNextButtonClick.bind(this)}>
+                        
+                    </span>
+                    <span  onClick={this.onGoToLastPageButtonClick.bind(this)}>
+                        Last
+                    </span>
+                </p>
 
             </div>
         )

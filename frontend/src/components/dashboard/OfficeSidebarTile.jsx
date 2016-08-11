@@ -8,15 +8,16 @@ class OfficeSidebarTile extends React.Component<any, any>{
         const props = this.props;
 
         return (
-            <div className="office-sidebar-tile ">
+            <p className="office-sidebar-tile ">
                         <Link to={props['link']} className="small-box-footer">
                             <span className="info-box-number">
                             {props['name']}
                         </span>
                         </Link>
-            </div>
+            </p>
 
         )
     }
 }
+
 export default OfficeSidebarTile;
