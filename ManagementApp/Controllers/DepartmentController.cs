@@ -60,5 +60,14 @@ namespace ManagementApp.Controllers
             var result = _departmentService.UpdateDepartment(inputInfo);
             return Json(result);
         }
+
+        [Route("totalNumberOfProjectsFromDepartment/{departmentId}")]
+        [HttpGet]
+        public IHttpActionResult GetTotalNumberProjects(int departmentId)
+        {
+            var result = _departmentService.GetTotalNumberOfProjectsFromDepartment(departmentId);
+            return Json(result);
+        }
+
     }
 }

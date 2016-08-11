@@ -22,7 +22,5 @@ namespace Contracts
         int GetAllocationOfEmployeeFromProject(int projectId, int employeeId);
         int GetNrTeamMembers(int projectId);
 
-        int GetTotalNumberOfProjectsFromDepartment( int departmentId );
-        
     }
 }

@@ -23,7 +23,7 @@ export default new class ProjectValidator{
         return new ValidationResult(true, "Valid")
     }
 
-    ValidateAllocation(allocation){
+    ValidateAllocation(allocation, oldAllocation){
         if(!allocation){
             return new ValidationResult(false, "Allocation is mandatory")
         }
@@ -33,6 +33,9 @@ export default new class ProjectValidator{
         if(!this.isNumeric(allocation) ){
             console.log('huh')
             return new ValidationResult(false, "Only numbers accepted")
+        }
+        if(allocation > oldAllocation){
+            return new ValidationResult(false, "Entered allocation cannot be grater than existing allocation!")
         }
         return new ValidationResult(true, "Valid")
     }

@@ -172,11 +172,7 @@ namespace Manager.Services
             
         }
 
-        public int GetTotalNumberOfProjectsFromDepartment(int departmentId)
-        {
-            return _projectRepository.GetTotalNumberOfProjectsFromDepartment(departmentId);
-        }
-
+      
       
     }
 }
