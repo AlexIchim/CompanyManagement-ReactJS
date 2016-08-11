@@ -24,9 +24,8 @@ export default class OfficesList extends React.Component{
     onContextChange(cursor){
         //console.log("Sidebar: ", Accessors.sidebarOffices(cursor))
     }
-
+    
     render(){
-
         const items = Accessors.sidebarOffices(Context.cursor).map ( (office, index) => {
             return (
                 <SidebarTile

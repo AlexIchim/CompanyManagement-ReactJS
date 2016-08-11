@@ -3,6 +3,7 @@ import Department from './DepartmentItem';
 import Context from '../../context/Context';
 import Accessors from '../../context/Accessors';
 import Controller from './DepartmentController';
+import OfficeController from '../dashboard/OfficeController';
 import Form from './Form';
 import '../../assets/less/index.less';
 import classnames from 'classnames';
@@ -43,14 +44,17 @@ export default class Departments extends React.Component{
         Controller.getDepartments(officeId, 1);
         Controller.getTotalNumberOfDepartments(officeId);
 
-        
+        OfficeController.GetOfficeById(officeId);
+
+        console.log(Context.cursor.get('currentOffice'))
+        const thisOffice=Context.cursor.get('currentOffice').Name;
+        console.log({thisOffice});
     }
 
     componentWillMount(){
         this.mountComponent(this.props);
 
     }
-
 
 
     componentWillUnmount(){
@@ -64,7 +68,8 @@ export default class Departments extends React.Component{
         this.setState({
             formToggle: false,
             items: cursor.get('items'),
-            totalNumberOfItems: cursor.get('totalNumberOfItems')
+            totalNumberOfItems: cursor.get('totalNumberOfItems'),
+            officeName: cursor.get('currentOffice')
         });
     }
 
@@ -133,7 +138,7 @@ export default class Departments extends React.Component{
     }
 
     render(){
-
+        
         const totalNumberOfDepartments = this.state.totalNumberOfItems;
 
         const numberOfPages = (totalNumberOfDepartments == 0) ? 1 : Math.ceil(totalNumberOfDepartments/5);
@@ -184,14 +189,15 @@ export default class Departments extends React.Component{
                 />
             );
         }*/
-
+        const officeName=this.state.officeName.Name;
+        console.log("aaaaaaaaaaaaaaaaaaaaa", officeName);
         const label = currentPage + "/" + numberOfPages;
 
         return (
             <div>
                 {form}
 
-                <p className="table-name">Departments </p>
+                <p className="table-name">Departments - {officeName} Office </p>
                 <div className=" rectangle custom-rectangle-department">
                     <div className="glyphicon glyphicon-plus-sign custom-add-icon"
                          onClick={this.onAddButtonClick.bind(this)}>

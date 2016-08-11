@@ -99,10 +99,10 @@ export default class EditForm extends React.Component {
         }
 
         if(!this.state.NameVR.valid){
-            nameVR=<span>{this.state.NameVR.message}</span>;
+            nameVR=<span className="error-color">{this.state.NameVR.message}</span>;
         }
         if(!this.state.DurationVR.valid){
-            durationVR=<span>{this.state.DurationVR.message}</span>
+            durationVR=<span className="error-color">{this.state.DurationVR.message}</span>
         }
 
         const projectName = this.state.projectName;

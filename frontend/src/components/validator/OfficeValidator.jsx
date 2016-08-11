@@ -23,7 +23,6 @@ export default new class OfficeValidator{
             return new ValidationResult(false, "Phone must have between 10 and 14 digits.");
         }
         
-
         return new ValidationResult(true, "Valid.");
     }
     ValidateAddress(addr){

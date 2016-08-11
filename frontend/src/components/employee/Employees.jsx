@@ -207,7 +207,7 @@ export default class Employees extends React.Component{
 
                 {modal}
 
-                <h1> Employees </h1>
+                <p className="table-name">Employees </p>
                     <div className="input-group input-group-xs col-md-4">
                         <div className="input-group-btn">
                             <button type="button" className="btn btn-warning">Search by name</button>
@@ -216,10 +216,14 @@ export default class Employees extends React.Component{
                         </input>
                     </div>
                 <p></p>
-                <div><button id="store" className="btn btn-success margin-top" onClick={this.onAddButtonClick.bind(this)}>
-                    Add New Employee
-                </button>
-                    &nbsp;
+                <div>
+                    <div className=" rectangle custom-rectangle-department">
+                        <div className="glyphicon glyphicon-plus-sign custom-add-icon"
+                             onClick={this.onAddButtonClick.bind(this)}>
+                            <span className="add-span" onClick={this.onAddButtonClick.bind(this)}>Add Employee</span>
+                        </div>
+                    </div>
+                    
                     <select id='jobTypeDropdown' className="selectpicker" onChange={this.filterByJobType.bind(this)}>
                         <option selected>-- Job Type --</option>
 
@@ -251,13 +255,14 @@ export default class Employees extends React.Component{
 
                     </select>
                 </div>
-                <table className="table table-hover">
+                <table className="table">
                 <thead>
                 <tr>
-                    <td><h3> Name </h3></td>
-                    <td><h3> Position </h3></td>
-                    <td><h3> Allocation </h3></td>
-                    <td><h3> Actions </h3></td>
+                    <td> </td>
+                    <td>Name </td>
+                    <td>Position</td>
+                    <td>Allocation</td>
+                    <td>Views</td>
                 </tr>
                 </thead>
                 <tbody>

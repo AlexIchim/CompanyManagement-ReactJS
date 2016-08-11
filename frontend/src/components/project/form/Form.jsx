@@ -70,11 +70,11 @@ export default class Form extends React.Component {
         let durationValidationResult = "";
 
         if(!this.state.NameValidationResult.valid ){
-            nameValidationResult=<span>{this.state.NameValidationResult.message}</span>;
+            nameValidationResult=<span className="error-color">{this.state.NameValidationResult.message}</span>;
         }
 
         if(!this.state.DurationValidationResult.valid){
-            durationValidationResult=<span>{this.state.DurationValidationResult.message}</span>;
+            durationValidationResult=<span className="error-color">{this.state.DurationValidationResult.message}</span>;
         }
 
         console.log('form is valid? ', formIsValid);

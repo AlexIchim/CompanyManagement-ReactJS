@@ -97,8 +97,6 @@ export default class Dashboard extends React.Component{
             <div className="row">
                 {form}
                 {items}
-
-                
             </div>
                 </div>
             

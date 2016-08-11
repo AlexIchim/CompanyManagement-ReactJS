@@ -30,6 +30,7 @@ export default new class OfficeController {
             }.bind(this)
         });
     }
+
     GetOfficeById(id){
         console.log("GetPartial called");
         $.ajax({
@@ -37,7 +38,7 @@ export default new class OfficeController {
             url: config.base+'office/getOfficeImagePartial?id='+id,
             async:false,
             success: function(data){                
-                Context.cursor.set('something something',data);
+                Context.cursor.set('currentOffice',data);
             }.bind(this)
         });
     }

@@ -11,7 +11,8 @@ const initialState = {
     items: null,
     totalNumberOfItems: null,
     model:null,
-    dropdownItems: null
+    dropdownItems: null,
+    currentOffice: null
 };
 
 class Context{
