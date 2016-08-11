@@ -15,24 +15,38 @@ namespace DataAccess.Migrations {
         protected override void Seed(DataAccess.Context.DbContext context) {
 
             Office office1 = new Office() {
-                Name = "Office1",
-                Address = "Address1",
-                Phone = "Phone1",
-                Image = new byte[50]
+                Name = "Alpha",
+                Address = "Poneyland, California",
+                Phone = "400684315332",
+                Image= "data:image/jpeg;base64,/9j/"
             };
 
             Office office2 = new Office() {
-                Name = "Office2",
-                Address = "Address2",
-                Phone = "Phone2",
-                Image = new byte[50],
+                Name = "Beta",
+                Address = "Charlington, Hungary",
+                Phone = "0846598555",
+                Image= "data:image/jpeg;base64,/9j/"
             };
 
             Office office3 = new Office() {
-                Name = "Office3",
-                Address = "Address3",
-                Phone = "Phone3",
-                Image = new byte[50],
+                Name = "Gamma",
+                Address = "Bucharest, Romania",
+                Phone = "0754668995",
+                Image= "data:image/jpeg;base64,/9j/"
+            };
+            Office office4 = new Office()
+            {
+                Name = "Delta",
+                Address = "Xian Hua, China",
+                Phone = "0085684311",
+                Image= "data:image/jpeg;base64,/9j/"
+            };
+            Office office5 = new Office()
+            {
+                Name = "Main",
+                Address = "Cluj-Napoca, Romania",
+                Phone = "0744688795",
+                Image= "data:image/jpeg;base64,/9j/"
             };
 
 
@@ -152,7 +166,9 @@ namespace DataAccess.Migrations {
                 p => p.Id,
                 office1,
                 office2,
-                office3
+                office3,
+                office4,
+                office5
                 );
 
             context.Employees.AddOrUpdate(
