@@ -35,7 +35,7 @@ export default new class ProjectValidator{
             return new ValidationResult(false, "Only numbers accepted")
         }
         if(allocation > oldAllocation){
-            return new ValidationResult(false, "Entered allocation cannot be grater than existing allocation!")
+            return new ValidationResult(false, "Entered allocation cannot be grater than remaining allocation!")
         }
         return new ValidationResult(true, "Valid")
     }

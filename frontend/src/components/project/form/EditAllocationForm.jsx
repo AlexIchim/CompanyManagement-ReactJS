@@ -23,7 +23,7 @@ export default class EditAllocationForm extends React.Component{
     }
 
     onAllocationChange() {
-        
+
         var employee = null;
         $.ajax({
             method: 'GET',
