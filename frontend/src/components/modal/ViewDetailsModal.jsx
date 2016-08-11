@@ -1,4 +1,6 @@
 import React from 'react';
+import "./../../assets/less/index.less";
+
 export default class  ViewDetailsModal extends React.Component{
 
 
@@ -20,16 +22,14 @@ export default class  ViewDetailsModal extends React.Component{
                 <div className="modal-dialog">
                     <div className="modal-content">
                         <div className="box info-box modal-box">
-                            <div className="box-header with-border">
-                                <h3 className="box-title">{this.props.title}</h3>
+                            <div className="box-header">
+
+                                <button className="exit-details"  onClick={this.cancel.bind(this)}><i className="fa fa-times-circle fa-2x" aria-hidden="true"></i></button>
                             </div>
                             <form className="form-horizontal">
                                 <div className="box-body">
+                                    <h3 className="box-title title-position">{this.props.title}</h3>
                                     {this.props.children}
-                                </div>
-
-                                <div className="box-footer modal-footer">
-                                    <button type="button" className="col-sm-2 btn btn-default cancel-button" onClick={this.cancel.bind(this)}> Cancel</button>
                                 </div>
                             </form>
                         </div>

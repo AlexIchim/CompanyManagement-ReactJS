@@ -48,6 +48,10 @@ namespace DataAccess.Context
 
             modelBuilder.Entity<EmployeeProject>().HasKey(ep => new { ep.EmployeeId, ep.ProjectId });
 
+            modelBuilder.Entity<Employee>().Property(e => e.EmploymentDate).HasColumnType("Date");
+            modelBuilder.Entity<Employee>().Property(e => e.ReleaseDate).HasColumnType("Date");
+
+
         }
     }
 }
