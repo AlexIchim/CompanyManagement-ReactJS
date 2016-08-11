@@ -21,7 +21,7 @@ namespace Contracts
 
         IEnumerable<Project> GetAllDepartmentProjects(Department department,ProjectStatus? status, int? pageSize, int? pageNr);
         int GetEmployeeProjectAllocationById(int projectId, int employeeId);
-        string GetEmployeeRoleById(int employeeId);
+        
         //IEnumerable<string> GetProjectStatusDescriptions();
         EmployeeProject GetEmployeeProjectById(int employeeId, int projectId);
 

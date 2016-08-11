@@ -1,5 +1,8 @@
 import React from 'react';
+<<<<<<< HEAD
 import "./../../assets/less/index.less";
+=======
+>>>>>>> capac-cristina
 
 export default class  ViewDetailsModal extends React.Component{
 

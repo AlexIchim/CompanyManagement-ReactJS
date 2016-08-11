@@ -63,18 +63,15 @@ export default class EditForm extends React.Component{
             data:inputInfo,
             success: function (data) { 
                     cb(); 
-                   this.refresh(this.props.projectId);            
-                 
+                   this.refresh(this.props.projectId);                        
             }.bind(this)
         })   
 
-   
-        
-              
     }
 
     refresh(projectId){
-         Controller.getEmployeesByProjectId(projectId,1);
+         this.props.setPageNr();
+         Controller.getEmployeesByProjectId(projectId,null,1);
     }
 
   
@@ -84,14 +81,21 @@ export default class EditForm extends React.Component{
         return(
 
         <Modal title={'Edit member allocation'} button={'Edit'} close={this.props.close} action={this.edit.bind(this)}>
+
             <div className="form-group">
-                <label className="col-sm-4 control-label" > {this.state.member.get('Name')} </label>
-            
-                <div className="col-sm-6">
-                    <label className="col-sm-4 control-label" > Allocation</label>
-                    <input  ref="allocation" className="form-control"  value={this.state.member.get('Allocation')} onChange={this.changeData.bind(this)}/>
-                </div>        
+                <h2> {this.state.member.get('Name')} </h2>
             </div>
+
+
+            <div className="form-group">
+                <label className="col-sm-4 control-label"> Allocation </label>
+                <div className="col-sm-6">
+                    <input  ref="allocation" className="form-control"  value={this.state.member.get('Allocation')} onChange={this.changeData.bind(this)}/>
+                </div>
+            </div>
+
+
+
       
         </Modal>
         )

@@ -10,6 +10,7 @@ import * as Immutable from 'immutable';
 import * as Controller from '../controller';
 
 
+
 export default class Department extends React.Component {
 
     constructor() {
@@ -62,8 +63,8 @@ export default class Department extends React.Component {
                     }
                 )
             }.bind(this)
-        })
-    }
+    })
+}
     
     showAddForm(){
         this.setState({
@@ -94,7 +95,6 @@ export default class Department extends React.Component {
     next(){
        
         const whereTo=this.state.pageNr+1
-        console.log(3)
 
         this.setNumberOfPages();
 

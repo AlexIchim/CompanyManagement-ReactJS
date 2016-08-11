@@ -16,7 +16,10 @@ namespace Manager.Mapper
             CreateMap<AddDepartmentInputInfo, Department>();
             CreateMap<Office, OfficeInfo>();
 
-            CreateMap<Employee, EmployeeInfo>();
+            CreateMap<Employee, EmployeeInfo>().ForMember(
+                dest => dest.Role,
+                opt => opt.MapFrom(src => src.PositionType.GetDescription())
+                );
             CreateMap<Employee, EmployeeAllocationInfo>();
             CreateMap<Project, ProjectInfo>().ForMember(
                 pi => pi.EmployeesNumber,
@@ -34,10 +37,12 @@ namespace Manager.Mapper
 
             CreateMap<Employee, MemberInfo>().ForMember(
                 dest => dest.JobType,
-                opt => opt.MapFrom(src=> src.JobType.GetDescription()))
+                opt => opt.MapFrom(src => src.JobType.GetDescription()))
                 .ForMember(
                 e => e.PositionType,
                 o => o.MapFrom(s => s.PositionType.GetDescription()));
+
+
 
             //CreateMap<Employee, MemberInfo>().AfterMap((e, mi) =>
             //    mi.JobType = new JobTypeInfo()
@@ -69,7 +74,10 @@ namespace Manager.Mapper
                    
             CreateMap<Department, EmployeeInfo>();
 
-            CreateMap<Employee, NotFullyAllocatedEmployeesInfo>();
+            CreateMap<Employee, NotFullyAllocatedEmployeesInfo>().ForMember(
+                dest => dest.Role,
+                opt => opt.MapFrom(src => src.PositionType.GetDescription())
+                );
 
         }
     }

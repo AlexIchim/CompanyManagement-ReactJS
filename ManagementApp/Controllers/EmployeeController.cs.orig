@@ -2,6 +2,8 @@
 using Manager.Services;
 using System.Web.Http;
 using System.Web.Http.Cors;
+using Domain.Enums;
+
 namespace ManagementApp.Controllers
 {
     [RoutePrefix("api/employee")]
@@ -14,6 +16,7 @@ namespace ManagementApp.Controllers
         {
             _employeeService = employeeService;
         }
+
 
         [Route("getAllProjectsOfAnEmployee")]
         [HttpGet]
@@ -65,9 +68,9 @@ namespace ManagementApp.Controllers
 
         [Route("getAllDepartmentEmployees")]
         [HttpGet]
-        public IHttpActionResult GetAllDepartmentEmployees(int departmentId, int? pageSize, int? pageNr)
+        public IHttpActionResult GetAllDepartmentEmployees(int departmentId, string employeeName, int? pageSize, int? pageNr,int? allocation=null, PositionType? ptype = null,JobType? jtype = null)
         {
-            var result = _employeeService.GetAllDepartmentEmployees(departmentId, pageSize, pageNr);
+            var result = _employeeService.GetAllDepartmentEmployees(departmentId, employeeName, pageSize, pageNr,allocation,ptype,jtype);
             return Json(result);
         }
 
@@ -89,13 +92,16 @@ namespace ManagementApp.Controllers
 
         [Route("GetEmployeesThatAreNotFullyAllocated")]
         [HttpGet]
-        public IHttpActionResult GetEmployeesThatAreNotFullyAllocated()
+        public IHttpActionResult GetEmployeesThatAreNotFullyAllocated(int projectId,int? pageSize, int? pageNr, int? departmentId=null, PositionType? ptype = null)
         {
-            var result = _employeeService.GetEmployeesThatAreNotFullyAllocated();
+<<<<<<< HEAD
+            var result = _employeeService.GetEmployeesThatAreNotFullyAllocated(projectId,departmentId,pageSize,pageNr,ptype);
+=======
+            var result = _employeeService.GetEmployeesThatAreNotFullyAllocated(projectId,departmentName, pageSize,pageNr,ptype);
+>>>>>>> capac-andreimuresan
             return Json(result);
         }
 
-<<<<<<< HEAD
         [Route("getTotalAllocation")]
         [HttpGet]
         public IHttpActionResult GetTotalAllocation(int employeeId)
@@ -105,7 +111,7 @@ namespace ManagementApp.Controllers
         }
 
 
-=======
+
         [Route("getJobTypes")]
         [HttpGet]
         public IHttpActionResult GetJobTypes()
@@ -114,14 +120,43 @@ namespace ManagementApp.Controllers
             return Json(result);
         }
 
-        [Route("getPoisitionTypes")]
+        [Route("getPositionTypes")]
         [HttpGet]
         public IHttpActionResult GetPositionTypes()
         {
             var result = _employeeService.GetPositionTypesDescriptions();
             return Json(result);
         }
->>>>>>> capac-cristina
+
+        [Route("assignEmployee")]
+        [HttpPost]
+        public IHttpActionResult AssignEmployee([FromBody] AssignEmployeeInputInfo inputInfo)
+        {
+            var result = _employeeService.AssignEmployee(inputInfo);
+            return Json(result);
+        }
+
+        [Route("searchEmployeesByName")]
+        [HttpGet]
+        public IHttpActionResult SearchEmployeesByName(int departmentId, string employeeName, int? pageSize, int? pageNr)
+        {
+            var result = _employeeService.SearchEmployeesByName(departmentId, employeeName, pageSize, pageNr);
+            return Json(result);
+<<<<<<< HEAD
+
+=======
+>>>>>>> capac-andreimuresan
+        }
+
+        [Route("getEmployeeById")]
+        [HttpPost]
+        public IHttpActionResult GetEmployeeById(int employeeId)
+        {
+            var result = _employeeService.GetEmployeeById(employeeId);
+            return Json(result);
+
+        }
+
 
 
     }

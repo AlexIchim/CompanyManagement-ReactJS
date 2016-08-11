@@ -24,15 +24,17 @@ namespace Contracts
 
         IEnumerable<EmployeeProject> GetEmployeeProjectById(int projectId);
 
-        IEnumerable<Employee> GetAllDepartmentEmployees(Department department,int? pageSize,int? pageNr);
+        IEnumerable<Employee> GetAllDepartmentEmployees(Department department, string employeeName,int? pageSize,int? pageNr,int? allocation, PositionType? ptype = null, JobType? jtype = null);
 
         void AddEmployee(Employee employee);
 
         IEnumerable<Employee> GetAllUnAllocatedEmployeesOnProject();
 
-        IEnumerable<Employee> GetEmployeesThatAreNotFullyAllocated(int projectId,string DepartmentName, int? pageSize, int? pageNr,PositionType? ptype);
+        IEnumerable<Employee> GetEmployeesThatAreNotFullyAllocated(int projectId,int? DepartmentId, int? pageSize, int? pageNr,PositionType? ptype);
 
 
         void AssignEmployee(EmployeeProject ep);
+
+        IEnumerable<Employee> SearchEmployeesByName(int departmentId,string employeeName, int? pageSize, int? pageNr);
     }
 }

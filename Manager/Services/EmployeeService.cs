@@ -130,20 +130,25 @@ namespace Manager.Services
                         int totalAllocation = _employeeRepository.ComputeTotalAllocation(ep.EmployeeId);
 
                         int newTotalAllocation = totalAllocation - ep.Allocation + inputInfo.Allocation;
-
+                        if (inputInfo.Allocation == 0)
+                        {
+                            _employeeRepository.ReleaseEmployee(ep.EmployeeId);
+                            return new OperationResult(true, Messages.SuccessfullyDeletedEmployee);
+                        }
                         if (newTotalAllocation <= 100)
                         {
                             ep.Allocation = inputInfo.Allocation;
                             _employeeRepository.Save();
                             return new OperationResult(true, Messages.SuccessfullyUpdatedPartialAllocation);
                         }
+                        
                     }
                 }
             }
             return new OperationResult(false, Messages.ErrorWhileUpdatingPartialAllocation);
         }
 
-        public IEnumerable<MemberInfo> GetAllDepartmentEmployees(int departmentId, int? pageSize, int? pageNr)
+        public IEnumerable<MemberInfo> GetAllDepartmentEmployees(int departmentId, string employeeName, int? pageSize, int? pageNr,int? allocation, PositionType? ptype = null, JobType? jtype = null)
         {
             if (_employeeValidator.ValidateId(departmentId))
             {
@@ -152,7 +157,7 @@ namespace Manager.Services
 
                 if (department != null)
                 {
-                    var members = _employeeRepository.GetAllDepartmentEmployees(department, pageSize, pageNr);
+                    var members = _employeeRepository.GetAllDepartmentEmployees(department,employeeName, pageSize, pageNr,allocation,ptype,jtype);
 
 
                     if (members.Any())
@@ -193,20 +198,18 @@ namespace Manager.Services
             foreach (EmployeeInfo ei in employeeInfos)
             {
                 ei.TotalAllocation = _employeeRepository.ComputeTotalAllocation(ei.Id);
-                ei.Role = _projectRepository.GetEmployeeRoleById(ei.Id);
 
             }
             return employeeInfos;
         }
 
-        public IEnumerable<NotFullyAllocatedEmployeesInfo> GetEmployeesThatAreNotFullyAllocated(int projectId,string departmentName, int? pageSize, int? pageNr,PositionType? ptype)
+        public IEnumerable<NotFullyAllocatedEmployeesInfo> GetEmployeesThatAreNotFullyAllocated(int projectId, int? departmentId, int? pageSize, int? pageNr,PositionType? ptype)
         {
-            var employees = _employeeRepository.GetEmployeesThatAreNotFullyAllocated(projectId,departmentName, pageSize,pageNr,ptype);
+            var employees = _employeeRepository.GetEmployeesThatAreNotFullyAllocated(projectId,departmentId, pageSize,pageNr,ptype);
             var employeeInfos = _mapper.Map<IEnumerable<NotFullyAllocatedEmployeesInfo>>(employees);
             foreach (NotFullyAllocatedEmployeesInfo ei in employeeInfos)
             {
                 ei.RemainingAllocation = 100-_employeeRepository.ComputeTotalAllocation(ei.Id);
-                ei.Role = _projectRepository.GetEmployeeRoleById(ei.Id);
                 ei.DepartmentName = _departmentRepository.GetDepartmentById(ei.DepartmentId).Name;
             }
             return employeeInfos;
@@ -256,10 +259,20 @@ namespace Manager.Services
             return new OperationResult(false, Messages.ErrorAssignEmployee);
         }
 
+        public IEnumerable<MemberInfo> SearchEmployeesByName(int departmentId, string employeeName, int? pageSize,int? pageNr)
+        {
+            if (!string.IsNullOrEmpty(employeeName))
+            {
+                var employees = _employeeRepository.SearchEmployeesByName(departmentId, employeeName, pageSize, pageNr);
+                var employeesInfo = _mapper.Map<IEnumerable<MemberInfo>>(employees);
+                return employeesInfo;
+            }
+            return null;
+        }
         public MemberInfo GetEmployeeById(int employeeId)
         {
             var employee = _employeeRepository.GetById(employeeId);
-            return _mapper.Map<MemberInfo>(employee);
+            return _mapper.Map<MemberInfo>(employee);      
         }
     }
 }

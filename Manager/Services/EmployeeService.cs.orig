@@ -1,10 +1,13 @@
-﻿using AutoMapper;
+﻿using System;
+using AutoMapper;
 using Contracts;
 using Domain.Models;
 using Manager.InfoModels;
 using Manager.InputInfoModels;
 using System.Collections.Generic;
 using System.Linq;
+using Domain.Enums;
+using Manager.Descriptors;
 
 namespace Manager.Services
 {
@@ -15,14 +18,16 @@ namespace Manager.Services
         private readonly IMapper _mapper;
         private readonly IEmployeeValidator _employeeValidator;
         private readonly IEmployeeProjectValidator _employeeProjectValidator;
+        private readonly IProjectRepository _projectRepository;
 
-        public EmployeeService(IMapper mapper, IEmployeeRepository employeeRepository, IDepartmentRepository departmentRepository, IEmployeeValidator employeeValidator, IEmployeeProjectValidator employeeProjectValidator)
+        public EmployeeService(IMapper mapper, IEmployeeRepository employeeRepository, IDepartmentRepository departmentRepository, IEmployeeValidator employeeValidator, IEmployeeProjectValidator employeeProjectValidator, IProjectRepository projectRepository)
         {
             _employeeRepository = employeeRepository;
             _departmentRepository = departmentRepository;
             _mapper = mapper;
             _employeeValidator = employeeValidator;
             _employeeProjectValidator = employeeProjectValidator;
+            _projectRepository = projectRepository;
         }
 
         public IEnumerable<ProjectsOfAnEmployeeInfo> GetProjectByEmployeeId(int employeeId)
@@ -70,7 +75,15 @@ namespace Manager.Services
                         employee.Name = inputInfo.Name;
                         employee.Address = inputInfo.Address;
                         employee.EmploymentDate = inputInfo.EmploymentDate;
-                        employee.ReleaseDate = inputInfo.ReleaseDate;
+                        if (inputInfo.ReleaseDate.Equals(DateTime.MinValue))
+                        {
+                            employee.ReleaseDate = null;
+                        }
+                        else
+                        {
+                            employee.ReleaseDate = inputInfo.ReleaseDate;
+                        }
+                      
                         employee.JobType = inputInfo.JobType;
                         employee.PositionType = inputInfo.PositionType;
 
@@ -130,7 +143,7 @@ namespace Manager.Services
             return new OperationResult(false, Messages.ErrorWhileUpdatingPartialAllocation);
         }
 
-        public IEnumerable<MemberInfo> GetAllDepartmentEmployees(int departmentId, int? pageSize, int? pageNr)
+        public IEnumerable<MemberInfo> GetAllDepartmentEmployees(int departmentId, string employeeName, int? pageSize, int? pageNr,int? allocation, PositionType? ptype = null, JobType? jtype = null)
         {
             if (_employeeValidator.ValidateId(departmentId))
             {
@@ -139,7 +152,7 @@ namespace Manager.Services
 
                 if (department != null)
                 {
-                    var members = _employeeRepository.GetAllDepartmentEmployees(department, pageSize, pageNr);
+                    var members = _employeeRepository.GetAllDepartmentEmployees(department,employeeName, pageSize, pageNr,allocation,ptype,jtype);
 
 
                     if (members.Any())
@@ -180,35 +193,92 @@ namespace Manager.Services
             foreach (EmployeeInfo ei in employeeInfos)
             {
                 ei.TotalAllocation = _employeeRepository.ComputeTotalAllocation(ei.Id);
+
             }
             return employeeInfos;
         }
 
-        public IEnumerable<EmployeeInfo> GetEmployeesThatAreNotFullyAllocated()
+        public IEnumerable<NotFullyAllocatedEmployeesInfo> GetEmployeesThatAreNotFullyAllocated(int projectId, int? departmentId, int? pageSize, int? pageNr,PositionType? ptype)
         {
-            var employees = _employeeRepository.GetEmployeesThatAreNotFullyAllocated();
-            var employeeInfos = _mapper.Map<IEnumerable<EmployeeInfo>>(employees);
-            foreach (EmployeeInfo ei in employeeInfos)
+            var employees = _employeeRepository.GetEmployeesThatAreNotFullyAllocated(projectId,departmentId, pageSize,pageNr,ptype);
+            var employeeInfos = _mapper.Map<IEnumerable<NotFullyAllocatedEmployeesInfo>>(employees);
+            foreach (NotFullyAllocatedEmployeesInfo ei in employeeInfos)
             {
-                ei.TotalAllocation = _employeeRepository.ComputeTotalAllocation(ei.Id);
+                ei.RemainingAllocation = 100-_employeeRepository.ComputeTotalAllocation(ei.Id);
+                ei.DepartmentName = _departmentRepository.GetDepartmentById(ei.DepartmentId).Name;
             }
             return employeeInfos;
         }
 
-<<<<<<< HEAD
         public int GetTotalAllocation(int employeeId)
         {
             return _employeeRepository.ComputeTotalAllocation(employeeId);
-=======
-        public IEnumerable<string> GetJobTypesDescriptions()
-        {
-            return _employeeRepository.GetJobTypesDescriptions();
         }
 
-        public IEnumerable<string> GetPositionTypesDescriptions()
+        public IEnumerable<JobTypeInfo> GetJobTypesDescriptions()
         {
-            return _employeeRepository.GetPositionTypeDescriptions();
->>>>>>> capac-cristina
+            Array values = Enum.GetValues(typeof(JobType));
+
+            return (from JobType jobType in values
+                select new JobTypeInfo
+                {
+                    Id = (int) jobType,
+                    Description = jobType.GetDescription()
+                }).ToList();
+        }
+
+        public IEnumerable<PositionTypeInfo> GetPositionTypesDescriptions()
+        {
+            Array values = Enum.GetValues(typeof(PositionType));
+            foreach (PositionType positionType in values)
+            {
+                yield return new PositionTypeInfo
+                {
+                    Id = (int) positionType,
+                    Description = positionType.GetDescription()
+                };
+            }
+        }
+
+        public OperationResult AssignEmployee(AssignEmployeeInputInfo inputInfo)
+        {
+            var project = _projectRepository.GetProjectById(inputInfo.ProjectId);
+            var employee = _employeeRepository.GetById(inputInfo.EmployeeId);
+
+            if (project != null && employee != null)
+            {
+                _employeeRepository.AssignEmployee(new EmployeeProject(employee, project, inputInfo.Allocation));
+
+                return new OperationResult(true, Messages.SuccessfullyAssignEmployee);
+            }
+            return new OperationResult(false, Messages.ErrorAssignEmployee);
+        }
+
+<<<<<<< HEAD
+        public IEnumerable<MemberInfo> SearchEmployeesByName(int departmentId, string employeeName, int? pageSize,
+            int? pageNr)
+=======
+        public IEnumerable<MemberInfo> SearchEmployeesByName(int departmentId, string employeeName, int? pageSize,int? pageNr)
+>>>>>>> capac-andreimuresan
+        {
+            if (!string.IsNullOrEmpty(employeeName))
+            {
+                var employees = _employeeRepository.SearchEmployeesByName(departmentId, employeeName, pageSize, pageNr);
+                var employeesInfo = _mapper.Map<IEnumerable<MemberInfo>>(employees);
+                return employeesInfo;
+            }
+            return null;
+        }
+        public MemberInfo GetEmployeeById(int employeeId)
+        {
+<<<<<<< HEAD
+            
+            var employee = _employeeRepository.GetById(employeeId);
+            return _mapper.Map<MemberInfo>(employee);    
+=======
+            var employee = _employeeRepository.GetById(employeeId);
+            return _mapper.Map<MemberInfo>(employee);      
+>>>>>>> capac-andreimuresan
         }
     }
 }

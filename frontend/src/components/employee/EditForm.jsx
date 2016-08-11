@@ -141,42 +141,47 @@ export default class EditForm extends React.Component{
             </div>
            
              <div className="form-group">
-                <label className="col-sm-4">Employment Date:</label>
-
-                <div className="input-group date col-sm-6">
-                  <div className="input-group-addon">
-                    <i className="fa fa-calendar"></i>
-                  </div>
-                  <input type="text" ref ="employmentDate"className="form-control pull-right" id="datepicker1" value={this.state.employee.get('EmploymentDate')}onChange={this.changeData.bind(this)}/>
-                </div>
+                <label className="col-sm-4 control-label">Employment Date</label>
+                 <div className="col-sm-6">
+                    <div className="input-group date">
+                      <div className="input-group-addon">
+                        <i className="fa fa-calendar"></i>
+                      </div>
+                      <input type="text" ref="employmentDate" className="form-control" id="datepicker1" value={this.state.employee.get('EmploymentDate')}onChange={this.changeData.bind(this)}/>
+                    </div>
+                 </div>
                 
               </div>
             <div className="form-group">
-                <label className="col-sm-4">Release Date:</label>
-
-                <div className="input-group date col-sm-6">
-                  <div className="input-group-addon">
-                    <i className="fa fa-calendar"></i>
-                  </div>
-                  <input type="text" ref ="releaseDate"className="form-control pull-right" id="datepicker2"value={this.state.employee.get('ReleaseDate')}onChange={this.changeData.bind(this)}/>
+                <label className="col-sm-4 control-label">Release Date</label>
+                <div className="col-sm-6">
+                    <div className="input-group date">
+                        <div className="input-group-addon">
+                            <i className="fa fa-calendar"></i>
+                        </div>
+                        <input type="text" ref ="releaseDate" className="form-control" id="datepicker2" value={this.state.employee.get('ReleaseDate')} onChange={this.changeData.bind(this)}/>
+                    </div>
                 </div>
-                
-              </div>
+            </div>
 
            <div className="form-group">
-             <label className="col-sm-4 control-label"> Job Type </label>
-                 <div className="col-sm-6">
-            <select ref="jobType" className="selectpicker form-group" >
-                {jobTypes}        
-                              
-            </select>
+               <label className="col-sm-4 control-label"> Job Type </label>
+               <div className="col-sm-6">
+                    <select className="form-control" ref="jobType" >
+                        {jobTypes}
+                    </select>
+                </div>
             </div>
+
+
+            <div className="form-group">
+                <label className="col-sm-4 control-label"> Position Type </label>
+                <div className="col-sm-6">
+                    <select className="form-control" ref="positionType" >
+                        {positionTypes}
+                    </select>
+                </div>
             </div>
-            <label className="col-sm-4 control-label"> Position Type </label>
-       
-            <select className="selectpicker" ref="positionType" >
-                {positionTypes}                    
-            </select>
            
         </Modal>
         )
