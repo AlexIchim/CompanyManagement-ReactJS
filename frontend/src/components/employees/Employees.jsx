@@ -162,7 +162,7 @@ export default class Employees extends Component {
         Controller.releaseEmployee(
             id, 
             true, 
-            this.fetchData.bind(this, null, null)
+            this.fetchData.bind(this,null,null,null,null)
         ); 
     }
 

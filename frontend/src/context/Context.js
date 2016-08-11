@@ -3,7 +3,7 @@ import * as Cursor from 'immutable/contrib/cursor';
 import * as Rx from 'rx';
 
 const initialState = {
-    offices: [ {id: 0, name: "sample office", image: null} ],
+    offices: [],
     currentOfficeId: null,
     currentDepartments: [],
     currentDepartmentId: null
