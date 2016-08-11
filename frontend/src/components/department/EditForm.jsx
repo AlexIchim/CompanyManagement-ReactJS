@@ -4,6 +4,7 @@ import configs from '../helpers/calls';
 import Context from '../../context/Context.js';
 import * as Immutable from 'immutable';
 import * as $ from 'jquery';
+import ValidateDepartment from '../validators/ValidateDepartment.js';
 
 export default class EditForm extends React.Component{
     
@@ -12,6 +13,9 @@ export default class EditForm extends React.Component{
         this.state={
             departmentManagers:[],
             department:{
+            },
+             errors:{
+                NameErrors:[]
             }
         }
     }
@@ -85,6 +89,15 @@ export default class EditForm extends React.Component{
               
     }
 
+    onChangeName()
+    {    
+        const errors = ValidateDepartment.validateName(this.refs.name.value)
+        this.state.errors.NameErrors = errors
+       
+         this.setState({
+             errors: this.state.errors
+         })
+    }
   
     render(){
 
@@ -100,7 +113,8 @@ export default class EditForm extends React.Component{
             <div className="form-group">
                 <label className="col-sm-4 control-label"> Name </label>
                 <div className="col-sm-6">
-                    <input  ref="name" className="form-control" placeholder="Name" value={this.state.department.get('Name')} onChange={this.changeData.bind(this)}/>
+                    {this.state.errors.NameErrors}
+                    <input  ref="name" className="form-control" placeholder="Name" value={this.state.department.get('Name')} onChange={this.changeData.bind(this)} onKeyUp={this.onChangeName.bind(this)}/>
                 </div>
             </div>
            

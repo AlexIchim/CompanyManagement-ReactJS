@@ -3,6 +3,7 @@ import Modal from '../modal/Modal.jsx';
 import configs from '../helpers/calls';
 import Context from '../../context/Context.js';
 import * as Immutable from 'immutable';
+import ValidateProject from '../validators/ValidateProject.js';
 
 export default class EditFormProject extends React.Component{
     
@@ -11,7 +12,11 @@ export default class EditFormProject extends React.Component{
         this.state={
             project:{
             },
-            statusDescriptions:[]
+            statusDescriptions:[],
+            errors:{
+                NameErrors:[],
+                DurationErrors:[]
+            }
         }
     }
 
@@ -86,6 +91,25 @@ export default class EditFormProject extends React.Component{
               
     }
 
+    onChangeName()
+    {   
+        const errors = ValidateProject.validateName(this.refs.name.value)
+        this.state.errors.NameErrors = errors
+       
+         this.setState({
+             errors: this.state.errors
+         })
+    }
+
+    onChangeDuration()
+    {   
+        const errors = ValidateProject.validateDuration(this.refs.duration.value)
+        this.state.errors.DurationErrors = errors
+       
+         this.setState({
+             errors: this.state.errors
+         })
+    }
   
     render(){
         const statusDescriptions=this.state.statusDescriptions.map((el, x) => {
@@ -101,7 +125,8 @@ export default class EditFormProject extends React.Component{
             <div className="form-group">
                 <label className="col-sm-4 control-label"> Name </label>
                 <div className="col-sm-6">
-                    <input  ref="name" className="form-control" placeholder="Name" value={this.state.project.get('Name')} onChange={this.changeData.bind(this)}/>
+                    {this.state.errors.NameErrors}
+                    <input  ref="name" className="form-control" placeholder="Name" value={this.state.project.get('Name')} onChange={this.changeData.bind(this)} onKeyUp={this.onChangeName.bind(this)}/>
                 </div>
                 
                 <label className="col-sm-4 control-label">Status </label>     
@@ -110,7 +135,8 @@ export default class EditFormProject extends React.Component{
                 </select>
                 <label className="col-sm-4 control-label"> Duration </label>
                 <div className="col-sm-6">
-                    <input  ref="duration" className="form-control" placeholder="Duration" value={this.state.project.get('Duration')} onChange={this.changeData.bind(this)}/>
+                    {this.state.errors.DurationErrors}
+                    <input  ref="duration" className="form-control" placeholder="Duration" value={this.state.project.get('Duration')} onChange={this.changeData.bind(this)} onKeyUp={this.onChangeDuration.bind(this)}/>
                 </div>
 
             </div>

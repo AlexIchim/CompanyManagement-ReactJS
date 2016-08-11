@@ -62,10 +62,7 @@ export default class Form extends React.Component{
 
     onChangeName()
     {
-        const inputInfo = {
-            Name: this
-        } 
-        console.log("nume", this.refs.name.value)
+        
         const errors = ValidateDepartment.validateName(this.refs.name.value)
         this.state.errors.NameErrors = errors
        
@@ -89,8 +86,7 @@ export default class Form extends React.Component{
                 <label className="col-sm-4 control-label"> Name </label>
                 <div className="col-sm-6">
                 {this.state.errors.NameErrors}
-                    <input  ref="name" className="form-control" placeholder="Name" onKeyUp={this.onChangeName.bind(this)}/>
-                    
+                    <input  ref="name" className="form-control" placeholder="Name" onKeyUp={this.onChangeName.bind(this)}/>                    
                 </div>
             </div>
 
@@ -102,11 +98,6 @@ export default class Form extends React.Component{
                     </select>
                 </div>
             </div>
-
-
-
-
-
         </Modal>
         )
     }
