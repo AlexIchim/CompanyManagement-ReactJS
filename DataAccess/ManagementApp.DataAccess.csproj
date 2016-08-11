@@ -105,6 +105,14 @@
     <Compile Include="Migrations\201608081314121_ChangeImageType.Designer.cs">
       <DependentUpon>201608081314121_ChangeImageType.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201608101423373_ChangeDate.cs" />
+    <Compile Include="Migrations\201608101423373_ChangeDate.Designer.cs">
+      <DependentUpon>201608101423373_ChangeDate.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201608101427405_ChangeReleaseDate.cs" />
+    <Compile Include="Migrations\201608101427405_ChangeReleaseDate.Designer.cs">
+      <DependentUpon>201608101427405_ChangeReleaseDate.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositories\DepartmentRepository.cs" />
@@ -157,6 +165,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201608081314121_ChangeImageType.resx">
       <DependentUpon>201608081314121_ChangeImageType.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201608101423373_ChangeDate.resx">
+      <DependentUpon>201608101423373_ChangeDate.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201608101427405_ChangeReleaseDate.resx">
+      <DependentUpon>201608101427405_ChangeReleaseDate.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

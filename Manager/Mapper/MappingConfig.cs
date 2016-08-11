@@ -37,10 +37,12 @@ namespace Manager.Mapper
 
             CreateMap<Employee, MemberInfo>().ForMember(
                 dest => dest.JobType,
-                opt => opt.MapFrom(src=> src.JobType.GetDescription()))
+                opt => opt.MapFrom(src => src.JobType.GetDescription()))
                 .ForMember(
                 e => e.PositionType,
                 o => o.MapFrom(s => s.PositionType.GetDescription()));
+
+
 
             //CreateMap<Employee, MemberInfo>().AfterMap((e, mi) =>
             //    mi.JobType = new JobTypeInfo()

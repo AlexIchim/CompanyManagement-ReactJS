@@ -1,9 +1,7 @@
 import React from 'react';
 import ViewDetailsModal from '../modal/ViewDetailsModal.jsx';
 import configs from '../helpers/calls';
-import Context from '../../context/Context.js';
-import * as Immutable from 'immutable';
-//import * as $ from 'jquery';
+import "./../../assets/less/index.less";
 
 export default class ViewDetailsForm extends React.Component{
     
@@ -47,42 +45,47 @@ export default class ViewDetailsForm extends React.Component{
          return(
              <div>
                 <ViewDetailsModal title={this.props.element.get('Name')} close={this.props.close}>
-                 <div className="form-group">
-                <label className="col-sm-4 control-label"> Name </label>
-                <label className="col-sm-4 control-label"> {this.props.element.get('Name')} </label>
-                
-            </div>
-            <div className="form-group">
-                <label className="col-sm-4 control-label"> Address </label>
-                 <label className="col-sm-4 control-label"> {this.props.element.get('Address')} </label>
-              
-            </div>
-           
-             <div className="form-group">
-                <label className="col-sm-4">Employment Date:</label>
-                 <label className="col-sm-4 control-label"> {this.props.element.get('EmploymentDate')} </label>
-            </div>
-                
-            <div className="form-group">
-                <label className="col-sm-4">Release Date:</label>
-                 <label className="col-sm-4 control-label"> {this.props.element.get('ReleaseDate')} </label>
-              </div>
-                <div className="form-group">
-                <label className="col-sm-4">Job type: </label>
-                 <label className="col-sm-4 control-label"> {this.props.element.get('JobType')} </label>
-              </div>
-                <div className="form-group">
-                <label className="col-sm-4">Position type:</label>
-                 <label className="col-sm-4 control-label"> {this.props.element.get('PositionType')} </label>
-              </div>
+                    <div className="col-sm-6">
+                         <div className="control-group">
+                            <label className="col-sm-8 control-label"> Name: </label>
+                            <label className=" controls readonly"> {this.props.element.get('Name')} </label>
+                        </div>
 
-      
+                        <div className="control-group">
+                            <label className="col-sm-8 control-label"> Job type: </label>
+                            <label className=" controls readonly"> {this.props.element.get('JobType')} </label>
+                        </div>
 
-            <table className="table table-condensed" id="table1">
+                        <div className="control-group">
+                             <label className="col-sm-8 control-label"> Employment Date: </label>
+                             <label className="controls readonly"> {this.props.element.get('EmploymentDate')} </label>
+                        </div>
+                    </div>
+
+                    <div className="col-sm-6">
+                        <div className="control-group">
+                            <label className="col-sm-8 control-label"> Address: </label>
+                            <label className="controls readonly"> {this.props.element.get('Address')} </label>
+
+                        </div>
+
+                        <div className="control-group">
+                            <label className="col-sm-8 control-label"> Position type: </label>
+                            <label className=" controls readonly"> {this.props.element.get('PositionType')} </label>
+                        </div>
+
+                        <div className="control-group">
+                            <label className="col-sm-8 control-label"> Release Date: </label>
+                            <label className=" controls readonly"> {this.props.element.get('ReleaseDate')} </label>
+                        </div>
+                    </div>
+                    <br/><br/>
+
+            <table className="table table-striped table-details" id="">
                 <thead>
                 <tr>
-                    <th className="col-md-2">Project Name</th>
-                    <th className="col-md-2">Allocation</th>
+                    <th className="col-sm-2">Project Name</th>
+                    <th className="col-sm-2">Allocation</th>
                 </tr>
                 </thead>
                 <tbody>
