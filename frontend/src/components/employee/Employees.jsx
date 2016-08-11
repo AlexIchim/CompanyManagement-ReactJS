@@ -21,11 +21,11 @@ export default class Employees extends React.Component{
             jobTypeIndex: null,
             positionIndex: null,
             allocationIndex: null,
-            search: ""
+            search: null
         });
         this.subscription = Context.subscribe(this.onContextChange.bind(this));
         //const employeeId = this.props.routeParams['employeeId'];
-        MyController.getAllEmployees( null, null, null);
+        MyController.getAllEmployees(null,  null, null, null);
         this.setJobTypeDropdownItems();
         this.setPositionDropdownItems();
     }
@@ -112,9 +112,10 @@ export default class Employees extends React.Component{
         this.setState({
             jobTypeIndex: jobTypeIndex,
             positionIndex: positionIndex,
-            allocationIndex: this.state.allocationIndex
+            allocationIndex: this.state.allocationIndex,
+            search: this.state.search
         })
-        MyController.getAllEmployees(jobTypeIndex, positionIndex, this.state.allocationIndex)
+        MyController.getAllEmployees(this.state.search, jobTypeIndex, positionIndex, this.state.allocationIndex)
     }
     filterByPosition(){
         var select = document.getElementById('positionDropdown');
@@ -123,9 +124,10 @@ export default class Employees extends React.Component{
         this.setState({
             jobTypeIndex: jobTypeIndex,
             positionIndex: positionIndex,
-            allocationIndex: this.state.allocationIndex
+            allocationIndex: this.state.allocationIndex,
+            search: this.state.search
         })
-        MyController.getAllEmployees(jobTypeIndex, positionIndex, this.state.allocationIndex)
+        MyController.getAllEmployees(this.state.search, jobTypeIndex, positionIndex, this.state.allocationIndex)
 
     }
     filterByAllocation(){
@@ -136,9 +138,23 @@ export default class Employees extends React.Component{
         this.setState({
             jobTypeIndex: this.state.jobTypeIndex,
             positionIndex: this.state.positionIndex,
-            allocationIndex: allocationIndex
+            allocationIndex: allocationIndex,
+            search: this.state.search
         })
-        MyController.getAllEmployees(this.state.jobTypeIndex, this.state.positionIndex, allocationIndex)
+        MyController.getAllEmployees(this.state.search, this.state.jobTypeIndex, this.state.positionIndex, allocationIndex)
+    }
+
+    searchByName(){
+        let name = this.refs.inputName.value;
+        console.log('search : ', name);
+        this.setState({
+            jobTypeIndex: this.state.jobTypeIndex,
+            positionIndex: this.state.positionIndex,
+            allocationIndex: this.state.allocationIndex,
+            search: name
+        })
+        MyController.getAllEmployees(name, this.state.jobTypeIndex, this.state.positionIndex, this.state.allocationIndex)
+
     }
     render(){
         let jobTypeDropdownItems = this.state.jobTypeDropdownItems.map( (element, index) => {
@@ -196,7 +212,7 @@ export default class Employees extends React.Component{
                         <div className="input-group-btn">
                             <button type="button" className="btn btn-warning">Search by name</button>
                         </div>
-                        <input type="text"  ref="inputName" className="form-control" placeholder="Search..." >
+                        <input type="text"  ref="inputName" className="form-control" placeholder="Search..." onChange={this.searchByName.bind(this)} >
                         </input>
                     </div>
                 <p></p>

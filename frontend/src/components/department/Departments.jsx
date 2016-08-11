@@ -49,8 +49,7 @@ export default class Departments extends React.Component{
 
     }
 
-        this.mountingComponent(props);
-    }
+
 
     componentWillUnmount(){
         console.log('unmount dep')
