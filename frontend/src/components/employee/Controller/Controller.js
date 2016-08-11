@@ -4,10 +4,18 @@ import Accessors from '../../../context/Accessors';
 import $ from 'jquery';
 export default new class Controller{
 
-    getAllEmployees(departmentId, pageNumber){
+    getAllEmployees(name, jobType, position, allocation){
+        let myUrl = "";
+        if(name){
+            myUrl = config.base + 'department/members/1/5/1' + "?name=" + name + "&jobType=" + jobType + "&position=" + position +"&allocation=" + allocation
+        }
+        else{
+            myUrl = config.base + 'department/members/1/5/1' + "?jobType=" + jobType + "&position=" + position +"&allocation=" + allocation
+        }
+        console.log('myUrl: ', myUrl);
         $.ajax({
             method: 'GET',
-            url: config.base + "department/members/" + departmentId + "/5/" + pageNumber,
+            url: myUrl,
             async: false,
             success: function(data){
                 Context.cursor.set('items', data);

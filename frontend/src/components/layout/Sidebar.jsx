@@ -55,10 +55,9 @@ class Sidebar extends React.Component{
                         <p className="header">Firm Offices</p>
                         <hr className="fade-hr"></hr>
                         
-                        <SidebarOffices
-                        />
+                        <SidebarOffices/>
 
-                        <Multilevel/>
+                        
                     </ul>
                 </section>
             </aside>

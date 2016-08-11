@@ -1,5 +1,6 @@
 import * as React from 'react'
 import {Link} from 'react-router';
+import '../../assets/less/index.less';
 
 const ProjectItem = (props) => {
 
@@ -11,10 +12,18 @@ const ProjectItem = (props) => {
     const link = props.Link;
     const edit = props.onEdit;
     const deleteF = props.onDelete;
+    const lft = {
+        float: "left"
+    };
 
     return (
-        <tr>
-
+        <tr className="table-tr">
+            <td className="td-actions">
+                <div className="glyphicon glyphicon-edit custom-edit-icon" style={lft}
+                    onClick={edit}>
+                </div>
+                <div className="glyphicon glyphicon-trash custom-delete-icon" onClick={deleteF}></div>
+                </td>
             <td>{name}</td>
             <td>{nrMembers}</td>
             <td>{duration}</td>
@@ -22,18 +31,16 @@ const ProjectItem = (props) => {
             <td>
                 <tr>
                     <td>
-                        <Link to={link} className="small-box-footer">
-                            View Members
-                        </Link></td>
-                    <td>
-                <button id="store" className="btn btn-success margin-top" onClick={edit}>
-                    Edit
-                </button>
-                </td><td>
 
-                <button className="btn btn-danger margin-top" onClick={deleteF}><i className="fa fa-trash" ></i>
-                    Delete
-                </button></td>
+                        <Link to={link} className="btn btn-info">
+                            View Members
+                        </Link>
+
+                    </td>
+
+
+
+
                 </tr>
             </td>
         </tr>

@@ -10,6 +10,7 @@ import ViewDetailsForm from './ViewDetailsForm'
 import '../../assets/less/index.less'
 
 export default class Employees extends React.Component{
+
     constructor(){
         super();
     }
@@ -21,15 +22,22 @@ export default class Employees extends React.Component{
             formToggle:false,
             departmentId: departmentId,
             currentPage: 1
+            jobTypeIndex: null,
+            positionIndex: null,
+            allocationIndex: null,
+            search: null
         });
-
         this.subscription = Context.subscribe(this.onContextChange.bind(this));
 
-        Context.cursor.set("items",[]);
+        MyController.getAllEmployees(null,  null, null, null);
+        this.setJobTypeDropdownItems();
+        this.setPositionDropdownItems();
+	Context.cursor.set("items",[]);
         Context.cursor.set("totalNumberOfItems", -1);
-
-        MyController.getAllEmployees(departmentId, 1);
+        this.setJobTypeDropdownItems();
+        this.setPositionDropdownItems();
         MyController.getTotalNumberOfEmployees(departmentId);
+        MyController.getAllEmployees(null,  null, null, null);
     }
 
     componentWillMount(){
@@ -133,12 +141,97 @@ export default class Employees extends React.Component{
         MyController.getAllEmployees(this.state.departmentId, numberOfPages);
     }
 
+    setJobTypeDropdownItems(){
+        $.ajax({
+            method: 'GET',
+            url: config.base + "/employee/getJobTypes",
+            async: false,
+            success: function(data){
+                console.log('here');
+                this.setState({
+                    jobTypeDropdownItems: data
+                })
+            }.bind(this)
+        });
+    }
+    setPositionDropdownItems(){
+        $.ajax({
+            method:'GET',
+            url: config.base + "/employee/getPositions",
+            async: false,
+            success: function(data){
+                this.setState({
+                    positionDropdownItems: data
+                })
+            }.bind(this)
+        })
+    }
+
+    filterByJobType(){
+        var select = document.getElementById('jobTypeDropdown');
+        var jobTypeIndex = select.options[select.selectedIndex].value;
+        var positionIndex = this.state.positionIndex;
+        this.setState({
+            jobTypeIndex: jobTypeIndex,
+            positionIndex: positionIndex,
+            allocationIndex: this.state.allocationIndex,
+            search: this.state.search
+        })
+        MyController.getAllEmployees(this.state.search, jobTypeIndex, positionIndex, this.state.allocationIndex)
+    }
+    filterByPosition(){
+        var select = document.getElementById('positionDropdown');
+        var positionIndex = select.options[select.selectedIndex].value;
+        var jobTypeIndex = this.state.jobTypeIndex;
+        this.setState({
+            jobTypeIndex: jobTypeIndex,
+            positionIndex: positionIndex,
+            allocationIndex: this.state.allocationIndex,
+            search: this.state.search
+        })
+        MyController.getAllEmployees(this.state.search, jobTypeIndex, positionIndex, this.state.allocationIndex)
+
+    }
+    filterByAllocation(){
+
+        var select = document.getElementById('allocationDropdown');
+        var allocationIndex = select.options[select.selectedIndex].value;
+        console.log('all index', allocationIndex);
+        this.setState({
+            jobTypeIndex: this.state.jobTypeIndex,
+            positionIndex: this.state.positionIndex,
+            allocationIndex: allocationIndex,
+            search: this.state.search
+        })
+        MyController.getAllEmployees(this.state.search, this.state.jobTypeIndex, this.state.positionIndex, allocationIndex)
+    }
+
+    searchByName(){
+        let name = this.refs.inputName.value;
+        console.log('search : ', name);
+        this.setState({
+            jobTypeIndex: this.state.jobTypeIndex,
+            positionIndex: this.state.positionIndex,
+            allocationIndex: this.state.allocationIndex,
+            search: name
+        })
+        MyController.getAllEmployees(name, this.state.jobTypeIndex, this.state.positionIndex, this.state.allocationIndex)
+
+    }
     render(){
 
         const totalNumberOfDepartments = this.state.totalNumberOfItems;
         const numberOfPages = (totalNumberOfDepartments == 0) ? 1 : Math.ceil(totalNumberOfDepartments/5);
         const currentPage = this.state.currentPage;
         const label = currentPage + "/" + numberOfPages;
+
+        let jobTypeDropdownItems = this.state.jobTypeDropdownItems.map( (element, index) => {
+            return (<option value={element.Index} key = {element.Index} > {element.Description} </option>)
+        });
+         let positionDropdownItems = this.state.positionDropdownItems.map( (element, index) => {
+             return (<option value={element.Index} key = {element.Index} > {element.Description} </option>)
+         });
+
 
         console.log('In Employees@!@@');
         let modal = "";
@@ -184,7 +277,7 @@ export default class Employees extends React.Component{
                         <div className="input-group-btn">
                             <button type="button" className="btn btn-warning">Search by name</button>
                         </div>
-                        <input type="text"  ref="inputName" className="form-control" placeholder="Search..." >
+                        <input type="text"  ref="inputName" className="form-control" placeholder="Search..." onChange={this.searchByName.bind(this)} >
                         </input>
                     </div>
                 <p>
@@ -198,50 +291,38 @@ export default class Employees extends React.Component{
                     </button>
 
                     &nbsp;
+                    <select id='jobTypeDropdown' className="selectpicker" onChange={this.filterByJobType.bind(this)}>
+                        <option selected>-- Job Type --</option>
 
-                    <div className="btn-group">
-                        <button type="button" className="btn btn-info">Job Type</button>
-                        <button type="button" className="btn btn-info dropdown-toggle" data-toggle="dropdown">
-                            <span className="caret"></span>
-                            <span className="sr-only">Toggle Dropdown</span>
-                        </button>
-                        <ul className="dropdown-menu" role="menu">
-                            <li><a href="#">Part Time 4</a></li>
-                            <li><a href="#">Part Time 6</a></li>
-                            <li><a href="#">Full Time</a></li>
-                        </ul>
-                    </div>
+                            {jobTypeDropdownItems}
+
+                   </select>
 
                     &nbsp;
+                    <select id='positionDropdown' className="selectpicker" onChange={this.filterByPosition.bind(this)}>
+                        <option selected>-- Position --</option>
 
-                    <div className="btn-group">
-                        <button type="button" className="btn btn-info">Position</button>
-                        <button type="button" className="btn btn-info dropdown-toggle" data-toggle="dropdown">
-                            <span className="caret"></span>
-                            <span className="sr-only">Toggle Dropdown</span>
-                        </button>
-                        <ul className="dropdown-menu" role="menu">
-                            <li><a href="#">Developer</a></li>
-                            <li><a href="#">Project Manager</a></li>
-                            <li><a href="#">QA</a></li>
-                            <li><a href="#">Department Manager</a></li>
-                        </ul>
-                    </div>
+                        {positionDropdownItems}
+
+                    </select>
 
                     &nbsp;
+                    <select id='allocationDropdown' className="selectpicker" onChange={this.filterByAllocation.bind(this)}>
+                        <option selected>-- Allocation --</option>
 
-                    <div className="btn-group">
-                        <button type="button" className="btn btn-info">Allocation</button>
-                        <button type="button" className="btn btn-info dropdown-toggle" data-toggle="dropdown">
-                            <span className="caret"></span>
-                            <span className="sr-only">Toggle Dropdown</span>
-                        </button>
-                        <ul className="dropdown-menu" role="menu">
-                            <li><a href="#">Fully Allocated</a></li>
-                            <li><a href="#">Available</a></li>
-                        </ul>
-                    </div>
+                        <option value={0} key = {0} > {"Not Allocated"} </option>
+                        <option value={10} key = {10} > {10} </option>
+                        <option value={20} key = {20} > {20} </option>
+                        <option value={30} key = {30} > {30} </option>
+                        <option value={40} key = {40} > {40} </option>
+                        <option value={50} key = {50} > {50} </option>
+                        <option value={60} key = {60} > {60} </option>
+                        <option value={70} key = {70} > {70} </option>
+                        <option value={80} key = {80} > {80} </option>
+                        <option value={90} key = {90} > {90} </option>
+                        <option value={100} key = {100} > {"Fully Allocated"} </option>
 
+                    </select>
                 </div>
 
                 <table className="table table-hover">

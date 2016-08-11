@@ -23,6 +23,6 @@ namespace Contracts
         int GetNrTeamMembers(int projectId);
 
         int GetTotalNumberOfProjectsFromDepartment( int departmentId );
-
+        
     }
 }

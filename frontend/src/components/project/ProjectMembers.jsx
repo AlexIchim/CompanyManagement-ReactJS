@@ -7,23 +7,28 @@ import Accessors from '../../context/Accessors'
 import Form from './form/Form';
 import EditAllocationForm from './form/EditAllocationForm'
 import AssignEmployeeForm from './form/AssignEmployeeForm'
-
+import '../../assets/less/index.less';
 
 const Item = (props) => {
+    const lft = {
+        float: "left",
+        margin: '0px 0px 0px 5px'
+    };
     return (
-        <tr>
+        <tr className="table-tr">
+            <td className="td-actions">
+                <div className="glyphicon glyphicon-trash custom-delete-icon" onClick={props.onDelete}>
+
+                </div>
+            </td>
             <td>{props.element['Name']}</td>
             <td>{props.element['Position']}</td>
-            <td>{props.element['Allocation']} %</td>
-            <td><button id="store" className="btn btn-success margin-top" onClick={props.onEdit}>
-                Edit Allocation
-            </button>
+            <td><span style={lft}>{props.element['Allocation']} %</span>
+                <span className="glyphicon glyphicon-edit custom-edit-icon" style={lft}
+                     onClick={props.onEdit}>
+                </span>
             </td>
-            <td>
-                <button className="btn btn-danger margin-top" onClick={props.onDelete}><i className="fa fa-trash" ></i>
-                    Delete
-                </button>
-            </td>
+
         </tr>
     )
 }
@@ -33,23 +38,22 @@ class ProjectMembers extends React.Component {
         super();
     }
     componentWillMount(){
-        this.setState({
-            formToggle: false
-        });
         const projectId = this.props.routeParams['projectId'];
-        Controller.GetProjectMembers(projectId);
+        Controller.GetProjectMembers(projectId, 1);
+        Controller.GetNrMembers(projectId);
         $.ajax({
             method: 'GET',
             url: config.base + 'project/getById/' +projectId,
             async: false,
             success: function(data){
                 this.setState({
+                    formToggle: false,
+                    currentPage: 1,
                     projectId: data.Id,
                     projectName: data.Name
                 })
             }.bind(this)
         });
-
 
         this.subscription = Context.subscribe(this.onContextChange.bind(this));
 
@@ -60,7 +64,8 @@ class ProjectMembers extends React.Component {
     onContextChange(cursor){
         this.setState({
             projectMembers: Accessors.items(Context.cursor),
-            formToggle: false
+            formToggle: false,
+            totalNumberOfItems: Accessors.totalNumberOfItems(Context.cursor)
         });
     }
 
@@ -81,8 +86,52 @@ class ProjectMembers extends React.Component {
     toggleModal(){
         this.setState({formToggle: false})
     }
+
+    onPreviousButtonClick(){
+        let currentPage = this.state.currentPage;
+        let newCurrentpage = currentPage - 1;
+        if (currentPage > 1){
+            this.setState({
+                currentPage: newCurrentpage
+            })
+            Controller.GetProjectMembers(this.state.projectId, newCurrentpage);
+        }
+    }
+    onNextButtonClick(){
+        let currentPage = this.state.currentPage;
+        let newCurrentpage = currentPage + 1;
+        let numberOfPages = Math.ceil((this.state.totalNumberOfItems)/5);
+        if (currentPage < numberOfPages){
+            this.setState({
+                currentPage: newCurrentpage
+            })
+            Controller.GetProjectMembers(this.state.projectId, newCurrentpage);
+        }
+    }
+    onGoToFirstPageButtonClick(){
+        this.setState({
+            currentPage: 1
+        })
+        Controller.GetProjectMembers(this.state.projectId, 1);
+    }
+
+    onGoToLastPageButtonClick(){
+        let numberOfPages = Math.ceil((this.state.totalNumberOfItems)/5);
+        this.setState({
+            currentPage: numberOfPages
+        });
+        Controller.GetProjectMembers(this.state.projectId, numberOfPages);
+    }
     render(){
+        const totalNumberOfItems = this.state.totalNumberOfItems;
+        console.log('total numberrr: ', this.state.totalNumberOfItems);
+
+        const numberOfPages = (totalNumberOfItems == 0) ? 1 : Math.ceil(totalNumberOfItems/5);
+        console.log('nrOfPages', totalNumberOfItems);
+
+        const currentPage = this.state.currentPage;
         let modal = "";
+        let label =  currentPage + "/" + numberOfPages;
 
         const items = this.state.projectMembers.map ( (projectMember, index) => {
             return (
@@ -113,17 +162,22 @@ class ProjectMembers extends React.Component {
         return (
             <div>
                 {modal}
-                <h1> {this.state.projectName} Members  <button id="store" className="btn btn-success margin-top" onClick={this.onAddButtonClick.bind(this)} >
-                    Assign Employee
-                </button></h1>
+                <p className="table-name">Project Members</p>
+                <div className=" rectangle custom-rectangle-project-member">
+                    <div className="glyphicon glyphicon-plus-sign custom-add-icon"
+                         onClick={this.onAddButtonClick.bind(this)}>
+                        <span className="add-span" onClick={this.onAddButtonClick.bind(this)}>Assign Employee</span>
+                    </div>
+                </div>
             <table className="table table-stripped">
 
                 <thead>
 
                 <tr>
-                    <td><h3> Employee Name </h3></td>
-                    <td><h3>Role</h3></td>
-                    <td><h3>Allocation</h3></td>
+                    <td> </td>
+                    <td> Employee Name </td>
+                    <td>Role</td>
+                    <td>Allocation</td>
                 </tr>
 
                 </thead>
@@ -131,6 +185,22 @@ class ProjectMembers extends React.Component {
                     {items}
                 </tbody>
             </table>
+
+                <div className="btn-group">
+                    <button className="btn btn-info" onClick={this.onGoToFirstPageButtonClick.bind(this)}>
+                        Go to first page
+                    </button>
+                    <button className="btn btn-warning" onClick={this.onPreviousButtonClick.bind(this)}>
+                        Prev
+                    </button>
+                    <button className="btn btn-warning">{label}</button>
+                    <button className="btn btn-warning" onClick={this.onNextButtonClick.bind(this)}>
+                        Next
+                    </button>
+                    <button className="btn btn-info" onClick={this.onGoToLastPageButtonClick.bind(this)}>
+                        Go to last page
+                    </button>
+                </div>
                 </div>
         )
     }
