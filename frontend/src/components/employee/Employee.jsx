@@ -17,6 +17,12 @@ export default class Employee extends React.Component{
             add: false,
             employees: Context.cursor.get("employees"),
             pageNr: 1,
+            pageSize: 3,
+            nrOfPages: null,
+            filterByJob:{},
+            filterByPosition:{},
+            filterByAllocation:null,
+            search:"",
             positionTypes:[],
             jobTypes:[],
             allocation: [0,10,20,30,40,50,60,70,80,90,100, 'None']
@@ -48,13 +54,13 @@ export default class Employee extends React.Component{
             }.bind(this)
         })        
 
-        Controller.getAllEmployeesByDepartmentId(this.props.routeParams.departmentId,"",null,{},{},this.state.pageNr);
        this.subscription = Context.subscribe(this.onContextChange.bind(this));
     }
 
       componentDidMount(){
-          Controller.getAllEmployeesByDepartmentId(this.props.routeParams.departmentId,"",null,{},{},this.state.pageNr);
-     }
+          Controller.getAllEmployeesByDepartmentId(this.props.routeParams.departmentId,"",null,{},{},1);
+          this.setNumberOfPages("",null,{},{}); 
+    }
 
     componentWillUnmount () {
         this.subscription.dispose(); 
@@ -64,6 +70,31 @@ export default class Employee extends React.Component{
         this.setState({
             employees: cursor.get('employees')
         })
+    }
+
+    getAllEmployeesByDepartmentId(pageNr,employeeName,allocation,position,job){
+        Controller.getAllEmployeesByDepartmentId(this.props.routeParams.departmentId,employeeName,allocation,position,job,pageNr);
+    }
+
+    setNumberOfPages(employeeName,allocation,position,job){
+         $.ajax({
+            method: 'GET',
+            async: false,
+            url: configs.baseUrl + 'api/employee/getAllDepartmentEmployees?departmentId=' + this.props.routeParams.departmentId+ '&employeeName=' + employeeName + '&allocation=' + allocation + '&ptype=' +position + '&jtype=' + job  + '&pageSize=null&pageNr=null',
+            success: function (data) {   
+
+                if (!data){
+                        data=[]
+                }       
+                this.setState(
+                    {
+                        
+                        nrOfPages: data.length / this.state.pageSize + 1
+                    }
+                )
+            }.bind(this)
+        })
+
     }
 
     showAddForm(){
@@ -80,10 +111,11 @@ export default class Employee extends React.Component{
 
     back(){
 
-        if (this.state.pageNr!=1){
+        if (this.state.pageNr > 1){
+
             const whereTo=this.state.pageNr-1
 
-            Controller.getAllEmployeesByDepartmentId(this.props.routeParams.departmentId,"",null,{},{},whereTo)
+            this.getAllEmployeesByDepartmentId(whereTo,"",this.state.filterByAllocation,this.state.filterByPosition,this.state.filterByJob)
             
              this.setState({
                 pageNr:this.state.pageNr-1
@@ -95,12 +127,30 @@ export default class Employee extends React.Component{
     next(){
 
         const whereTo=this.state.pageNr+1
+        console.log(whereTo)
 
-        Controller.getAllEmployeesByDepartmentId(this.props.routeParams.departmentId,"",null,{},{},whereTo)
+        if(whereTo < this.state.nrOfPages) {
 
+            this.getAllEmployeesByDepartmentId(whereTo,"",this.state.filterByAllocation,this.state.filterByPosition,this.state.filterByJob)
+
+            this.setState({
+                pageNr:this.state.pageNr+1
+            })
+
+        }
+    }
+
+    setPageNr(){
+        
         this.setState({
-            pageNr:this.state.pageNr+1
+            pageNr:1,
+            filterByAllocation:null,
+            filterByJob:{},
+            filterByPosition:{},
+            search:"",
         })
+
+        this.setNumberOfPages("",null,{},{});
     }
 
     onDropDownChange(){
@@ -118,9 +168,20 @@ export default class Employee extends React.Component{
                 allocation = null
 
         let employeeName = this.refs.search.value;
+
         const pageNr = 1;
 
-        Controller.getAllEmployeesByDepartmentId(this.props.routeParams.departmentId,employeeName,allocation,ptype,jtype,this.state.pageNr)
+        this.setState({
+            filterByPosition: ptype,
+            filterByJob:jtype,
+            filterByAllocation:allocation,
+            search:employeeName,
+            pageNr:pageNr
+        })
+
+        this.setNumberOfPages(employeeName,allocation, ptype, jtype );
+
+        this.getAllEmployeesByDepartmentId(pageNr,employeeName,allocation,ptype,jtype)
     }
 
     onSearchChange(){
@@ -138,7 +199,10 @@ export default class Employee extends React.Component{
 
         const pageNr = 1;
         const employeeName = this.refs.search.value;      
-        Controller.getAllEmployeesByDepartmentId(this.props.routeParams.departmentId,employeeName,allocation,ptype,jtype,this.state.pageNr)
+
+        this.setNumberOfPages(employeeName,allocation, ptype, jtype );
+
+        this.getAllEmployeesByDepartmentId(pageNr,employeeName,allocation,ptype,jtype)
     }
 
 render(){
@@ -168,8 +232,9 @@ render(){
             <EmployeeItem
                 node = {element}
                 key = {index}
+                index={index}
                 departmentId = {this.props.routeParams.departmentId}
-
+                setPageNr={this.setPageNr.bind(this)}
             />
         )
 
@@ -177,7 +242,7 @@ render(){
     });
  
     
-   const addModal = this.state.add ? <Form departmentId={this.props.routeParams.departmentId} show={this.state.add} close ={this.closeAddForm.bind(this)} /> : ""
+   const addModal = this.state.add ? <Form setPageNr={this.setPageNr.bind(this)} departmentId={this.props.routeParams.departmentId} show={this.state.add} close ={this.closeAddForm.bind(this)} /> : ""
    
     return(
         <div>
