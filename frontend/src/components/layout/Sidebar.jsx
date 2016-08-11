@@ -1,65 +1,78 @@
 import * as React from 'react';
 import {Link} from 'react-router';
+import Context from '../../context/Context.js';
+import * as Immutable from 'immutable';
+import * as Controller from '../controller';
+import * as $ from 'jquery';
+import configs from '../helpers/calls'
 
-const Multilevel = () => {
-    return (
-        <li className="treeview">
-            <Link to="#">
-                <i className="fa fa-share"></i> <span>Offices</span>
-            <span className="pull-right-container">
-              <i className="fa fa-angle-left pull-right"></i>
-            </span>
-            </Link>
-            <ul className="treeview-menu">
-                <li>
-                    <Link to="#"><i className="fa fa-circle-o"></i> Level One</Link></li>
-                <li>
-                    <a href="#"><i className="fa fa-circle-o"></i> Level One
-                <span className="pull-right-container">
-                  <i className="fa fa-angle-left pull-right"></i>
-                </span>
-                    </a>
-                    <ul className="treeview-menu">
-                        <li><a href="#"><i className="fa fa-circle-o"></i> Level Two</a></li>
-                        <li>
-                            <a href="#"><i className="fa fa-circle-o"></i> Level Two
-                    <span className="pull-right-container">
-                      <i className="fa fa-angle-left pull-right"></i>
-                    </span>
-                            </a>
-                            <ul className="treeview-menu">
-                                <li><a href="#"><i className="fa fa-circle-o"></i> Level Three</a></li>
-                                <li><a href="#"><i className="fa fa-circle-o"></i> Level Three</a></li>
-                            </ul>
-                        </li>
+export default class Sidebar extends React.Component{
+
+    constructor(){
+        super();
+        this.setState({
+          offices: {
+
+          }
+        })
+    }
+
+    componentDidMount(){
+        $.ajax({
+            method: 'GET',
+            async: false,
+            url: configs.baseUrl + 'api/office/getAll',
+            success: function (data) {
+               this.setState({
+                   offices: Immutable.fromJS(data)
+               })
+            }.bind(this)
+        })
+    }
+
+    componentWillMount(){
+        this.subscription = Context.subscribe(this.onContextChange.bind(this));
+    }
+
+    onContextChange(cursor){
+        this.setState({
+            offices: cursor.get("offices")
+        });
+
+    }
+    componentWillUnmount () {
+        this.subscription.dispose();
+    }
+
+
+    render(){
+
+        const items = this.state.offices.map((el, x) => {
+            return (
+                <li key={x} > <Link to={"/office/" + el.get('Id') + '/' + el.get('Name') + '/' + 'departments' }>{el.get('Name')} </Link></li>
+            )
+        });
+
+        return(
+
+        <div>
+            <aside className="main-sidebar main-sidebar-custom">
+                <section className="sidebar sidebar-custom">
+                    <h1>Firm offices</h1>
+                    <hr/>
+                    <ul className="sidebar-menu">
+                        {items}
                     </ul>
-                </li>
-                <li><a href="#"><i className="fa fa-circle-o"></i> Level One</a></li>
-            </ul>
-        </li>
-    )
+                </section>
+            </aside>
+        </div>
+        )
+    }
+
+
+
+
+
+
+
 }
-
-
-
-const Sidebar = () => {
-    return (
-        <aside className="main-sidebar main-sidebar-custom">
-            <section className="sidebar sidebar-custom">
-                <h1>Firm offices</h1>
-                <ul className="sidebar-menu">
-                    <li className="treeview">
-                        <Link to="#">
-                            <i className="fa fa-dashboard"></i> <span>Dashboard</span>
-                        </Link>
-                    </li>
-                    <Multilevel />
-
-                </ul>
-            </section>
-        </aside>
-
-    )
-};
-
-export default Sidebar;
