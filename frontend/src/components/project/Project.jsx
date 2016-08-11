@@ -6,13 +6,13 @@ import Context from '../../context/Context';
 import MyController from './controller/Controller'
 import EditForm from './form/EditForm';
 
-
 export default class Project extends React.Component{
     constructor(){
         super();
     }
     componentWillMount(){
         const departmentId = this.props.routeParams['departmentId'];
+
         this.setState({
             formToggle:false,
             currentPage: 1,
@@ -20,7 +20,6 @@ export default class Project extends React.Component{
         });
         this.subscription = Context.subscribe(this.onContextChange.bind(this));
 
-        console.log('dep ID: ', departmentId);
         Context.cursor.set("items",[]);
         MyController.GetAllProjects(departmentId, 1);
         MyController.GetNumberOfProjects(departmentId);
@@ -96,16 +95,12 @@ export default class Project extends React.Component{
     }
     render(){
 
-
         const totalNumberOfItems = this.state.totalNumberOfItems;
-        console.log('total numberrr: ', this.state.totalNumberOfItems);
-
         const numberOfPages = (totalNumberOfItems == 0) ? 1 : Math.ceil(totalNumberOfItems/5);
-        console.log('nrOfPages', totalNumberOfItems);
-
         const currentPage = this.state.currentPage;
         let modal = "";
         const label = currentPage + "/" + numberOfPages;
+
         if(this.state.formToggle) {
             if (Accessors.model(Context.cursor)) {
                 modal = <EditForm onCancelClick={this.toggleModal.bind(this)}
@@ -118,7 +113,7 @@ export default class Project extends React.Component{
                               Title="Add Project"/>;
             }
         }
-        const items =this.state.items.map( (project, index) => {
+        const items = this.state.items.map( (project, index) => {
             return (
                 <ProjectItem
                     node = {project}
@@ -145,8 +140,8 @@ export default class Project extends React.Component{
                     <td><h3> Team members </h3></td>
                     <td><h3> Duration</h3></td>
                     <td><h3> Status</h3></td>
-
                 </tr>
+
                 </thead>
                 <tbody>
                 {items}
