@@ -31,6 +31,14 @@ namespace ManagementApp.Controllers
             return Json(result);
         }
 
+        [Route("membersCount/{departmentId}")]
+        [HttpGet]
+        public IHttpActionResult CountAllMembersOfADepartment(int departmentId, string name = "",
+            int? jobType = null, int? position = null, int? allocation = null) {
+            return Json(_departmentService.CountAllMembersOfADepartment(departmentId, name, jobType,
+                position, allocation));
+        }
+
         [Route("members/{departmentId}/{pageSize}/{pageNumber}")]
         [HttpGet]
         public IHttpActionResult GetMembersOfDepartment(int departmentId, int pageSize, int pageNumber, string name = "", int? jobType = null, int? position = null, int? allocation = null) {
@@ -60,5 +68,14 @@ namespace ManagementApp.Controllers
             var result = _departmentService.UpdateDepartment(inputInfo);
             return Json(result);
         }
+
+        [Route("totalNumberOfProjectsFromDepartment/{departmentId}")]
+        [HttpGet]
+        public IHttpActionResult GetTotalNumberProjects(int departmentId)
+        {
+            var result = _departmentService.GetTotalNumberOfProjectsFromDepartment(departmentId);
+            return Json(result);
+        }
+
     }
 }

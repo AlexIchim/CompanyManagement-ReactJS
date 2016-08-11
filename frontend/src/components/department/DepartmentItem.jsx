@@ -11,7 +11,7 @@ export default class DepartmentItem extends React.Component<any, any> {
 
     render() {
 
-        console.log('dep Id from Department Component: ', this.props.departmentId);
+        //console.log('dep Id from Department Component: ', this.props.departmentId);
         const props = this.props;
 
         const lft = {
@@ -30,11 +30,11 @@ export default class DepartmentItem extends React.Component<any, any> {
                 <td>{props.element['NumberOfProjects']}</td>
                 <td>
                     <div className="btn-toolbar">
-                        <Link to={""} className="btn btn-info">
+                        <Link to={"department/members/" + props.element.Id} className="btn btn-info">
                             View Members
                         </Link>
 
-                        <Link to={"project/" + this.props.departmentId} className="btn btn-info">
+                        <Link to={"project/" + props.element.Id} className="btn btn-info">
                             View Projects
                         </Link>
                     </div>

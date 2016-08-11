@@ -2,6 +2,7 @@ import React from 'react';
 import ModalTemplate from '../../ModalTemplate';
 import Context from'../../../context/Context';
 import Validator from '../../validator/ProjectValidator'
+import config from '../../helper';
 
 export default class EditAllocationForm extends React.Component{
 
@@ -22,7 +23,19 @@ export default class EditAllocationForm extends React.Component{
     }
 
     onAllocationChange() {
-        var result = Validator.ValidateAllocation(this.refs.inputAllocation.value);
+        
+        var employee = null;
+        $.ajax({
+            method: 'GET',
+            url: config.base + 'employee/getById/' + this.state.model.Id,
+            async: false,
+            success: function(data){
+                employee = data
+            }.bind(this)
+        });
+
+        var result = Validator.ValidateAllocation(this.refs.inputAllocation.value, employee.RemainingAllocation);
+
         if(result.valid){
             this.setState({
                 model: this.state.model,
@@ -48,7 +61,7 @@ export default class EditAllocationForm extends React.Component{
             let allocation = this.refs.inputAllocation.value;
             if(allocation <= 100){
                 model.Allocation = (allocation) ? allocation : model.Allocation;
-
+                console.log('allocation', model.Allocation);
                 Context.cursor.set("model", model);
                 this.props.FormAction();
             }

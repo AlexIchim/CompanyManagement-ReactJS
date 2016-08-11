@@ -4,13 +4,13 @@ import Accessors from '../../../context/Accessors';
 import $ from 'jquery';
 export default new class Controller{
 
-    getAllEmployees(name, jobType, position, allocation){
+    getAllEmployees(departmentId, pageNumber, name, jobType, position, allocation){
         let myUrl = "";
         if(name){
-            myUrl = config.base + 'department/members/1/5/1' + "?name=" + name + "&jobType=" + jobType + "&position=" + position +"&allocation=" + allocation
+            myUrl = config.base + 'department/members/' + departmentId + '/5/' + pageNumber + "?name=" + name + "&jobType=" + jobType + "&position=" + position +"&allocation=" + allocation
         }
         else{
-            myUrl = config.base + 'department/members/1/5/1' + "?jobType=" + jobType + "&position=" + position +"&allocation=" + allocation
+            myUrl = config.base + 'department/members/' + departmentId + '/5/' + pageNumber + "?jobType=" + jobType + "&position=" + position +"&allocation=" + allocation
         }
         console.log('myUrl: ', myUrl);
         $.ajax({
@@ -18,44 +18,50 @@ export default new class Controller{
             url: myUrl,
             async: false,
             success: function(data){
-                console.log("DATA: ", data);
                 Context.cursor.set('items', data);
             }.bind(this)
         })
     }
 
-    Add(){
-        //console.log("Add employee!");
-        console.log("ModeL: ", Context.cursor.get('model'));
+    getTotalNumberOfEmployees(departmentId){
+        $.ajax({
+            method: 'GET',
+            url: config.base + 'department/membersCount/' + departmentId,
+            async: false,
+            success: function (data) {
+                Context.cursor.set('totalNumberOfItems', data);
+            }.bind(this)
+        })
+    }
 
+    Add(departmentId, currentPage, name, jobType, position, allocation){
         $.ajax({
             method: 'POST',
             url: config.base + 'employee/add',
             data: Accessors.model(Context.cursor),
             async: false,
             success: function(data){
-                console.log('success');
+                console.log("Successfully added!");
             }.bind(this)
         });
-        this.getAllEmployees();
-
+        this.getTotalNumberOfEmployees(departmentId);
+        this.getAllEmployees(departmentId, currentPage, name, jobType, position, allocation);
     }
 
-    Edit(){
+    Edit(departmentId, currentPage, name, jobType, position, allocation){
         $.ajax({
             method: 'PUT',
             url: config.base + 'employee/update',
             data: Accessors.model(Context.cursor),
             async: false,
             success: function(data){
-                console.log('success');
-            }.bind(this)
+                console.log("Successfully updated!");
+            }
         });
-        this.getAllEmployees();
+        this.getAllEmployees(departmentId, currentPage, name, jobType, position, allocation);
     }
 
     Delete(element){
-        console.log('we are in delete method, yey');
         const id = element.Id;
 
         $.ajax({
@@ -63,10 +69,9 @@ export default new class Controller{
             url: config.base + 'employee/delete/' + id,
             async: false,
             success: function(data){
-                console.log('success');
+                console.log("Successfully deleted!");
             }.bind(this)
         });
-        //this.getAllEmployees();
     }
 
 }

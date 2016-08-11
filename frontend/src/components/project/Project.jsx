@@ -144,7 +144,7 @@ export default class Project extends React.Component{
                     <td> Project Name </td>
                     <td> Team members </td>
                     <td> Duration </td>
-                    <td> Wiews</td>
+                    <td> Status </td>
                 </tr>
 
                 </thead>

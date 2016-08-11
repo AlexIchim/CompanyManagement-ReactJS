@@ -7,22 +7,9 @@ import Form from './Form';
 import '../../assets/less/index.less';
 import classnames from 'classnames';
 
-const PageButton = (props) => {
-    const nameClass = classnames({"active" : props.isActive, "btn btn-success btn-xs" : true});
-    return (
-        <button id={props.index} className = {nameClass} onClick={props.onPageButtonClick}>
-            {props.index}
-        </button>
-    );
-}
-
 export default class Departments extends React.Component{
     constructor(){
         super();
-    }
-
-    componentWillReceiveProps(props){
-        this.mountComponent(props);
     }
 
     mountComponent(props){
@@ -46,10 +33,16 @@ export default class Departments extends React.Component{
 
     componentWillMount(){
         this.mountComponent(this.props);
-
     }
 
+    componentWillReceiveProps(props){
+        const officeId = props.routeParams['officeId'];
+        Context.cursor.set("items",[]);
+        Context.cursor.set("totalNumberOfItems", -1);
 
+        Controller.getDepartments(officeId, 1);
+        Controller.getTotalNumberOfDepartments(officeId);
+    }
 
     componentWillUnmount(){
         console.log('unmount dep')
@@ -135,7 +128,7 @@ export default class Departments extends React.Component{
         const totalNumberOfDepartments = this.state.totalNumberOfItems;
 
         const numberOfPages = (totalNumberOfDepartments == 0) ? 1 : Math.ceil(totalNumberOfDepartments/5);
-        console.log('nrOfPages', totalNumberOfDepartments);
+        //console.log('nrOfPages', totalNumberOfDepartments);
 
         const currentPage = this.state.currentPage;
 
@@ -147,12 +140,12 @@ export default class Departments extends React.Component{
         if(this.state.formToggle){
             if(Accessors.model(Context.cursor)){
                 form=<Form onCancelClick={this.toggleModal.bind(this)}
-                           FormAction={Controller.Update.bind(this, this.state.officeId, currentPage)}
+                           FormAction={() => {Controller.Update(this.state.officeId, currentPage)}}
                            Title="Edit Department"
                            officeId={this.state.officeId}/>;
             }else{
                 form=<Form onCancelClick={this.toggleModal.bind(this)}
-                           FormAction={Controller.Add.bind(this, this.state.officeId, currentPage)}
+                           FormAction={() => {Controller.Add(this.state.officeId, currentPage)}}
                            Title="Add Department"
                            officeId={this.state.officeId}/>;
             }
@@ -162,7 +155,7 @@ export default class Departments extends React.Component{
             return (
                 <Department
                     element={department}
-                    departmentId= {department.Id}
+                    //departmentId= {department.Id}
                     //linkToEmployees={"department/members/" + department.Id}
                     //linkToProjects={"department/projects/" + department.Id}
                     key={index}
@@ -170,18 +163,6 @@ export default class Departments extends React.Component{
                 />
             )
         })
-
-        /*const buttons = [];
-        for (var i=1; i <= numberOfPages; i++) {
-            buttons.push(
-                <PageButton
-                    index = {i}
-                    key = {i}
-                    onPageButtonClick = {this.onPageButtonClick.bind(this, i)}
-                    isActive = {i === currentPage}
-                />
-            );
-        }*/
 
         const label = currentPage + "/" + numberOfPages;
 

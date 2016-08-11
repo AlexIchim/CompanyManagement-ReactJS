@@ -138,7 +138,7 @@ class ProjectMembers extends React.Component {
                 <Item
                     element = {projectMember}
                     onEdit = {this.onEditAllocationClick.bind(this, projectMember)}
-                    onDelete = {Controller.DeleteAssignment.bind(this, projectMember.Id, this.state.projectId)}
+                    onDelete = {Controller.DeleteAssignment.bind(this, projectMember.Id, this.state.projectId, this.state.currentPage)}
                     key = {index}
                     FormAction={Controller.EditAllocation.bind(this, projectMember, this.state.projectId)}
                     />
@@ -152,7 +152,9 @@ class ProjectMembers extends React.Component {
                                   Title="Edit Project Allocation"/>;
             } else {
                 modal = <AssignEmployeeForm
+                                currentPage={this.state.currentPage}
                               onCancelClick={this.toggleModal.bind(this)}
+
                               ProjectId = {this.state.projectId}
                               FormAction={Controller.Add}
                               Title="Add Project"/>;

@@ -77,10 +77,7 @@ namespace DataAccess.Repositories
             return nr;
 
         }
-        public int GetTotalNumberOfProjectsFromDepartment(int departmentId)
-        {
-            return _context.Projects.Where(p => p.Department.Id == departmentId).Count();
-        }
+       
 
       
 
