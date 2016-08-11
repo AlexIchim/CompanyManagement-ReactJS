@@ -50,19 +50,28 @@ namespace Manager.Services
             return _departmentRepository.GetProjectCountByDepartmentId(id, searchString, statusFilter);
         }
 
-        public IEnumerable<EmployeeInfo> GetEmployeesByDepartmentId(int id, int? pageSize = null, int? pageNumber = null, string searchString = "", int? positionIdFilter = null)
+        public IEnumerable<EmployeeInfo> GetEmployeesByDepartmentId(int id, int? pageSize = null, int? pageNumber = null, string searchString = "",
+                                                                    int? positionIdFilter = null, int? employmentFilter = null,
+                                                                    int? allocationFromFilter = null, int? allocationToFilter = null)
         {
-            var employees = _departmentRepository.GetEmployeesByDepartmentId(id, pageSize, pageNumber, searchString, positionIdFilter);
+            var employees = _departmentRepository.GetEmployeesByDepartmentId(
+                id, pageSize, pageNumber, searchString,
+                positionIdFilter, employmentFilter,
+                allocationFromFilter, allocationToFilter
+            );
             var employeeInfos = _mapper.Map<IEnumerable<EmployeeInfo>>(employees);
 
             return employeeInfos;
         }
 
-        public int GetEmployeeCountByDepartmentId(int id, string searchString = "", int? positionIdFilter = null)
+        public int GetEmployeeCountByDepartmentId(int id, string searchString = "", int? positionIdFilter = null, int? employmentFilter = null,
+                                                  int? allocationFromFilter = null, int? allocationToFilter = null)
         {
-            int count = _departmentRepository.GetEmployeeCountByDepartmentId(id, searchString, positionIdFilter);
-
-            return count;
+            return _departmentRepository.GetEmployeeCountByDepartmentId(
+                id, searchString,
+                positionIdFilter, employmentFilter,
+                allocationFromFilter, allocationToFilter
+            );
         }
 
         public OperationResult Add(AddDepartmentInputInfo inputInfo)
