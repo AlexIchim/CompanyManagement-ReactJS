@@ -16,7 +16,7 @@ namespace DataAccess.Migrations {
 
             Office office1 = new Office() {
                 Name = "Alpha",
-                Address = "Poneyland, California",
+                Address = "San Jose, California",
                 Phone = "400684315332",
                 Image= "data:image/jpeg;base64,/9j/"
             };
