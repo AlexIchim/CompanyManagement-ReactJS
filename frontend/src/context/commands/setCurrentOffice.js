@@ -16,6 +16,9 @@ const  setCurrentOffice = (id, callback) => {
             Command.fetchOfficeDepartmentList(callback);
         }
     }
+    else if(callback!==null && callback!==undefined){
+        callback();
+    }
 };
 
 export default setCurrentOffice;
