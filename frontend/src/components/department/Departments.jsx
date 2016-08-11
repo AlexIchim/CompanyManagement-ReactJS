@@ -125,6 +125,7 @@ export default class Departments extends React.Component{
 
         //console.log("CurrentPage: ", currentPage);
         //console.log("Totaaaal: ", totalNumberOfDepartments, numberOfPages);
+        //console.log("Totaaaal: ", totalNumberOfDepartments, numberOfPages);
 
         let form="";
         if(this.state.formToggle){

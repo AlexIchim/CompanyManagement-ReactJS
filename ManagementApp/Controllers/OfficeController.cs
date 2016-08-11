@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Web;
 using System.Web.Http;
 using System.Web.Http.Cors;
 using Manager.InputInfoModels;
@@ -11,7 +13,7 @@ using Manager.Services;
 namespace ManagementApp.Controllers
 {
     [RoutePrefix("api/office")]
-    [EnableCors("*", "*", "*")]
+    [EnableCors("*", "*", "GET, POST, PUT")]
     public class OfficeController : ApiController
     {
         private readonly OfficeService _officeService;
@@ -59,7 +61,7 @@ namespace ManagementApp.Controllers
         }
 
         [Route("update")]
-        [HttpPut]
+        [HttpPost]
         public IHttpActionResult Update([FromBody] UpdateOfficeInputInfo inputInfo)
         {
             var result = _officeService.Update(inputInfo);

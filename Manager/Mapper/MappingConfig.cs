@@ -27,8 +27,12 @@ namespace Manager.Mapper
             );
             CreateMap<AddDepartmentInputInfo, Department>();
 
-            CreateMap<Office, OfficeInfo>();
-            CreateMap<AddOfficeInputInfo, Office>();
+            CreateMap<Office, OfficeInfo>()
+                .ForMember(m => m.Image, n => n.MapFrom(src => GetString(src.Image)));
+            CreateMap<AddOfficeInputInfo, Office>()
+                .ForMember(m => m.Image, n => n.MapFrom(src => GetBytes(src.Image)));
+            CreateMap<UpdateOfficeInputInfo, Office>()
+                .ForMember(m => m.Image, n => n.MapFrom(src => GetBytes(src.Image)));
 
             CreateMap<Employee, EmployeeInfo>()
                 .ForMember(
@@ -49,6 +53,7 @@ namespace Manager.Mapper
                     employeeInfo => employeeInfo.Department,
                     employee => employee.MapFrom(src => src.Department.Name)
                 );
+
             CreateMap<AddEmployeeInputInfo, Employee>();
 
             CreateMap<Project, ProjectInfo>()
@@ -74,5 +79,21 @@ namespace Manager.Mapper
             CreateMap<AddAssignmentInputInfo, Assignment>();
 
         }
+
+        #region helpers
+
+        static byte[] GetBytes(string str)
+        {
+            byte[] buffer = System.Text.Encoding.UTF8.GetBytes(str);
+            return buffer;
+        }
+
+        static string GetString(byte[] bytes)
+        {
+            string s = System.Text.Encoding.UTF8.GetString(bytes, 0, bytes.Length);
+            return s;
+        }
+
+        #endregion
     }
 }

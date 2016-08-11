@@ -58,10 +58,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="InfoModels\JobTypeInfo.cs" />
+    <Compile Include="InfoModels\PositionTypeInfo.cs" />
     <Compile Include="InfoModels\ProjectMemberInfo.cs" />
     <Compile Include="InfoModels\DepartmentInfo.cs" />
     <Compile Include="InfoModels\EmployeeInfo.cs" />
     <Compile Include="InfoModels\ProjectInfo.cs" />
+    <Compile Include="InfoModels\StatusTypeInfo.cs" />
     <Compile Include="InputInfoModels\AddAssignmentInputInfo.cs" />
     <Compile Include="InputInfoModels\AddEmployeeInputInfo.cs" />
     <Compile Include="InputInfoModels\EditAllocationInputInfo.cs" />

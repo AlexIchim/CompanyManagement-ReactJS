@@ -1,5 +1,9 @@
 import * as React from 'react';
 import {Link} from 'react-router';
+import * as $ from 'jquery';
+import config from '../helper';
+import '../../assets/less/index.less';
+import Context from '../../context/Context';
 
 const Multilevel = () => {
     return (
@@ -41,17 +45,38 @@ const Multilevel = () => {
 
 
 class Sidebar extends React.Component{
-    constructor(){
-        super();
-    }
+    // constructor(){
+    //     super();
+    // }
+    //
+    // componentWillMount(){
+    //     $.ajax({
+    //         method:'GET',
+    //         url: config.base+'office/getAll',
+    //         async:false,
+    //         success: function(data){
+    //             this.setState({
+    //                 offices: cursor.get('items')
+    //             });
+    //             Context.cursor.set('items',data);
+    //             Context.cursor.set('formToggle',false);
+    //         }.bind(this)
+    //     });
+    // }
+    //
 
     render(){
+        // const image = this.state.offices.map ( (office, index) => {
+        //     return (
+        //             office.Image
+        //     );
+        // })
         return (
-
             <aside className="main-sidebar">
                 <section className="sidebar">
+                    <img className="EvozonImage" src="../../src/assets/less/themes/lte/img/full_logo.png" alt="tralala"/>
                     <ul className="sidebar-menu">
-                        <li className="header">MAIN NAVIGATION</li>
+                        <p className="header">Firm Offices</p>
                         <li className="treeview">
                             <Link to="#">
                                 <i className="fa fa-dashboard"></i> <span>Dashboard</span>

@@ -89,6 +89,15 @@ namespace DataAccess.Migrations {
                 JobType = JobTypes.fullTime,
                 Position = Position.Developer
             };
+            Employee employee5 = new Employee()
+            {
+                Name = "Employee4",
+                Address = "Address4",
+                EmploymentDate = new DateTime(2016, 4, 4),
+                Department = department1,
+                JobType = JobTypes.fullTime,
+                Position = Position.Developer
+            };
 
 
             Project project1 = new Project() {

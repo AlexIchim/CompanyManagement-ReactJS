@@ -25,11 +25,9 @@ class Context{
         this.subject.onNext(this.cursor);
     }
 
-
     subscribe(handleFunc){
         return this.subject.subscribe(handleFunc);
     }
-
 }
 
 export default new Context;

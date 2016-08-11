@@ -12,10 +12,6 @@ namespace Manager.Validators
     {
         public AddEmployeeValidator()
         {
-            RuleFor(m => m.Id)
-                .NotEmpty()
-                .GreaterThan(0);
-
             RuleFor(m => m.Name).NotEmpty();
             RuleFor(m => m.Name.Length).LessThanOrEqualTo(30);
 

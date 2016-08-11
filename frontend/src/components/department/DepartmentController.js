@@ -38,7 +38,7 @@ export default new class DepartmentController{
     }
 
     Add(officeId, currentPage){
-       $.ajax({
+        $.ajax({
            method: 'POST',
            url: config.base + 'department/add',
            async: false,

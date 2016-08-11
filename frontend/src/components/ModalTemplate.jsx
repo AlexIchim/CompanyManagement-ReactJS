@@ -1,7 +1,7 @@
 import React from 'react';
 
 export default class ModalTemplate extends React.Component{
-
+    
     componentDidMount(){
         const formModal=this.refs.formModal;
         $(formModal).modal('show');
@@ -16,7 +16,7 @@ export default class ModalTemplate extends React.Component{
         $(formModal).modal('hide');
         this.props.onCancelClick();
     }
-
+    
     render(){
 
         const storeLabel="Save";

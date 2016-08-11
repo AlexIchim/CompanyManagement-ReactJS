@@ -1,7 +1,5 @@
 import config from '../../helper';
 import Context from '../../../context/Context'
-import Accessors from '../../../context/Accessors';
-import GetAllProjects from './GetAllProjects';
 
 export default new class Controller{
 
@@ -59,7 +57,7 @@ export default new class Controller{
     }
 
     Update() {
-        console.log('model is: ', Context.cursor.get('model'));
+        console.log('model is: ', Context.cursor.get('model').Status);
         $.ajax({
             method: 'PUT',
             url: config.base + 'project/update',
@@ -107,15 +105,35 @@ export default new class Controller{
         });
     }
 
-    EditAllocation(projectMember, projectId){
+    EditAllocation(projectId){
+        console.log('controller edit allocation');
+        console.log('allocation ',Context.cursor.get('model').Allocation )
         $.ajax({
-            method: 'GET',
+            method: 'PUT',
             url: config.base + "project/editAllocation",
+            data: {
+                projectId: projectId,
+                employeeId: Context.cursor.get('model').Id,
+                Allocation: Context.cursor.get('model').Allocation
+            },
             async: false,
             success: function(data){
                 console.log('successfully changed allocation');
             }.bind(this)
         });
+        Controller.GetAllProjectMembers(projectId);
+    }
+
+    DeleteAssignment(employeeId, projectId){
+        console.log('employee id, projectId', employeeId, projectId);
+        $.ajax({
+            method: 'DELETE',
+            url: config.base + "project/deleteEmployee/" + employeeId + "/" + projectId,
+            async: false,
+            success: function(data){
+                console.log('successfully deleted assignment')
+            }
+        })
         Controller.GetAllProjectMembers(projectId);
     }
 

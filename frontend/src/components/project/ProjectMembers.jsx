@@ -5,10 +5,11 @@ import Controller from './controller/Controller';
 import Context from '../../context/Context';
 import Accessors from '../../context/Accessors'
 import Form from './form/Form';
+import EditAllocationForm from './form/EditAllocationForm'
+import AssignEmployeeForm from './form/AssignEmployeeForm'
 
 
 const Item = (props) => {
-
     return (
         <tr>
             <td>{props.element['Name']}</td>
@@ -19,7 +20,7 @@ const Item = (props) => {
             </button>
             </td>
             <td>
-                <button className="btn btn-danger margin-top"><i className="fa fa-trash" ></i>
+                <button className="btn btn-danger margin-top" onClick={props.onDelete}><i className="fa fa-trash" ></i>
                     Delete
                 </button>
             </td>
@@ -48,6 +49,8 @@ class ProjectMembers extends React.Component {
                 })
             }.bind(this)
         });
+
+
         this.subscription = Context.subscribe(this.onContextChange.bind(this));
 
     }
@@ -68,21 +71,25 @@ class ProjectMembers extends React.Component {
             formToggle: true
         });
     }
-    onEditAllocationClick(){
+    onEditAllocationClick(projectMember){
+        Context.cursor.set('model', projectMember)
         this.setState({
             formToggle: true
         });
     }
+
     toggleModal(){
         this.setState({formToggle: false})
     }
     render(){
         let modal = "";
+
         const items = this.state.projectMembers.map ( (projectMember, index) => {
             return (
                 <Item
                     element = {projectMember}
-                    onEdit = {this.onEditAllocationClick.bind(this)}
+                    onEdit = {this.onEditAllocationClick.bind(this, projectMember)}
+                    onDelete = {Controller.DeleteAssignment.bind(this, projectMember.Id, this.state.projectId)}
                     key = {index}
                     FormAction={Controller.EditAllocation.bind(this, projectMember, this.state.projectId)}
                     />
@@ -90,13 +97,15 @@ class ProjectMembers extends React.Component {
         });
         if(this.state.formToggle) {
             if (Accessors.model(Context.cursor)) {
-                modal = <EditForm onCancelClick={this.toggleModal.bind(this)}
-                                  FormAction={Controller.Update}
-                                  Title="Edit Project"/>;
+                modal = <EditAllocationForm
+                                  onCancelClick={this.toggleModal.bind(this)}
+                                      FormAction={Controller.EditAllocation.bind(this, this.state.projectId)}
+                                  Title="Edit Project Allocation"/>;
             } else {
-                modal = <Form onCancelClick={this.toggleModal.bind(this)}
+                modal = <AssignEmployeeForm onCancelClick={this.toggleModal.bind(this)}
                               FormAction={Controller.Add}
                               Title="Add Project"/>;
+
             }
         }
         return (
@@ -110,16 +119,11 @@ class ProjectMembers extends React.Component {
                 <thead>
 
                 <tr>
-                    <td>
-                       <h3> Employee Name </h3>
-                    </td>
-                    <td>
-                        <h3>Role</h3>
-                    </td>
-                    <td>
-                        <h3>Allocation</h3>
-                    </td>
+                    <td><h3> Employee Name </h3></td>
+                    <td><h3>Role</h3></td>
+                    <td><h3>Allocation</h3></td>
                 </tr>
+
                 </thead>
                 <tbody>
                     {items}
@@ -128,7 +132,6 @@ class ProjectMembers extends React.Component {
                 </div>
         )
     }
-
 }
 
 export default ProjectMembers;

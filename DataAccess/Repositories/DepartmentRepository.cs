@@ -32,6 +32,8 @@ namespace DataAccess.Repositories
         {
             var department = GetDepartmentById(departmentId);
             return department.Employees.AsQueryable()
+
+            
                 .Where(
                     x =>
                         (((!name.Equals("") && x.Name.Contains(name)) || name.Equals("")) &&
