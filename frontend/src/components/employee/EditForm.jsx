@@ -3,7 +3,7 @@ import Modal from '../modal/Modal.jsx';
 import configs from '../helpers/calls';
 import Context from '../../context/Context.js';
 import * as Immutable from 'immutable';
-//import * as $ from 'jquery';
+import ValidateEmployee from '../validators/ValidateEmployee.js';
 
 export default class EditForm extends React.Component{
     
@@ -13,6 +13,10 @@ export default class EditForm extends React.Component{
             jobTypes:[],
             positionTypes:[],
             employee:{
+            },
+            errors:{
+                NameErrors:[],
+                AddressErrors:[]
             }
         }
     }
@@ -69,8 +73,16 @@ export default class EditForm extends React.Component{
       
     }
 
+    checkErrors()
+    {
+        if (this.state.errors.NameErrors.length == 0)
+            return true
+        return false
+    }
+
     edit(cb){
-   
+        if (this.checkErrors() == true)
+        {
         const jobTypeDescription=this.refs.jobType.options[this.refs.jobType.selectedIndex].value;
         const positionTypeDescription=this.refs.positionType.options[this.refs.positionType.selectedIndex].value
         const employmentDate=this.refs.employmentDate.value;
@@ -102,16 +114,43 @@ export default class EditForm extends React.Component{
             data:newEmployee,
             success: function (data) { 
                 //const index= Context.cursor.get('employees').indexOf(this.props.node)
+                if (data.Success == true)
+                {
                    Context.cursor.get('employees').update( this.props.index,  oldInstance => {
                         oldInstance=np4
                         return oldInstance;
                     });              
                  
-                 cb(); 
+                 cb(); }
+                 else
+                    alert ("Invalid input!")
                  
             }.bind(this)
-        })                
+        })}
+        else
+            alert ("Invalid input!")                
     }
+
+    onChangeName()
+    { 
+        const errors = ValidateEmployee.validateName(this.refs.name.value)
+        this.state.errors.NameErrors = errors
+       
+         this.setState({
+             errors: this.state.errors
+         })
+    }
+
+    onChangeAddress()
+    { 
+        const errors = ValidateEmployee.validateAddress(this.refs.address.value)
+        this.state.errors.AddressErrors = errors
+       
+         this.setState({
+             errors: this.state.errors
+         })
+    }
+
     render(){
 
         const jobTypes=this.state.jobTypes.map((el, x) => {
@@ -134,13 +173,19 @@ export default class EditForm extends React.Component{
             <div className="form-group">
                 <label className="col-sm-4 control-label"> Name </label>
                 <div className="col-sm-6">
-                    <input  ref="name" className="form-control" placeholder="Name" value={this.state.employee.get('Name')} onChange={this.changeData.bind(this)}/>
+                <div className="col-sm-10 red">
+                    {this.state.errors.NameErrors}
+                </div>
+                    <input  ref="name" className="form-control" placeholder="Name" value={this.state.employee.get('Name')} onChange={this.changeData.bind(this)} onKeyUp={this.onChangeName.bind(this)}/>
                 </div>
             </div>
             <div className="form-group">
                 <label className="col-sm-4 control-label"> Address </label>
                 <div className="col-sm-6">
-                    <input  ref="address" className="form-control" placeholder="Address" value={this.state.employee.get('Address')} onChange={this.changeData.bind(this)}/>
+                    <div className="col-sm-10 red">
+                         {this.state.errors.AddressErrors}
+                    </div>
+                    <input  ref="address" className="form-control" placeholder="Address" value={this.state.employee.get('Address')} onChange={this.changeData.bind(this)} onKeyUp={this.onChangeAddress.bind(this)}/>
                 </div>
             </div>
            
@@ -157,7 +202,10 @@ export default class EditForm extends React.Component{
                 
               </div>
             <div className="form-group">
-                <label className="col-sm-4 control-label">Release Date</label>
+                <label className="col-sm-4 control-label">Release Date <div className="col-sm-16 darkred">
+                        *Release date must be set after employment date!
+                        </div></label>
+                
                 <div className="col-sm-6">
                     <div className="input-group date">
                         <div className="input-group-addon">

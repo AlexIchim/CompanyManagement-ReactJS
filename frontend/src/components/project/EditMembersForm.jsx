@@ -5,6 +5,7 @@ import Context from '../../context/Context.js';
 import * as Immutable from 'immutable';
 import * as $ from 'jquery';
 import * as Controller from '../controller';
+import ValidateEmployee from '../validators/ValidateEmployee.js';
 
 export default class EditForm extends React.Component{
     
@@ -13,7 +14,10 @@ export default class EditForm extends React.Component{
         this.state={
             member:{
             },
-            totalAllocation:null
+            totalAllocation:null,
+            errors:{
+                AllocationErrors:[]
+            }
         }
     }
 
@@ -36,6 +40,7 @@ export default class EditForm extends React.Component{
     
 
     edit(cb){
+        console.log(3)
 
 
         const inputInfo = {
@@ -63,7 +68,17 @@ export default class EditForm extends React.Component{
          Controller.getEmployeesByProjectId(projectId,null,1);
     }
 
-  
+    onChangeAllocation()
+    {
+        console.log(2)
+        const errors = ValidateMember.validateAllocation(this.refs.allocation.value)
+        this.state.errors.AllocationErrors = errors
+       
+         this.setState({
+             errors: this.state.errors
+         })
+    }
+
     render(){
 
     
@@ -79,7 +94,10 @@ export default class EditForm extends React.Component{
             <div className="form-group">
                 <label className="col-sm-4 control-label"> Allocation </label>
                 <div className="col-sm-6">
-                    <input  ref="allocation" className="form-control" min="10" placeholder="10" step="10" type="number" max="100" />
+                    <div className="col-sm-10 red">
+                        {this.state.errors.AllocationErrors}
+                    </div>
+                    <input  ref="allocation" className="form-control" min="10" placeholder="10" step="10" type="number" max="100"  onKeyUp={this.onChangeAllocation.bind(this)}/>
                 </div>
             </div>
 
