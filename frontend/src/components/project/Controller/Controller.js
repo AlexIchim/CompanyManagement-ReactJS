@@ -44,7 +44,7 @@ export default new class Controller{
     static GetTotalNumberOfProjects(departmentId){
         $.ajax({
             method: 'GET',
-            url: config.base + 'project/totalNumberOfProjectsFromDepartment/' + departmentId,
+            url: config.base + 'department/totalNumberOfProjectsFromDepartment/' + departmentId,
             async: false,
             success: function(data){
                 console.log("Number of items: ", data);
@@ -151,7 +151,7 @@ export default new class Controller{
 
     EditAllocation(projectId){
         console.log('controller edit allocation');
-        console.log('allocation ',Context.cursor.get('model').Allocation )
+        console.log('allocation on context ',Context.cursor.get('model').Allocation )
         $.ajax({
             method: 'PUT',
             url: config.base + "project/editAllocation",
@@ -165,10 +165,10 @@ export default new class Controller{
                 console.log('successfully changed allocation');
             }.bind(this)
         });
-        Controller.GetAllProjectMembers(projectId);
+        Controller.GetAllProjectMembers(projectId, currentPage);
     }
 
-    DeleteAssignment(employeeId, projectId){
+    DeleteAssignment(employeeId, projectId, currentPage){
         console.log('employee id, projectId', employeeId, projectId);
         $.ajax({
             method: 'DELETE',
@@ -178,8 +178,8 @@ export default new class Controller{
                 console.log('successfully deleted assignment')
             }
         })
-        Controller.GetAllProjectMembers(projectId);
-        Controller.GetTotalNumberProjectMembers(projectId);
+        Controller.GetAllProjectMembers(projectId, currentPage);
+        Controller.GetTotalNumberProjectMembers(projectId, currentPage);
     }
 
 }

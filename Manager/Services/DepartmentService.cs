@@ -110,6 +110,11 @@ namespace Manager.Services
 
             return new OperationResult(true, Messages.SuccessfullyUpdatedDepartment);
         }
+        public int GetTotalNumberOfProjectsFromDepartment(int departmentId)
+        {
+            return _departmentRepository.GetTotalNumberOfProjectsFromDepartment(departmentId);
+        }
+
 
     }
 }

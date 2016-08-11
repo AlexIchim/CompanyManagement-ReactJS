@@ -13,5 +13,6 @@ namespace Contracts
         IEnumerable<Project> FilterProjectsOfADepartmentByStatus(int departmentId, string status);
         void AddDepartment(Department department);
         void Save();
+        int GetTotalNumberOfProjectsFromDepartment(int departmentId);
     }
 }
