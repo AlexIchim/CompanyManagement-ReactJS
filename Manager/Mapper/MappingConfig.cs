@@ -28,6 +28,7 @@ namespace Manager.Mapper
             CreateMap<AddDepartmentInputInfo, Department>();
 
             CreateMap<Office, OfficePartialInfo>();
+            CreateMap<Office, OfficeImagePartialInfo>();
             CreateMap<Office, OfficeInfo>();
             CreateMap<AddOfficeInputInfo, Office>();
             CreateMap<UpdateOfficeInputInfo, Office>();

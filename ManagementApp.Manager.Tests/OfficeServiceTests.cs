@@ -106,6 +106,36 @@ namespace ManagementApp.Manager.Tests
         }
 
         [Test]
+        public void GetImagePartialById_CallsGetByIdFromRepository()
+        {
+            int id = 1;
+            //Arrange
+
+            //Act
+            _officeService.GetImagePartialById(id);
+
+            //Assert
+            _officeRepositoryMock.Verify(x => x.GetById(id), Times.Once);
+        }
+
+        [Test]
+        public void GetImagePartialById_ReturnsCorrectOfficeImagePartial()
+        {
+            //Arrange
+            int id = 1;
+            var office = CreateOffice(1, "Office1", "Address1", "Phone1", "ASD");
+            var officeImagePartial = CreateOfficeImagePartialInfo(1, "Office1", "ASD");
+
+            _officeRepositoryMock.Setup(m => m.GetById(id)).Returns(office);
+            _mapperMock.Setup(m => m.Map<OfficeImagePartialInfo>(office)).Returns(officeImagePartial);
+            //Act
+            var result= _officeService.GetImagePartialById(id);
+
+            //Assert
+            Assert.AreEqual(result.Id, officeImagePartial.Id);
+        }
+
+        [Test]
         public void GetAllDepartmentsOfAnOffice_ReturnsDepartments(){
             //Arrange
             var office = CreateOffice(1, "Office1", "Address1", "Phone1", "ASD");
@@ -416,6 +446,16 @@ namespace ManagementApp.Manager.Tests
             {
                 Id = id,
                 Name = name
+            };
+            return officePartialInfo;
+        }
+        private OfficeImagePartialInfo CreateOfficeImagePartialInfo(int id, string name, string img)
+        {
+            var officePartialInfo = new OfficeImagePartialInfo()
+            {
+                Id = id,
+                Name = name,
+                Image=img
             };
             return officePartialInfo;
         }

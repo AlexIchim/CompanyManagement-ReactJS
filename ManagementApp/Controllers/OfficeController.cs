@@ -37,6 +37,13 @@ namespace ManagementApp.Controllers
             var result = _officeService.GetPartial();
             return Json(result);
         }
+        [Route("getOfficeImagePartial")]
+        [HttpGet]
+        public IHttpActionResult GetImagePartial(int id)
+        {
+            var result = _officeService.GetImagePartialById(id);
+            return Json(result);
+        }
 
         [Route("departmentsCount/{officeId}")]
         [HttpGet]
