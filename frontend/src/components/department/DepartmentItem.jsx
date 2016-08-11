@@ -11,7 +11,7 @@ export default class DepartmentItem extends React.Component<any, any> {
 
     render() {
 
-        console.log('dep Id: ', this.props.departmentId);
+        console.log('dep Id from Department Component: ', this.props.departmentId);
         const props = this.props;
 
         const lft = {

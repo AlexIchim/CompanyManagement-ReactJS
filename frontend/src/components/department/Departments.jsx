@@ -151,6 +151,7 @@ export default class Departments extends React.Component{
             return (
                 <Department
                     element={department}
+                    departmentId= {department.Id}
                     //linkToEmployees={"department/members/" + department.Id}
                     //linkToProjects={"department/projects/" + department.Id}
                     key={index}
