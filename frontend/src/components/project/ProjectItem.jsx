@@ -60,7 +60,7 @@ export default class ProjectItem extends React.Component{
                 <td>{this.props.node.get('Name')}</td>
                 <td>{this.props.node.get('EmployeesNumber')}</td>
                 <td>{this.props.node.get('Status')}</td>
-                <td>{this.props.node.get('Duration')}</td>
+                <td>{this.props.node.get('Duration')} months</td>
                 <td><Link to={linkMembers}> View members | </Link>
                     <button className="linkButton" onClick={this.showEditForm.bind(this)}> Edit | </button>
                     <button className="linkButton" onClick={this.deleteProject.bind(this)}> Delete</button>
