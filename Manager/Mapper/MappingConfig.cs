@@ -39,8 +39,8 @@ namespace Manager.Mapper
                 dest => dest.JobType,
                 opt => opt.MapFrom(src => src.JobType.GetDescription()))
                 .ForMember(
-                e => e.PositionType,
-                o => o.MapFrom(s => s.PositionType.GetDescription()));
+                    e => e.PositionType,
+                    o => o.MapFrom(s => s.PositionType.GetDescription()));
 
 
 
