@@ -20,6 +20,7 @@ namespace ManagementApp
             var cors= new EnableCorsAttribute("*","*", "GET, POST, PUT, DELETE");
 
             config.EnableCors(cors);
+            config.EnableCors(cors);
 
             config.Routes.MapHttpRoute(
                 name: "DefaultApi",

@@ -1,12 +1,12 @@
 import * as React from 'react';
-import Tile from './Tile';
+import Tile from './OfficeTile';
 import config from '../helper';
 import Context from '../../context/Context';
 import Accessors from '../../context/Accessors';
 import '../../assets/less/index.less';
 import Controller from './OfficeController.jsx';
 
-import Form from './Form';
+import Form from './OfficeForm';
 
 export default class Dashboard extends React.Component{
     constructor(){
@@ -72,9 +72,10 @@ export default class Dashboard extends React.Component{
             return (
                 <Tile
                     parentClass="bg-aqua"
+                    name={office.Name}
                     phone={office.Phone}
                     address={office.Address}
-                    link={"Departments/"+office.Id}
+                    link={"office/departments/"+office.Id}
                     icon={office.Image}
                     key={index}
                     index={index}
@@ -82,7 +83,6 @@ export default class Dashboard extends React.Component{
                 />
             );
         })
-        
 
         return (
             <div>

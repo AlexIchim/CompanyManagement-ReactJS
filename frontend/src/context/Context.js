@@ -5,6 +5,7 @@ import * as Rx from 'rx';
 
 const initialState = {
     user : mock,
+    sidebarOffices: null,
     items: null,
     model:null,
     dropdownItems: null
@@ -26,7 +27,6 @@ class Context{
     subscribe(handleFunc){
         return this.subject.subscribe(handleFunc);
     }
-
 }
 
 export default new Context;

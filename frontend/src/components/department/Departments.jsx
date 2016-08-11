@@ -4,6 +4,17 @@ import Context from '../../context/Context';
 import Accessors from '../../context/Accessors';
 import Controller from './DepartmentController';
 import Form from './Form';
+import '../../assets/less/index.less';
+import classnames from 'classnames';
+
+const PageButton = (props) => {
+    const nameClass = classnames({"active" : props.isActive, "btn btn-success btn-xs" : true});
+    return (
+        <button id={props.index} className = {nameClass} onClick={props.onPageButtonClick}>
+            {props.index}
+        </button>
+    );
+}
 
 export default class Departments extends React.Component{
     constructor(){
@@ -11,36 +22,41 @@ export default class Departments extends React.Component{
     }
 
     componentWillMount(){
-
+        console.log('here dep')
         const officeId = this.props.routeParams['officeId'];
 
         this.setState({
             formToggle:false,
-            officeId: officeId
+            officeId: officeId,
+            currentPage: 1
         });
 
         this.subscription=Context.subscribe(this.onContextChange.bind(this));
 
         Context.cursor.set("items",[]);
+        Context.cursor.set("totalNumberOfItems", -1);
 
-        Controller.getDepartments(officeId);
+        Controller.getDepartments(officeId, 1);
+        Controller.getTotalNumberOfDepartments(officeId);
     }
 
     componentWillUnmount(){
+        console.log('unmount dep')
         this.subscription.dispose();
     }
 
 
     onContextChange(cursor){
-        console.log("Context has changed!");
+        //console.log("Context has changed!");
         this.setState({
             formToggle: false,
-            items: cursor.get('items')
+            items: cursor.get('items'),
+            totalNumberOfItems: cursor.get('totalNumberOfItems')
         });
     }
 
     onAddButtonClick(){
-        console.log("Add button pressed!");
+        //console.log("Add button pressed!");
 
         Context.cursor.set('model',null);
         this.setState({
@@ -49,7 +65,7 @@ export default class Departments extends React.Component{
     }
 
     onEditButtonClick(index){
-        console.log("Edit button pressed!");
+        //console.log("Edit button pressed!");
 
         const department = this.state.items[index];
         Context.cursor.set("model", department);
@@ -65,26 +81,38 @@ export default class Departments extends React.Component{
         })
     }
 
+    onPageButtonClick(pageNumber){
+        //console.log("Page number: ", pageNumber);
+        Controller.getDepartments(this.state.officeId, pageNumber);
+        this.setState({
+            currentPage: pageNumber
+        })
+    }
+
     render(){
 
-        console.log("Form toggle: ", this.state.formToggle);
+        const totalNumberOfDepartments = this.state.totalNumberOfItems;
+        const numberOfPages = Math.ceil(totalNumberOfDepartments/5);
+        const currentPage = this.state.currentPage;
+
+
+        //console.log("CurrentPage: ", currentPage);
+        //console.log("Totaaaal: ", totalNumberOfDepartments, numberOfPages);
 
         let form="";
         if(this.state.formToggle){
             if(Accessors.model(Context.cursor)){
                 form=<Form onCancelClick={this.toggleModal.bind(this)}
-                           FormAction={Controller.Update.bind(this, this.state.officeId)}
+                           FormAction={Controller.Update.bind(this, this.state.officeId, currentPage)}
                            Title="Edit Department"
                            officeId={this.state.officeId}/>;
             }else{
                 form=<Form onCancelClick={this.toggleModal.bind(this)}
-                           FormAction={Controller.Add.bind(this, this.state.officeId)}
+                           FormAction={Controller.Add.bind(this, this.state.officeId, currentPage)}
                            Title="Add Department"
                            officeId={this.state.officeId}/>;
             }
         }
-
-        console.log("Hellooooo: ", this.state.items);
 
         const items = this.state.items.map( (department, index) => {
             return (
@@ -98,18 +126,36 @@ export default class Departments extends React.Component{
             )
         })
 
+        const buttons = [];
+        for (var i=1; i <= numberOfPages; i++) {
+            buttons.push(
+                <PageButton
+                    index = {i}
+                    key = {i}
+                    onPageButtonClick = {this.onPageButtonClick.bind(this, i)}
+                    isActive = {i === currentPage}
+                />
+            );
+        }
+
         return (
             <div>
 
                 {form}
 
-                <button className="btn btn-success" onClick={this.onAddButtonClick.bind(this)}>
-                    Add Department
-                </button>
 
-                <table className="table table-stripped">
+
+                <div className=" rectangle ">
+                    <div className="glyphicon glyphicon-plus-sign custom-add-icon"
+                         onClick={this.onAddButtonClick.bind(this)}>
+                        <span className="add-span" onClick={this.onAddButtonClick.bind(this)}>Add Department</span>
+                    </div>
+                </div>
+
+                <table className="table table-stripped ">
                     <thead>
                     <tr>
+                        <td> </td>
                         <td>Department</td>
                         <td>Department Manager</td>
                         <td>Employees</td>
@@ -121,6 +167,8 @@ export default class Departments extends React.Component{
                     {items}
                     </tbody>
                 </table>
+
+                {buttons}
 
             </div>
         )

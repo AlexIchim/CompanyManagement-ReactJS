@@ -4,7 +4,6 @@ using Contracts;
 using Domain.Models;
 using Manager.InfoModels;
 using Manager.InputInfoModels;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.InteropServices;

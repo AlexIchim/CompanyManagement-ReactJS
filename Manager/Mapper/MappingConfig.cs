@@ -26,6 +26,7 @@ namespace Manager.Mapper
             );
             CreateMap<AddDepartmentInputInfo, Department>();
 
+            CreateMap<Office, OfficePartialInfo>();
             CreateMap<Office, OfficeInfo>()
                 .ForMember(m => m.Image, n => n.MapFrom(src => GetString(src.Image)));
             CreateMap<AddOfficeInputInfo, Office>()
@@ -52,6 +53,7 @@ namespace Manager.Mapper
                     employeeInfo => employeeInfo.Department,
                     employee => employee.MapFrom(src => src.Department.Name)
                 );
+
             CreateMap<AddEmployeeInputInfo, Employee>();
 
             CreateMap<Project, ProjectInfo>()

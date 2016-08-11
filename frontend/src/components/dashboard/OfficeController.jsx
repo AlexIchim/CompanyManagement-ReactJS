@@ -14,10 +14,22 @@ export default new class OfficeController {
             success: function(data){                
                 Context.cursor.set('items',data);
                 Context.cursor.set('formToggle',false);
+                console.log(data)
             }.bind(this)
         });
     }
 
+    GetPartial(){
+        console.log("Refreshing");
+        $.ajax({
+            method:'GET',
+            url: config.base+'office/getPartialOffices',
+            async:false,
+            success: function(data){                
+                Context.cursor.set('sidebarOffices',data);
+            }.bind(this)
+        });
+    }
 
     Add(){
         console.log("Add called");
