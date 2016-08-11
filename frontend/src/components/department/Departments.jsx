@@ -4,6 +4,7 @@ import Context from '../../context/Context';
 import Accessors from '../../context/Accessors';
 import Controller from './DepartmentController';
 import Form from './Form';
+import '../../assets/less/index.less';
 import classnames from 'classnames';
 
 const PageButton = (props) => {
@@ -21,7 +22,7 @@ export default class Departments extends React.Component{
     }
 
     componentWillMount(){
-
+        console.log('here dep')
         const officeId = this.props.routeParams['officeId'];
 
         this.setState({
@@ -40,6 +41,7 @@ export default class Departments extends React.Component{
     }
 
     componentWillUnmount(){
+        console.log('unmount dep')
         this.subscription.dispose();
     }
 
@@ -173,13 +175,19 @@ export default class Departments extends React.Component{
 
                 {form}
 
-                <button className="btn btn-success" onClick={this.onAddButtonClick.bind(this)}>
-                    Add Department
-                </button>
 
-                <table className="table table-stripped">
+
+                <div className=" rectangle ">
+                    <div className="glyphicon glyphicon-plus-sign custom-add-icon"
+                         onClick={this.onAddButtonClick.bind(this)}>
+                        <span className="add-span" onClick={this.onAddButtonClick.bind(this)}>Add Department</span>
+                    </div>
+                </div>
+
+                <table className="table table-stripped ">
                     <thead>
                     <tr>
+                        <td> </td>
                         <td>Department</td>
                         <td>Department Manager</td>
                         <td>Employees</td>

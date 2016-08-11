@@ -59,6 +59,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="InfoModels\JobTypeInfo.cs" />
+    <Compile Include="InfoModels\OfficePartialInfo.cs" />
     <Compile Include="InfoModels\PositionTypeInfo.cs" />
     <Compile Include="InfoModels\ProjectMemberInfo.cs" />
     <Compile Include="InfoModels\DepartmentInfo.cs" />

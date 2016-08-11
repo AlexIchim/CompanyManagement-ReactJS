@@ -8,8 +8,7 @@ const Header = () => {
             <a href="/" className="logo">
                 <span className="logo-lg"><img className="header-evozon-image" src="../../src/assets/less/themes/lte/img/full_logo_header.png" alt="tralala"/><b>Fluffy</b>Warriors</span>
             </a>
-            
-            <nav className="navbar navbar-static-top">
+            <nav className=" navbar-custom navbar navbar-static-top">
                 <div className="navbar-custom-menu">
                     <ul className="nav navbar-nav">
                         <li className="dropdown user user-menu">

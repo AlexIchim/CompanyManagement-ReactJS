@@ -1,12 +1,12 @@
 import * as React from 'react';
-import Tile from './Tile';
+import Tile from './OfficeTile';
 import config from '../helper';
 import Context from '../../context/Context';
 import Accessors from '../../context/Accessors';
 import '../../assets/less/index.less';
-import Controller from './OfficeController';
+import Controller from './OfficeController.jsx';
 
-import Form from './Form';
+import Form from './OfficeForm';
 
 export default class Dashboard extends React.Component{
     constructor(){
@@ -72,6 +72,7 @@ export default class Dashboard extends React.Component{
             return (
                 <Tile
                     parentClass="bg-aqua"
+                    name={office.Name}
                     phone={office.Phone}
                     address={office.Address}
                     link={"office/departments/"+office.Id}
@@ -85,10 +86,12 @@ export default class Dashboard extends React.Component{
 
         return (
             <div>
-
-                <div className=" glyphicon glyphicon-plus-sign custom-add-icon "
+                <div className=" rectangle ">
+                     <div className="glyphicon glyphicon-plus-sign custom-add-icon"
                         onClick={this.onAddButtonClick.bind(this)}>
-                    <p className="add-span"></p>
+                     <span className="add-span" onClick={this.onAddButtonClick.bind(this)}>Add Office</span>
+                     </div>
+
                 </div>
 
             <div className="row">

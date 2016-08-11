@@ -15,7 +15,6 @@ const Routes = () => {
         <Router history={hashHistory}>
             <Route path="/" component={App}>
                 <IndexRoute component={Dashboard}/>
-
                 <Route path="ConcertsList" component={ConcertsList}></Route>
                 <Route path="project/members/:projectId" component={ProjectMembers}></Route>
                 <Route path="project" component={Project}></Route>

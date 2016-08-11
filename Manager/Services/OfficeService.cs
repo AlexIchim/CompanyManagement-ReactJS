@@ -35,6 +35,13 @@ namespace Manager.Services
 
             return officeInfos;
         }
+        public IEnumerable<OfficePartialInfo> GetPartial()
+        {
+            var offices = _officeRepository.GetAll();
+            var officeInfos = _mapper.Map<IEnumerable<OfficePartialInfo>>(offices);
+
+            return officeInfos;
+        }
 
         public int CountAllDepartmentsOfAnOffice(int officeId)
         {

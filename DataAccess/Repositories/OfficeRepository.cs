@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data.Entity.Core.Objects;
 using System.Linq;
+using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
 using Contracts;
@@ -56,11 +57,13 @@ namespace DataAccess.Repositories
                 )
                 .Join(_context.Assignments,
                     employee => employee.Id, assignment => assignment.EmployeeId,
-                    (employee, assignment) => new {
+                    (employee, assignment) => new
+                    {
                         employee,
                         assignment
                     }
                 )
+               
                 .GroupBy(x => x.employee)
                 .Select(g => new {
                     Employee = g.Key,
@@ -71,6 +74,8 @@ namespace DataAccess.Repositories
                 .Paginate(pageSize, pageNumber)
                 .ToArray().Select(x => x.Employee)
                 .Where(e => e.Assignments.Where(a => a.ProjectId == projectId).Count() == 0);
+
+           
         }
 
         public void Add(Office office)
