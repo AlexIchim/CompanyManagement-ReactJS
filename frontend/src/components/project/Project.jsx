@@ -6,6 +6,7 @@ import Context from '../../context/Context';
 import MyController from './controller/Controller'
 import EditForm from './form/EditForm';
 
+import '../../assets/less/index.less';
 export default class Project extends React.Component{
     constructor(){
         super();
@@ -128,18 +129,22 @@ export default class Project extends React.Component{
         return (
             <div>
                 {modal}
-
-            <table className="table table-stripped">
-                <thead>
-                <h1> Projects <button id="store" className="btn btn-success margin-top" onClick={this.onAddButtonClick.bind(this)}>
-                    Add New Project
-                </button></h1>
-
+                <p className="table-name">Projects</p>
+                <div className=" rectangle custom-rectangle-project">
+                    <div className="glyphicon glyphicon-plus-sign custom-add-icon"
+                         onClick={this.onAddButtonClick.bind(this)}>
+                        <span className="add-span" onClick={this.onAddButtonClick.bind(this)}>Add Project</span>
+                    </div>
+                </div>
+                
+                <table className="table table-stripped">
+                    <thead>
                 <tr>
-                    <td><h3> Project Name </h3></td>
-                    <td><h3> Team members </h3></td>
-                    <td><h3> Duration</h3></td>
-                    <td><h3> Status</h3></td>
+                    <td> </td>
+                    <td> Project Name </td>
+                    <td> Team members </td>
+                    <td> Duration </td>
+                    <td> Wiews</td>
                 </tr>
 
                 </thead>

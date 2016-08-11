@@ -39,9 +39,9 @@ export default class OfficesList extends React.Component{
         })
 
         return (
-            <ul>
+            <div>
                 {items}
-            </ul>
+            </div>
         )
     }
 }
