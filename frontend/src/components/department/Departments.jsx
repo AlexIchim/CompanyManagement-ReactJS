@@ -21,9 +21,9 @@ export default class Departments extends React.Component{
         super();
     }
 
-    componentWillMount(){
+    mountingComponent(props){
         console.log('here dep')
-        const officeId = this.props.routeParams['officeId'];
+        const officeId = props.routeParams['officeId'];
 
         this.setState({
             formToggle:false,
@@ -38,6 +38,14 @@ export default class Departments extends React.Component{
 
         Controller.getDepartments(officeId, 1);
         Controller.getTotalNumberOfDepartments(officeId);
+    }
+
+    componentWillMount(){
+        this.mountingComponent(this.props);
+    }
+
+    componentWillReceiveProps(props){
+        this.mountingComponent(props);
     }
 
     componentWillUnmount(){
@@ -122,10 +130,10 @@ export default class Departments extends React.Component{
     render(){
 
         const totalNumberOfDepartments = this.state.totalNumberOfItems;
-        const numberOfPages = Math.ceil(totalNumberOfDepartments/5);
+        const numberOfPages = (totalNumberOfDepartments == 0) ? 1 : Math.ceil(totalNumberOfDepartments/5);
         const currentPage = this.state.currentPage;
 
-        //console.log("CurrentPage: ", currentPage);
+        //console.log("CurrentPage: ", numberOfPages);
         //console.log("Totaaaal: ", totalNumberOfDepartments, numberOfPages);
         //console.log("Totaaaal: ", totalNumberOfDepartments, numberOfPages);
 
