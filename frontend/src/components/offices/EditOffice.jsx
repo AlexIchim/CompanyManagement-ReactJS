@@ -277,7 +277,11 @@ export default class EditOffice extends React.Component {
                             </div>
                         </div>
                     </div>
-                    <div><b><font color="red">{this.state.nameMessage}<br/>{this.state.addressMessage}<br/>{this.state.phoneMessage}</font></b></div>
+                    <div><b><font color="red">{this.state.nameMessage}<br/>
+                            {this.state.addressMessage}<br/>
+                            {this.state.phoneMessage}
+                            </font>
+                    </b></div>
                     <div className="box-footer">
                         {saveButton}
                         <button type="button" className="btn btn-md btn-info" onClick={this.props.hideFunc}> Cancel</button>
