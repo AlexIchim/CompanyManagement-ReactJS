@@ -28,7 +28,6 @@ export default class Project extends React.Component {
             async: false,
             url: configs.baseUrl + 'api/project/getProjectStatusDescriptions',
             success: function (data) {
-                console.log("status",data, this);
                 this.setState({
                     statusDescriptions: data                    
                 })

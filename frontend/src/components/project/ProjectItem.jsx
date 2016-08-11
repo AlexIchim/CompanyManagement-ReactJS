@@ -29,7 +29,6 @@ export default class ProjectItem extends React.Component{
     }
 
     deleteProject(){
-        console.log("projId",this.props.node.get('Id'));
          $.ajax({
             method: 'DELETE',
             async: false,
@@ -41,8 +40,6 @@ export default class ProjectItem extends React.Component{
                 this.refresh(this.props.departmentId);       
             }.bind(this),
             error: function (data) {
-                console.log("asd");
-                
             }
         })  
     }

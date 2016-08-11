@@ -21,7 +21,6 @@ export default class Form extends React.Component{
             async: false,
             url: configs.baseUrl + 'api/project/getProjectStatusDescriptions',
             success: function (data) {
-                console.log("status",data, this);
                 this.setState({
                     statusDescriptions: data
                 })
@@ -71,16 +70,23 @@ export default class Form extends React.Component{
                 <div className="col-sm-6">
                     <input  ref="name" className="form-control" placeholder="Name"/>
                 </div>
-                    <label className="col-sm-4 control-label"> Duration </label>
-                    <div className="col-sm-6">
-                        <input  ref="duration" className="form-control" placeholder="Project Duration"/>
-                    </div>
             </div>
+               <div className="form-group">
+                <label className="col-sm-4 control-label"> Duration </label>
+                <div className="col-sm-6">
+                    <input  ref="duration" className="form-control" placeholder="Project Duration"/>
+                </div>
+            </div>
+               <div className="form-group">
+                   <label className="col-sm-4 control-label"> Status </label>
+                   <div className="col-sm-6">
+                       <select ref="status" className="selectpicker form-control">
+                           {statusDescriptions}
+                       </select>
+                   </div>
+               </div>
 
-            <label className="col-sm-4 control-label">Status </label>     
-            <select className="selectpicker" ref="status" >
-                {statusDescriptions}                    
-            </select>
+
      
        
         </Modal>

@@ -22,7 +22,6 @@ export default class EditFormProject extends React.Component{
             async: false,
             url: configs.baseUrl + 'api/project/getProjectStatusDescriptions',
             success: function (data) {
-                console.log("status",data, this);
                 this.setState({
                     statusDescriptions: data
                 })
@@ -93,8 +92,7 @@ export default class EditFormProject extends React.Component{
                 <option value={el.Description} key={x} id={el.Id} >{el.Description}</option>                         
             )
         });
-
-
+        
         return(
 
         <Modal title={'Edit project'} button={'Edit'} close={this.props.close} action={this.edit.bind(this)}>
@@ -103,16 +101,20 @@ export default class EditFormProject extends React.Component{
                 <div className="col-sm-6">
                     <input  ref="name" className="form-control" placeholder="Name" value={this.state.project.get('Name')} onChange={this.changeData.bind(this)}/>
                 </div>
-                
-                <label className="col-sm-4 control-label">Status </label>     
-                <select className="selectpicker" ref="status" >
-                    {statusDescriptions}                    
-                </select>
+            </div>
+            <div className="form-group">
                 <label className="col-sm-4 control-label"> Duration </label>
                 <div className="col-sm-6">
                     <input  ref="duration" className="form-control" placeholder="Duration" value={this.state.project.get('Duration')} onChange={this.changeData.bind(this)}/>
                 </div>
-
+            </div>
+            <div className="form-group">
+                <label className="col-sm-4 control-label">Status </label>
+                <div className="col-sm-6">
+                    <select className="selectpicker form-control" ref="status" >
+                        {statusDescriptions}
+                    </select>
+                </div>
             </div>
        
         </Modal>
