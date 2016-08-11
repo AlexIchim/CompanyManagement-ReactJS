@@ -13,8 +13,7 @@ export default class AddProject extends React.Component{
         this.state = {
             status : "Not started",
             nameMessage : "Error!!! Project name cannot be empty",
-            durationMessage : "",
-            numberOfErrors : 1
+            durationMessage : ""
         }
     }
 
@@ -34,10 +33,8 @@ export default class AddProject extends React.Component{
     }
 
     changeOption(e){      
-        let newProject = this.state.project; 
-        newProject['status'] = e.target.value;
         this.setState({
-            project: newProject
+            status: e.target.value
         });
     }
 

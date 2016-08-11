@@ -47,7 +47,6 @@ export default class EditDetails extends React.Component {
         let department = this.state.department;
         department[d.target.name] = d.target.value;
 
-        console.log(department);
 
         this.setState({
             department: department
@@ -127,7 +126,7 @@ export default class EditDetails extends React.Component {
                                         value={this.state.department.departmentManagerId}
                                         onChange={this.onChangeDepartmentManagerName.bind(this)}
                                 >
-                                    <option value=""  selected>Not allocated</option>
+                                    <option value="">Not allocated</option>
                                     {departmentManagers}
                                 </select>
                             </div>

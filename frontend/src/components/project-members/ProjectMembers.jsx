@@ -22,8 +22,6 @@ export default class ProjectMembers extends Component {
             pageSize: 5,
             pageNumber: 1,
             searchText: '',
-
-            posFilter: null,
             positionList: [],
             selectedPosition: ''
         };
@@ -85,13 +83,14 @@ export default class ProjectMembers extends Component {
         Controller.getEmployeesByProjectId(
             projectId,
             pageSize,
-            pageNumber,
+            1,
             stext, 
             pfilter,
             true,
             (data) => {
                 this.setState({
-                    memberList: data
+                    memberList: data,
+                    pageNumber: 1
                 });
             }
         )
@@ -141,7 +140,7 @@ export default class ProjectMembers extends Component {
             pageSize,
             pageNumber,
             this.state.searchText,
-            this.state.posFilter,
+            this.state.selectedPosition,
             true,
             (data) => {
                 this.setState({

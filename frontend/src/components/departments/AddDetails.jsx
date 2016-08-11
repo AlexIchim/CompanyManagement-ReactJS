@@ -67,7 +67,7 @@ export default class AddDetails extends React.Component {
                                 <select className="form-control"
                                         onChange={this.onDepartmentManagerChange.bind(this)}
                                 >
-                                    <option value="" disabled selected>Select your option</option>
+                                    <option value="" disabled>Select your option</option>
                                     {departmentManagers}
                                 </select>
                             </div>

@@ -20,8 +20,7 @@ export default class EditModal extends React.Component {
             nameMessage : "",
             emailMessage : "",
             addressMessage : "",
-            employmentDateMessage : "",
-            releaseDateMessage : ""
+            employmentDateMessage : ""
         };
     }
 
@@ -176,11 +175,10 @@ export default class EditModal extends React.Component {
                 <div>
                     <b>
                         <font color="red">
-                            {this.state.nameMessage}<br/>
-                            {this.state.emailMessage}<br/>
-                            {this.state.addressMessage}<br/>
-                            {this.state.employmentDateMessage}<br/>
-                            {this.state.releaseDateMessage}
+                            {this.state.nameMessage && <span>{this.state.nameMessage}<br/></span>}
+                            {this.state.emailMessage && <span>{this.state.emailMessage}<br/></span>}
+                            {this.state.addressMessage && <span>{this.state.addressMessage}<br/></span>}
+                            {this.state.employmentDateMessage && <span>{this.state.employmentDateMessage}</span>}
                         </font>
                     </b>
                 </div>

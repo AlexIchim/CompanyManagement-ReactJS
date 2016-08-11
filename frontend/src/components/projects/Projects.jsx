@@ -93,13 +93,14 @@ export default class Projects extends React.Component{
         Controller.getProjectsByDepartmentId(
             this.props.params.departmentId,
             this.state.pageSize,
-            this.state.pageNumber,
+            1,
             stext,
             stfilter,
             true,
             (data) => {
                 this.setState({
-                    projects : data
+                    projects : data,
+                    pageNumber : 1
                 });
         });
 

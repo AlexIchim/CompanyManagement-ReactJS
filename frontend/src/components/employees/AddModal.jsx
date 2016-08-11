@@ -158,10 +158,10 @@ export default class AddModal extends React.Component {
                 <div>
                     <b>
                         <font color="red">
-                            {this.state.nameMessage}<br/>
-                            {this.state.emailMessage}<br/>
-                            {this.state.addressMessage}<br/>
-                            {this.state.employmentDateMessage}
+                            {this.state.nameMessage && <span>{this.state.nameMessage}<br/></span>}
+                            {this.state.emailMessage && <span>{this.state.emailMessage}<br/></span>}
+                            {this.state.addressMessage && <span>{this.state.addressMessage}<br/></span>}
+                            {this.state.employmentDateMessage && <span>{this.state.employmentDateMessage}</span>}
                         </font>
                     </b>
                 </div>

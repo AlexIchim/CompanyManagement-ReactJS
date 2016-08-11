@@ -13,17 +13,31 @@ export default class EditOffice extends React.Component {
             allocation: {
                 id: this.props.employeeAllocation.allocationId,
                 allocationPercentage: this.props.employeeAllocation.allocation
-            }
+            },
+            wrongPercentage: false
         })
     }
 
     onChangeHandler(e){
+        let freeAllocation = 100 - this.state.employeeAllocation.employee.totalAllocation;
+        let allocationPercentage = this.state.employeeAllocation.allocation;
+        
         let newAllocation = this.state.allocation;
-        newAllocation[e.target.name] = e.target.value;
-        this.setState({
-            allocation: newAllocation
-        })
+        
+        let val = e.target.value;
 
+        if(Number.isInteger(+val) && val >= 0 && val <= freeAllocation + allocationPercentage){
+            newAllocation[e.target.name] = val;
+            this.setState({
+                allocation: newAllocation,
+                wrongPercentage: false
+            });
+        }
+        else {
+            this.setState({
+                wrongPercentage: true
+            });   
+        }
     }
 
     onSave(){
@@ -77,8 +91,12 @@ export default class EditOffice extends React.Component {
                         </div>
                     </div>
 
+                    {this.state.wrongPercentage && <font color="red">
+                        <b>&nbsp;Wrong allocation percentage. Insert integer between 0 - {freeAllocation + allocationPercentage}.</b>
+                    </font>}
+
                     <div className="box-footer">
-                        <button type="button" className="btn btn-md btn-info" onClick={this.onSave.bind(this)}> Save</button>
+                        <button type="button" className="btn btn-md btn-info" onClick={this.onSave.bind(this)}  disabled={this.state.wrongPercentage}> Save</button>
                         <button type="button" className="btn btn-md btn-info" onClick={this.props.hideFunc}> Cancel</button>
                     </div>
                 </form>
