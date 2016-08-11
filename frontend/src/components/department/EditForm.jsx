@@ -103,12 +103,14 @@ export default class EditForm extends React.Component{
                     <input  ref="name" className="form-control" placeholder="Name" value={this.state.department.get('Name')} onChange={this.changeData.bind(this)}/>
                 </div>
             </div>
-           
+           <div className="form-group">
            <label className="col-sm-4 control-label"> Department manager </label>
-       
-            <select className="selectpicker" ref="managersDropdown" >
-                {departmentManagers}                    
-            </select>
+               <div className="col-sm-6">
+                    <select className="selectpicker" ref="managersDropdown" >
+                        {departmentManagers}
+                    </select>
+               </div>
+           </div>
      
        
         </Modal>

@@ -76,6 +76,7 @@ export default class Form extends React.Component{
                 <div className="col-sm-6">
                     <input  ref="duration" className="form-control" placeholder="Project Duration"/>
                 </div>
+                   <label className="col-sm-1 control-label"> months </label>
             </div>
                <div className="form-group">
                    <label className="col-sm-4 control-label"> Status </label>
