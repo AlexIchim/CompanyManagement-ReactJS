@@ -9,6 +9,7 @@ import Departments from './components/department/Departments.jsx';
 import Employees from './components/employee/Employees';
 import Project from './components/project/Project.jsx';
 import ProjectMembers from './components/project/ProjectMembers.jsx';
+
 const Routes = () => {
 
     return (
@@ -17,7 +18,7 @@ const Routes = () => {
                 <IndexRoute component={Dashboard}/>
                 <Route path="ConcertsList" component={ConcertsList}></Route>
                 <Route path="project/members/:projectId" component={ProjectMembers}></Route>
-                <Route path="project" component={Project}></Route>
+                <Route path="project/:departmentId" component={Project}></Route>
                 <Route path="office/departments/:officeId" component={Departments}></Route>
                 <Route path="department/members/:departmentId/:pageSize/:pageNumber" component={Employees}></Route>
             </Route>

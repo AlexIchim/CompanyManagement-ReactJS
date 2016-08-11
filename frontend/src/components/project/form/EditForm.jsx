@@ -10,7 +10,6 @@ export default class EditForm extends React.Component {
         super();
     }
     componentWillMount(){
-        //MyController.GetStatusDescriptions();
         $.ajax({
             method:'GET',
             url: config.base + "/project/statusDescriptions",
@@ -49,9 +48,7 @@ export default class EditForm extends React.Component {
             Context.cursor.set("model", model);
             this.props.FormAction();
         }
-
     }
-
 
     onContextChange(newGlobalCursor){
         this.setState({
@@ -62,27 +59,27 @@ export default class EditForm extends React.Component {
     }
 
     onNameChange(){
-        var result = Validator.ValidateName(this.refs.inputName.value);
-        this.updateState(result, null);
-        console.log('name validation: ', result);
-        if(result.valid){
-            this.setState({
-                model: this.state.model,
-                projectName: this.refs.inputName.value,
-            })
+        let nameInput = this.refs.inputName.value;
+        if (!nameInput.replace(/\s/g, '').length) {
+            nameInput = '';
         }
-
+        var result = Validator.ValidateName(nameInput);
+        console.log('VALID?!', result.valid);
+        this.updateState(result, null);
+        this.setState({
+            projectName: nameInput
+        });
     }
+
     onDurationChange(){
         var result = Validator.ValidateDuration(this.refs.inputDuration.value);
         this.updateState(null, result);
-        console.log('duration validation: ', result);
-        if(result.valid) {
-            this.setState({
-                model: this.state.model,
-                projectDuration: this.refs.inputDuration.value
-            });
-        }
+
+        this.setState({
+            model: this.state.model,
+            projectDuration: this.refs.inputDuration.value
+        })
+
     }
 
     updateState(nameVR, durationVR){
@@ -91,16 +88,14 @@ export default class EditForm extends React.Component {
             DurationVR: (durationVR) ? durationVR: this.state.DurationVR
         })
     }
+
     render(){
-        let formIsValid = true;
+        let formIsValid = "";
         let nameVR = "";
         let durationVR = "";
 
-        console.log('form name is valid?', this.state.NameVR.valid)
-        console.log('form duration is valid: ', this.state.DurationVR.valid);
         if(this.state.DurationVR.valid && this.state.NameVR.valid){
             formIsValid = true;
-            console.log('is valid:', formIsValid);
         }
 
         if(!this.state.NameVR.valid){
@@ -110,16 +105,15 @@ export default class EditForm extends React.Component {
             durationVR=<span>{this.state.DurationVR.message}</span>
         }
 
-
         const projectName = this.state.projectName;
         const projectDuration = this.state.projectDuration;
+
         const items = this.state.dropdownItems.map( (status, index) => {
             return ( <option key={status.Index} >{status.Description}</option>
             )});
 
         const model = Accessors.model(Context.cursor);
         const name = model.Name;
-        console.log('duratiooon', model.Duration);
         const duration = model.Duration;
         const status = model.Status;
 

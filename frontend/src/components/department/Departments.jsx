@@ -21,9 +21,13 @@ export default class Departments extends React.Component{
         super();
     }
 
-    componentWillMount(){
+    componentWillReceiveProps(props){
+        this.mountComponent(props);
+    }
+
+    mountComponent(props){
         console.log('here dep')
-        const officeId = this.props.routeParams['officeId'];
+        const officeId = props.routeParams['officeId'];
 
         this.setState({
             formToggle:false,
@@ -39,6 +43,13 @@ export default class Departments extends React.Component{
         Controller.getDepartments(officeId, 1);
         Controller.getTotalNumberOfDepartments(officeId);
     }
+
+    componentWillMount(){
+        this.mountComponent(this.props);
+
+    }
+
+
 
     componentWillUnmount(){
         console.log('unmount dep')
@@ -115,17 +126,20 @@ export default class Departments extends React.Component{
         let numberOfPages = Math.ceil((this.state.totalNumberOfItems)/5);
         this.setState({
             currentPage: numberOfPages
-        })
+        });
         Controller.getDepartments(this.state.officeId, numberOfPages);
     }
 
     render(){
 
         const totalNumberOfDepartments = this.state.totalNumberOfItems;
-        const numberOfPages = Math.ceil(totalNumberOfDepartments/5);
+
+        const numberOfPages = (totalNumberOfDepartments == 0) ? 1 : Math.ceil(totalNumberOfDepartments/5);
+        console.log('nrOfPages', totalNumberOfDepartments);
+
         const currentPage = this.state.currentPage;
 
-        //console.log("CurrentPage: ", currentPage);
+        //console.log("CurrentPage: ", numberOfPages);
         //console.log("Totaaaal: ", totalNumberOfDepartments, numberOfPages);
         //console.log("Totaaaal: ", totalNumberOfDepartments, numberOfPages);
 
@@ -148,6 +162,7 @@ export default class Departments extends React.Component{
             return (
                 <Department
                     element={department}
+                    departmentId= {department.Id}
                     //linkToEmployees={"department/members/" + department.Id}
                     //linkToProjects={"department/projects/" + department.Id}
                     key={index}
@@ -172,17 +187,16 @@ export default class Departments extends React.Component{
 
         return (
             <div>
-
                 {form}
 
-
-
-                <div className=" rectangle ">
+                <p className="table-name">Departments</p>
+                <div className=" rectangle custom-rectangle-department">
                     <div className="glyphicon glyphicon-plus-sign custom-add-icon"
                          onClick={this.onAddButtonClick.bind(this)}>
                         <span className="add-span" onClick={this.onAddButtonClick.bind(this)}>Add Department</span>
                     </div>
                 </div>
+
 
                 <table className="table table-stripped ">
                     <thead>
@@ -192,29 +206,28 @@ export default class Departments extends React.Component{
                         <td>Department Manager</td>
                         <td>Employees</td>
                         <td>Projects</td>
-                        <td>Actions</td>
+                        <td>Views</td>
                     </tr>
                     </thead>
                     <tbody>
                     {items}
                     </tbody>
                 </table>
-
-                <div className="btn-group">
-                    <button className="btn btn-info" onClick={this.onGoToFirstPageButtonClick.bind(this)}>
-                        Go to first page
-                    </button>
-                    <button className="btn btn-warning" onClick={this.onPreviousButtonClick.bind(this)}>
-                        Prev
-                    </button>
-                    <button className="btn btn-warning">{label}</button>
-                    <button className="btn btn-warning" onClick={this.onNextButtonClick.bind(this)}>
-                        Next
-                    </button>
-                    <button className="btn btn-info" onClick={this.onGoToLastPageButtonClick.bind(this)}>
-                        Go to last page
-                    </button>
-                </div>
+                <hr className="fade-hr"></hr>
+                <p className="pagination">
+                    <span  onClick={this.onGoToFirstPageButtonClick.bind(this)}>
+                        First
+                    </span>
+                    <span className=" glyphicon glyphicon-circle-arrow-left" onClick={this.onPreviousButtonClick.bind(this)}>
+                    </span>
+                    <span><b>{label}</b></span>
+                    <span className=" glyphicon glyphicon-circle-arrow-right" onClick={this.onNextButtonClick.bind(this)}>
+                        
+                    </span>
+                    <span  onClick={this.onGoToLastPageButtonClick.bind(this)}>
+                        Last
+                    </span>
+                </p>
 
             </div>
         )

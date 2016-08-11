@@ -18,6 +18,7 @@ export default new class DepartmentController{
     }
 
     static getTotalNumberOfDepartmentsAjaxCall(officeId){
+        console.log('call')
         $.ajax({
             method: 'GET',
             url: config.base + 'office/departmentsCount/' + officeId,

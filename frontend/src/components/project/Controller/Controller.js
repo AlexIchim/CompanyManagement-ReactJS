@@ -4,11 +4,11 @@ import Context from '../../../context/Context'
 export default new class Controller{
 
 
-    static ajaxCall(){
+    static GetAllProjectsFromDepartmentAjaxCall(departmentId, pageNumber){
         console.log('ajax call');
         $.ajax({
             method: 'GET',
-            url: config.base + 'department/projects/1/50/1',
+            url: config.base + 'department/projects/' + departmentId +'/5/' + pageNumber ,
             async: false,
             success: function(data){
                 Context.cursor.set('items', data);
@@ -17,27 +17,52 @@ export default new class Controller{
         })
     }
 
-    static GetAllProjectMembers(projectId){
+    static GetAllProjectMembers(projectId, pageNumber){
         $.ajax({
             method: 'GET',
-            url: config.base + 'project/members/' +projectId + '/5/1',
+            url: config.base + 'project/members/' +projectId + '/5/' + pageNumber,
             async: false,
             success: function(data){
-                console.log('data:', data);
                 Context.cursor.set('items', data);
                 Context.cursor.set('model', null);
             }.bind(this)
         });
     }
 
-    GetAllProjects() {
-        Controller.ajaxCall();
-    }
-    GetProjectMembers(projectId){
-        Controller.GetAllProjectMembers(projectId);
+    static GetTotalNumberProjectMembers(projectId){
+        $.ajax({
+            method: 'GET',
+            url: config.base + 'project/numberOfMembers/' + projectId,
+            async: false,
+            success: function(data){
+                Context.cursor.set('totalNumberOfItems', data)
+            }.bind(this)
+        })
     }
 
+    static GetTotalNumberOfProjects(departmentId){
+        $.ajax({
+            method: 'GET',
+            url: config.base + 'project/totalNumberOfProjectsFromDepartment/' + departmentId,
+            async: false,
+            success: function(data){
+                Context.cursor.set('totalNumberOfItems', data)
+            }.bind(this)
+        })
+    }
+    GetAllProjects(departmentId, pageNumber) {
+        Controller.GetAllProjectsFromDepartmentAjaxCall(departmentId, pageNumber);
+    }
+    GetProjectMembers(projectId, pageNumber){
+        Controller.GetAllProjectMembers(projectId, pageNumber);
+    }
 
+    GetNumberOfProjects(departmentId){
+        Controller.GetTotalNumberOfProjects(departmentId);
+    }
+    GetNrMembers(projectId){
+        Controller.GetTotalNumberProjectMembers(projectId);
+    }
 
     SetDepartmentDropdownItems(){
         $.ajax({
@@ -52,7 +77,7 @@ export default new class Controller{
         });
     }
 
-    Add() {
+    Add(departmentId, currentPage) {
         console.log('name:', Context.cursor.get('model').Name);
         $.ajax({
             method: 'POST',
@@ -68,10 +93,11 @@ export default new class Controller{
                 console.log('success');
             }.bind(this)
         });
-        Controller.ajaxCall();
+        Controller.GetAllProjectsFromDepartmentAjaxCall(departmentId, currentPage);
+        Controller.GetTotalNumberOfProjects(departmentId);
     }
 
-    Update() {
+    Update(departmentId, currentPage) {
         console.log('model is: ', Context.cursor.get('model').Status);
         $.ajax({
             method: 'PUT',
@@ -91,11 +117,11 @@ export default new class Controller{
             }.bind(this)
         });
 
-        Controller.ajaxCall();
+        Controller.GetAllProjectsFromDepartmentAjaxCall(departmentId, currentPage);
 
     }
 
-    Delete(element){
+    Delete(element, departmentId, currentPage){
         console.log('we are in delete method, yey', element.Id);
         const id = element.Id;
         $.ajax({
@@ -106,7 +132,8 @@ export default new class Controller{
                 console.log('success');
             }.bind(this)
         });
-        Controller.ajaxCall();
+        Controller.GetAllProjectsFromDepartmentAjaxCall(departmentId, currentPage);
+        Controller.GetTotalNumberOfProjects(departmentId);
     }
     GetStatusDescriptions(){
         console.log('status descriptions');
@@ -150,6 +177,7 @@ export default new class Controller{
             }
         })
         Controller.GetAllProjectMembers(projectId);
+        Controller.GetTotalNumberProjectMembers(projectId);
     }
 
 }

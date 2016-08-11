@@ -5,20 +5,22 @@ import '../../assets/less/index.less';
 export default class DepartmentItem extends React.Component<any, any> {
 
     onEditButtonClick(){
+
         this.props.onEditButtonClick(this.props.index);
     }
 
     render() {
 
+        console.log('dep Id from Department Component: ', this.props.departmentId);
         const props = this.props;
 
         const lft = {
             float: "left"
         };
-
+        
         return (
             <tr className="table-tr">
-                <td>
+                <td className="td-actions">
                     <div id="editDepartment" className="glyphicon glyphicon-edit custom-edit-icon" style={lft} onClick={this.onEditButtonClick.bind(this)}></div>
                 </td>
 
@@ -32,7 +34,7 @@ export default class DepartmentItem extends React.Component<any, any> {
                             View Members
                         </Link>
 
-                        <Link to={"project"} className="btn btn-info">
+                        <Link to={"project/" + this.props.departmentId} className="btn btn-info">
                             View Projects
                         </Link>
                     </div>

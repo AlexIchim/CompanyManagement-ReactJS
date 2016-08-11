@@ -28,12 +28,9 @@ namespace Manager.Mapper
             CreateMap<AddDepartmentInputInfo, Department>();
 
             CreateMap<Office, OfficePartialInfo>();
-            CreateMap<Office, OfficeInfo>()
-                .ForMember(m => m.Image, n => n.MapFrom(src => GetString(src.Image)));
-            CreateMap<AddOfficeInputInfo, Office>()
-                .ForMember(m => m.Image, n => n.MapFrom(src => GetBytes(src.Image)));
-            CreateMap<UpdateOfficeInputInfo, Office>()
-                .ForMember(m => m.Image, n => n.MapFrom(src => GetBytes(src.Image)));
+            CreateMap<Office, OfficeInfo>();
+            CreateMap<AddOfficeInputInfo, Office>();
+            CreateMap<UpdateOfficeInputInfo, Office>();
 
             CreateMap<Employee, EmployeeInfo>()
                 .ForMember(
@@ -82,18 +79,7 @@ namespace Manager.Mapper
         }
 
         #region helpers
-
-        static byte[] GetBytes(string str)
-        {
-            byte[] buffer = System.Text.Encoding.UTF8.GetBytes(str);
-            return buffer;
-        }
-
-        static string GetString(byte[] bytes)
-        {
-            string s = System.Text.Encoding.UTF8.GetString(bytes, 0, bytes.Length);
-            return s;
-        }
+        
 
         #endregion
     }
