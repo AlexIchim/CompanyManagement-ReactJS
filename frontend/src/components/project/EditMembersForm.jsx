@@ -90,7 +90,7 @@ export default class EditForm extends React.Component{
             <div className="form-group">
                 <label className="col-sm-4 control-label"> Allocation </label>
                 <div className="col-sm-6">
-                    <input  ref="allocation" className="form-control"  value={this.state.member.get('Allocation')} onChange={this.changeData.bind(this)}/>
+                    <input  ref="allocation" className="form-control" min="10" placeholder="10" step="10" type="number" max="100"  onChange={this.changeData.bind(this)}/>
                 </div>
             </div>
 

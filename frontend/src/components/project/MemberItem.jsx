@@ -48,7 +48,7 @@ export default class DepartmentItem extends React.Component{
 
     render(){
 
-        const editForm =  this.state.edit ? <EditMembersForm setPageNr={this.props.setPageNr} projectId = {this.props.projectId} element={this.props.node} show = {this.state.edit} close={this.closeEditForm.bind(this)} /> : ''; 
+        const editForm =  this.state.edit ? <EditMembersForm setPageNr={this.props.setPageNr}  projectId = {this.props.projectId} element={this.props.node} show = {this.state.edit} close={this.closeEditForm.bind(this)} /> : ''; 
 
          return(
         <tr>
