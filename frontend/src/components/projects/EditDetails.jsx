@@ -11,7 +11,8 @@ export default class EditDetails extends React.Component {
         super();
         this.state = {
             project : {},
-            message : "",
+            nameMessage : "",
+            durationMessage : ""
         }
     }
 
@@ -45,6 +46,19 @@ export default class EditDetails extends React.Component {
         });
     }
 
+    getNumberOfErrors(){
+        let numberOfErrors = 0;
+        if(this.state.nameMessage !== ""){
+            numberOfErrors++;
+        }
+
+        if(this.state.durationMessage !== ""){
+            numberOfErrors++;
+        }
+
+        return numberOfErrors;
+    }
+
     onInputChange(){
         var newProjectName = this.refs.name.value;
         var newProjectDuration = parseInt(this.refs.duration.value);
@@ -52,33 +66,35 @@ export default class EditDetails extends React.Component {
 
         if(newProjectName === ""){
             this.setState({
-                message : "Error!!! Project name cannot be empty."
+                nameMessage : "Error!!! Project name cannot be empty."
             });
         } else if(newProjectName.length > 100) {
             this.setState({
-                message : "Error!!! Project name cannot contain more than 100 characters."
-            });
-        } else if(isNaN(newProjectDuration)) {
-            newProjectDuration= 0;
-        } else if(newProjectDuration > 120) {
-            this.setState({
-                message : "Error!!! A project cannot last more than 120 months."
+                nameMessage : "Error!!! Project name cannot contain more than 100 characters."
             });
         } else {
             this.setState({
-                message : ""
+                nameMessage : ""
+            })
+        } 
+        
+        if(isNaN(newProjectDuration)) {
+            newProjectDuration= 0;
+        } else if(newProjectDuration > 120) {
+            this.setState({
+                durationMessage : "Error!!! A project cannot last more than 120 months."
+            });
+            newProjectDuration = parseInt(newProjectDuration / 10);
+        } else {
+            this.setState({
+                durationMessage : ""
             });
         }
  
-        this.refs.name.value = newProjectName;
-        
-        if(this.state.message !== "Error!!! A project cannot last more than 120 months."){
-            newProject.duration = newProjectDuration;
-        }
-
-        if(this.state.message !== "Error!!! Project name cannot contain more than 100 characters."){
-            newProject.name = newProjectName;
-        }
+        this.refs.name.value = newProjectName.substr(0, 99);
+        this.refs.duration.value = newProjectDuration.toString();
+        newProject.name = newProjectName.substr(0, 99);
+        newProject.duration = newProjectDuration;
 
         this.setState({
             project : newProject
@@ -89,10 +105,6 @@ export default class EditDetails extends React.Component {
         let project = this.state.project;
         const onEdit = this.props.onEdit;
         const projectName = this.props.project.name;
-
-        const saveButton = (this.state.message === "") && (this.state.project.name.length <= 100) && (this.state.project.duration <= 120) ? (
-            <button type="button" className="btn btn-info" onClick={this.updateProject.bind(this)}>Save</button>
-        ) : (<button type="button" className="btn btn-info" disabled>Save</button>);
 
         return(
             <div className="box info-box">
@@ -133,8 +145,16 @@ export default class EditDetails extends React.Component {
                     <div><font color="red"><b>{this.state.message}</b></font></div>
                 </div>
 
+                <div>
+                    <font color="red">
+                        <b>
+                            {this.state.nameMessage}<br/>
+                            {this.state.durationMessage}
+                        </b>
+                    </font>
+                </div>
                 <div className="box-footer">
-                    {saveButton}
+                    <button type="button" className="btn btn-info" onClick={this.updateProject.bind(this)} disabled={this.getNumberOfErrors() > 0 && this.state.project.duration < 120}>Save</button>
                     <button type="button" className="btn btn-info" onClick={this.props.hideFunc}>Cancel</button>
                 </div>
             </form>

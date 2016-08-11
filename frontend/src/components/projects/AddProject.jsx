@@ -12,7 +12,9 @@ export default class AddProject extends React.Component{
         super();
         this.state = {
             status : "Not started",
-            message : ""
+            nameMessage : "Error!!! Project name cannot be empty",
+            durationMessage : "",
+            numberOfErrors : 1
         }
     }
 
@@ -31,47 +33,68 @@ export default class AddProject extends React.Component{
             );
     }
 
-    changeOption(e){
-        
+    changeOption(e){      
+        let newProject = this.state.project; 
+        newProject['status'] = e.target.value;
         this.setState({
-            status: e.target.value
+            project: newProject
         });
+    }
 
+    getNumberOfErrors(){
+        let numberOfErrors = 0;
+        if(this.state.nameMessage !== ""){
+            numberOfErrors++;
+        }
+
+        if(this.state.durationMessage !== ""){
+            numberOfErrors++;
+        }
+
+        return numberOfErrors;
     }
 
     onInputChange(){
-        const newProjectName = this.refs.name.value;
-        const newProjectDuration = parseInt(this.refs.duration.value);
+        let newProjectName = this.refs.name.value;
+        let newProjectDuration = parseInt(this.refs.duration.value);
         
         if(newProjectName === "")
         {
             this.setState({
-                message : "Error!!! Project name cannot be empty."
+                nameMessage : "Error!!! Project name cannot be empty."
             });
         } else if(newProjectName.length > 100) {
             this.setState({
-                message : "Error!!! Project name cannot be longer than 100 characters."
+                nameMessage : "Error!!! Project name cannot be longer than 100 characters."
             });
-        } else if(isNaN(newProjectDuration)) {
-            this.refs.duration.value = "0";
+        } else { 
+            this.setState({
+                nameMessage : ""
+            })
+        }
+        
+        
+        if(isNaN(newProjectDuration)) {
+            newProjectDuration = 0
         } else if(newProjectDuration > 120) {
             this.setState({
-                message : "Error!!! A project cannot last more than 120 months."
+                durationMessage : "Error!!! A project cannot last more than 120 months."
             });
+            newProjectDuration = parseInt(newProjectDuration / 10);  
         } else {
             this.setState({
-                message : ""
+                durationMessage : ""
             });
-            this.refs.duration.value = newProjectDuration;
         }
 
+        this.refs.duration.value = newProjectDuration.toString();
+        this.refs.name.value = newProjectName.substr(0, 99);
+        this.setState({
+            numberOfErrors : this.getNumberOfErrors()
+        })
     }
 
     render(){
-
-        const addButton = this.state.message === "" ? (
-            <button type="button" className="btn btn-info" onClick={this.addProject.bind(this)}>Add</button>
-        ) : (<button type="button" className="btn btn-info" disabled>Add</button>);
 
         return (
             <div className="box info-box">
@@ -85,7 +108,7 @@ export default class AddProject extends React.Component{
                             <label>Name</label>
                         </div>
                         <div className="col-md-10">
-                            <input type="text" className="form-control" ref="name" placeholder="Project name" autoComplete="off" onChange={this.onInputChange.bind(this)}></input>
+                            <input type="text" ref="name" className="form-control" value={this.state.name} autoComplete="off" onChange={this.onInputChange.bind(this)}></input>
                          </div>
                     </div>
                     <div className="form-group">
@@ -106,14 +129,20 @@ export default class AddProject extends React.Component{
                             <label>Duration</label>
                         </div>
                         <div className="col-md-10">
-                            <input type="text" autoComplete="off" className="form-control" ref="duration" placeholder="Duration" onChange={this.onInputChange.bind(this)}></input>
+                            <input type="text" autoComplete="off" ref="duration" className="form-control" value={this.state.duration} onChange={this.onInputChange.bind(this)}></input>
                         </div>
                     </div>
-                    <div><font color="red"><b>{this.state.message}</b></font></div>
+                    <div>
+                        <font color="red">
+                            <b>{this.state.nameMessage}<br/>
+                                {this.state.duratioMessage}
+                            </b>
+                        </font>
+                    </div>
                 </div>
 
                 <div className="box-footer">
-                    {addButton}
+                    <button type="button" className="btn btn-info" onClick={this.addProject.bind(this)} disabled={this.getNumberOfErrors() > 0}>Add</button>
                     <button type="button" className="btn btn-info" onClick={this.props.hideFunc}>Cancel</button>
                 </div>
             </form>
