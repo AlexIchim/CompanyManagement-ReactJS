@@ -218,6 +218,7 @@ export default class Projects extends React.Component{
                 <div>
                     <h1>{this.state.departmentName} Department Projects</h1>
                     {modalTemplate}
+                    <br/>
                     <button className="btn btn-md btn-info" onClick={this.addProject.bind(this)}>
                         <span className="glyphicon glyphicon-plus-sign"></span>
                         &nbsp;Add new project
@@ -225,12 +226,12 @@ export default class Projects extends React.Component{
                     <br/><br/>
 
                     <div>
-                        <div className="col-md-6">
-                            <label>Search:&nbsp;&nbsp;</label>
-                            <input type="text" value={this.state.searchText} onChange={this.onSearchTextChange.bind(this)} />
+                        <div className="col-md-2 input-group pull-left">
+                            <input type="text" value={this.state.searchText} placeholder="Search by name" className="form-control" onChange={this.onSearchTextChange.bind(this)} />
+                            <span className="input-group-addon"><i className="fa fa-search"></i></span>
                         </div>
-                        <div className="col-md-6">
-                            <select className="pull-right" value={this.state.selectedStatus} onChange={this.onStatusFilterChange.bind(this)}>
+                        <div className="col-md-2 pull-right">
+                            <select className="pull-right form-control" value={this.state.selectedStatus} onChange={this.onStatusFilterChange.bind(this)}>
                                 <option value="" key={''}>Any Status</option>
                                 <option value="Not Started">Not started</option>
                                 <option value="In progress">In progress</option>
@@ -240,7 +241,7 @@ export default class Projects extends React.Component{
                         </div>
                     </div>
 
-                    <br/>
+                    <br/><br/><br/>
                     <PaginatedTable 
                         header={header} 
                         listOfItems={items}
