@@ -75,22 +75,20 @@ namespace DataAccess.Repositories
             {
                 return new Employee[0];
             }
-            else
-            {
-                return dept.Employees.Where(
-                    e => e.Name.ToLower().Contains(searchString.ToLower()) &&
-                         (positionIdFilter == null || e.PositionId == positionIdFilter) &&
-                         (employmentFilter == null || e.EmploymentHours == employmentFilter.Value) &&
-                         (
-                            allocationFromFilter == null ||
-                            e.ProjectAllocations.Select(a => a.AllocationPercentage).Sum() >= allocationFromFilter.Value
-                         ) &&
-                         (
-                            allocationToFilter == null ||
-                            e.ProjectAllocations.Select(a => a.AllocationPercentage).Sum() <= allocationToFilter.Value
-                         )
-                ).Paginate(pageSize, pageNumber).ToArray();
-            }
+
+            return dept.Employees.Where(
+                e => e.Name.ToLower().Contains(searchString.ToLower()) &&
+                        (positionIdFilter == null || e.PositionId == positionIdFilter) &&
+                        (employmentFilter == null || e.EmploymentHours == employmentFilter.Value) &&
+                        (
+                        allocationFromFilter == null ||
+                        e.ProjectAllocations.Select(a => a.AllocationPercentage).Sum() >= allocationFromFilter.Value
+                        ) &&
+                        (
+                        allocationToFilter == null ||
+                        e.ProjectAllocations.Select(a => a.AllocationPercentage).Sum() <= allocationToFilter.Value
+                        )
+            ).OrderBy(e => e.Name).Paginate(pageSize, pageNumber).ToArray();
         }
 
         public int GetEmployeeCountByDepartmentId(int id, string searchString = "",
@@ -102,22 +100,21 @@ namespace DataAccess.Repositories
             {
                 return 0;
             }
-            else
-            {
-                return dept.Employees.Count(
-                    e => e.Name.ToLower().Contains(searchString.ToLower()) &&
-                         (positionIdFilter == null || e.PositionId == positionIdFilter.Value) &&
-                         (employmentFilter == null || e.EmploymentHours == employmentFilter.Value) &&
-                         (
-                            allocationFromFilter == null ||
-                            e.ProjectAllocations.Select(a => a.AllocationPercentage).Sum() >= allocationFromFilter.Value
-                         ) &&
-                         (
-                            allocationToFilter == null ||
-                            e.ProjectAllocations.Select(a => a.AllocationPercentage).Sum() <= allocationToFilter.Value
-                         )
-                );
-            }
+
+            return dept.Employees.Count(
+                e => e.Name.ToLower().Contains(searchString.ToLower()) &&
+                     (positionIdFilter == null || e.PositionId == positionIdFilter.Value) &&
+                     (employmentFilter == null || e.EmploymentHours == employmentFilter.Value) &&
+                     (
+                        allocationFromFilter == null ||
+                        e.ProjectAllocations.Select(a => a.AllocationPercentage).Sum() >= allocationFromFilter.Value
+                     ) &&
+                     (
+                        allocationToFilter == null ||
+                        e.ProjectAllocations.Select(a => a.AllocationPercentage).Sum() <= allocationToFilter.Value
+                     )
+            );
+
         }
 
         public void Add(Department department, int? departmentManagerId)

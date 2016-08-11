@@ -35,7 +35,7 @@ namespace DataAccess.Repositories
                 a => a.ProjectId == id &&
                      a.Employee.Name.ToLower().Contains(str) &&
                      (positionIdFilter == null || a.Employee.PositionId == positionIdFilter)
-            ).OrderBy(a => a.Id).Paginate(pageSize, pageNumber).ToArray();
+            ).OrderBy(a => a.Employee.Name).Paginate(pageSize, pageNumber).ToArray();
         }
         public int GetProjectMembersCount(int id, string searchString = "", int? positionIdFilter = null)
         {

@@ -42,24 +42,24 @@ namespace DataAccess.Repositories
 
         public int GetAvailableEmployeesCount(int? departmentId, int? positionId, int? projectId)
         {
-            return _context.Employees.Where(
+            return _context.Employees.Count(
                 e => (
-                    (
+                     (
                         e.ProjectAllocations.Count == 0 ||
                         e.ProjectAllocations.Select(a => a.AllocationPercentage).Sum() < 100
-                        ) &&
-                    (departmentId == null || e.DepartmentId == departmentId) &&
-                    (positionId == null || e.PositionId == positionId) &&
-                    (e.ProjectAllocations.Count(a => a.ProjectId == projectId) == 0) &&
-                    (!e.Position.Name.Equals("Department Manager"))
+                     ) &&
+                     (departmentId == null || e.DepartmentId == departmentId) &&
+                     (positionId == null || e.PositionId == positionId) &&
+                     (e.ProjectAllocations.Count(a => a.ProjectId == projectId) == 0) &&
+                     (!e.Position.Name.Equals("Department Manager"))
 
-                    )
-                ).Count();
+                )
+            );
         }
 
         public IEnumerable<Employee> GetAllDepartmentManagers()
         {
-            return _context.Employees.Where(e => e.Position.Id == 1).ToArray();
+            return _context.Employees.Where(e => e.Position.Id == 1).OrderBy(e => e.Name).ToArray();
         }
 
 

@@ -39,9 +39,7 @@ namespace DataAccess.Repositories
 
         public int GetDepartmentCountByOfficeId(int officeId)
         {
-            return _context.Departments
-                .Where(d => d.OfficeId == officeId)
-                .Count();
+            return _context.Departments.Count(d => d.OfficeId == officeId);
         }
 
         public void Add(Office office)
