@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data.Entity.Core.Objects;
 using System.Linq;
+using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
 using Contracts;
@@ -30,30 +31,39 @@ namespace DataAccess.Repositories
             return _context.Offices.SingleOrDefault(o => o.Id == id);
         }
 
-        public IEnumerable<Department> GetAllDepartmentsOfAnOffice(int officeId, int pageSize, int pageNumber)
-        { 
+        public int CountAllDepartmentsOfAnOffice(int officeId)
+        {
             return
                 _context.Departments.Where(d => d.Office.Id == officeId)
-                    .OrderBy(d => d.Id)
-                    .Paginate(pageSize, pageNumber)
-                    .ToArray();
+                    .OrderBy(d => d.Id).Count();
         }
 
-        public IEnumerable<Employee> GetAllAvailableEmployeesOfAnOffice(int officeId, int pageSize, int pageNumber, int? department = null, int? position = null)
+        public IEnumerable<Department> GetAllDepartmentsOfAnOffice(int officeId, int pageSize, int pageNumber)
+        {
+            var office = GetById(officeId);
+            return office.Departments.AsQueryable()
+                .OrderBy(d => d.Id)
+                .Paginate(pageSize, pageNumber)
+                .ToArray();
+        }
+
+        public IEnumerable<Employee> GetAllAvailableEmployeesOfAnOffice(int projectId, int officeId, int pageSize, int pageNumber, int? department = null, int? position = null)
         {
             return _context.Employees
-                .Where(e => 
-                            (e.Department.Office.Id == officeId) &&
-                            ((department.HasValue && e.Department.Id == department) || !department.HasValue) &&
-                            ((position.HasValue && (int)e.Position == position) || !position.HasValue)
-                      )
+                .Where(e =>
+                    (e.Department.Office.Id == officeId) &&
+                    ((department.HasValue && e.Department.Id == department) || !department.HasValue) &&
+                    ((position.HasValue && (int)e.Position == position) || !position.HasValue)
+                )
                 .Join(_context.Assignments,
                     employee => employee.Id, assignment => assignment.EmployeeId,
-                    (employee, assignment) => new {
+                    (employee, assignment) => new
+                    {
                         employee,
                         assignment
                     }
                 )
+               
                 .GroupBy(x => x.employee)
                 .Select(g => new {
                     Employee = g.Key,
@@ -62,7 +72,10 @@ namespace DataAccess.Repositories
                 .Where(x => x.Allocation < 100)
                 .OrderBy(x => x.Employee.Id)
                 .Paginate(pageSize, pageNumber)
-                .ToArray().Select(x => x.Employee);
+                .ToArray().Select(x => x.Employee)
+                .Where(e => e.Assignments.Where(a => a.ProjectId == projectId).Count() == 0);
+
+           
         }
 
         public void Add(Office office)

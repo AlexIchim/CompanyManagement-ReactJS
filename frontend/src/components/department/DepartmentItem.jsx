@@ -4,7 +4,7 @@ import '../../assets/less/index.less';
 
 export default class DepartmentItem extends React.Component<any, any> {
 
-    submit(){
+    onEditButtonClick(){
         this.props.onEditButtonClick(this.props.index);
     }
 
@@ -19,7 +19,7 @@ export default class DepartmentItem extends React.Component<any, any> {
         return (
             <tr className="table-tr">
                 <td>
-                    <div id="editDepartment" className="glyphicon glyphicon-edit custom-edit-icon" style={lft} onClick={this.submit.bind(this)}></div>
+                    <div id="editDepartment" className="glyphicon glyphicon-edit custom-edit-icon" style={lft} onClick={this.onEditButtonClick.bind(this)}></div>
                 </td>
 
                 <td>{props.element['Name']}</td>
@@ -28,12 +28,13 @@ export default class DepartmentItem extends React.Component<any, any> {
                 <td>{props.element['NumberOfProjects']}</td>
                 <td>
                     <div className="btn-toolbar">
-                        <button id="editDepartment" className="btn btn-info" onClick={this.submit.bind(this)}>
+                        <Link to={""} className="btn btn-info">
                             View Members
-                        </button>
-                        <button id="editDepartment" className="btn btn-info" onClick={this.submit.bind(this)}>
+                        </Link>
+
+                        <Link to={"project"} className="btn btn-info">
                             View Projects
-                        </button>
+                        </Link>
                     </div>
                 </td>
             </tr>

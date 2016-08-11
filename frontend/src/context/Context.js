@@ -3,10 +3,12 @@ import * as Immutable from 'immutable';
 import * as Cursor from 'immutable/contrib/cursor';
 import * as Rx from 'rx';
 
+
 const initialState = {
     user : mock,
     sidebarOffices: null,
     items: null,
+    totalNumberOfItems: null,
     model:null,
     dropdownItems: null
 };

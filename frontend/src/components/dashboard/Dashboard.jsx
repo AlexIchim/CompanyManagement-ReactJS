@@ -4,7 +4,7 @@ import config from '../helper';
 import Context from '../../context/Context';
 import Accessors from '../../context/Accessors';
 import '../../assets/less/index.less';
-import Controller from './OfficeController';
+import Controller from './OfficeController.jsx';
 
 import Form from './OfficeForm';
 

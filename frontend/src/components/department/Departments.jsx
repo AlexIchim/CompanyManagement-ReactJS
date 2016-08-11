@@ -81,12 +81,42 @@ export default class Departments extends React.Component{
         })
     }
 
-    onPageButtonClick(pageNumber){
-        //console.log("Page number: ", pageNumber);
-        Controller.getDepartments(this.state.officeId, pageNumber);
+    onPreviousButtonClick(){
+        let currentPage = this.state.currentPage;
+        let newCurrentpage = currentPage - 1;
+        if (currentPage > 1){
+            this.setState({
+                currentPage: newCurrentpage
+            })
+            Controller.getDepartments(this.state.officeId, newCurrentpage);
+        }
+    }
+
+    onNextButtonClick(){
+        let currentPage = this.state.currentPage;
+        let newCurrentpage = currentPage + 1;
+        let numberOfPages = Math.ceil((this.state.totalNumberOfItems)/5);
+        if (currentPage < numberOfPages){
+            this.setState({
+                currentPage: newCurrentpage
+            })
+            Controller.getDepartments(this.state.officeId, newCurrentpage);
+        }
+    }
+
+    onGoToFirstPageButtonClick(){
         this.setState({
-            currentPage: pageNumber
+            currentPage: 1
         })
+        Controller.getDepartments(this.state.officeId, 1);
+    }
+
+    onGoToLastPageButtonClick(){
+        let numberOfPages = Math.ceil((this.state.totalNumberOfItems)/5);
+        this.setState({
+            currentPage: numberOfPages
+        })
+        Controller.getDepartments(this.state.officeId, numberOfPages);
     }
 
     render(){
@@ -95,8 +125,8 @@ export default class Departments extends React.Component{
         const numberOfPages = Math.ceil(totalNumberOfDepartments/5);
         const currentPage = this.state.currentPage;
 
-
         //console.log("CurrentPage: ", currentPage);
+        //console.log("Totaaaal: ", totalNumberOfDepartments, numberOfPages);
         //console.log("Totaaaal: ", totalNumberOfDepartments, numberOfPages);
 
         let form="";
@@ -118,15 +148,15 @@ export default class Departments extends React.Component{
             return (
                 <Department
                     element={department}
-                    linkToEmployees={"department/members/" + department.Id}
-                    linkToProjects={"department/projects/" + department.Id}
+                    //linkToEmployees={"department/members/" + department.Id}
+                    //linkToProjects={"department/projects/" + department.Id}
                     key={index}
                     onEditButtonClick={this.onEditButtonClick.bind(this, index)}
                 />
             )
         })
 
-        const buttons = [];
+        /*const buttons = [];
         for (var i=1; i <= numberOfPages; i++) {
             buttons.push(
                 <PageButton
@@ -136,7 +166,9 @@ export default class Departments extends React.Component{
                     isActive = {i === currentPage}
                 />
             );
-        }
+        }*/
+
+        const label = currentPage + "/" + numberOfPages;
 
         return (
             <div>
@@ -168,7 +200,21 @@ export default class Departments extends React.Component{
                     </tbody>
                 </table>
 
-                {buttons}
+                <div className="btn-group">
+                    <button className="btn btn-info" onClick={this.onGoToFirstPageButtonClick.bind(this)}>
+                        Go to first page
+                    </button>
+                    <button className="btn btn-warning" onClick={this.onPreviousButtonClick.bind(this)}>
+                        Prev
+                    </button>
+                    <button className="btn btn-warning">{label}</button>
+                    <button className="btn btn-warning" onClick={this.onNextButtonClick.bind(this)}>
+                        Next
+                    </button>
+                    <button className="btn btn-info" onClick={this.onGoToLastPageButtonClick.bind(this)}>
+                        Go to last page
+                    </button>
+                </div>
 
             </div>
         )
