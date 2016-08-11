@@ -7,6 +7,9 @@ export default new class Accessors{
     sidebarOffices(cursor){
         return cursor.get('sidebarOffices');
     }
+    sidebarImage(cursor){
+        return cursor.get('sidebarImage');
+    }
     model(cursor){
         return cursor.get('model');
     }

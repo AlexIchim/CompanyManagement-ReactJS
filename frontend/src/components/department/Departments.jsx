@@ -42,6 +42,8 @@ export default class Departments extends React.Component{
 
         Controller.getDepartments(officeId, 1);
         Controller.getTotalNumberOfDepartments(officeId);
+
+        
     }
 
     componentWillMount(){
@@ -189,7 +191,7 @@ export default class Departments extends React.Component{
             <div>
                 {form}
 
-                <p className="table-name">Departments</p>
+                <p className="table-name">Departments </p>
                 <div className=" rectangle custom-rectangle-department">
                     <div className="glyphicon glyphicon-plus-sign custom-add-icon"
                          onClick={this.onAddButtonClick.bind(this)}>

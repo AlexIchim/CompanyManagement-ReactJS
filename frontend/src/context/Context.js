@@ -7,6 +7,7 @@ import * as Rx from 'rx';
 const initialState = {
     user : mock,
     sidebarOffices: null,
+    sidebarImage: null,
     items: null,
     totalNumberOfItems: null,
     model:null,

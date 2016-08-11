@@ -8,7 +8,9 @@ class OfficeTile extends React.Component<any, any>{
     submit(){
         this.props.onEditButtonClick(this.props.index);
     }
-
+    onViewDepartment(){
+        Context.cursor.set('sidebarImage', this.props['icon'])
+    }
     
     render(){
         const props = this.props;
@@ -36,7 +38,7 @@ class OfficeTile extends React.Component<any, any>{
                             <span className="glyphicon glyphicon-earphone"></span>
                             {props['phone']}
                         </span>
-                        <Link to={props['link']} className="small-box-footer">
+                        <Link to={props['link']} className="small-box-footer" onClick={this.onViewDepartment.bind(this)}>
                             <span className="glyphicon glyphicon-eye-open "></span>
                              View Departments
                         </Link>
