@@ -51,6 +51,7 @@ export default new class OfficeController {
             }.bind(this)
         });             
         this.GetAll();
+        this.GetPartial();
     }
 
 
