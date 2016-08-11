@@ -27,7 +27,6 @@ class Context{
     subscribe(handleFunc){
         return this.subject.subscribe(handleFunc);
     }
-
 }
 
 export default new Context;

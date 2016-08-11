@@ -53,6 +53,7 @@ namespace Manager.Mapper
                     employeeInfo => employeeInfo.Department,
                     employee => employee.MapFrom(src => src.Department.Name)
                 );
+
             CreateMap<AddEmployeeInputInfo, Employee>();
 
             CreateMap<Project, ProjectInfo>()

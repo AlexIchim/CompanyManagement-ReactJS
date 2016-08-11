@@ -13,13 +13,15 @@ namespace Manager.Services
     public class EmployeeService
     {
         private readonly IEmployeeRepository _employeeRepository;
+        private readonly IDepartmentRepository _departmentRepository;
         private readonly IMapper _mapper;
         private readonly AddEmployeeValidator _addEmployeeValidator;
         private readonly UpdateEmployeeValidator _updateEmployeeValidator;
 
-        public EmployeeService(IMapper mapper, IEmployeeRepository employeeRepository)
+        public EmployeeService(IMapper mapper, IEmployeeRepository employeeRepository, IDepartmentRepository departmentRepository)
         {
             _employeeRepository = employeeRepository;
+            _departmentRepository = departmentRepository;
             _mapper = mapper;
 
             _addEmployeeValidator = new AddEmployeeValidator();
@@ -57,6 +59,7 @@ namespace Manager.Services
             }
 
             var newEmployee = _mapper.Map<Employee>(inputInfo);
+            newEmployee.Department = _departmentRepository.GetDepartmentById(inputInfo.DepartmentId);
             _employeeRepository.Add(newEmployee);
 
             return new OperationResult(true, Messages.SuccessfullyAddedEmployee);
