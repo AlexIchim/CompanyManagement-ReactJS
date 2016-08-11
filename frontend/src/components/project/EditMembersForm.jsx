@@ -33,26 +33,15 @@ export default class EditForm extends React.Component{
             }.bind(this)
         })   
     }
-
-    
-    changeData(){
-        const newAllocation = this.refs.allocation.value;
-        const newMember= this.state.member.set('Allocation',newAllocation);
-
-        
-  
-        this.setState({
-            member: newMember
-        })
-            
-    }
     
 
     edit(cb){
+
+
         const inputInfo = {
             EmployeeId: this.state.member.get('Id'),
             ProjectId: parseInt(this.props.projectId) ,
-            Allocation: parseInt(this.state.member.get('Allocation'))
+            Allocation: parseInt( this.refs.allocation.value)
         }
 
         console.log(this.state.member.toJS())
@@ -90,7 +79,7 @@ export default class EditForm extends React.Component{
             <div className="form-group">
                 <label className="col-sm-4 control-label"> Allocation </label>
                 <div className="col-sm-6">
-                    <input  ref="allocation" className="form-control" min="10" placeholder="10" step="10" type="number" max="100"  onChange={this.changeData.bind(this)}/>
+                    <input  ref="allocation" className="form-control" min="10" placeholder="10" step="10" type="number" max="100" />
                 </div>
             </div>
 
