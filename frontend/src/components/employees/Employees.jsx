@@ -29,7 +29,10 @@ export default class Employees extends Component {
             searchText: '',
             posFilter: null,
             positionList: [],
-            selectedPosition: ''
+            selectedPosition: '',
+            selectedEmploymentType: '',
+            allocationFrom: '',
+            allocationTo: '',
         };
     }
 
@@ -65,22 +68,33 @@ export default class Employees extends Component {
         this.fetchData();
     }
 
-    fetchData(newSearchText, newPosFilter) {
+    fetchData(newSearchText, newPosFilter, newEmplType, newAllocFrom, newAllocTo) {
         let stext = (newSearchText === null || newSearchText === undefined) ? this.state.searchText : newSearchText;
         let pfilter = (newPosFilter === null || newPosFilter === undefined) ? this.state.selectedPosition : newPosFilter;
+        let etype = (newEmplType === null || newEmplType === undefined) ? this.state.selectedEmploymentType : newEmplType;
+        let afrom = (newAllocFrom === null || newAllocFrom === undefined) ? this.state.allocationFrom : newAllocFrom;
+        let ato = (newAllocTo === null || newAllocTo === undefined) ? this.state.allocationTo : newAllocTo;
 
         if(pfilter === ''){ 
             pfilter = null;
+        }
+
+        if(etype === ''){
+            etype = null;
         }
 
         Controller.getEmployeeCountByDepartmentId(
             this.props.params.departmentId,
             stext,
             pfilter,
+            etype,
+            afrom,
+            ato,
             true,
             (data) => {
                 this.setState({
-                    totalEmployeeCount: data
+                    totalEmployeeCount: data,
+                    pageNumber: 1
                 });
             }
         );
@@ -89,13 +103,17 @@ export default class Employees extends Component {
         Controller.getEmployeesByDepartmentId(
             this.props.params.departmentId,
             this.state.pageSize,
-            this.state.pageNumber,
+            1,
             stext,
             pfilter,
+            etype,
+            afrom,
+            ato,
             true,
             (data) => {
                 this.setState({
-                    employeeList: data
+                    employeeList: data,
+                    pageNumber: 1
                 });
             }
         );
@@ -155,6 +173,9 @@ export default class Employees extends Component {
             pageNumber,
             this.state.searchText,
             this.state.selectedPosition,
+            this.state.selectedEmploymentType,
+            this.state.allocationFrom,
+            this.state.allocationTo,
             true,
             (data) => {
                 this.setState({
@@ -174,15 +195,51 @@ export default class Employees extends Component {
     }
 
     onPositionFilterChange(e){
-         this.setState({
+        this.setState({
             selectedPosition: e.target.value
         });
         this.fetchData(null, e.target.value);
     }
 
+    onEmploymentFilterChange(e){
+        this.setState({
+            selectedEmploymentType: e.target.value
+        });
+        this.fetchData(null, null, e.target.value);
+    }
+
+    onAllocationFromChange(e){
+        let val = e.target.value.trim();
+
+        if(val === '' || Number.isInteger(+val) && val >= 0 && val <= 100){
+            this.setState({
+                allocationFrom: e.target.value
+            });
+
+            if(val === ''){
+                val = null;
+            }
+            this.fetchData(null, null, null, e.target.value);
+        }
+    }
+
+    onAllocationToChange(e){
+        let val = e.target.value.trim();
+
+        if(val === '' || Number.isInteger(+val) && val >= 0 && val <= 100){
+            this.setState({
+                allocationTo: e.target.value
+            });
+
+            if(val === ''){
+                val = null;
+            }
+            this.fetchData(null, null, null, null, e.target.value);
+        }
+    }
+
 
     render() {
-
         const items = this.state.employeeList.map( 
             (e) => <Item key={e.id} data={e}
                          onView={this.viewDetails.bind(this, e)}
@@ -260,6 +317,31 @@ export default class Employees extends Component {
                             <option value="" key={''}>All Positions</option>
                             {positionOptions}
                         </select>
+                    </div>
+                    <div className="col-md-3 pull-right">
+                        <select className="pull-right form-control" value={this.state.selectedEmploymentType} onChange={this.onEmploymentFilterChange.bind(this)}>
+                            <option value="" key={''}>Any Employment Hours Types</option>
+                            <option value="8" key={8}>8</option>
+                            <option value="6" key={6}>6</option>
+                            <option value="4" key={4}>4</option>
+                        </select>
+                    </div>
+                    <br/><br/>
+                    <div className="col-md-6 pull-right text-right">
+                        Total Allocation:<br/>  
+                        
+                        from:&nbsp;  
+                        <input className="text-right" type="text" size="1" placeholder="0"
+                            value={this.state.allocationFrom}
+                            onChange={this.onAllocationFromChange.bind(this)}
+                        />
+                        &nbsp;&nbsp;&nbsp;
+                        to:&nbsp;
+                        <input className="text-right" type="text" size="1" placeholder="100"
+                            value={this.state.allocationTo}
+                            onChange={this.onAllocationToChange.bind(this)}
+                        />
+                                                      
                     </div>
                 </div>
                 
