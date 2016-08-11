@@ -34,7 +34,7 @@ export default class Employees extends React.Component{
         this.setJobTypeDropdownItems();
         this.setPositionDropdownItems();
         MyController.getTotalNumberOfEmployees(departmentId);
-        MyController.getAllEmployees(null,  null, null, null);
+        MyController.getAllEmployees(departmentId, 1, null,  null, null, null);
     }
 
     componentWillMount(){
@@ -46,8 +46,8 @@ export default class Employees extends React.Component{
         Context.cursor.set("items",[]);
         Context.cursor.set("totalNumberOfItems", -1);
 
-        MyController.getAllEmployees(departmentId, 1);
         MyController.getTotalNumberOfEmployees(departmentId);
+        MyController.getAllEmployees(departmentId, 1, null,  null, null, null);
     }
 
     componentWillUnmount(){
@@ -107,7 +107,7 @@ export default class Employees extends React.Component{
             this.setState({
                 currentPage: newCurrentpage
             })
-            MyController.getAllEmployees(this.state.departmentId, newCurrentpage);
+            MyController.getAllEmployees(this.state.departmentId, newCurrentpage, this.state.search, this.state.jobTypeIndex, this.state.positionIndex, this.state.allocationIndex);
         }
     }
 
@@ -119,7 +119,7 @@ export default class Employees extends React.Component{
             this.setState({
                 currentPage: newCurrentpage
             })
-            MyController.getAllEmployees(this.state.departmentId, newCurrentpage);
+            MyController.getAllEmployees(this.state.departmentId, newCurrentpage, this.state.search, this.state.jobTypeIndex, this.state.positionIndex, this.state.allocationIndex);
         }
     }
 
@@ -127,7 +127,7 @@ export default class Employees extends React.Component{
         this.setState({
             currentPage: 1
         })
-        MyController.getAllEmployees(this.state.departmentId, 1);
+        MyController.getAllEmployees(this.state.departmentId, 1, this.state.search, this.state.jobTypeIndex, this.state.positionIndex, this.state.allocationIndex);
     }
 
     onGoToLastPageButtonClick(){
@@ -135,7 +135,7 @@ export default class Employees extends React.Component{
         this.setState({
             currentPage: numberOfPages
         });
-        MyController.getAllEmployees(this.state.departmentId, numberOfPages);
+        MyController.getAllEmployees(this.state.departmentId, numberOfPages, this.state.search, this.state.jobTypeIndex, this.state.positionIndex, this.state.allocationIndex);
     }
 
     setJobTypeDropdownItems(){
@@ -174,7 +174,7 @@ export default class Employees extends React.Component{
             allocationIndex: this.state.allocationIndex,
             search: this.state.search
         })
-        MyController.getAllEmployees(this.state.search, jobTypeIndex, positionIndex, this.state.allocationIndex)
+        MyController.getAllEmployees(this.state.departmentId, this.state.currentPage, this.state.search, jobTypeIndex, positionIndex, this.state.allocationIndex)
     }
     filterByPosition(){
         var select = document.getElementById('positionDropdown');
@@ -186,7 +186,7 @@ export default class Employees extends React.Component{
             allocationIndex: this.state.allocationIndex,
             search: this.state.search
         })
-        MyController.getAllEmployees(this.state.search, jobTypeIndex, positionIndex, this.state.allocationIndex)
+        MyController.getAllEmployees(this.state.departmentId, this.state.currentPage, this.state.search, jobTypeIndex, positionIndex, this.state.allocationIndex)
 
     }
     filterByAllocation(){
@@ -200,7 +200,7 @@ export default class Employees extends React.Component{
             allocationIndex: allocationIndex,
             search: this.state.search
         })
-        MyController.getAllEmployees(this.state.search, this.state.jobTypeIndex, this.state.positionIndex, allocationIndex)
+        MyController.getAllEmployees(this.state.departmentId, this.state.currentPage, this.state.search, this.state.jobTypeIndex, this.state.positionIndex, allocationIndex)
     }
 
     searchByName(){
@@ -212,7 +212,7 @@ export default class Employees extends React.Component{
             allocationIndex: this.state.allocationIndex,
             search: name
         })
-        MyController.getAllEmployees(name, this.state.jobTypeIndex, this.state.positionIndex, this.state.allocationIndex)
+        MyController.getAllEmployees(this.state.departmentId, this.state.currentPage, name, this.state.jobTypeIndex, this.state.positionIndex, this.state.allocationIndex)
 
     }
     render(){
@@ -240,13 +240,13 @@ export default class Employees extends React.Component{
                 } else {
                     if (this.state.buttonClicked === "edit") {
                         modal = <Form onCancelClick={this.toggleModal.bind(this)}
-                                      FormAction={() => {MyController.Edit(this.state.departmentId, currentPage)}}
+                                      FormAction={() => {MyController.Edit(this.state.departmentId, currentPage, this.state.search, this.state.jobTypeIndex, this.state.positionIndex, this.state.allocationIndex)}}
                                       Title="Edit Employee"/>;
                     }
                 }
             }else{
                 modal=<Form onCancelClick={this.toggleModal.bind(this)}
-                            FormAction={() => {MyController.Add(this.state.departmentId, currentPage)}}
+                            FormAction={() => {MyController.Add(this.state.departmentId, currentPage, this.state.search, this.state.jobTypeIndex, this.state.positionIndex, this.state.allocationIndex)}}
                             Title="Add Employee"/>;
             }
         }
