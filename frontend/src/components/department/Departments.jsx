@@ -115,14 +115,17 @@ export default class Departments extends React.Component{
         let numberOfPages = Math.ceil((this.state.totalNumberOfItems)/5);
         this.setState({
             currentPage: numberOfPages
-        })
+        });
         Controller.getDepartments(this.state.officeId, numberOfPages);
     }
 
     render(){
 
         const totalNumberOfDepartments = this.state.totalNumberOfItems;
-        const numberOfPages = Math.ceil(totalNumberOfDepartments/5);
+
+        const numberOfPages = (totalNumberOfDepartments == 0) ? 1 : Math.ceil(totalNumberOfDepartments/5);
+        console.log('nrOfPages', totalNumberOfDepartments);
+
         const currentPage = this.state.currentPage;
 
         //console.log("CurrentPage: ", currentPage);

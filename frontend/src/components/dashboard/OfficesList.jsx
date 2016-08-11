@@ -19,7 +19,7 @@ export default class OfficesList extends React.Component{
 
                 <SidebarTile
                     name={office.Name}
-                    link={"office/departments/"+office.Id + "/5/1"}
+                    link={"office/departments/"+office.Id }
                     key={index}
                     index={index}>
                     

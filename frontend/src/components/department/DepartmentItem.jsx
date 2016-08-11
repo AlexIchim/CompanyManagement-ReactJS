@@ -5,11 +5,13 @@ import '../../assets/less/index.less';
 export default class DepartmentItem extends React.Component<any, any> {
 
     onEditButtonClick(){
+
         this.props.onEditButtonClick(this.props.index);
     }
 
     render() {
 
+        console.log('dep Id: ', this.props.departmentId);
         const props = this.props;
 
         const lft = {
@@ -32,7 +34,7 @@ export default class DepartmentItem extends React.Component<any, any> {
                             View Members
                         </Link>
 
-                        <Link to={"project"} className="btn btn-info">
+                        <Link to={"project/" + this.props.departmentId} className="btn btn-info">
                             View Projects
                         </Link>
                     </div>
