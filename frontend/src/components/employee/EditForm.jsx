@@ -77,22 +77,26 @@ export default class EditForm extends React.Component{
    
         const jobTypeDescription=this.refs.jobType.options[this.refs.jobType.selectedIndex].value;
         const positionTypeDescription=this.refs.positionType.options[this.refs.positionType.selectedIndex].value
+        const employmentDate=this.refs.employmentDate.value;
+        const releaseDate=this.refs.releaseDate.value;
 
         const newEmployee={
             Id: this.state.employee.get('Id'),
             Name:this.state.employee.get('Name'),
             Address: this.state.employee.get("Address"),
-            EmploymentDate: this.state.employee.get("EmploymentDate"),
-            ReleaseDate: this.state.employee.get("ReleaseDate"),
+            EmploymentDate: employmentDate,
+            ReleaseDate: releaseDate,
             JobType: jobTypeDescription,
             PositionType: positionTypeDescription,
             DepartmentId:this.props.departmentId
         }
 
-        console.log(newEmployee);
+         console.log("lala",newEmployee);
 
          const np =this.state.employee.set('JobType',this.refs.jobType.options[this.refs.jobType.selectedIndex].text);
          const np2=np.set('PositionType', this.refs.positionType.options[this.refs.positionType.selectedIndex].text);
+         const np3=np2.set('EmploymentDate',employmentDate);
+         const np4=np3.set('ReleaseDate',releaseDate);
        
       
         $.ajax({
@@ -101,9 +105,9 @@ export default class EditForm extends React.Component{
             url: configs.baseUrl + 'api/employee/updateEmployee',
             data:newEmployee,
             success: function (data) { 
-                   const index= Context.cursor.get('employees').indexOf(this.props.element)
-                   Context.cursor.get('employees').update( index,  oldInstance => {
-                        oldInstance=np2
+                //const index= Context.cursor.get('employees').indexOf(this.props.node)
+                   Context.cursor.get('employees').update( this.props.index,  oldInstance => {
+                        oldInstance=np4
                         return oldInstance;
                     });              
                  

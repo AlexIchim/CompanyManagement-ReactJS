@@ -214,7 +214,7 @@ export default class FormAssign extends React.Component{
                     <td>{el.Name}</td>
                     <td>{el.DepartmentName}</td>
                     <td>{el.Role}</td>
-                    <td>{el.RemainingAllocation}</td>
+                    <td>{el.RemainingAllocation} %</td>
                     <td><input ref="allocation" id={el.Id} onChange={this.onNumbericInputChange.bind(this,el.Id)}type="number"min="10" max={el.RemainingAllocation} step="10" placeholder="10"/></td>
                     <td><input id={el.Id} data-allocation={el.RemainingAllocation} ref="radio" type="radio" name="radio" onChange={this.onChange.bind(this,el.Id)} /></td>
                 </tr>

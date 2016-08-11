@@ -41,7 +41,11 @@ export default class Form extends React.Component{
             Duration: this.refs.duration.value,
             DepartmentId: this.props.departmentId,
         }
+<<<<<<< HEAD
         
+=======
+        ValidateProject(inputInfo)
+>>>>>>> origin/capac
         $.ajax({
             method: 'POST',
             async: false,
@@ -95,12 +99,19 @@ export default class Form extends React.Component{
                     {this.state.errors.NameErrors}
                     <input  ref="name" className="form-control" placeholder="Name" onKeyUp={this.onChangeName.bind(this)}/>
                 </div>
+<<<<<<< HEAD
+                    <label className="col-sm-4 control-label"> Duration </label>
+                    <div className="col-sm-6">
+                        {this.state.errors.DurationErrors}
+                        <input  ref="duration" className="form-control" placeholder="Project Duration" onKeyUp={this.onChangeDuration.bind(this)}/>
+                    </div>
+=======
+>>>>>>> origin/capac
             </div>
                <div className="form-group">
                 <label className="col-sm-4 control-label"> Duration </label>
                 <div className="col-sm-6">
-                        {this.state.errors.DurationErrors}
-                        <input  ref="duration" className="form-control" placeholder="Project Duration" onKeyUp={this.onChangeDuration.bind(this)}/>
+                    <input  ref="duration" className="form-control" placeholder="Project Duration"/>
                 </div>
             </div>
                <div className="form-group">
@@ -113,8 +124,15 @@ export default class Form extends React.Component{
                </div>
 
 
+<<<<<<< HEAD
+            <label className="col-sm-4 control-label">Status </label>     
+            <select className="selectpicker" ref="status" >
+                {statusDescriptions}                    
+            </select>      
+=======
      
        
+>>>>>>> origin/capac
         </Modal>
         )
     }

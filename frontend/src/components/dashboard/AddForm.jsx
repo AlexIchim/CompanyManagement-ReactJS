@@ -25,7 +25,8 @@ export default class AddForm extends React.Component{
          let inputInfo = {
              Name: this.refs.inputName.value,
              Address:this.refs.inputAddress.value,
-             PhoneNumber:this.refs.inputPhone.value
+             PhoneNumber:this.refs.inputPhone.value,
+             Image:this.refs.inputImage.value
          }
 
         $.ajax({
@@ -112,7 +113,7 @@ export default class AddForm extends React.Component{
                         </div>
 
                         <div className="form-group">
-                            <label htmlFor="inputPhone" className="col-sm-2 control-label"> Image </label>
+                            <label htmlFor="inputImage" className="col-sm-2 control-label"> Image </label>
                             <div className="col-sm-10">
                                 <input type="text" className="form-control" ref="inputImage" name="Image" placeholder="http://...">
                                 </input>
