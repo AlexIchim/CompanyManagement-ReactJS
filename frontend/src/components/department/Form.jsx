@@ -61,8 +61,7 @@ export default class Form extends React.Component{
     }
 
     onChangeName()
-    {
-        
+    { 
         const errors = ValidateDepartment.validateName(this.refs.name.value)
         this.state.errors.NameErrors = errors
        

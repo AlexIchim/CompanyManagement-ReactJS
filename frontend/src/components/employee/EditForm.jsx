@@ -3,7 +3,7 @@ import Modal from '../modal/Modal.jsx';
 import configs from '../helpers/calls';
 import Context from '../../context/Context.js';
 import * as Immutable from 'immutable';
-//import * as $ from 'jquery';
+import ValidateEmployee from '../validators/ValidateEmployee.js';
 
 export default class EditForm extends React.Component{
     
@@ -13,6 +13,10 @@ export default class EditForm extends React.Component{
             jobTypes:[],
             positionTypes:[],
             employee:{
+            },
+            errors:{
+                NameErrors:[],
+                AddressErrors:[]
             }
         }
     }
@@ -108,6 +112,27 @@ export default class EditForm extends React.Component{
             }.bind(this)
         })                
     }
+
+    onChangeName()
+    { 
+        const errors = ValidateEmployee.validateName(this.refs.name.value)
+        this.state.errors.NameErrors = errors
+       
+         this.setState({
+             errors: this.state.errors
+         })
+    }
+
+    onChangeAddress()
+    { 
+        const errors = ValidateEmployee.validateAddress(this.refs.address.value)
+        this.state.errors.AddressErrors = errors
+       
+         this.setState({
+             errors: this.state.errors
+         })
+    }
+
     render(){
 
         const jobTypes=this.state.jobTypes.map((el, x) => {
@@ -130,13 +155,15 @@ export default class EditForm extends React.Component{
             <div className="form-group">
                 <label className="col-sm-4 control-label"> Name </label>
                 <div className="col-sm-6">
-                    <input  ref="name" className="form-control" placeholder="Name" value={this.state.employee.get('Name')} onChange={this.changeData.bind(this)}/>
+                    {this.state.errors.NameErrors}
+                    <input  ref="name" className="form-control" placeholder="Name" value={this.state.employee.get('Name')} onChange={this.changeData.bind(this)} onKeyUp={this.onChangeName.bind(this)}/>
                 </div>
             </div>
             <div className="form-group">
                 <label className="col-sm-4 control-label"> Address </label>
                 <div className="col-sm-6">
-                    <input  ref="address" className="form-control" placeholder="Address" value={this.state.employee.get('Address')} onChange={this.changeData.bind(this)}/>
+                    {this.state.errors.AddressErrors}
+                    <input  ref="address" className="form-control" placeholder="Address" value={this.state.employee.get('Address')} onChange={this.changeData.bind(this)} onKeyUp={this.onChangeAddress.bind(this)}/>
                 </div>
             </div>
            

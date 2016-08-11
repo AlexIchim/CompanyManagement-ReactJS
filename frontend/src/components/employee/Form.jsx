@@ -4,6 +4,7 @@ import Context from '../../context/Context.js';
 import * as Immutable from 'immutable';
 import * as Controller from '../controller';
 import Modal from '../modal/Modal.jsx';
+import ValidateEmployee from '../validators/ValidateEmployee.js';
 
 export default class Form extends React.Component{
 
@@ -11,7 +12,12 @@ export default class Form extends React.Component{
         super();
         this.state={
             jobTypes:[],
-            positionTypes:[]
+            positionTypes:[],
+            errors:{
+                NameErrors:[],
+                AddressErrors:[],
+                DateErrors:[]
+            }
         }
     }
 
@@ -68,15 +74,45 @@ export default class Form extends React.Component{
             url: configs.baseUrl + 'api/employee/addEmployee',
             data:inputInfo,
             success: function (data) {              
-                 cb(); 
-                 this.refresh(this.props.departmentId);
+                
+                
+                 if (data.Success == false)
+                {
+                    alert("Release date must be set after employment date!")
+                    
+                }else{
+                     cb(); 
+                     this.refresh(this.props.departmentId);
+                }
+  
             }.bind(this)
-        })   
+         })
+      
         
     }
 
     refresh(departmentId){
-         Controller.getAllEmployeesByDepartmentId(departmentId,1)
+         Controller.getAllEmployeesByDepartmentId(departmentId,"",null,{},{},1)
+    }
+
+    onChangeName()
+    { 
+        const errors = ValidateEmployee.validateName(this.refs.name.value)
+        this.state.errors.NameErrors = errors
+       
+         this.setState({
+             errors: this.state.errors
+         })
+    }
+
+    onChangeAddress()
+    { 
+        const errors = ValidateEmployee.validateAddress(this.refs.address.value)
+        this.state.errors.AddressErrors = errors
+       
+         this.setState({
+             errors: this.state.errors
+         })
     }
 
     render(){
@@ -97,13 +133,15 @@ export default class Form extends React.Component{
            <div className="form-group">
                 <label className="col-sm-4 control-label"> Name </label>
                 <div className="col-sm-6">
-                    <input  ref="name" className="form-control" placeholder="Name"/>
+                    {this.state.errors.NameErrors}
+                    <input  ref="name" className="form-control" placeholder="Name" onKeyUp={this.onChangeName.bind(this)}/>
                 </div>
             </div>
             <div className="form-group">
                 <label className="col-sm-4 control-label"> Address </label>
                 <div className="col-sm-6">
-                    <input  ref="address" className="form-control" placeholder="Address"/>
+                    {this.state.errors.AddressErrors}
+                    <input  ref="address" className="form-control" placeholder="Address" onKeyUp={this.onChangeAddress.bind(this)}/>
                 </div>
             </div>
             <div className="form-group">
@@ -125,6 +163,7 @@ export default class Form extends React.Component{
                       <div className="input-group-addon">
                         <i className="fa fa-calendar"></i>
                       </div>
+                        {this.state.DateErrors}
                       <input type="text" ref ="releaseDate"className="form-control pull-right" id="datepicker2"/>
                     </div>
                 </div>
