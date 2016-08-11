@@ -214,10 +214,8 @@ render(){
                 </div>
 
                 <div className="col-sm-2 pull-left form-group">
-
                         <label />
                         <input type="search" ref="search" className="form-control" placeholder="Search employee" onChange={this.onSearchChange.bind(this)}/>
-
                 </div>
             </div>
         </div>
