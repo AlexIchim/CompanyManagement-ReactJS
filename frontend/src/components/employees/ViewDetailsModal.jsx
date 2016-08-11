@@ -51,7 +51,7 @@ export default (props) => {
                         </tr>
                         <tr>
                             <td>Total Allocation:</td>
-                            <td>{employee.totalAllocation}%</td>
+                            <td>{employee.totalAllocation} %</td>
                         </tr>
                     </tbody>
                 </table>

@@ -28,7 +28,7 @@ namespace Manager.Validators
 
         private static EmailValidationResult ValidateEmail(string email)
         {
-            if (email.Length > 200)
+            if (email!= null && email.Length > 200)
             {
                 return EmailValidationResult.TooLongEmail;
             }
@@ -37,7 +37,7 @@ namespace Manager.Validators
 
         private static AddressValidationResult ValidateAddress(string address)
         {
-            if (address == null || address.Length > 300)
+            if (address!= null && address.Length > 300)
             {
                 return AddressValidationResult.TooLongAddress;
             }
