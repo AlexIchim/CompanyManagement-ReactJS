@@ -196,7 +196,7 @@ export default class EditForm extends React.Component{
                       <div className="input-group-addon">
                         <i className="fa fa-calendar"></i>
                       </div>
-                      <input type="text" ref="employmentDate" className="form-control" id="datepicker1" value={this.state.employee.get('EmploymentDate')}onChange={this.changeData.bind(this)}/>
+                      <input type="text" ref="employmentDate" className="form-control pull-right" id="datepicker1" value={this.state.employee.get('EmploymentDate')}onChange={this.changeData.bind(this)}/>
                     </div>
                  </div>
                 
@@ -211,7 +211,7 @@ export default class EditForm extends React.Component{
                         <div className="input-group-addon">
                             <i className="fa fa-calendar"></i>
                         </div>
-                        <input type="text" ref ="releaseDate" className="form-control" id="datepicker2" value={this.state.employee.get('ReleaseDate')} onChange={this.changeData.bind(this)}/>
+                        <input type="text" ref ="releaseDate" className="form-control pull-right" id="datepicker2" value={this.state.employee.get('ReleaseDate')} onChange={this.changeData.bind(this)}/>
                     </div>
                 </div>
             </div>
@@ -219,7 +219,7 @@ export default class EditForm extends React.Component{
            <div className="form-group">
                <label className="col-sm-4 control-label"> Job Type </label>
                <div className="col-sm-6">
-                    <select className="form-control" ref="jobType" >
+                    <select className="selectpicker form-control" ref="jobType" >
                         {jobTypes}
                     </select>
                 </div>
