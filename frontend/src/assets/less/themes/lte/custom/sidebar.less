@@ -1,8 +1,6 @@
 @custom-blue: #3fc3f2;
 @table-head-blue: rgba(91, 185, 247, 0.43);
-.box-header{
-  //background-color: rgba(91, 185, 247, 0.43);
-}
+
 .error-color{
   color: red;
 }
@@ -11,58 +9,22 @@
   background-color: @table-head-blue;
 }
 
-.view-details-li:hover{
-  background-color: black !important;
-}
+//.view-details-li:hover{
+//  background-color: black !important;
+//}
 
 
 .btn{
   margin-right: 5px;
 }
+
 .main-sidebar{
   position: fixed;
 }
 .box-body{
   overflow: hidden;
 }
-thead{
-  background-color: rgba(91, 185, 247, 0.43);
-  font-weight: bold;
-}
-.table-name{
-  width: 100%;
-  text-align: center;
-  font-weight: bold;
-  font-size: 30px;
-  color: @custom-blue;
-}
-//actions TD(ala din fata) projects
-.td-actions{
-  width: 120px;
-}
 
-
-//PAGINAREA LA DEPARTMENTS
-.pagination{
-  //padding-top: 10px;
-  //border-top: groove;
-  margin-top: 0px;
-  //border-color: rgba(91, 185, 247, 0.43);
-  width: 100%;
-  text-align: center;
-}
-.pagination span{
-  color: #3fc3f2;
-  font-size: 20px;
-  font-weight: 400;
-  margin: 5px;
-}
-
-.pagination .glyphicon:hover{
-  color: #1269d3;;
-}
-
-//---------------------------------
 .office-sidebar-tile{
   text-align: center;
   padding: 5px 0px 5px 0px;
@@ -70,7 +32,7 @@ thead{
 }
 
 .office-sidebar-tile:hover{
-  border-left: 3px solid #3fc3f2;
+  border-left: 3px solid @custom-blue;
   background-color: rgba(91, 185, 247, 0.14);
 }
 
@@ -78,6 +40,7 @@ thead{
   position: relative;
   background-color: white !important;
 }
+
 .office-sidebar-tile{
   text-transform: uppercase;
 }
@@ -85,76 +48,6 @@ thead{
   box-shadow: 3px 3px 7px #888888;;
   border-radius: 6px;
 }
-
-//.info-box-custom{
-//  overflow:hidden;
-//
-//}
-
-.small-icon{
-  width: 100px;
-  height: 102px;
-  vertical-align: top;
-  //border-radius: 10px 0px 0px 10px;
-}
-
-.glyphicon{
-  margin-right: 5px;
-}
-//RECTANGLE----------------------
-.rectangle{
-    height: 36px;
-    width: 36px;
-    overflow: hidden;
-    display: block;
-    border-radius: 100px;
-    transition: All 0.5s ease;
-    line-height: 36px;
-  margin-bottom: 15px;
-  margin-right: 10px;
-}
-
-.rectangle:hover{
-  width: 165px;
-  background-color: #5bb9f7;
-}
-.custom-rectangle-department:hover{
-  width: 233px;
-}
-.custom-rectangle-project:hover{
-  width: 180px;
-}
-.custom-rectangle-project-member:hover{
-  width: 242px;
-}
-//edit bootstrap icon-------------------------
-.custom-edit-icon{
-  float: right;
-  font-size: 25px;
-  color: #5bb9f7;
-}
-
-.custom-edit-icon:hover {
-  color: #1269d3;
-}
-
-//delete bootstrap icon
-.custom-delete-icon{
-  float: left;
-  font-size: 24px;
-  color: #5bb9f7;
-}
-
-
-.custom-delete-icon:hover {
-  color: #ed2126;
-}
-//---------------------
-
-.table-tr:hover{
-  background-color: rgba(91, 185, 247, 0.14);
-}
-
 
 .header-evozon-image{
   width: 65px;
@@ -165,63 +58,10 @@ thead{
   margin-top: 20px;
 }
 
-.header{
-  text-align: center;
-  font-size: 30px;
-  font-style: inherit;
-}
-.custom-add-icon{
-  font-size: 36px;
-  color: #3fc3f2;
-  margin-bottom: 10px;
-  clear: both;
-}
-.custom-add-icon:hover{
-  color: #4fdb45;
-}
-.custom-add-icon span{
-  text-align: left;
-}
-
-
-.add-span{
-  vertical-align: top;
-  color: white;
-  border-radius: 38px;
-  display: inline;
-  width: 360px;
-  line-height: 35px;
-  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-  text-space: -20px;
-  font-size: 25px;
-}
-
 .main-header-custom{
-  background-color: #3fc3f2 !important;
-}
-
-li:hover{
-  border-left: 3px solid #3fc3f2;
-  background-color: #3fc3f2 !important;
+  background-color: @custom-blue !important;
 }
 
 .EvozonImage{
   width: 230px;
 }
-.col-md-4-custom{
-  width:575px;
-}
-.fade-hr {
-  height: 12px;
-  border: 0;
-  box-shadow: inset 0 12px 12px -12px rgba(0, 0, 0, 0.5);
-}
-
-
-//.logo{
-//  color: white;
-//}
-//.navbar-custom{
-//  background-color: #3fc3f2;
-//  color: white;
-//}

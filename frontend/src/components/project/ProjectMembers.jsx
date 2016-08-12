@@ -18,7 +18,6 @@ const Item = (props) => {
         <tr className="table-tr">
             <td className="td-actions">
                 <div className="glyphicon glyphicon-trash custom-delete-icon" onClick={props.onDelete}>
-
                 </div>
             </td>
             <td>{props.element['Name']}</td>

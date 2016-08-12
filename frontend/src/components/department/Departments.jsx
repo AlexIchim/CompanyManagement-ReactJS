@@ -46,9 +46,9 @@ export default class Departments extends React.Component{
 
         OfficeController.GetOfficeById(officeId);
 
-        console.log(Context.cursor.get('currentOffice'))
+        //console.log(Context.cursor.get('currentOffice'))
         const thisOffice=Context.cursor.get('currentOffice').Name;
-        console.log({thisOffice});
+        //console.log({thisOffice});
     }
 
     componentWillMount(){
@@ -190,7 +190,7 @@ export default class Departments extends React.Component{
             );
         }*/
         const officeName=this.state.officeName.Name;
-        console.log("aaaaaaaaaaaaaaaaaaaaa", officeName);
+        //console.log("aaaaaaaaaaaaaaaaaaaaa", officeName);
         const label = currentPage + "/" + numberOfPages;
 
         return (
