@@ -83,13 +83,11 @@ export default class Form extends React.Component {
     }
 
     onContextChange(newGlobalCursor) {
+        console.log('MODEL', newGlobalCursor.get('model'))
         this.setState({
             model: newGlobalCursor.get('model'),
-            employeeName: newGlobalCursor.get('model') && newGlobalCursor.get('model').Name || '',
-            employeeAddress: newGlobalCursor.get('model') && newGlobalCursor.get('model').Address || '',
-            employeeEmploymentDate: newGlobalCursor.get('model') && newGlobalCursor.get('model').EmploymentDate || '',
-            employeeJobType: newGlobalCursor.get('model') && newGlobalCursor.get('model').JobType || '',
-            employeePosition: newGlobalCursor.get('model') && newGlobalCursor.get('model').Position || ''
+            employeeName: newGlobalCursor.get('model') && newGlobalCursor.get('model').Name || "",
+            employeeAddress: newGlobalCursor.get('model') && newGlobalCursor.get('model').Address || "",
         })
     }
 
@@ -102,16 +100,15 @@ export default class Form extends React.Component {
             model: this.state.model,
             employeeName: this.refs.inputName.value,
             employeeAddress: this.refs.inputAddress.value,
-            employeeEmploymentDate: this.refs.inputEmploymentDate.value,
+            /*employeeEmploymentDate: this.refs.inputEmploymentDate.value,
             employeeJobType: this.refs.inputJobType.value,
-            employeePosition: this.refs.inputPosition.value
+            employeePosition: this.refs.inputPosition.value*/
         })
     }
 
     onStoreClick() {
 
-        if(     this.state.NameValidationResult.valid
-            &&  this.state.AddressValidationResult.valid) {
+        if(this.state.NameValidationResult.valid &&  this.state.AddressValidationResult.valid) {
 
             let currentModel = this.state.model;
             let modelToStore = {};
@@ -133,9 +130,14 @@ export default class Form extends React.Component {
     }
 
     onChangeName(){
-        var result=Validator.ValidateName(this.refs.inputName.value);
+        let employeeNameInput = this.refs.inputName.value;
+        if (!employeeNameInput.replace(/\s/g, '').length) {
+            employeeNameInput = '';
+        }
+        var result=Validator.ValidateName(employeeNameInput);
         this.updateState(result, null);
     }
+
     onChangeAddress(){
         var result=Validator.ValidateAddress(this.refs.inputAddress.value);
         this.updateState(null, result);
@@ -149,6 +151,8 @@ export default class Form extends React.Component {
     }
 
         render(){
+            let nameValidationResult="";
+            let addressValidationResult="";
 
             let jobTypeDropdownItems = this.state.jobTypeDropdownItems.map( (element, index) => {
                 return (<option value={element.Index} key = {element.Index} > {element.Description} </option>)
@@ -157,8 +161,6 @@ export default class Form extends React.Component {
                 return (<option value={element.Index} key = {element.Index} > {element.Description} </option>)
             });
 
-            let nameValidationResult="";
-            let addressValidationResult="";
 
             if(!this.state.NameValidationResult.valid){
                 nameValidationResult=<span>{this.state.NameValidationResult.message}</span>;
@@ -170,11 +172,11 @@ export default class Form extends React.Component {
 
 
             var formIsValid=false;
-            if(    this.state.NameValidationResult.valid
-                && this.state.AddressValidationResult.valid)
-                {
+            if(this.state.NameValidationResult.valid && this.state.AddressValidationResult.valid)
+            {
                     formIsValid = true;
-                }
+            }
+
             const employeeName = this.state.employeeName;
             const employeeAddress = this.state.employeeAddress;
             const employeeEmploymentDate = this.state.employeeEmploymentDate;
@@ -189,30 +191,7 @@ export default class Form extends React.Component {
                                Model={this.props.Model}
                                formIsValid={formIsValid} >
 
-                    {/*<div className="btn-group">
-                     <button type="button" className="btn btn-info">Job Type</button>
-                     <button type="button" className="btn btn-info dropdown-toggle" data-toggle="dropdown">
-                     <span className="caret"></span>
-                     <span className="sr-only">Toggle Dropdown</span>
-                     </button>
-                     <ul className="dropdown-menu" role="menu">
-                     <li><a href="#">Part Time 4</a></li>
-                     <li><a href="#">Part Time 6</a></li>
-                     <li><a href="#">Full Time</a></li>
-                     </ul>
 
-                     <button type="button" className="btn btn-info">Position</button>
-                     <button type="button" className="btn btn-info dropdown-toggle" data-toggle="dropdown">
-                     <span className="caret"></span>
-                     <span className="sr-only">Toggle Dropdown</span>
-                     </button>
-                     <ul className="dropdown-menu" role="menu">
-                     <li><a href="#">Developer</a></li>
-                     <li><a href="#">Project Manager</a></li>
-                     <li><a href="#">QA</a></li>
-                     <li><a href="#">Department Manager</a></li>
-                     </ul>
-                     </div>*/}
 
                     <select id='jobTypeDropdown' className="selectpicker" onChange={this.filterByJobType.bind(this)}>
                         <option selected>-- Job Type --</option>
@@ -232,7 +211,8 @@ export default class Form extends React.Component {
                         <div className="col-sm-10">
                             <input type="text" ref="inputName" className="form-control"
                                    onChange={this.onModelChange.bind(this)} value={employeeName} placeholder="Name"
-                                   onKeyUp={this.onChangeName.bind(this)}>
+                                   onKeyUp={this.onChangeName.bind(this)}
+                            >
                             </input>
                             {nameValidationResult}
                         </div>
