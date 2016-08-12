@@ -19,6 +19,7 @@ export default class EditForm extends React.Component {
                  dropdownItems: data,
                     NameVR: {valid: true, message:""},
                     DurationVR: {valid: true, message:""}
+
                 })
             }.bind(this)
         });
@@ -74,12 +75,14 @@ export default class EditForm extends React.Component {
     onDurationChange(){
         var result = Validator.ValidateDuration(this.refs.inputDuration.value);
         this.updateState(null, result);
-
         this.setState({
             model: this.state.model,
             projectDuration: this.refs.inputDuration.value
         })
 
+    }
+    onStatusChange(){
+       this.updateState(this.state.NameVR,this.state.DurationVR);
     }
 
     updateState(nameVR, durationVR){
@@ -96,6 +99,7 @@ export default class EditForm extends React.Component {
 
         if(this.state.DurationVR.valid && this.state.NameVR.valid){
             formIsValid = true;
+            console.log('form is valid?!?!?1', formIsValid);
         }
 
         if(!this.state.NameVR.valid){
@@ -159,7 +163,7 @@ export default class EditForm extends React.Component {
 
                 <div className="form-group">
                     <label htmlFor="inputStatus" className="col-sm-2 control-label"> Status</label>
-                    <select id='dropdown' className="selectpicker">
+                    <select id='dropdown' className="selectpicker" onChange={this.onStatusChange.bind(this)}>
                         {items}
                     </select>
 

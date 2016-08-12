@@ -26,7 +26,10 @@ export default class AssignEmployeeForm extends React.Component{
         this.SetPositionDropdownItems();
         this.setState({
             departmentIndex: null,
-            positionIndex: null
+            positionIndex: null,
+            formIsValid: false,
+            checkedItems: []
+
         });
         this.GetAllAvailableEmployees(null, null);
     }
@@ -79,7 +82,7 @@ export default class AssignEmployeeForm extends React.Component{
         this.setState({
             departmentIndex: departmentIndex,
             positionIndex: positionIndex
-        })
+        });
         this.GetAllAvailableEmployees(departmentIndex, positionIndex)
     }
 
@@ -90,30 +93,63 @@ export default class AssignEmployeeForm extends React.Component{
         this.setState({
             departmentIndex: departmentIndex,
             positionIndex: positionIndex
-        })
+        });
         this.GetAllAvailableEmployees(departmentIndex, positionIndex)
     }
 
-    onCheck(employee){
-        console.log('projectId:', this.props.ProjectId);
-        console.log('employee id is: ', employee['Id']);
+    onCheck(employee) {
+        let items = this.state.checkedItems;
+        if (items.indexOf(employee) != -1) {
+            items.splice(items.indexOf(employee), 1);
+            this.setState({
+                checkedItems: items
+            })
+            console.log('items: ', items);
+        }
+        else {
+            items.push(employee);
+            console.log('EMPLOYEE', employee);
+            console.log('items: ', items);
+            this.setState({
+                checkedItems: items,
+            })
+        }
+        if(this.state.checkedItems != []){
+            this.setState({
+                formIsValid: true
+            })
+        }
+    }
+    addAjaxCall(employee){
+        console.log('employee', employee);
+        console.log('projectId:', this.props.ProjectId)
         $.ajax({
             method: 'POST',
             url: config.base + "/project/addAssignment",
             async: false,
             data: {
-                EmployeeId: employee['Id'],
+                EmployeeId: employee.Id,
                 ProjectId: this.props.ProjectId,
-                Allocation : employee['RemainingAllocation']
+                Allocation : employee.RemainingAllocation
             },
             success: function(data){
                 console.log('successfully added');
             }.bind(this)
         });
-    }
-    onStoreClick(){
+        }
 
+
+    onStoreClick(){
+        let items = this.state.checkedItems;
+        console.log('ITEMS:', items);
+        for(var i=0; i<items.length; i++) {
+            this.addAjaxCall(items[i]);
+            //console.log('var', items[i].Id);
+
+        }
+        Controller.GetProjectMembers(this.props.ProjectId, this.props.currentPage);
     }
+
     render(){
         const departmentIndex = this.state.departmentIndex;
         const positionIndex = this.state.positionIndex;
@@ -124,9 +160,8 @@ export default class AssignEmployeeForm extends React.Component{
                     element = {employee}
                     key = {index}
                     onCheck = {this.onCheck.bind(this, employee)}
-
                 />)
-        })
+        });
 
         let itemsPosition = this.state.dropdownItemsPosition.map( (position, index) => {
             return (<option value={position.Index} key = {position.Index} > {position.Description}  </option>)
@@ -140,6 +175,7 @@ export default class AssignEmployeeForm extends React.Component{
             <ModalTemplate
                 onCancelClick={this.props.onCancelClick}
                 onStoreClick={this.onStoreClick.bind(this)}
+                formIsValid={this.state.formIsValid}
             >
                 <h3> Assign Employee </h3>
                 <div className="form-group">

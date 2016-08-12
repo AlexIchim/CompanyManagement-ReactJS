@@ -14,20 +14,40 @@ export default class Employees extends React.Component{
     constructor(){
         super();
     }
-    componentWillMount(){
+
+    mountingComponent(props){
+        const departmentId = props.routeParams['departmentId'];
 
         this.setState({
             formToggle:false,
+            departmentId: departmentId,
+            currentPage: 1,
             jobTypeIndex: null,
             positionIndex: null,
             allocationIndex: null,
             search: null
         });
         this.subscription = Context.subscribe(this.onContextChange.bind(this));
-        //const employeeId = this.props.routeParams['employeeId'];
-        MyController.getAllEmployees(null,  null, null, null);
+
+	    Context.cursor.set("items",[]);
+        Context.cursor.set("totalNumberOfItems", -1);
         this.setJobTypeDropdownItems();
         this.setPositionDropdownItems();
+        MyController.getTotalNumberOfEmployees(departmentId);
+        MyController.getAllEmployees(departmentId, 1, null,  null, null, null);
+    }
+
+    componentWillMount(){
+        this.mountingComponent(this.props);
+    }
+
+    componentWillReceiveProps(props){
+        const departmentId = props.routeParams['departmentId'];
+        Context.cursor.set("items",[]);
+        Context.cursor.set("totalNumberOfItems", -1);
+
+        MyController.getTotalNumberOfEmployees(departmentId);
+        MyController.getAllEmployees(departmentId, 1, null,  null, null, null);
     }
 
     componentWillUnmount(){
@@ -38,7 +58,8 @@ export default class Employees extends React.Component{
         console.log('employees:', cursor.get('items'));
         this.setState({
             formToggle: false,
-            employees: cursor.get('items')
+            employees: cursor.get('items'),
+            totalNumberOfItems: cursor.get('totalNumberOfItems')
         });
     }
 
@@ -79,6 +100,44 @@ export default class Employees extends React.Component{
         })
     }
 
+    onPreviousButtonClick(){
+        let currentPage = this.state.currentPage;
+        let newCurrentpage = currentPage - 1;
+        if (currentPage > 1){
+            this.setState({
+                currentPage: newCurrentpage
+            })
+            MyController.getAllEmployees(this.state.departmentId, newCurrentpage, this.state.search, this.state.jobTypeIndex, this.state.positionIndex, this.state.allocationIndex);
+        }
+    }
+
+    onNextButtonClick(){
+        let currentPage = this.state.currentPage;
+        let newCurrentpage = currentPage + 1;
+        let numberOfPages = Math.ceil((this.state.totalNumberOfItems)/5);
+        if (currentPage < numberOfPages){
+            this.setState({
+                currentPage: newCurrentpage
+            })
+            MyController.getAllEmployees(this.state.departmentId, newCurrentpage, this.state.search, this.state.jobTypeIndex, this.state.positionIndex, this.state.allocationIndex);
+        }
+    }
+
+    onGoToFirstPageButtonClick(){
+        this.setState({
+            currentPage: 1
+        })
+        MyController.getAllEmployees(this.state.departmentId, 1, this.state.search, this.state.jobTypeIndex, this.state.positionIndex, this.state.allocationIndex);
+    }
+
+    onGoToLastPageButtonClick(){
+        let numberOfPages = Math.ceil((this.state.totalNumberOfItems)/5);
+        this.setState({
+            currentPage: numberOfPages
+        });
+        MyController.getAllEmployees(this.state.departmentId, numberOfPages, this.state.search, this.state.jobTypeIndex, this.state.positionIndex, this.state.allocationIndex);
+    }
+
     setJobTypeDropdownItems(){
         $.ajax({
             method: 'GET',
@@ -115,7 +174,7 @@ export default class Employees extends React.Component{
             allocationIndex: this.state.allocationIndex,
             search: this.state.search
         })
-        MyController.getAllEmployees(this.state.search, jobTypeIndex, positionIndex, this.state.allocationIndex)
+        MyController.getAllEmployees(this.state.departmentId, this.state.currentPage, this.state.search, jobTypeIndex, positionIndex, this.state.allocationIndex)
     }
     filterByPosition(){
         var select = document.getElementById('positionDropdown');
@@ -127,7 +186,7 @@ export default class Employees extends React.Component{
             allocationIndex: this.state.allocationIndex,
             search: this.state.search
         })
-        MyController.getAllEmployees(this.state.search, jobTypeIndex, positionIndex, this.state.allocationIndex)
+        MyController.getAllEmployees(this.state.departmentId, this.state.currentPage, this.state.search, jobTypeIndex, positionIndex, this.state.allocationIndex)
 
     }
     filterByAllocation(){
@@ -141,7 +200,7 @@ export default class Employees extends React.Component{
             allocationIndex: allocationIndex,
             search: this.state.search
         })
-        MyController.getAllEmployees(this.state.search, this.state.jobTypeIndex, this.state.positionIndex, allocationIndex)
+        MyController.getAllEmployees(this.state.departmentId, this.state.currentPage, this.state.search, this.state.jobTypeIndex, this.state.positionIndex, allocationIndex)
     }
 
     searchByName(){
@@ -153,10 +212,16 @@ export default class Employees extends React.Component{
             allocationIndex: this.state.allocationIndex,
             search: name
         })
-        MyController.getAllEmployees(name, this.state.jobTypeIndex, this.state.positionIndex, this.state.allocationIndex)
+        MyController.getAllEmployees(this.state.departmentId, this.state.currentPage, name, this.state.jobTypeIndex, this.state.positionIndex, this.state.allocationIndex)
 
     }
     render(){
+
+        const totalNumberOfDepartments = this.state.totalNumberOfItems;
+        const numberOfPages = (totalNumberOfDepartments == 0) ? 1 : Math.ceil(totalNumberOfDepartments/5);
+        const currentPage = this.state.currentPage;
+        const label = currentPage + "/" + numberOfPages;
+
         let jobTypeDropdownItems = this.state.jobTypeDropdownItems.map( (element, index) => {
             return (<option value={element.Index} key = {element.Index} > {element.Description} </option>)
         });
@@ -167,7 +232,6 @@ export default class Employees extends React.Component{
 
         console.log('In Employees@!@@');
         let modal = "";
-        let modal1 = "";
         if(this.state.formToggle){
             if(Accessors.model(Context.cursor)){
                 if (this.state.buttonClicked === "viewDetails") {
@@ -176,17 +240,14 @@ export default class Employees extends React.Component{
                 } else {
                     if (this.state.buttonClicked === "edit") {
                         modal = <Form onCancelClick={this.toggleModal.bind(this)}
-                                      FormAction={MyController.Edit.bind(this)}
+                                      FormAction={() => {MyController.Edit(this.state.departmentId, currentPage, this.state.search, this.state.jobTypeIndex, this.state.positionIndex, this.state.allocationIndex)}}
                                       Title="Edit Employee"/>;
                     }
                 }
-                /*modal1=<ViewDetailsForm onCancelClick={Command.hideModal.bind(this)}
-                            onStoreClick={this.onModalSaveClick.bind(this)}
-                            Title="Edit Employee"/>;*/
             }else{
                 modal=<Form onCancelClick={this.toggleModal.bind(this)}
-                            FormAction={MyController.Add.bind(this)}
-                           Title="Add Employee"/>;
+                            FormAction={() => {MyController.Add(this.state.departmentId, currentPage, this.state.search, this.state.jobTypeIndex, this.state.positionIndex, this.state.allocationIndex)}}
+                            Title="Add Employee"/>;
             }
         }
         const items = this.state.employees.map( (employee, index) => {
@@ -215,7 +276,7 @@ export default class Employees extends React.Component{
                         <input type="text"  ref="inputName" className="form-control" placeholder="Search..." onChange={this.searchByName.bind(this)} >
                         </input>
                     </div>
-                <p></p>
+                <p>
                 <div>
                     <div className=" rectangle custom-rectangle-department">
                         <div className="glyphicon glyphicon-plus-sign custom-add-icon"
@@ -224,20 +285,21 @@ export default class Employees extends React.Component{
                         </div>
                     </div>
                     
+
                     <select id='jobTypeDropdown' className="selectpicker" onChange={this.filterByJobType.bind(this)}>
                         <option selected>-- Job Type --</option>
 
                             {jobTypeDropdownItems}
 
                    </select>
-                    &nbsp;
+
                     <select id='positionDropdown' className="selectpicker" onChange={this.filterByPosition.bind(this)}>
                         <option selected>-- Position --</option>
 
                         {positionDropdownItems}
 
                     </select>
-                    &nbsp;
+
                     <select id='allocationDropdown' className="selectpicker" onChange={this.filterByAllocation.bind(this)}>
                         <option selected>-- Allocation --</option>
 
@@ -256,20 +318,38 @@ export default class Employees extends React.Component{
                     </select>
                 </div>
                 <table className="table">
-                <thead>
-                <tr>
+                    <thead>
+                    <tr>
                     <td> </td>
                     <td>Name </td>
                     <td>Position</td>
                     <td>Allocation</td>
                     <td>Views</td>
-                </tr>
-                </thead>
-                <tbody>
-                    {items}
-                </tbody>
-            </table>
+                    </tr>
+                    </thead>
+
+                    <tbody>
+                        {items}
+                    </tbody>
+                </table>
+
+                <div className="btn-group">
+                    <button className="btn btn-info" onClick={this.onGoToFirstPageButtonClick.bind(this)}>
+                        Go to first page
+                    </button>
+                    <button className="btn btn-warning" onClick={this.onPreviousButtonClick.bind(this)}>
+                        Prev
+                    </button>
+                    <button className="btn btn-warning">{label}</button>
+                    <button className="btn btn-warning" onClick={this.onNextButtonClick.bind(this)}>
+                        Next
+                    </button>
+                    <button className="btn btn-info" onClick={this.onGoToLastPageButtonClick.bind(this)}>
+                        Go to last page
+                    </button>
                 </div>
+
+            </div>
         )
     }
 }
