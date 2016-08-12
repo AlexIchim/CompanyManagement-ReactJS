@@ -57,6 +57,9 @@
     <Compile Include="Mappings\EmployeeMap.cs" />
     <Compile Include="Mappings\OfficeMap.cs" />
     <Compile Include="Mappings\ProjectMap.cs" />
+    <Compile Include="Migrations\201608120627581_Initial.cs" />
+    <Compile Include="Migrations\201608120627581_Initial.Designer.cs">
+      <DependentUpon>201608120627581_Initial.cs</DependentUpon>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositories\EmployeeRepository.cs" />
@@ -78,6 +81,8 @@
       <Name>ManagementApp.Domain</Name>
     </ProjectReference>
   </ItemGroup>
+    <EmbeddedResource Include="Migrations\201608120627581_Initial.resx">
+      <DependentUpon>201608120627581_Initial.cs</DependentUpon>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

@@ -58,11 +58,13 @@ export default class OfficeForm extends React.Component{
         this.onChangePhone();
     }
     onStoreClick(){
+
         this.checkAll();
 
         if(     this.state.NameValidationResult.valid
             &&  this.state.AddressValidationResult.valid
-            &&  this.state.PhoneValidationResult.valid  )
+            &&  this.state.PhoneValidationResult.valid  
+            &&  this.state.ImageValidationResult.valid)
         {
             Context.cursor.set('model', this.state.Model);
             this.props.FormAction();
@@ -89,8 +91,7 @@ export default class OfficeForm extends React.Component{
         let name=this.refs.inputName.value;
         let addr=this.refs.inputAddress.value;
         let phone=this.refs.inputPhone.value;
-        let image=this.state.Image;
-
+        let image=this.state.Model.Image;
         let model={
             Id:this.state.Model.Id,
             Name:name,
