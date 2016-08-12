@@ -7,10 +7,12 @@ import * as Rx from 'rx';
 const initialState = {
     user : mock,
     sidebarOffices: null,
+    sidebarImage: null,
     items: null,
     totalNumberOfItems: null,
     model:null,
-    dropdownItems: null
+    dropdownItems: null,
+    currentOffice: null
 };
 
 class Context{

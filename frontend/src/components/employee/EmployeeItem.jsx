@@ -22,8 +22,16 @@ const EmployeeItem = (props) => {
         console.log("II nUULLLL");
     }
 
+    const lft = {
+        float: "left"
+    };
+
     return (
-        <tr>
+        <tr className="table-tr">
+            <td className="td-actions">
+                <div id="editDepartment" className="glyphicon glyphicon-edit custom-edit-icon" style={lft} onClick={edit}></div>
+                <div className="glyphicon glyphicon-trash custom-delete-icon" onClick={deleteEmployee}></div>
+            </td>
             <td className="name-td">
                 {name}
             </td>
@@ -31,23 +39,18 @@ const EmployeeItem = (props) => {
                 {position}
             </td>
             <td>
-                {allocation}
+                {allocation}%
             </td>
             <td>
                     {/*<Link to={link} className="btn btn-success margin-top" onClick={edit}>
                         View Details
                     </Link>*/}
-                    <button className="btn btn-success margin-top" onClick={viewDetails}>
+
+                    <button className="btn btn-info margin-top" onClick={viewDetails}>
                         View Details
                     </button>
-                    &nbsp;
-                    <button id="store" className="btn btn-success margin-top" onClick={edit}>
-                        Edit
-                    </button>
-                    &nbsp;
-                    <button id="deleteButton" className="btn btn-danger margin-top" onClick={deleteEmployee}><i className="fa fa-trash" ></i>
-                        Delete
-                    </button>
+
+                
             </td>
 
         </tr>

@@ -78,7 +78,7 @@ export default class EditAllocationForm extends React.Component{
         }
         let projectAllocation = this.state.projectAllocation;
         if(!this.state.AllocationVR.valid){
-            AllocationValidationResult=<span>{this.state.AllocationVR.message}</span>
+            AllocationValidationResult=<span className="error-color">{this.state.AllocationVR.message}</span>
         }
         return(
             <ModalTemplate

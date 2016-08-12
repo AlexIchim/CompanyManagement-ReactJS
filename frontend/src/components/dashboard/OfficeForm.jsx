@@ -4,6 +4,7 @@ import Context from '../../context/Context';
 import Accessors from '../../context/Accessors';
 import config from '../helper';
 import Validator from '../validator/OfficeValidator';
+import '../../assets/less/index.less'
 
 export default class OfficeForm extends React.Component{
     constructor(){
@@ -114,8 +115,7 @@ export default class OfficeForm extends React.Component{
     }
 
     render(){
-
-        //console.log("RENDERING");
+        
         
         const model=this.state.Model;
         //console.log("MODEL: ", model);
@@ -133,17 +133,17 @@ export default class OfficeForm extends React.Component{
         
 
         if(!this.state.NameValidationResult.valid){
-            nameValidationResult=<span>{this.state.NameValidationResult.message}</span>;
+            nameValidationResult=<span className="error-color">{this.state.NameValidationResult.message}</span>;
         }
 
         if(!this.state.AddressValidationResult.valid){
-            addrValidationResult=<span>{this.state.AddressValidationResult.message}</span>;
+            addrValidationResult=<span className="error-color">{this.state.AddressValidationResult.message}</span>;
         }
         if(!this.state.PhoneValidationResult.valid){
-            phoneValidationResult=<span>{this.state.PhoneValidationResult.message}</span>;
+            phoneValidationResult=<span className="error-color">{this.state.PhoneValidationResult.message}</span>;
         }
         if(!this.state.ImageValidationResult.valid){
-            imgValidationResult=<span>{this.state.ImageValidationResult.message}</span>;
+            imgValidationResult=<span className="error-color">{this.state.ImageValidationResult.message}</span>;
         }
 
         var formIsValid=false;

@@ -66,7 +66,6 @@ export default class ModalTemplate extends React.Component{
         //         $('#bigbox').hide();
         //     }
         // }
-
         
         return(
             <div ref="formModal" className="modal fade " role="dialog"  tabIndex="-1" >
@@ -82,8 +81,8 @@ export default class ModalTemplate extends React.Component{
                                 </div>
 
                                 <div className="box-footer">
-                                    <button type="button" className="btn btn-default" onClick={this.onCancelClick.bind(this)} > Cancel</button>
-                                    <button type="button" ref='storeButton' className="storeButton btn btn-default" onClick={this.onStoreClick.bind(this)} > {storeLabel}</button>
+                                    <button type="button" className="btn btn-danger" onClick={this.onCancelClick.bind(this)} > Cancel</button>
+                                    <button type="button" ref='storeButton' className="storeButton btn btn-success" onClick={this.onStoreClick.bind(this)} > {storeLabel}</button>
                                 </div>
                             </form>
                         </div>

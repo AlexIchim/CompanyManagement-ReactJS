@@ -268,25 +268,24 @@ export default class Employees extends React.Component{
 
                 {modal}
 
-                <h1> Employees </h1>
+                <p className="table-name">Employees </p>
+                <div className=" rectangle custom-rectangle-department">
+                    <div className="glyphicon glyphicon-plus-sign custom-add-icon"
+                         onClick={this.onAddButtonClick.bind(this)}>
+                        <span className="add-span" onClick={this.onAddButtonClick.bind(this)}>Add Employee</span>
+                    </div>
+                </div>
                     <div className="input-group input-group-xs col-md-4">
-                        <div className="input-group-btn">
-                            <button type="button" className="btn btn-warning">Search by name</button>
+                        <div className="input-group-btn ">
+                            <button type="button" className="btn input-search-btn-search">Search by name</button>
                         </div>
                         <input type="text"  ref="inputName" className="form-control" placeholder="Search..." onChange={this.searchByName.bind(this)} >
                         </input>
                     </div>
+
                 <p>
+                <div className="employee-dropdowns">
 
-                </p>
-
-                <div>
-
-                    <button id="store" className="btn btn-success margin-top" onClick={this.onAddButtonClick.bind(this)}>
-                        Add New Employee
-                    </button>
-
-                    &nbsp;
                     <select id='jobTypeDropdown' className="selectpicker" onChange={this.filterByJobType.bind(this)}>
                         <option selected>-- Job Type --</option>
 
@@ -318,14 +317,14 @@ export default class Employees extends React.Component{
 
                     </select>
                 </div>
-
-                <table className="table table-hover">
+                <table className="table">
                     <thead>
                     <tr>
-                        <td><h3> Name </h3></td>
-                        <td><h3> Position </h3></td>
-                        <td><h3> Allocation </h3></td>
-                        <td><h3> Actions </h3></td>
+                    <td> </td>
+                    <td>Name </td>
+                    <td>Position</td>
+                    <td>Allocation</td>
+                    <td>Views</td>
                     </tr>
                     </thead>
 
@@ -334,22 +333,24 @@ export default class Employees extends React.Component{
                     </tbody>
                 </table>
 
-                <div className="btn-group">
-                    <button className="btn btn-info" onClick={this.onGoToFirstPageButtonClick.bind(this)}>
-                        Go to first page
-                    </button>
-                    <button className="btn btn-warning" onClick={this.onPreviousButtonClick.bind(this)}>
-                        Prev
-                    </button>
-                    <button className="btn btn-warning">{label}</button>
-                    <button className="btn btn-warning" onClick={this.onNextButtonClick.bind(this)}>
-                        Next
-                    </button>
-                    <button className="btn btn-info" onClick={this.onGoToLastPageButtonClick.bind(this)}>
-                        Go to last page
-                    </button>
-                </div>
 
+                    <hr className="fade-hr"></hr>
+                    <p className="pagination">
+                    <span  onClick={this.onGoToFirstPageButtonClick.bind(this)}>
+                        First
+                    </span>
+                    <span className=" glyphicon glyphicon-circle-arrow-left" onClick={this.onPreviousButtonClick.bind(this)}>
+                    </span>
+                        <span><b>{label}</b></span>
+                    <span className=" glyphicon glyphicon-circle-arrow-right" onClick={this.onNextButtonClick.bind(this)}>
+
+                    </span>
+                    <span  onClick={this.onGoToLastPageButtonClick.bind(this)}>
+                        Last
+                    </span>
+                    </p>
+
+                </p>
             </div>
         )
     }

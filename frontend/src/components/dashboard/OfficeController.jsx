@@ -20,13 +20,25 @@ export default new class OfficeController {
     }
 
     GetPartial(){
-        console.log("Refreshing");
+        console.log("GetPartial called");
         $.ajax({
             method:'GET',
             url: config.base+'office/getPartialOffices',
             async:false,
             success: function(data){                
                 Context.cursor.set('sidebarOffices',data);
+            }.bind(this)
+        });
+    }
+
+    GetOfficeById(id){
+        console.log("GetPartial called");
+        $.ajax({
+            method:'GET',
+            url: config.base+'office/getOfficeImagePartial?id='+id,
+            async:false,
+            success: function(data){                
+                Context.cursor.set('currentOffice',data);
             }.bind(this)
         });
     }
@@ -51,7 +63,6 @@ export default new class OfficeController {
             }.bind(this)
         });             
         this.GetAll();
-        this.GetPartial();
     }
 
 

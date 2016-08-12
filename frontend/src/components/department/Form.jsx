@@ -4,7 +4,7 @@ import Context from '../../context/Context';
 import $ from 'jquery';
 import config from '../helper';
 import Validator from '../validator/DepartmentValidator.jsx';
-
+import '../../assets/less/index.less'
 const DropdownItem = (props) => {
     return (
         <option value={props.element.Id}>
@@ -101,7 +101,7 @@ export default class Form extends React.Component{
     render(){
         let nameValidationResult="";
         if(!this.state.NameValidationResult.valid){
-            nameValidationResult = <span>{this.state.NameValidationResult.message}</span>;
+            nameValidationResult = <span className="error-color">{this.state.NameValidationResult.message}</span>;
         }
         var formIsValid=false;
         if(this.state.NameValidationResult.valid){

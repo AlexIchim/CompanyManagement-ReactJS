@@ -77,7 +77,7 @@ export default class Form extends React.Component{
                            onStoreClick={this.onStoreClick.bind(this)}
                            Title={this.props.Title}>
                     <div className="form-group">
-                        <label htmlFor="inputName" className="col-sm-2 control-label"> Name</label>
+                        <label htmlFor="inputName" className="col-sm-2 control-label"> Name *</label>
                         <div className="col-sm-10">
                             <input type="text" 
                                 className="form-control" 
@@ -88,7 +88,7 @@ export default class Form extends React.Component{
                     </div>
 
                     <div className="form-group">
-                        <label htmlFor="inputAddress" className="col-sm-2 control-label"> Address </label>
+                        <label htmlFor="inputAddress" className="col-sm-2 control-label"> Address *</label>
                         <div className="col-sm-10">
                             <input  type="text" 
                                     className="form-control" 
@@ -99,7 +99,7 @@ export default class Form extends React.Component{
                     </div>
 
                     <div className="form-group">
-                        <label htmlFor="inputPhone" className="col-sm-2 control-label"> Phone </label>
+                        <label htmlFor="inputPhone" className="col-sm-2 control-label"> Phone *</label>
                         <div className="col-sm-10">
                             <input type="text" 
                                 className="form-control" 

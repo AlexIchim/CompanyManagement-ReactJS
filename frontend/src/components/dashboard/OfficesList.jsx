@@ -11,30 +11,19 @@ export default class OfficesList extends React.Component{
     }
     componentWillMount(){
 
-        this.subscription=Context.subscribe(this.onContextChange.bind(this));
-
         Controller.GetPartial();
     }
-
-    componentWillUnmount(){
-        console.log('unmount dep')
-        this.subscription.dispose();
-    }
-
-    onContextChange(cursor){
-        //console.log("Sidebar: ", Accessors.sidebarOffices(cursor))
-    }
-
+    
+    
     render(){
-
         const items = Accessors.sidebarOffices(Context.cursor).map ( (office, index) => {
             return (
                 <SidebarTile
                     name={office.Name}
                     link={"office/departments/"+office.Id}
                     key={index}
-                    index={index}>
-                </SidebarTile>
+                    index={index}
+                />
             );
         })
 

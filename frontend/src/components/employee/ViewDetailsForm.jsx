@@ -40,10 +40,9 @@ export default class EditForm extends React.Component {
 
             <ViewDetailsModalTemplate onCancelClick={this.props.onCancelClick}
                            Title={this.props.Title}>
-
                 <div className="col-md-4 col-md-4-custom">
                     <div className="box box-widget widget-user-2">
-                        <div className="widget-user-header bg-yellow">
+                        <div className="widget-user-header widget-user-header-custom">
                             <div className="widget-user-image">
                                 <img className="img-circle hoverZoomLink" src="../../../src/assets/less/themes/lte/img/full_logo.png" alt="User Avatar"></img>
                             </div>
@@ -52,12 +51,12 @@ export default class EditForm extends React.Component {
                         </div>
                         <div className="box-footer no-padding">
                             <ul className="nav nav-stacked">
-                                <li><a href="#">Projects <span className="pull-right badge bg-aqua">{projects}</span></a></li>
-                                <li><a href="#">Allocation <span className="pull-right badge bg-green">{allocation}</span></a></li>
-                                <li><a href="#">Address <span className="pull-right badge bg-blue">{address}</span></a></li>
-                                <li><a href="#">Job Type <span className="pull-right badge bg-red">{jobType}</span></a></li>
-                                <li><a href="#">Employment Date <span className="pull-right badge bg-red">{employmentDate}</span></a></li>
-                                <li><a href="#">Termination Date <span className="pull-right badge bg-red">{releasedDate}</span></a></li>
+                                <li><a>Projects <span className="pull-right bg-aqua">{projects}</span></a></li>
+                                <li><a>Allocation <span className="pull-right badge bg-aqua">{allocation}</span></a></li>
+                                <li><a>Address <span className="pull-right badge bg-aqua">{address}</span></a></li>
+                                <li><a>Job Type <span className="pull-right badge bg-aqua">{jobType}</span></a></li>
+                                <li><a>Employment Date <span className="pull-right badge bg-aqua">{employmentDate}</span></a></li>
+                                <li><a>Termination Date <span className="pull-right badge bg-aqua">{releasedDate}</span></a></li>
                             </ul>
                         </div>
                     </div>

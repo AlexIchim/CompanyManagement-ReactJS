@@ -44,12 +44,13 @@ const Multilevel = () => {
     )
 }
 
-
+// <img className="EvozonImage" src="../../src/assets/less/themes/lte/img/full_logo.png" alt="tralala"/>
 class Sidebar extends React.Component{
     render(){
         return (
             <aside className="main-sidebar">
                 <section className="sidebar">
+
                     <img className="EvozonImage" src="../../src/assets/less/themes/lte/img/full_logo.png" alt="tralala"/>
                     <ul className="sidebar-menu">
                         <p className="header">Firm Offices</p>

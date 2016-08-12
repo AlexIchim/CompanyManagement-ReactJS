@@ -35,6 +35,14 @@ namespace Manager.Services
 
             return officeInfos;
         }
+
+        public OfficeImagePartialInfo GetImagePartialById(int id)
+        {
+            var office = _officeRepository.GetById(id);
+            var officeInfo = _mapper.Map<OfficeImagePartialInfo>(office);
+
+            return officeInfo;
+        }
         public IEnumerable<OfficePartialInfo> GetPartial()
         {
             var offices = _officeRepository.GetAll();
