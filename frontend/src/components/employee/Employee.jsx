@@ -52,7 +52,9 @@ export default class Employee extends React.Component{
                     jobTypes: data
                 })
             }.bind(this)
-        })        
+        })
+
+        Controller.getAllOffices();
 
        this.subscription = Context.subscribe(this.onContextChange.bind(this));
     }
@@ -85,13 +87,22 @@ export default class Employee extends React.Component{
 
                 if (!data){
                         data=[]
-                }       
-                this.setState(
-                    {
-                        
-                        nrOfPages: data.length / this.state.pageSize + 1
-                    }
-                )
+                }
+                if (data.length==0){
+                    this.setState(
+                        {
+                            nrOfPages: 1
+                        }
+                    )
+
+                }else{
+                    this.setState(
+                        {
+                            nrOfPages: Math.ceil( data.length / this.state.pageSize)
+                        }
+                    )
+
+                }
             }.bind(this)
         })
 
@@ -115,7 +126,7 @@ export default class Employee extends React.Component{
 
             const whereTo=this.state.pageNr-1
 
-            this.getAllEmployeesByDepartmentId(whereTo,"",this.state.filterByAllocation,this.state.filterByPosition,this.state.filterByJob)
+            this.getAllEmployeesByDepartmentId(whereTo,this.state.search,this.state.filterByAllocation,this.state.filterByPosition,this.state.filterByJob)
             
              this.setState({
                 pageNr:this.state.pageNr-1
@@ -127,17 +138,37 @@ export default class Employee extends React.Component{
     next(){
 
         const whereTo=this.state.pageNr+1
-        console.log(whereTo)
 
-        if(whereTo < this.state.nrOfPages) {
+        if(whereTo <= this.state.nrOfPages) {
 
-            this.getAllEmployeesByDepartmentId(whereTo,"",this.state.filterByAllocation,this.state.filterByPosition,this.state.filterByJob)
+            this.getAllEmployeesByDepartmentId(whereTo,this.state.search,this.state.filterByAllocation,this.state.filterByPosition,this.state.filterByJob)
 
             this.setState({
                 pageNr:this.state.pageNr+1
             })
 
         }
+    }
+
+    last(){
+        this.setNumberOfPages(this.state.search,this.state.filterByAllocation,this.state.filterByPosition,this.state.filterByJob);
+
+
+        this.getAllEmployeesByDepartmentId(this.state.nrOfPages,this.state.search,this.state.filterByAllocation,this.state.filterByPosition,this.state.filterByJob)
+
+        this.setState({
+            pageNr: this.state.nrOfPages
+        })
+    }
+
+    first(){
+        this.getAllEmployeesByDepartmentId(1,this.state.search,this.state.filterByAllocation,this.state.filterByPosition,this.state.filterByJob)
+
+        this.setState({
+            pageNr:1
+        })
+
+
     }
 
     setPageNr(){
@@ -198,125 +229,143 @@ export default class Employee extends React.Component{
                 allocation = null
 
         const pageNr = 1;
-        const employeeName = this.refs.search.value;      
+        const employeeName = this.refs.search.value;
+
+        this.setState({
+            filterByPosition: ptype,
+            filterByJob:jtype,
+            filterByAllocation:allocation,
+            search:employeeName,
+            pageNr:pageNr
+        })
 
         this.setNumberOfPages(employeeName,allocation, ptype, jtype );
 
         this.getAllEmployeesByDepartmentId(pageNr,employeeName,allocation,ptype,jtype)
     }
 
-render(){
-    let positionTypes=this.state.positionTypes.map((el, x) => {
-            return (
-                <option value={el.Id} key={x} >{el.Description}</option>                         
+    render(){
+        let positionTypes=this.state.positionTypes.map((el, x) => {
+                return (
+                    <option value={el.Id} key={x} >{el.Description}</option>
+                )
+            });
+
+        const jobTypes=this.state.jobTypes.map((el, x) => {
+                return (
+                    <option value={el.Id} key={x} >{el.Description}</option>
+                )
+            });
+
+        const allocation = this.state.allocation.map((el,x) =>{
+            return(
+                <option value={el} key={x}> {el} </option>
             )
-        });
-
-    const jobTypes=this.state.jobTypes.map((el, x) => {
-            return (
-                <option value={el.Id} key={x} >{el.Description}</option>                         
-            )
-        });
-
-    const allocation = this.state.allocation.map((el,x) =>{
-        return(
-            <option value={el} key={x}> {el} </option>
-        )    
-    }
-    )
-
-    
-    
-    const items = this.state.employees.map( (element, index) => {
-        return(
-            <EmployeeItem
-                node = {element}
-                key = {index}
-                index={index}
-                departmentId = {this.props.routeParams.departmentId}
-                setPageNr={this.setPageNr.bind(this)}
-            />
+        }
         )
 
 
-    });
- 
-    
-   const addModal = this.state.add ? <Form setPageNr={this.setPageNr.bind(this)} departmentId={this.props.routeParams.departmentId} show={this.state.add} close ={this.closeAddForm.bind(this)} /> : ""
-   
-    return(
-        <div>
-            
-            <button className="btn btn-md btn-info" onClick={this.showAddForm.bind(this)}> <span className="glyphicon glyphicon-plus-sign"></span> Add new employee </button>
 
-         <div>
-            <div className="row">
-                <div className="col-sm-6 pull-right form-group">
-                    <div className="col-sm-4">
-                        <label className="control-label"> Job Type </label>
-                        <select className="form-control" ref="jobTypes" onChange={this.onDropDownChange.bind(this)}>
-                            <option value=""> None </option>
-                            {jobTypes}
-                        </select>
+        const items = this.state.employees.map( (element, index) => {
+            return(
+                <EmployeeItem
+                    node = {element}
+                    key = {index}
+                    index={index}
+                    departmentId = {this.props.routeParams.departmentId}
+                    setPageNr={this.setPageNr.bind(this)}
+                />
+            )
+
+
+        });
+
+
+       const addModal = this.state.add ? <Form setPageNr={this.setPageNr.bind(this)} departmentId={this.props.routeParams.departmentId} show={this.state.add} close ={this.closeAddForm.bind(this)} /> : ""
+
+        return(
+            <div>
+
+                <h2> {this.props.routeParams.departmentName} Employees</h2>
+
+                <button className="btn btn-md btn-info" onClick={this.showAddForm.bind(this)}> <span className="glyphicon glyphicon-plus-sign"></span> Add new employee </button>
+
+             <div>
+                <div className="row">
+                    <div className="col-sm-6 pull-right form-group">
+                        <div className="col-sm-4">
+                            <label className="control-label"> Job Type </label>
+                            <select className="form-control" ref="jobTypes" onChange={this.onDropDownChange.bind(this)}>
+                                <option value=""> None </option>
+                                {jobTypes}
+                            </select>
+                        </div>
+
+                        <div className="col-sm-4">
+                            <label className="control-label"> Position </label>
+                            <select className="form-control" ref="positionTypes" onChange={this.onDropDownChange.bind(this)}>
+                                <option value=""> None </option>
+                                {positionTypes}
+                            </select>
+                        </div>
+
+                        <div className="col-sm-4">
+                            <label className="control-label"> Allocation </label>
+                            <select className="form-control" ref="allocation" onChange={this.onDropDownChange.bind(this)}>
+                                <option value=""> None </option>
+                                {allocation}
+                            </select>
+                        </div>
+
                     </div>
 
-                    <div className="col-sm-4">
-                        <label className="control-label"> Position </label>
-                        <select className="form-control" ref="positionTypes" onChange={this.onDropDownChange.bind(this)}>
-                            <option value=""> None </option>
-                            {positionTypes}
-                        </select>
+                    <div className="col-sm-2 pull-left form-group">
+                            <label />
+                            <input type="search" ref="search" className="form-control" placeholder="Search employee" onChange={this.onSearchChange.bind(this)}/>
                     </div>
-
-                    <div className="col-sm-4">
-                        <label className="control-label"> Allocation </label>
-                        <select className="form-control" ref="allocation" onChange={this.onDropDownChange.bind(this)}>
-                            <option value=""> None </option>
-                            {allocation}
-                        </select>
-                    </div>
-
-                </div>
-
-                <div className="col-sm-2 pull-left form-group">
-                        <label />
-                        <input type="search" ref="search" className="form-control" placeholder="Search employee" onChange={this.onSearchChange.bind(this)}/>
                 </div>
             </div>
-        </div>
 
-            {addModal}
+                {addModal}
 
-                <table className="table table-striped table-custom">
-                    <thead>
-                    <tr>
-                        <th className="col-md-2">Name</th>
-                        <th className="col-md-2">Address</th>
-                        <th className="col-md-2">Employment Date</th>
-                        <th className="col-md-2">Termination Date</th>
-                        <th className="col-md-2">Job Type</th>
-                        <th className="col-md-2">Position</th>
-                        <th className="col-md-2">Allocation</th>
-                        <th className="col-md-2">Actions </th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                        {items}
-                    </tbody>
-                </table>
+                    <table className="table table-striped table-custom">
+                        <thead>
+                        <tr>
+                            <th className="col-md-2">Name</th>
+                            <th className="col-md-2">Address</th>
+                            <th className="col-md-2">Employment Date</th>
+                            <th className="col-md-2">Termination Date</th>
+                            <th className="col-md-2">Job Type</th>
+                            <th className="col-md-2">Position</th>
+                            <th className="col-md-2">Allocation</th>
+                            <th className="col-md-2">Actions </th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                            {items}
+                        </tbody>
+                    </table>
 
-                <div className="btn-wrapper">
-                    <button className="leftArrow" onClick={this.back.bind(this)}>
-                                <i className="fa fa-arrow-left fa-1x" aria-hidden="true"></i>
-                    </button>
-                    <button className="rightArrow" onClick={this.next.bind(this)}>
-                                <i className="fa fa-arrow-right fa-1x" aria-hidden="true"></i>
-                    </button>
-                </div>
-            
-        </div>
-    )
-}
+                    <div className="btn-wrapper">
+                        <button className="rightArrow" onClick={this.first.bind(this)}>
+                            <i className="fa fa-angle-double-left fa-2x" aria-hidden="true"></i>
+                        </button>
+                        <button className="leftArrow" onClick={this.back.bind(this)}>
+                            <i className="fa fa-angle-left fa-2x" aria-hidden="true"></i>
+                        </button>
+                        <label className="to-right">{this.state.pageNr} </label>
+                        <button className="rightArrow" onClick={this.next.bind(this)}>
+                            <i className="fa fa-angle-right fa-2x" aria-hidden="true"></i>
+                        </button>
+                        <button className="rightArrow" onClick={this.last.bind(this)}>
+                            <i className="fa fa-angle-double-right fa-2x" aria-hidden="true"></i>
+                        </button>
+
+                    </div>
+
+            </div>
+        )
+    }
     
     
     

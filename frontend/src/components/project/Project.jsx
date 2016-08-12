@@ -28,12 +28,13 @@ export default class Project extends React.Component {
             async: false,
             url: configs.baseUrl + 'api/project/getProjectStatusDescriptions',
             success: function (data) {
-                console.log("status",data, this);
                 this.setState({
                     statusDescriptions: data                    
                 })
             }.bind(this)
-        })     
+        })
+
+        Controller.getAllOffices();
 
         this.subscription = Context.subscribe(this.onContextChange.bind(this));
     }
@@ -65,9 +66,21 @@ export default class Project extends React.Component {
             url: configs.baseUrl + 'api/project/getAllDepartmentProjects?depId='+this.props.routeParams.departmentId+'&status='+status+'&pageSize=null' +
             '&pageNr=null',
             success: function (data) {
-                this.setState({
-                    nrOfPages: data.length / this.state.pageSize + 1
-                });                
+                if (data.length==0){
+                    this.setState(
+                        {
+                            nrOfPages: 1
+                        }
+                    )
+
+                }else{
+                    this.setState(
+                        {
+                            nrOfPages: Math.ceil( data.length / this.state.pageSize)
+                        }
+                    )
+
+                }
             }.bind(this)
         })
     }
@@ -118,7 +131,11 @@ export default class Project extends React.Component {
 
         const whereTo=this.state.pageNr+1
 
-        if (whereTo < this.state.nrOfPages){
+        console.log(whereTo)
+
+        console.log(this.state.nrOfPages)
+
+        if (whereTo <= this.state.nrOfPages){
 
             this.getAllProjects(whereTo,this.state.filter);
 
@@ -126,6 +143,27 @@ export default class Project extends React.Component {
                 pageNr:this.state.pageNr+1
             })
         }
+    }
+
+    last(){
+        this.setNumberOfPages(this.state.filter);
+
+
+        this.getAllProjects(this.state.nrOfPages,this.state.filter);
+
+        this.setState({
+            pageNr: this.state.nrOfPages
+        })
+    }
+
+    first(){
+        this.getAllProjects(1,this.state.filter);
+
+        this.setState({
+            pageNr:1
+        })
+
+
     }
 
     setPageNr(){
@@ -154,6 +192,7 @@ export default class Project extends React.Component {
                 <ProjectItem
                     node = {el}
                     key= {x}
+                    index={x}
                     departmentId={this.props.routeParams.departmentId}   
                     officeId={this.props.routeParams.officeId}
                     setPageNr={this.setPageNr.bind(this)}
@@ -165,6 +204,8 @@ export default class Project extends React.Component {
         return (
             <div>
                 {addModal}
+
+                <h2> {this.props.routeParams.departmentName} Projects</h2>
                 
                 <div className="form-group">
                     <button className="btn btn-md btn-info btn-add-custom" onClick={this.showAddForm.bind(this)} > <span className="glyphicon glyphicon-plus-sign"></span> Add new project </button>
@@ -191,11 +232,18 @@ export default class Project extends React.Component {
                 </tbody>
                 </table>
                 <div className="btn-wrapper">
-                    <button className="leftArrow" onClick={this.back.bind(this)}>
-                                <i className="fa fa-arrow-left fa-1x" aria-hidden="true"></i>
+                    <button className="rightArrow" onClick={this.first.bind(this)}>
+                        <i className="fa fa-angle-double-left fa-2x" aria-hidden="true"></i>
                     </button>
+                    <button className="leftArrow" onClick={this.back.bind(this)}>
+                        <i className="fa fa-angle-left fa-2x" aria-hidden="true"></i>
+                    </button>
+                    <label className="to-right">{this.state.pageNr} </label>
                     <button className="rightArrow" onClick={this.next.bind(this)}>
-                                <i className="fa fa-arrow-right fa-1x" aria-hidden="true"></i>
+                        <i className="fa fa-angle-right fa-2x" aria-hidden="true"></i>
+                    </button>
+                    <button className="rightArrow" onClick={this.last.bind(this)}>
+                        <i className="fa fa-angle-double-right fa-2x" aria-hidden="true"></i>
                     </button>
                 </div>
 

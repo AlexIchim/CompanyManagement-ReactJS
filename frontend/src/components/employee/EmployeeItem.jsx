@@ -68,7 +68,7 @@ export default class EmployeeItem extends React.Component{
                     <td>{relDate}</td>
                     <td>{this.props.node.get('JobType')}</td>
                     <td>{this.props.node.get('PositionType')}</td>
-                    <td>{this.props.node.get('TotalAllocation')}</td>
+                    <td>{this.props.node.get('TotalAllocation')} %</td>
                     <td><button className="linkButton" onClick={this.showViewDetailsForm.bind(this)}> View Details |</button>
                         {viewDetailsModal}
                         <button className="linkButton" onClick={this.releaseEmployee.bind(this,this.props.node.get('Id'))}> Release |</button>

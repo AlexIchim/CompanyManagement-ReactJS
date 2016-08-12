@@ -1,1 +1,0 @@
-export {default as ValidateDepartment} from './ValidateDepartment.js';

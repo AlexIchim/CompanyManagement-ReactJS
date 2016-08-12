@@ -81,7 +81,7 @@ export default class ViewDetailsForm extends React.Component{
                     </div>
                     <br/><br/>
 
-            <table className="table table-striped table-details" id="">
+            <table className="table table-striped table-details table-custom" id="">
                 <thead>
                 <tr>
                     <th className="col-sm-2">Project Name</th>

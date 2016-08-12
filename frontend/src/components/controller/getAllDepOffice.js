@@ -10,6 +10,7 @@ export default (officeId,pageNr)=>{
             async: false,
             url: configs.baseUrl + 'api/office/getAllDepOffice?officeId=' + officeId+'&pageSize=3&pageNr='+pageNr,
             success: function (data) {
+                console.log(data)
                 Context.cursor.set("departments",Immutable.fromJS(data));
             }.bind(this)
         })
