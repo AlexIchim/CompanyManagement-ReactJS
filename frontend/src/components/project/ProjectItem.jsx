@@ -54,13 +54,17 @@ export default class ProjectItem extends React.Component{
         const linkMembers = "project/" + this.props.node.get('Id')  + '/' + this.props.node.get('Name') + '/' + this.props.officeId + "/members";
         
         const editModal = this.state.edit ? <EditFormProject index={this.props.index} departmentId={this.props.departmentId} element={this.props.node} show = {this.state.edit} close={this.closeEditForm.bind(this)} /> : '';
-
+        let duration
+        if (this.props.node.get('Duration') == 0)
+            duration = "Variable"
+        else
+            duration = this.props.node.get('Duration')
         return(
                 <tr>
                 <td>{this.props.node.get('Name')}</td>
                 <td>{this.props.node.get('EmployeesNumber')}</td>
                 <td>{this.props.node.get('Status')}</td>
-                <td>{this.props.node.get('Duration')} months</td>
+                <td>{duration} months</td>
                 <td><Link to={linkMembers}> View members | </Link>
                     <button className="linkButton" onClick={this.showEditForm.bind(this)}> Edit | </button>
                     <button className="linkButton" onClick={this.deleteProject.bind(this)}> Delete</button>

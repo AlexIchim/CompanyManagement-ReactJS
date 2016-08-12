@@ -145,11 +145,15 @@ export default class Member extends React.Component{
     }
 
     first(){
+
+            if (this.state.pageNr!=1){
         this.getAllEmployeeOnProject(1, this.state.filter);
 
         this.setState({
             pageNr:1
         })
+
+            }
 
 
     }

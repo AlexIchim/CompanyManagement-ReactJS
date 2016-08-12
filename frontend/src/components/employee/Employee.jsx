@@ -162,11 +162,14 @@ export default class Employee extends React.Component{
     }
 
     first(){
+            if (this.state.pageNr!=1){
         this.getAllEmployeesByDepartmentId(1,this.state.search,this.state.filterByAllocation,this.state.filterByPosition,this.state.filterByJob)
 
         this.setState({
             pageNr:1
         })
+
+            }
 
 
     }

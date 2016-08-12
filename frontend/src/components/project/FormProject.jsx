@@ -110,8 +110,8 @@ export default class Form extends React.Component{
                 <label className="col-sm-4 control-label"> Name </label>
                 <div className="col-sm-6">
                     <div className="col-sm-10 red">
-                        {this.state.errors.NameErrors}'
-                    </div>'
+                        {this.state.errors.NameErrors}
+                    </div>
                     <input  ref="name" className="form-control" placeholder="Name" onKeyUp={this.onChangeName.bind(this)}/>
                 </div>
             </div>

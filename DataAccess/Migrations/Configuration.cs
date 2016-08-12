@@ -275,12 +275,12 @@ namespace DataAccess.Migrations
 
             context.Projects.AddOrUpdate(
                 p => p.Id,
-                new Project { Id = 1, Name = "Northern Safety", Status = ProjectStatus.InProgress, DepartmentId = 1 },
-                new Project { Id = 2, Name = "Street Remote", Status = ProjectStatus.Done, DepartmentId = 1 },
+                new Project { Id = 1, Name = "Northern Safety", Status = ProjectStatus.InProgress, Duration = 6, DepartmentId = 1 },
+                new Project { Id = 2, Name = "Street Remote", Status = ProjectStatus.Done, Duration = 12, DepartmentId = 1 },
                 new Project { Id = 3, Name = "Liquid Alarm", Status = ProjectStatus.OnHold, DepartmentId = 2 },
                 new Project { Id = 4, Name = "Supersonic Mars", Status = ProjectStatus.Done, DepartmentId = 1 },
-                new Project { Id = 5, Name = "Massive Donut", Status = ProjectStatus.InProgress, DepartmentId = 1 },
-                new Project { Id = 6, Name = "Bulldozer Grim", Status = ProjectStatus.OnHold, DepartmentId = 1 }
+                new Project { Id = 5, Name = "Massive Donut", Status = ProjectStatus.InProgress, Duration = 8, DepartmentId = 1 },
+                new Project { Id = 6, Name = "Bulldozer Grim", Status = ProjectStatus.OnHold, Duration = 10, DepartmentId = 1 }
 
             );
 

@@ -133,21 +133,30 @@ export default class Department extends React.Component {
 
     }
     last(){
+
+        
         this.setNumberOfPages();
+
 
         this.getAllDepartments(this.state.nrOfPages, this.props.routeParams.officeId);
 
         this.setState({
             pageNr: this.state.nrOfPages
         })
+
+    
     }
 
     first(){
-        this.getAllDepartments(1,this.props.routeParams.officeId);
+        if (this.state.pageNr!=1){
+             this.getAllDepartments(1,this.props.routeParams.officeId);
 
         this.setState({
             pageNr:1
         })
+
+        }
+       
     }
 
     render() {

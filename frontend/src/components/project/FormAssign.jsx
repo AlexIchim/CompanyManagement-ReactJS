@@ -167,10 +167,13 @@ export default class FormAssign extends React.Component{
     }
 
     first(){
+            if (this.state.pageNr!=1){
         this.getEmployeesThatAreNotFullyAllocated(1,this.state.filterByPosition, this.state.filterByDepartment);
         this.setState({
             pageNr:1
         })
+
+            }
 
 
     }

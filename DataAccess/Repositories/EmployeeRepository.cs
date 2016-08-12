@@ -114,7 +114,7 @@ namespace DataAccess.Repositories
             foreach (Employee employee in employees)
             {
                 var employeeProject = GetEmployeeProjectCombinationById(projectId, employee.Id);
-                if (ComputeTotalAllocation(employee.Id) < 100 && employeeProject ==null)
+                if (ComputeTotalAllocation(employee.Id) < 100 && employeeProject ==null && (employee.ReleaseDate ==null || employee.ReleaseDate.Equals(DateTime.MinValue)))
                 {
                     notfullyAllocatedEmployees.Add(employee);
                 }

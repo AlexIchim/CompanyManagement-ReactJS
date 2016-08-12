@@ -29,7 +29,7 @@ export default new class ValidatorProject {
     validateDuration(duration)
     {
         let errors = []
-        if (duration == 0)
+        if (duration == null || duration == "")
             errors.push("Duration should not be empty!")
         if (!isNumeric(duration))
             errors.push("Duration should only contain numbers!")
