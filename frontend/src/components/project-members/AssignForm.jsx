@@ -246,7 +246,7 @@ export default class AssignForm extends React.Component {
                                 changeHandler={this.paginationChangeHandler.bind(this)}
                             />
                             <br/><br/>
-                            <span type="text" ref="message"/>
+                            <span type="text" ref="message">Please select an employee.</span>
                             <br/><br/>
                             <button type="button" className="btn btn-md btn-info" onClick={this.onSave.bind(this)} disabled={!this.state.readyToSave}> Save</button>
                             <button type="button" className="btn btn-md btn-info" onClick={this.props.hideFunc}> Cancel</button>
