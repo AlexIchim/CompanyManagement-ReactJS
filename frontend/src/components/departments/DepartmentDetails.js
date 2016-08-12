@@ -49,14 +49,20 @@ export default class DepartmentDetails extends React.Component {
                 <div className="row">
                     <div className="col-md-3 col-sm-3 col-xs-12">
                         <span className="info-box-icon projectsSpan"> <i className=" fa fa-folder"/> </span>
-                        <button className="btn btn-md btn-default"> <Link to={linkProjects} > Projects <i className="fa fa-arrow-circle-right"></i></Link>
-                        </button>
+                        <Link to={linkProjects} >
+                            <button className="btn btn-md btn-default">
+                            Projects <i className="fa fa-arrow-circle-right"></i>
+                            </button>
+                        </Link>
                     </div>
 
                     <div className="col-md-3 col-sm-3 col-xs-12">
-                        <span className="info-box-icon"><i className="fa fa-users"/> </span>
-                        <button className="btn btn-md btn-default"> <Link to={linkEmployees} > Employees <i className="fa fa-arrow-circle-right"></i></Link>
-                        </button>
+                        <span className="info-box-icon projectsSpan"><i className="fa fa-users"/> </span>
+                        <Link to={linkEmployees} >
+                            <button className="btn btn-md btn-default">
+                             Employees <i className="fa fa-arrow-circle-right"></i>
+                            </button>
+                        </Link>
                     </div>
                 </div>
             </div>
