@@ -49,7 +49,10 @@ export default class Departments extends React.Component{
 
         Controller.getDepartments(officeId, 1);
         Controller.getTotalNumberOfDepartments(officeId);
+
+        OfficeController.GetOfficeById(officeId);
     }
+
     componentWillUnmount(){
         console.log('unmount dep')
         this.subscription.dispose();

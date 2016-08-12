@@ -34,12 +34,13 @@ namespace Manager.Mapper
             CreateMap<UpdateOfficeInputInfo, Office>();
 
             CreateMap<Employee, EmployeeInfo>()
-                .ForMember(
+               /* .ForMember(
                     employeeInfo => employeeInfo.JobType,
                     employee => employee.MapFrom(src => src.JobType.ToString()))
                 .ForMember(
                     employeeInfo => employeeInfo.Position,
                     employee => employee.MapFrom(src => src.Position.ToString()))
+                    */
                 .ForMember(
                     employeeInfo => employeeInfo.Allocation,
                     employee => employee.MapFrom(src => src.GetAllocation())

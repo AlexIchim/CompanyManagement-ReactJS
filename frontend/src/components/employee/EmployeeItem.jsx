@@ -20,6 +20,9 @@ const EmployeeItem = (props) => {
 
     if (releasedDate == null){
         console.log("II nUULLLL");
+    }else {
+        /*$(this.refs.editEmployeeRef).attr('disabled',true);
+        $(this.refs.deleteEmployeeRef).attr('disabled',true);*/
     }
 
     const lft = {
@@ -29,8 +32,9 @@ const EmployeeItem = (props) => {
     return (
         <tr className="table-tr">
             <td className="td-actions">
-                <div id="editDepartment" className="glyphicon glyphicon-edit custom-edit-icon" style={lft} onClick={edit}></div>
-                <div className="glyphicon glyphicon-trash custom-delete-icon" onClick={deleteEmployee}></div>
+                <button ref="editEmployeeRef" id="editDepartment" className="glyphicon glyphicon-edit custom-edit-icon buton" style={lft} onClick={edit}></button>
+                <button ref="deleteEmployeeRef" id="deleteDepartment" className="glyphicon glyphicon-trash custom-delete-icon buton" onClick={deleteEmployee}></button>
+
             </td>
             <td className="name-td">
                 {name}
@@ -46,11 +50,11 @@ const EmployeeItem = (props) => {
                         View Details
                     </Link>*/}
 
-                    <button className="btn btn-info margin-top" onClick={viewDetails}>
+                    <button id="viewDetailsID" className="btn btn-info margin-top" onClick={viewDetails}>
                         View Details
                     </button>
 
-                
+
             </td>
 
         </tr>

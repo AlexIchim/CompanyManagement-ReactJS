@@ -2,7 +2,7 @@ import * as React from 'react';
 import classNames from 'classnames';
 import {Link} from 'react-router';
 import '../../assets/less/index.less';
-
+import Context from '../../context/Context'
 class OfficeTile extends React.Component<any, any>{
 
     submit(){

@@ -1,4 +1,5 @@
 ﻿using System;
+using Domain.Models;
 
 
 namespace Manager.InputInfoModels
@@ -9,8 +10,8 @@ namespace Manager.InputInfoModels
         public string Name { get; set; }
         public string Address { get; set; }
         public DateTime EmploymentDate { get; set; }
-        public string JobType { get; set; }
-        public string Position { get; set; }
+        public JobTypes JobType { get; set; }
+        public Position Position { get; set; }
         public int DepartmentId { get; set; }
     }
 }

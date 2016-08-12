@@ -185,7 +185,7 @@ export default class OfficeForm extends React.Component{
                                     onChange={this.updateModel.bind(this)}
                                     onKeyUp={this.onChangeAddress.bind(this)}>
                             </input>
-                            {addrValidationResult}
+                            {phoneValidationResult}
                         </div>
                     </div>
 
@@ -199,7 +199,7 @@ export default class OfficeForm extends React.Component{
                                 onChange={this.updateModel.bind(this)}
                                 onKeyUp={this.onChangePhone.bind(this)}>
                             </input>
-                            {phoneValidationResult}
+                            {addrValidationResult}
                         </div>
                     </div>
 

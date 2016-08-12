@@ -31,7 +31,7 @@ export default class DepartmentItem extends React.Component<any, any> {
                 <td>
                     <div className="btn-toolbar">
                         <Link to={"department/members/" + props.element.Id} className="btn btn-info">
-                            View Members
+                            View Department Members
                         </Link>
 
                         <Link to={"project/" + props.element.Id} className="btn btn-info">

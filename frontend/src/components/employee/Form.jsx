@@ -88,6 +88,7 @@ export default class Form extends React.Component {
             model: newGlobalCursor.get('model'),
             employeeName: newGlobalCursor.get('model') && newGlobalCursor.get('model').Name || "",
             employeeAddress: newGlobalCursor.get('model') && newGlobalCursor.get('model').Address || "",
+            employeeEmploymentDate: newGlobalCursor.get('model') && newGlobalCursor.get('model').EmploymentDate.toString() || ""
         })
     }
 
@@ -100,15 +101,17 @@ export default class Form extends React.Component {
             model: this.state.model,
             employeeName: this.refs.inputName.value,
             employeeAddress: this.refs.inputAddress.value,
-            /*employeeEmploymentDate: this.refs.inputEmploymentDate.value,
+            employeeEmploymentDate: this.refs.inputEmploymentDate.value,
+            /*
             employeeJobType: this.refs.inputJobType.value,
             employeePosition: this.refs.inputPosition.value*/
         })
     }
 
     onStoreClick() {
+        console.log('STORE');
 
-        if(this.state.NameValidationResult.valid &&  this.state.AddressValidationResult.valid) {
+         if(this.state.NameValidationResult.valid &&  this.state.AddressValidationResult.valid) {
 
             let currentModel = this.state.model;
             let modelToStore = {};
@@ -117,17 +120,36 @@ export default class Form extends React.Component {
                 modelToStore.Id = currentModel.Id;
             }
 
+            var select = document.getElementById('jobTypeDropdown');
+            var jobType = select.options[select.selectedIndex].index;
+
+            console.log('job type: ', jobType);
+
+            var selectPosition = document.getElementById('positionDropdown');
+            var position = select.options[select.selectedIndex].index;
+
+            console.log('pos type: ', position);
+
             modelToStore.Name = this.refs.inputName.value;
             modelToStore.Address = this.refs.inputAddress.value;
             modelToStore.EmploymentDate = this.refs.inputEmploymentDate.value;
-            modelToStore.JobType = this.refs.inputJobType.value;
-            modelToStore.Position = this.refs.inputPosition.value;
+
+            modelToStore.JobType = jobType;
+            modelToStore.Position = position;
             modelToStore.DepartmentId = 1;
+
+
+
+            console.log('MODEL props: ',   modelToStore.Name,  modelToStore.Address, modelToStore.EmploymentDate, modelToStore.JobType ,modelToStore.DepartmentId )
+
 
             Context.cursor.set('model', modelToStore);
             this.props.FormAction();
         }
     }
+
+
+
 
     onChangeName(){
         let employeeNameInput = this.refs.inputName.value;
@@ -180,6 +202,7 @@ export default class Form extends React.Component {
             const employeeName = this.state.employeeName;
             const employeeAddress = this.state.employeeAddress;
             const employeeEmploymentDate = this.state.employeeEmploymentDate;
+            console.log('date', employeeEmploymentDate)
             const employeeJobType = this.state.employeeJobType;
             const employeePosition = this.state.employeePosition;
 
@@ -193,13 +216,13 @@ export default class Form extends React.Component {
 
 
 
-                    <select id='jobTypeDropdown' className="selectpicker" onChange={this.filterByJobType.bind(this)}>
+                    <select id='jobTypeDropdown' className="selectpicker" >
                         <option selected>-- Job Type --</option>
 
                         {jobTypeDropdownItems}
 
                     </select>
-                    <select id='positionDropdown' className="selectpicker" onChange={this.filterByPosition.bind(this)}>
+                    <select id='positionDropdown' className="selectpicker" >
                         <option selected>-- Position --</option>
 
                         {positionDropdownItems}
@@ -236,7 +259,7 @@ export default class Form extends React.Component {
                             <div className="input-group-addon">
                                 <i className="fa fa-calendar"></i>
                             </div>
-                            <input type="text" className="form-control pull-right" id="datepicker1"></input>
+                            <input ref = "inputEmploymentDate" type="text" className="form-control pull-right" id="datepicker1" value = {employeeEmploymentDate}></input>
                         </div>
                     </div>
 

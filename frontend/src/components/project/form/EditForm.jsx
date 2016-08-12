@@ -40,6 +40,7 @@ export default class EditForm extends React.Component {
             let duration = this.refs.inputDuration.value;
             var select = document.getElementById('dropdown');
             var status = select.options[select.selectedIndex].index;
+
             console.log('status selected:', status);
 
             model.Name = (name) ? name : model.Name;

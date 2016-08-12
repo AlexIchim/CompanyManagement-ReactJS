@@ -33,7 +33,7 @@ const ProjectItem = (props) => {
                     <td>
 
                         <Link to={link} className="btn btn-info">
-                            View Members
+                            View Project Members
                         </Link>
 
                     </td>
