@@ -94,12 +94,11 @@ export default class Departments extends Component {
             pageNumber: pageNumber,
             departmentList: Access.currentDepartments(Context.cursor).skip(
                 (pageNumber - 1) * pageSize
-            ).take(this.state.pageSize).toJS()
+            ).take(pageSize).toJS()
         });
     }
 
     render() {
-
         const items = this.state.departmentList.map((element, index) => {
             return (
                 <DepartmentRow
