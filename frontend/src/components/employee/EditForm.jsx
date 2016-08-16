@@ -3,7 +3,7 @@ import Modal from '../modal/Modal.jsx';
 import configs from '../helpers/calls';
 import Context from '../../context/Context.js';
 import * as Immutable from 'immutable';
-//import * as $ from 'jquery';
+import ValidateEmployee from '../validators/ValidateEmployee.js';
 
 export default class EditForm extends React.Component{
     
@@ -13,6 +13,10 @@ export default class EditForm extends React.Component{
             jobTypes:[],
             positionTypes:[],
             employee:{
+            },
+            errors:{
+                NameErrors:[],
+                AddressErrors:[]
             }
         }
     }
@@ -69,26 +73,38 @@ export default class EditForm extends React.Component{
       
     }
 
+    checkErrors()
+    {
+        if (this.state.errors.NameErrors.length == 0)
+            return true
+        return false
+    }
+
     edit(cb){
-   
+        if (this.checkErrors() == true)
+        {
         const jobTypeDescription=this.refs.jobType.options[this.refs.jobType.selectedIndex].value;
         const positionTypeDescription=this.refs.positionType.options[this.refs.positionType.selectedIndex].value
+        const employmentDate=this.refs.employmentDate.value;
+        const releaseDate=this.refs.releaseDate.value;
 
         const newEmployee={
             Id: this.state.employee.get('Id'),
             Name:this.state.employee.get('Name'),
             Address: this.state.employee.get("Address"),
-            EmploymentDate: this.state.employee.get("EmploymentDate"),
-            ReleaseDate: this.state.employee.get("ReleaseDate"),
+            EmploymentDate: employmentDate,
+            ReleaseDate: releaseDate,
             JobType: jobTypeDescription,
             PositionType: positionTypeDescription,
             DepartmentId:this.props.departmentId
         }
 
-        console.log(newEmployee);
+         console.log("lala",newEmployee);
 
          const np =this.state.employee.set('JobType',this.refs.jobType.options[this.refs.jobType.selectedIndex].text);
          const np2=np.set('PositionType', this.refs.positionType.options[this.refs.positionType.selectedIndex].text);
+         const np3=np2.set('EmploymentDate',employmentDate);
+         const np4=np3.set('ReleaseDate',releaseDate);
        
       
         $.ajax({
@@ -97,17 +113,44 @@ export default class EditForm extends React.Component{
             url: configs.baseUrl + 'api/employee/updateEmployee',
             data:newEmployee,
             success: function (data) { 
-                   const index= Context.cursor.get('employees').indexOf(this.props.element)
-                   Context.cursor.get('employees').update( index,  oldInstance => {
-                        oldInstance=np2
+                //const index= Context.cursor.get('employees').indexOf(this.props.node)
+                if (data.Success == true)
+                {
+                   Context.cursor.get('employees').update( this.props.index,  oldInstance => {
+                        oldInstance=np4
                         return oldInstance;
                     });              
                  
-                 cb(); 
+                 cb(); }
+                 else
+                    alert ("Invalid input!")
                  
             }.bind(this)
-        })                
+        })}
+        else
+            alert ("Invalid input!")                
     }
+
+    onChangeName()
+    { 
+        const errors = ValidateEmployee.validateName(this.refs.name.value)
+        this.state.errors.NameErrors = errors
+       
+         this.setState({
+             errors: this.state.errors
+         })
+    }
+
+    onChangeAddress()
+    { 
+        const errors = ValidateEmployee.validateAddress(this.refs.address.value)
+        this.state.errors.AddressErrors = errors
+       
+         this.setState({
+             errors: this.state.errors
+         })
+    }
+
     render(){
 
         const jobTypes=this.state.jobTypes.map((el, x) => {
@@ -130,13 +173,19 @@ export default class EditForm extends React.Component{
             <div className="form-group">
                 <label className="col-sm-4 control-label"> Name </label>
                 <div className="col-sm-6">
-                    <input  ref="name" className="form-control" placeholder="Name" value={this.state.employee.get('Name')} onChange={this.changeData.bind(this)}/>
+                <div className="col-sm-10 red">
+                    {this.state.errors.NameErrors}
+                </div>
+                    <input  ref="name" className="form-control" placeholder="Name" value={this.state.employee.get('Name')} onChange={this.changeData.bind(this)} onKeyUp={this.onChangeName.bind(this)}/>
                 </div>
             </div>
             <div className="form-group">
                 <label className="col-sm-4 control-label"> Address </label>
                 <div className="col-sm-6">
-                    <input  ref="address" className="form-control" placeholder="Address" value={this.state.employee.get('Address')} onChange={this.changeData.bind(this)}/>
+                    <div className="col-sm-10 red">
+                         {this.state.errors.AddressErrors}
+                    </div>
+                    <input  ref="address" className="form-control" placeholder="Address" value={this.state.employee.get('Address')} onChange={this.changeData.bind(this)} onKeyUp={this.onChangeAddress.bind(this)}/>
                 </div>
             </div>
            
@@ -147,19 +196,22 @@ export default class EditForm extends React.Component{
                       <div className="input-group-addon">
                         <i className="fa fa-calendar"></i>
                       </div>
-                      <input type="text" ref="employmentDate" className="form-control" id="datepicker1" value={this.state.employee.get('EmploymentDate')}onChange={this.changeData.bind(this)}/>
+                      <input type="text" ref="employmentDate" className="form-control pull-right" id="datepicker1" value={this.state.employee.get('EmploymentDate')}onChange={this.changeData.bind(this)}/>
                     </div>
                  </div>
                 
               </div>
             <div className="form-group">
-                <label className="col-sm-4 control-label">Release Date</label>
+                <label className="col-sm-4 control-label">Release Date <div className="col-sm-16 darkred">
+                        *Release date must be set after employment date!
+                        </div></label>
+                
                 <div className="col-sm-6">
                     <div className="input-group date">
                         <div className="input-group-addon">
                             <i className="fa fa-calendar"></i>
                         </div>
-                        <input type="text" ref ="releaseDate" className="form-control" id="datepicker2" value={this.state.employee.get('ReleaseDate')} onChange={this.changeData.bind(this)}/>
+                        <input type="text" ref ="releaseDate" className="form-control pull-right" id="datepicker2" value={this.state.employee.get('ReleaseDate')} onChange={this.changeData.bind(this)}/>
                     </div>
                 </div>
             </div>
@@ -167,7 +219,7 @@ export default class EditForm extends React.Component{
            <div className="form-group">
                <label className="col-sm-4 control-label"> Job Type </label>
                <div className="col-sm-6">
-                    <select className="form-control" ref="jobType" >
+                    <select className="selectpicker form-control" ref="jobType" >
                         {jobTypes}
                     </select>
                 </div>

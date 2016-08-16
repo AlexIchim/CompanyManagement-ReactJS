@@ -32,8 +32,16 @@ export default class Form extends React.Component{
         })     
     }
 
+    checkErrors()
+    {
+        if (this.state.errors.NameErrors.length == 0)
+            return true
+        return false
+    }
+
     store(cb){
-   
+        if (this.checkErrors() == true)
+        {
         const depManager=this.refs.managersDropdown.options[this.refs.managersDropdown.selectedIndex].value;
 
         var inputInfo={
@@ -47,11 +55,22 @@ export default class Form extends React.Component{
             async: false,
             url: configs.baseUrl + 'api/department/addDepartment',
             data:inputInfo,
-            success: function (data) {               
-                 cb(); 
-                 this.refresh(this.props.officeId);
+            success: function (data) {
+                if (data.Success == true)
+                {  
+                     cb(); 
+                     this.refresh(this.props.officeId);  
+                }
+                else
+                {
+                    alert ("Invalid input!")
+                }        
             }.bind(this)
-        })   
+        })}
+
+        else{
+             alert("Invalid input!")
+        }  
 
               
     }
@@ -61,11 +80,7 @@ export default class Form extends React.Component{
     }
 
     onChangeName()
-    {
-        const inputInfo = {
-            Name: this
-        } 
-        console.log("nume", this.refs.name.value)
+    { 
         const errors = ValidateDepartment.validateName(this.refs.name.value)
         this.state.errors.NameErrors = errors
        
@@ -88,9 +103,10 @@ export default class Form extends React.Component{
             <div className="form-group">
                 <label className="col-sm-4 control-label"> Name </label>
                 <div className="col-sm-6">
-                {this.state.errors.NameErrors}
-                    <input  ref="name" className="form-control" placeholder="Name" onKeyUp={this.onChangeName.bind(this)}/>
-                    
+                    <div className="col-sm-10 red">
+                        {this.state.errors.NameErrors}
+                    </div>
+                    <input  ref="name" className="form-control" placeholder="Name" onKeyUp={this.onChangeName.bind(this)}/>                    
                 </div>
             </div>
 
@@ -102,11 +118,6 @@ export default class Form extends React.Component{
                     </select>
                 </div>
             </div>
-
-
-
-
-
         </Modal>
         )
     }

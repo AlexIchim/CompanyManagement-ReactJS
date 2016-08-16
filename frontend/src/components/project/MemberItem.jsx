@@ -48,13 +48,13 @@ export default class DepartmentItem extends React.Component{
 
     render(){
 
-        const editForm =  this.state.edit ? <EditMembersForm setPageNr={this.props.setPageNr} projectId = {this.props.projectId} element={this.props.node} show = {this.state.edit} close={this.closeEditForm.bind(this)} /> : ''; 
+        const editForm =  this.state.edit ? <EditMembersForm setPageNr={this.props.setPageNr}  projectId = {this.props.projectId} element={this.props.node} show = {this.state.edit} close={this.closeEditForm.bind(this)} /> : ''; 
 
          return(
         <tr>
             <td>{this.props.node.get('Name')} </td>
             <td>{this.props.node.get('Role')}</td>
-            <td>{this.props.node.get('Allocation')}</td> 
+            <td>{this.props.node.get('Allocation')} %</td>
             <td><button className="linkButton" onClick={this.showEditForm.bind(this)} >Edit Allocation | </button>
                 <button className="linkButton" onClick={this.deleteEmployeeFromProject.bind(this)} > Delete </button>
                 {editForm}

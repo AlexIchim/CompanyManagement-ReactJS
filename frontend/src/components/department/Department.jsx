@@ -25,12 +25,22 @@ export default class Department extends React.Component {
     }
 
     
-    componentWillMount(){ 
-        this.subscription = Context.subscribe(this.onContextChange.bind(this));
+    componentWillMount(){
+        this.subscription = Context.subscribe(this.onContextChange.bind(this))
+        Controller.getAllOffices();
+    }
+
+    componentWillReceiveProps(props){
+        this.setState({
+            pageNr:1
+        })
+        this.getAllDepartments(1, props.params.officeId)
+        this.setNumberOfPages(props.params.officeId);
     }
 
     componentDidMount(){
          this.getAllDepartments(this.state.pageNr);
+        this.setNumberOfPages();
     }
 
     componentWillUnmount () {
@@ -38,30 +48,45 @@ export default class Department extends React.Component {
     }
 
      onContextChange(cursor){
-        this.setState({
+         this.setState({
             departments: cursor.get("departments")         
         });
 
     }
 
-    getAllDepartments(pageNr){
+    getAllDepartments(pageNr, officeId = null){
 
-        Controller.getAllDepOffice(this.props.routeParams.officeId,pageNr);
+        if(! officeId){
+            officeId = this.props.routeParams.officeId;
+        }
+        Controller.getAllDepOffice(officeId,pageNr);
 
-        this.setNumberOfPages();
+
     }
 
-    setNumberOfPages(){
+    setNumberOfPages(officeId = null){
         $.ajax({
             method: 'GET',
             async: false,
-            url: configs.baseUrl + 'api/office/getAllDepOffice?officeId=' + this.props.routeParams.officeId+'&pageSize=null&pageNr=null',
+            url: configs.baseUrl + 'api/office/getAllDepOffice?officeId=' +(officeId || this.props.routeParams.officeId)+'&pageSize=null&pageNr=null',
             success: function (data) {
-                this.setState(
-                    {
-                        nrOfPages: data.length / this.state.pageSize + 1
-                    }
-                )
+                if (data.length==0){
+                    this.setState(
+                        {
+                            nrOfPages: 1
+                        }
+                    )
+
+                }else{
+                    this.setState(
+                        {
+                            nrOfPages: Math.ceil( data.length / this.state.pageSize)
+                        }
+                    )
+
+                }
+
+
             }.bind(this)
     })
 }
@@ -96,9 +121,7 @@ export default class Department extends React.Component {
        
         const whereTo=this.state.pageNr+1
 
-        this.setNumberOfPages();
-
-        if (whereTo < this.state.nrOfPages){
+        if (whereTo <= this.state.nrOfPages){
             
              this.getAllDepartments(whereTo);
 
@@ -108,6 +131,32 @@ export default class Department extends React.Component {
 
         }
 
+    }
+    last(){
+
+        
+        this.setNumberOfPages();
+
+
+        this.getAllDepartments(this.state.nrOfPages, this.props.routeParams.officeId);
+
+        this.setState({
+            pageNr: this.state.nrOfPages
+        })
+
+    
+    }
+
+    first(){
+        if (this.state.pageNr!=1){
+             this.getAllDepartments(1,this.props.routeParams.officeId);
+
+        this.setState({
+            pageNr:1
+        })
+
+        }
+       
     }
 
     render() {
@@ -150,12 +199,24 @@ export default class Department extends React.Component {
                 </table>
 
                 <div className="btn-wrapper">
-                    <button className="leftArrow" onClick={this.back.bind(this)}>
-                                <i className="fa fa-arrow-left fa-1x" aria-hidden="true"></i>
+                    <button className="rightArrow" onClick={this.first.bind(this)}>
+                        <i className="fa fa-angle-double-left fa-2x" aria-hidden="true"></i>
                     </button>
+                    <button className="leftArrow" onClick={this.back.bind(this)}>
+                                <i className="fa fa-angle-left fa-2x" aria-hidden="true"></i>
+                    </button>
+                    <label className="to-right">{this.state.pageNr} </label>
                     <button className="rightArrow" onClick={this.next.bind(this)}>
-                                <i className="fa fa-arrow-right fa-1x" aria-hidden="true"></i>
-                    </button>              
+                                <i className="fa fa-angle-right fa-2x" aria-hidden="true"></i>
+                    </button>
+                    <button className="rightArrow" onClick={this.last.bind(this)}>
+                        <i className="fa fa-angle-double-right fa-2x" aria-hidden="true"></i>
+                    </button>
+
+
+
+
+
                 </div>
 
             </div>

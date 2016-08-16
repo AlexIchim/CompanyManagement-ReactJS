@@ -82,7 +82,7 @@ namespace DataAccess.Repositories
         {
             return
                 _context.Employees.Where(e => e.DepartmentId == department.Id)
-                    .Where(e =>(allocation == null|| ( !e.EmployeeProjects.Any() && allocation ==0) || e.EmployeeProjects.Sum(ep=>ep.Allocation)==allocation) && (ptype == null || e.PositionType == ptype) && (jtype == null || e.JobType == jtype) && (string.IsNullOrEmpty(employeeName) || e.Name.Contains(employeeName)))
+                    .Where(e =>(allocation == null|| ( !e.EmployeeProjects.Any() && allocation ==0) || e.EmployeeProjects.Sum(ep=>ep.Allocation)==allocation) && (ptype == null || e.PositionType == ptype) && (jtype == null || e.JobType == jtype) && (string.IsNullOrEmpty(employeeName) || e.Name.StartsWith(employeeName)))
                     .OrderBy(e => e.Name)
                     .Paginate(pageSize, pageNr)
                     .ToArray();    
@@ -114,7 +114,7 @@ namespace DataAccess.Repositories
             foreach (Employee employee in employees)
             {
                 var employeeProject = GetEmployeeProjectCombinationById(projectId, employee.Id);
-                if (ComputeTotalAllocation(employee.Id) < 100 && employeeProject ==null)
+                if (ComputeTotalAllocation(employee.Id) < 100 && employeeProject ==null && (employee.ReleaseDate ==null || employee.ReleaseDate.Equals(DateTime.MinValue)))
                 {
                     notfullyAllocatedEmployees.Add(employee);
                 }
@@ -158,7 +158,7 @@ namespace DataAccess.Repositories
 
         public IEnumerable<Employee> SearchEmployeesByName(int departmentId,string employeeName, int? pageSize, int? pageNr)
         {
-            return _context.Employees.Where(e =>(e.Department.Id==departmentId) && e.Name.Contains(employeeName)).ToArray();
+            return _context.Employees.Where(e =>(e.Department.Id==departmentId) && e.Name.StartsWith(employeeName)).ToArray();
         }
     }
 }

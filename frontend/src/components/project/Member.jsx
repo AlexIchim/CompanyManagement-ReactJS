@@ -38,7 +38,9 @@ export default class Member extends React.Component{
                     positionTypes: data
                 })
             }.bind(this)
-        })      
+        })
+
+        Controller.getAllOffices();
     }
 
      componentDidMount(){
@@ -70,12 +72,21 @@ export default class Member extends React.Component{
             async: false,
             url: configs.baseUrl + 'api/project/getEmployeesByProjectId?projectId='+ this.props.routeParams.projectId+'&ptype=' + position +'&pageSize=nul&pageNr=null',
             success: function (data) {
-                console.log(data)
-                this.setState(
-                    {
-                        nrOfPages: data.length / this.state.pageSize + 1
-                    }
-                )
+                if (data.length==0){
+                    this.setState(
+                        {
+                            nrOfPages: 1
+                        }
+                    )
+
+                }else{
+                    this.setState(
+                        {
+                            nrOfPages: Math.ceil( data.length / this.state.pageSize)
+                        }
+                    )
+
+                }
             }.bind(this)
         })
     }
@@ -110,7 +121,7 @@ export default class Member extends React.Component{
 
         const whereTo=this.state.pageNr+1
 
-        if(whereTo < this.state.nrOfPages) {
+        if(whereTo <= this.state.nrOfPages) {
             
             this.getAllEmployeeOnProject(whereTo, this.state.filter);
 
@@ -120,6 +131,31 @@ export default class Member extends React.Component{
         }
 
        
+    }
+
+    last(){
+        this.setNumberOfPages(this.state.filter);
+
+
+        this.getAllEmployeeOnProject(this.state.nrOfPages, this.state.filter);
+
+        this.setState({
+            pageNr: this.state.nrOfPages
+        })
+    }
+
+    first(){
+
+            if (this.state.pageNr!=1){
+        this.getAllEmployeeOnProject(1, this.state.filter);
+
+        this.setState({
+            pageNr:1
+        })
+
+            }
+
+
     }
 
     onDropDownChange(){
@@ -206,12 +242,19 @@ export default class Member extends React.Component{
                 </table>
 
                 <div className="btn-wrapper">
-                    <button className="leftArrow" onClick={this.back.bind(this)}>
-                                <i className="fa fa-arrow-left fa-1x" aria-hidden="true"></i>
+                    <button className="rightArrow" onClick={this.first.bind(this)}>
+                        <i className="fa fa-angle-double-left fa-2x" aria-hidden="true"></i>
                     </button>
+                    <button className="leftArrow" onClick={this.back.bind(this)}>
+                        <i className="fa fa-angle-left fa-2x" aria-hidden="true"></i>
+                    </button>
+                    <label className="to-right">{this.state.pageNr} </label>
                     <button className="rightArrow" onClick={this.next.bind(this)}>
-                                <i className="fa fa-arrow-right fa-1x" aria-hidden="true"></i>
-                    </button>              
+                        <i className="fa fa-angle-right fa-2x" aria-hidden="true"></i>
+                    </button>
+                    <button className="rightArrow" onClick={this.last.bind(this)}>
+                        <i className="fa fa-angle-double-right fa-2x" aria-hidden="true"></i>
+                    </button>
                 </div>
 
                 
